@@ -22,6 +22,7 @@
     "@angular/router": "^6.1.0",
     "core-js": "^2.5.4",
     "eslint": "^5.13.0",
+    "ng-zorro-antd": "^7.0.0-rc.3",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },
@@ -52,7 +53,9 @@
     "typescript": "~2.9.2"
   },
   "commitlint": {
-    "extends": ["@commitlint/config-conventional"]
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "husky": {
     "hooks": {
