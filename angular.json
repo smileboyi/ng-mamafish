@@ -49,6 +49,14 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
             }
           }
         },
@@ -60,6 +68,10 @@
           "configurations": {
             "production": {
               "browserTarget": "ng-mamafish:build:production"
+            },
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "ng-mamafish:build:hmr"
             }
           }
         },
