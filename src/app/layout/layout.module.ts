@@ -8,10 +8,13 @@ import { ContentModule } from './content/content.module';
 
 import { LayoutComponent } from './layout.component';
 
+import { SharedModule } from '../shared/shared.module';
+
 @NgModule({
   // 可以导入模块管道指令
   imports: [
     CommonModule,
+    SharedModule,
 
     ToolbarModule,
     FooterModule,
