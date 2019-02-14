@@ -1,15 +1,128 @@
-<div nz-row>
-  <div nz-col nzSpan="12">col-12</div>
-  <div nz-col nzSpan="12">col-12</div>
+<header class="header box-shadow">
+  <div class="top-info"></div>
+  <div nz-row class="">
+    <div nz-col nzSpan="8">
+      <button nz-button nzType="large">
+        <i nz-icon type="bars"></i>
+      </button>
+      <div class="divider"></div>
+      <button nz-button nzType="large">
+        <i nz-icon type="arrow-down"></i>
+      </button>
+      <div class="divider"></div>
+      <button nz-button nzType="large">
+        <i nz-icon type="lock"></i>
+      </button>
+    </div>
+    <div nz-col nzSpan="16" class="tr">
+      <ng-container *ngTemplateOutlet="user"></ng-container>
+      <ng-container *ngTemplateOutlet="search"></ng-container>
+      <ng-container *ngTemplateOutlet="bell"></ng-container>
+      <ng-container *ngTemplateOutlet="fullscreen"></ng-container>
+      <ng-container *ngTemplateOutlet="settings"></ng-container>
+    </div>
+  </div>
+</header>
+<div>
+  {{userMessage | json}}
 </div>
-<div nz-row>
-  <div nz-col nzSpan="8">col-8</div>
-  <div nz-col nzSpan="8">col-8</div>
-  <div nz-col nzSpan="8">col-8</div>
-</div>
-<div nz-row>
-  <div nz-col nzSpan="6">col-6</div>
-  <div nz-col nzSpan="6">col-6</div>
-  <div nz-col nzSpan="6">col-6</div>
-  <div nz-col nzSpan="6">col-6</div>
-</div>
+
+<ng-template #user>
+  <nz-dropdown [nzTrigger]="'click'" [nzPlacement]="'bottomCenter'" class="tc">
+    <div class="dib user-box" nz-dropdown>
+      <nz-avatar [nzSize]="40" nzIcon="user" class="avatar fl"></nz-avatar>
+      <button nz-button nzType="primary" class="user-btn">
+        <span class="ell name">smileboyi</span>
+        <i nz-icon type="down" theme="outline"></i>
+      </button>
+    </div>
+    <ul nz-menu class="user-menu">
+      <li nz-menu-item>
+        <button nz-button nzType="default">
+          <i nz-icon type="user"></i>个人信息
+        </button>
+      </li>
+      <li nz-menu-item>
+        <button nz-button nzType="default">
+          <i nz-icon type="mail"></i>收件箱
+        </button>
+      </li>
+      <li nz-menu-item>
+        <button nz-button nzType="default">
+          <i nz-icon type="poweroff"></i>退出
+        </button>
+      </li>
+    </ul>
+  </nz-dropdown>
+  <div class="divider"></div>
+</ng-template>
+
+<ng-template #search>
+  <button nz-button nzType="large">
+    <i nz-icon type="search"></i>
+  </button>
+  <div class="divider"></div>
+</ng-template>
+
+<ng-template #fullscreen>
+  <button nz-button nzType="large">
+    <i nz-icon type="fullscreen"></i>
+  </button>
+  <div class="divider"></div>
+</ng-template>
+
+<ng-template #bell>
+  <nz-dropdown [nzTrigger]="'click'" [nzPlacement]="'bottomCenter'">
+    <button nz-button nz-dropdown nzTrigger="click">
+      <i nz-icon type="bell"></i>
+    </button>
+    <div class="box-shadow inform-box">
+      <nz-tabset nzSize="small">
+        <nz-tab [nzTitle]="titleTemplate1">
+          <div class="message-item flex">
+            <nz-avatar nzSize="large" nzIcon="user"></nz-avatar>
+            <div class="">
+              <p></p>
+            </div>
+          </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="titleTemplate2">
+          Content of Tab Pane 2
+        </nz-tab>
+        <nz-tab [nzTitle]="titleTemplate3">
+          Content of Tab Pane 3
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </nz-dropdown>
+  <div class="divider"></div>
+</ng-template>
+
+<ng-template #settings>
+  <button nz-button nzType="large" (click)="openSetting()">
+    <i nz-icon type="setting"></i>
+  </button>
+</ng-template>
+
+<ng-template #titleTemplate1>
+  <i nz-icon type="message"></i>
+</ng-template>
+<ng-template #titleTemplate2>
+  <i nz-icon type="file"></i>
+</ng-template>
+<ng-template #titleTemplate3>
+  <i nz-icon type="schedule"></i>
+</ng-template>
+
+<nz-drawer
+  [nzVisible]="drawerVisible"
+  nzPlacement="right"
+  nzTitle="主题选项"
+  [nzWidth]="280"
+  [nzMaskStyle]="bgctp"
+  (nzOnClose)="handleDrawerClose()"
+>
+  <p>Some contents...</p>
+  <p>Some contents...</p>
+  <p>Some contents...</p>
+</nz-drawer>

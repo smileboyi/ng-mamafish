@@ -1,0 +1,85 @@
+:host {
+  header {
+    height: 64px;
+    max-width: 100%;
+    background-color: #1e88e5;
+  }
+  [nz-button] {
+    min-width: 64px;
+    height: 64px;
+    border: none;
+    background-color: transparent;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+  [nz-icon] {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .avatar {
+    position: relative;
+    top: 12px;
+  }
+  .user-box {
+    height: 64px;
+    padding-left: 8px;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    [nz-button] {
+      padding: 0 8px;
+      background-color: transparent;
+    }
+  }
+  .user-btn {
+    top: 0;
+    .name {
+      display: inline-block;
+      max-width: 100px;
+      margin-left: 5px;
+      vertical-align: sub;
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    i {
+      vertical-align: baseline;
+      font-size: 15px;
+    }
+  }
+  .divider {
+    display: inline-block;
+    position: absolute;
+    height: 64px;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.12);
+  }
+  ::ng-deep .ant-dropdown {
+    margin: 0;
+  }
+}
+
+.inform-box {
+  width: 280px;
+  ::ng-deep .ant-tabs-nav-scroll {
+    text-align: center;
+  }
+  ::ng-deep .ant-tabs-bar {
+    margin-bottom: 0;
+  }
+  .message-item {
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+}
+.user-menu {
+  width: 122px;
+  margin: 0 auto;
+  [nz-button] {
+    width: 100px;
+    text-align: left;
+    border: none;
+    background-color: transparent;
+  }
+}

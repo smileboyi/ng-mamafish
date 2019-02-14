@@ -20,10 +20,14 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "axios": "^0.18.0",
+    "axios-mock-adapter": "^1.16.0",
     "core-js": "^2.5.4",
     "eslint": "^5.13.0",
+    "mockjs": "^1.0.1-beta3",
     "ng-zorro-antd": "^7.0.0-rc.3",
     "rxjs": "~6.2.0",
+    "rxjs-compat": "^6.4.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

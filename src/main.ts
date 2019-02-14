@@ -6,6 +6,9 @@ import { environment } from './environments/environment';
 
 import { hmrBootstrap } from './hmr';
 
+import api from '../src/app/mock/api.mock';
+api.start();
+
 if (environment.production) {
   enableProdMode();
 }
