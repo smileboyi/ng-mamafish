@@ -1,8 +1,11 @@
 :host {
-  header {
+  [nz-row] {
     height: 64px;
     max-width: 100%;
     background-color: #1e88e5;
+  }
+  [nz-col]:nth-of-type(2){
+    position: static;
   }
   [nz-button] {
     min-width: 64px;
@@ -61,18 +64,117 @@
 
 .inform-box {
   width: 280px;
+  height: 300px;
+  background-color: #fff;
   ::ng-deep .ant-tabs-nav-scroll {
     text-align: center;
   }
   ::ng-deep .ant-tabs-bar {
     margin-bottom: 0;
   }
+  ::ng-deep .ant-tabs-tabpane {
+    height: 260px;
+    overflow-y: auto;
+  }
+  [nz-icon] {
+    font-size: 20px;
+  }
   .message-item {
+    height: 64px;
+    padding: 8px;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
     &:hover {
       background-color: #f5f5f5;
     }
+    [nzIcon] {
+      min-width: 50px;
+      height: 50px;
+      line-height: 50px;
+      margin-right: 8px;
+    }
+    .main {
+      width: 206px;
+    }
+    .name {
+      line-height: 22px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.87);
+    }
+    .time {
+      line-height: 22px;
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.77);
+    }
+    .text {
+      margin: 0;
+      height: 42px;
+      padding-right: 8px;
+      line-height: 14px;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.54);
+      white-space: initial;
+    }
+  }
+  .file-item {
+    padding: 8px;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    &:hover {
+      background-color: #f5f5f5;
+    }
+    .name {
+      line-height: 22px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.87);
+    }
+    .size {
+      line-height: 22px;
+      color: rgba(0, 0, 0, 0.87);
+      opacity: 0.8;
+    }
+  }
+  .schedule-item {
+    height: 64px;
+    padding: 8px;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    &:hover {
+      background-color: #f5f5f5;
+    }
+    .date {
+      width: 50px;
+      height: 50px;
+      margin-top: 6px;
+      margin-right: 8px;
+      text-align: center;
+      font-size: 13px;
+      line-height: 22px;
+      color: #fff;
+      border-radius: 4px;
+    }
+    .title {
+      margin: 0;
+      line-height: 22px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.87);
+      text-align: center;
+    }
+    .text {
+      margin: 0;
+      height: 42px;
+      padding-right: 8px;
+      line-height: 14px;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.54);
+      white-space: initial;
+    }
   }
 }
+
 .user-menu {
   width: 122px;
   margin: 0 auto;
@@ -81,5 +183,16 @@
     text-align: left;
     border: none;
     background-color: transparent;
+  }
+}
+
+.search-bar{
+  padding-left: 20px;
+  text-align:left;
+  background-color: #1e88e5;
+  justify-content: center;
+  .ipt{
+    font-size: 16px;
+    color: #fff;
   }
 }

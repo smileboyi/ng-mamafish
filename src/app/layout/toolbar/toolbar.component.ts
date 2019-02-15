@@ -2,11 +2,13 @@ import { messages } from './../../mock/data.mock';
 import {
   Component,
   OnInit,
+  ElementRef,
+  Renderer,
   TemplateRef,
-  ViewChild,
-  AfterViewInit
+  ViewChild
 } from '@angular/core';
 import { Observable } from 'rxjs';
+import * as screenfull from 'screenfull';
 
 import { Message, File, Schedule } from '../../declare';
 import { MessageService } from '../../services/message.service';
@@ -24,12 +26,13 @@ interface UserMessage {
 export class ToolbarComponent implements OnInit {
   userMessage: UserMessage;
   drawerVisible: boolean = false;
-  tabIcon: string[] = ['message', 'file', 'schedule'];
-  public messages: Array<Message>;
-  public files: Array<File>;
-  public meetings: Array<Schedule>;
+  searchBarState: boolean = false;
+  isFullscreen: boolean = false;
 
-  constructor(private message: MessageService) {}
+  @ViewChild('serchIpt')
+  serchIpt: ElementRef;
+
+  constructor(private message: MessageService, private renderer: Renderer) {}
 
   ngOnInit() {
     this.message.getMessages().subscribe(res => (this.userMessage = res.data));
@@ -40,5 +43,23 @@ export class ToolbarComponent implements OnInit {
   }
   handleDrawerClose(): void {
     this.drawerVisible = false;
+  }
+
+  // 全屏切换
+  toggleFullscreen() {
+    if (screenfull.enabled) {
+      screenfull.toggle();
+      this.isFullscreen = !this.isFullscreen;
+    }
+  }
+
+  // 显示搜索框
+  showSearchBar() {
+    this.searchBarState = true;
+    this.renderer.setElementAttribute(
+      this.serchIpt.nativeElement,
+      'autofocus',
+      'autofocus'
+    );
   }
 }

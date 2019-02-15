@@ -1,6 +1,6 @@
-<header class="header box-shadow">
-  <div class="top-info"></div>
-  <div nz-row class="">
+<header class="header box-shadow pre">
+  <cat-top-info></cat-top-info>
+  <div nz-row>
     <div nz-col nzSpan="8">
       <button nz-button nzType="large">
         <i nz-icon type="bars"></i>
@@ -23,9 +23,6 @@
     </div>
   </div>
 </header>
-<div>
-  {{userMessage | json}}
-</div>
 
 <ng-template #user>
   <nz-dropdown [nzTrigger]="'click'" [nzPlacement]="'bottomCenter'" class="tc">
@@ -58,15 +55,34 @@
 </ng-template>
 
 <ng-template #search>
-  <button nz-button nzType="large">
+  <button nz-button nzType="large" (click)="showSearchBar()">
     <i nz-icon type="search"></i>
   </button>
+  <div class="search-bar pab wh100 not nol z50 flex" [hidden]="!searchBarState">
+    <label class="fe">
+      <input
+        class="wh100 ipt"
+        type="text"
+        placeholder="搜索"
+        #serchIpt
+        autofocus="autofocus"
+      />
+    </label>
+    <button
+      nz-button
+      nzType="default"
+      nzShape="circle"
+      (click)="searchBarState = false"
+    >
+      <i nz-icon type="close" theme="outline"></i>
+    </button>
+  </div>
   <div class="divider"></div>
 </ng-template>
 
 <ng-template #fullscreen>
-  <button nz-button nzType="large">
-    <i nz-icon type="fullscreen"></i>
+  <button nz-button nzType="large" (click)="toggleFullscreen()">
+    <i nz-icon [type]="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"></i>
   </button>
   <div class="divider"></div>
 </ng-template>
@@ -79,18 +95,65 @@
     <div class="box-shadow inform-box">
       <nz-tabset nzSize="small">
         <nz-tab [nzTitle]="titleTemplate1">
-          <div class="message-item flex">
-            <nz-avatar nzSize="large" nzIcon="user"></nz-avatar>
-            <div class="">
-              <p></p>
+          <div class="scrollbar wh100" *ngIf="userMessage">
+            <div
+              class="message-item flex"
+              *ngFor="let message of userMessage.messages"
+            >
+              <nz-avatar
+                nzSize="50"
+                nzIcon="user"
+                [nzSrc]="message.avatar"
+              ></nz-avatar>
+              <div class="fe main">
+                <div>
+                  <span class="name">{{ message.name }}</span>
+                  <span class="time fr">{{ message.time }}</span>
+                </div>
+                <p class="text ell">
+                  {{ message.text }}
+                </p>
+              </div>
             </div>
           </div>
         </nz-tab>
         <nz-tab [nzTitle]="titleTemplate2">
-          Content of Tab Pane 2
+          <div class="scrollbar wh100" *ngIf="userMessage">
+            <div class="file-item" *ngFor="let file of userMessage.files">
+              <div>
+                <span class="name">{{ file.name }}</span
+                ><span class="size fr">{{ file.size }}</span>
+              </div>
+              <nz-progress
+                [nzPercent]="file.value"
+                [nzStrokeWidth]="3"
+                [nzShowInfo]="false"
+                [nzStrokeColor]="file.color"
+              ></nz-progress>
+            </div>
+          </div>
         </nz-tab>
         <nz-tab [nzTitle]="titleTemplate3">
-          Content of Tab Pane 3
+          <div class="scrollbar wh100" *ngIf="userMessage">
+            <div
+              class="schedule-item flex"
+              *ngFor="let schedule of userMessage.schedules"
+            >
+              <div
+                class="date"
+                [ngStyle]="{ 'background-color': schedule.bgColor }"
+              >
+                <div>{{ schedule.day }}</div>
+                <div class="month">{{ schedule.month }}</div>
+              </div>
+              <div class="fe">
+                <p class="title">{{ schedule.title }}</p>
+                <p class="text">
+                  {{ schedule.text }}
+                </p>
+              </div>
+            </div>
+          </div>
         </nz-tab>
       </nz-tabset>
     </div>
@@ -105,13 +168,13 @@
 </ng-template>
 
 <ng-template #titleTemplate1>
-  <i nz-icon type="message"></i>
+  <i nz-icon type="message" theme="fill"></i>
 </ng-template>
 <ng-template #titleTemplate2>
-  <i nz-icon type="file"></i>
+  <i nz-icon type="file" theme="fill"></i>
 </ng-template>
 <ng-template #titleTemplate3>
-  <i nz-icon type="schedule"></i>
+  <i nz-icon type="schedule" theme="fill"></i>
 </ng-template>
 
 <nz-drawer

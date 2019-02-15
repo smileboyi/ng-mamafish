@@ -46,42 +46,43 @@ export const messages: Array<Message> = [
   }
 ];
 
+// 颜色可以单独配置成变量
 export const files: Array<File> = [
   {
     name: 'annular.zip',
     size: '~6.2 MB',
     value: '47',
-    color: 'primary'
+    color: '#303f9f'
   },
   {
     name: 'documentation.pdf',
     size: '~14.6 MB',
     value: '33',
-    color: 'accent'
+    color: '#f53d7c'
   },
   {
     name: 'wallpaper.jpg',
     size: '~558 KB',
     value: '60',
-    color: 'warn'
+    color: '#f44336'
   },
   {
     name: 'letter.doc',
     size: '~57 KB',
     value: '80',
-    color: 'primary'
+    color: '#2e3d99'
   },
   {
     name: 'azimuth.zip',
     size: '~10.2 MB',
     value: '55',
-    color: 'warn'
+    color: '#f44336'
   },
   {
     name: 'contacts.xlsx',
     size: '~96 KB',
     value: '75',
-    color: 'accent'
+    color: '#f53d7c'
   }
 ];
 
@@ -92,7 +93,7 @@ export const schedules: Array<Schedule> = [
     title: 'Meeting with Bruno',
     text:
       'Fusce ut condimentum velit, quis egestas eros. Quisque sed condimentum neque.',
-    bgColor: 'gradient-purple'
+    bgColor: '#ff6ec4'
   },
   {
     day: '15',
@@ -100,27 +101,27 @@ export const schedules: Array<Schedule> = [
     title: 'Training course',
     text:
       'Fusce arcu tortor, tempor aliquam augue vel, consectetur vehicula lectus.',
-    bgColor: 'gradient-indigo'
+    bgColor: '#2ec6ff'
   },
   {
     day: '12',
     month: 'June',
     title: 'Dinner with Ashley',
     text: 'Curabitur rhoncus facilisis augue sed fringilla.',
-    bgColor: 'gradient-teal'
+    bgColor: '#a9dc7b'
   },
   {
     day: '14',
     month: 'June',
     title: 'Sport time',
     text: 'Vivamus tristique enim eros, ac ultricies sem ultrices vitae.',
-    bgColor: 'gradient-red'
+    bgColor: '#ff9e80'
   },
   {
     day: '29',
     month: 'July',
     title: 'Birthday of Julia',
     text: 'Nam porttitor justo nec elit efficitur vestibulum.',
-    bgColor: 'gradient-orange'
+    bgColor: '#ffd86f'
   }
 ];

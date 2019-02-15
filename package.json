@@ -28,6 +28,7 @@
     "ng-zorro-antd": "^7.0.0-rc.3",
     "rxjs": "~6.2.0",
     "rxjs-compat": "^6.4.0",
+    "screenfull": "^4.0.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
