@@ -1,2 +1,123 @@
-<div class="top-info">
+<div
+  class="top-info pre"
+  fxLayout="row"
+  fxLayoutWrap
+  fxLayoutAlign="space-between center"
+>
+  <button nz-button nzShape="circle">
+    <i nz-icon type="close"></i>
+  </button>
+  <div class="info-box centre3 tc" fxFlex="100" fxFlex.gt-sm="40">
+    <nz-avatar [nzSize]="130" nzIcon="user" nzSrc="../../../../assets/images/avatar.jpg"></nz-avatar>
+    <div class="tc info">
+      <h2 class="name">smileboyi</h2>
+      <h3 class="job">Web developer</h3>
+      <p class="member">Member since May. 2016</p>
+      <div class="button-group">
+        <button nz-tooltip nzPlacement="bottom" nzTitle="weibo">
+          <i nz-icon type="weibo"></i>
+        </button>
+        <button nz-tooltip nzPlacement="bottom" nzTitle="qq">
+          <i nz-icon type="qq"></i>
+        </button>
+        <button nz-tooltip nzPlacement="bottom" nzTitle="google">
+          <i nz-icon type="google"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="email-box" fxFlex="100" fxFlex.gt-sm="35">
+    <form
+      class="tc"
+      nz-form
+      [formGroup]="validateForm"
+      (ngSubmit)="submitForm()"
+    >
+      <nz-form-item>
+        <nz-form-control>
+          <input
+            nz-input
+            formControlName="email"
+            id="email"
+            placeholder="Email*"
+          />
+          <nz-form-explain
+            *ngIf="
+              validateForm.get('email').dirty &&
+              validateForm.get('email').errors?.required
+            "
+          >
+            Email is required
+          </nz-form-explain>
+          <nz-form-explain
+            *ngIf="
+              validateForm.get('email').dirty &&
+              validateForm.get('email').errors?.email
+            "
+            >Invalid email address!
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <input
+            nz-input
+            formControlName="subject"
+            id="subject"
+            placeholder="Subject*"
+          />
+          <nz-form-explain
+            *ngIf="
+              validateForm.get('subject').dirty &&
+              validateForm.get('subject').errors?.required
+            "
+          >
+            Subject is required
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <input
+            nz-input
+            formControlName="message"
+            id="message"
+            placeholder="Message*"
+          />
+          <nz-form-explain
+            *ngIf="
+              validateForm.get('message').dirty &&
+              validateForm.get('message').errors?.required
+            "
+          >
+            Message is required
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <button class="box-shadow" nz-button nzType="primary">
+        <svg
+          class="send"
+          t="1550495928470"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          p-id="1098"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          width="24"
+          height="24"
+          fill="#fff"
+        >
+          <defs><style type="text/css"></style></defs>
+          <path
+            d="M85.333333 896 981.333333 512 85.333333 128 85.333333 426.666667 725.333333 512 85.333333 597.333333 85.333333 896Z"
+            p-id="1099"
+          ></path>
+        </svg>
+        <span class="text">Send</span>
+      </button>
+    </form>
+  </div>
+  <div class="config-box tc" fxFlex="50" fxFlex.gt-sm="25">
+    <nz-checkbox-group [(ngModel)]="checkOptions"></nz-checkbox-group>
+  </div>
 </div>
