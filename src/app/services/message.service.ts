@@ -4,7 +4,7 @@ import axios from 'axios';
 import { map } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 
-import { Message, File, Schedule } from '../declare';
+import { Message, File, Schedule } from '@declare';
 
 @Injectable({
   providedIn: 'root'

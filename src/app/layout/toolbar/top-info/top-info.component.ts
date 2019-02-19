@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+
 @Component({
   selector: 'cat-top-info',
   templateUrl: './top-info.component.html',
@@ -7,6 +8,9 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 })
 export class TopInfoComponent implements OnInit {
   validateForm: FormGroup;
+  @Input() showInfoContent: boolean = false;
+  // tslint:disable-next-line:no-output-on-prefix
+  @Output() onCloseInfoContent: EventEmitter<any> = new EventEmitter();
 
   checkOptions = [
     { label: 'Notifications', value: 'notifications', checked: true },
@@ -28,7 +32,7 @@ export class TopInfoComponent implements OnInit {
     });
   }
 
-  submitForm() {
+  submitForm(): void {
     console.log(this.validateForm.value);
   }
 }

@@ -9,6 +9,20 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "paths": {
+      "@declare": [
+        "./src/app/declare",
+      ],
+      "@env": [
+        "./src/environments/environment"
+      ],
+      "@services/*": [
+        "./src/app/services/*",
+      ],
+      "@shared": [
+        "./src/app/shared/shared.module",
+      ]
+    },
     "target": "es5",
     "typeRoots": [
       "node_modules/@types"

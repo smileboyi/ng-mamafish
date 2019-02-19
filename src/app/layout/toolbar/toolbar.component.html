@@ -1,25 +1,54 @@
-<header class="header box-shadow pre">
-  <cat-top-info></cat-top-info>
-  <div nz-row>
-    <div nz-col nzSpan="8">
-      <button nz-button nzType="large">
-        <i nz-icon type="bars"></i>
-      </button>
-      <div class="divider"></div>
-      <button nz-button nzType="large">
-        <i nz-icon type="arrow-down"></i>
-      </button>
-      <div class="divider"></div>
-      <button nz-button nzType="large">
-        <i nz-icon type="lock"></i>
-      </button>
+﻿<header class="box-shadow">
+  <div class="header pre">
+    <cat-top-info
+      [showInfoContent]="showInfoContent"
+      (onCloseInfoContent)="closeInfoContent(showInfoContent)"
+    ></cat-top-info>
+    <div nz-row class="z10">
+      <div nz-col [nzSpan]="global.isMobile ? 14 : 8">
+        <button nz-button nzType="large">
+          <i nz-icon type="bars"></i>
+        </button>
+        <div class="divider"></div>
+        <button
+          nz-button
+          nzType="large"
+          (click)="showInfoContent = !showInfoContent"
+        >
+          <i nz-icon [type]="showInfoContent ? 'arrow-up' : 'arrow-down'"></i>
+        </button>
+        <div class="divider"></div>
+        <button nz-button nzType="large">
+          <i nz-icon type="lock"></i>
+        </button>
+      </div>
+      <div class="tr" nz-col [nzSpan]="global.isMobile ? 10 : 16">
+        <ng-container *ngIf="!global.isMobile">
+          <ng-container *ngTemplateOutlet="user"></ng-container>
+        </ng-container>
+        <ng-container *ngTemplateOutlet="search"></ng-container>
+        <ng-container *ngIf="!global.isMobile">
+          <ng-container *ngTemplateOutlet="bell"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="!global.isMobile">
+          <ng-container *ngTemplateOutlet="fullscreen"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="!global.isMobile">
+          <ng-container *ngTemplateOutlet="settings"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="global.isMobile">
+          <ng-container *ngTemplateOutlet="more"></ng-container>
+        </ng-container>
+      </div>
     </div>
-    <div nz-col nzSpan="16" class="tr">
-      <ng-container *ngTemplateOutlet="user"></ng-container>
-      <ng-container *ngTemplateOutlet="search"></ng-container>
-      <ng-container *ngTemplateOutlet="bell"></ng-container>
-      <ng-container *ngTemplateOutlet="fullscreen"></ng-container>
-      <ng-container *ngTemplateOutlet="settings"></ng-container>
+  </div>
+  <div class="header pre" [hidden]="!(global.isMobile && moreHeaderState)">
+    <div class="header-line"></div>
+    <div nz-row class="z10">
+      <div nz-col nzSpan="24" class="tr">
+        <ng-container *ngTemplateOutlet="user"></ng-container>
+        <ng-container *ngTemplateOutlet="settings"></ng-container>
+      </div>
     </div>
   </div>
 </header>
@@ -27,7 +56,12 @@
 <ng-template #user>
   <nz-dropdown [nzTrigger]="'click'" [nzPlacement]="'bottomCenter'" class="tc">
     <div class="dib user-box" nz-dropdown>
-      <nz-avatar [nzSize]="40" nzIcon="user" nzSrc="../../../assets/images/avatar.jpg" class="avatar fl"></nz-avatar>
+      <nz-avatar
+        [nzSize]="40"
+        nzIcon="user"
+        nzSrc="../../../assets/images/avatar.jpg"
+        class="avatar fl"
+      ></nz-avatar>
       <button nz-button nzType="primary" class="user-btn">
         <span class="ell name">smileboyi</span>
         <i nz-icon type="down" theme="outline"></i>
@@ -162,8 +196,14 @@
 </ng-template>
 
 <ng-template #settings>
-  <button nz-button nzType="large" (click)="openSetting()">
+  <button nz-button nzType="large">
     <i nz-icon type="setting"></i>
+  </button>
+</ng-template>
+
+<ng-template #more>
+  <button nz-button nzType="large" (click)="toggleMoreHeader()">
+    <i nz-icon type="ellipsis"></i>
   </button>
 </ng-template>
 
@@ -176,16 +216,3 @@
 <ng-template #titleTemplate3>
   <i nz-icon type="schedule" theme="fill"></i>
 </ng-template>
-
-<nz-drawer
-  [nzVisible]="drawerVisible"
-  nzPlacement="right"
-  nzTitle="主题选项"
-  [nzWidth]="280"
-  [nzMaskStyle]="bgctp"
-  (nzOnClose)="handleDrawerClose()"
->
-  <p>Some contents...</p>
-  <p>Some contents...</p>
-  <p>Some contents...</p>
-</nz-drawer>

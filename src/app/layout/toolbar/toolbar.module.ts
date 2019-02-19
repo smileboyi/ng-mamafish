@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ToolbarComponent } from './toolbar.component';
 
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '@shared';
 import { TopInfoComponent } from './top-info/top-info.component';
 
 @NgModule({

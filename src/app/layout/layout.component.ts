@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
+
+import { UtilsService } from '@services/utils.service';
+import { GlobalService } from '@services/global.service';
 
 @Component({
   selector: 'cat-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.less']
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent implements OnInit, OnDestroy {
+  drawerVisible: boolean = false;
 
-  constructor() { }
+  constructor(private utils: UtilsService, private global: GlobalService) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ngOnDestroy() {}
+
+  openSetting(): void {
+    this.drawerVisible = true;
   }
-
+  handleDrawerClose(): void {
+    this.drawerVisible = false;
+  }
 }

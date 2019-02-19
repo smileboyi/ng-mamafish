@@ -1,14 +1,33 @@
 <div
   class="top-info pre"
-  fxLayout="row"
+  fxLayout="row wrap"
   fxLayoutWrap
   fxLayoutAlign="space-between center"
+  [ngClass.lt-md]="{ md: true }"
+  [class.hide]="!showInfoContent"
 >
-  <button nz-button nzShape="circle">
+  <button
+    nz-button
+    nzShape="circle"
+    [ngStyle]="{ animation: !showInfoContent ? 'none' : 'scale .6s ease-out' }"
+    (click)="onCloseInfoContent.emit()"
+  >
     <i nz-icon type="close"></i>
   </button>
-  <div class="info-box centre3 tc" fxFlex="100" fxFlex.gt-sm="40">
-    <nz-avatar [nzSize]="130" nzIcon="user" nzSrc="../../../../assets/images/avatar.jpg"></nz-avatar>
+  <div
+    class="info-box centre3 tc trans"
+    fxFlex="40"
+    fxFlex.sm="100"
+    fxFlex.xs="100"
+  >
+    <nz-avatar
+      [nzSize]="130"
+      nzIcon="user"
+      [ngStyle]="{
+        animation: !showInfoContent ? 'none' : 'scale .6s ease-out'
+      }"
+      nzSrc="../../../../assets/images/avatar.jpg"
+    ></nz-avatar>
     <div class="tc info">
       <h2 class="name">smileboyi</h2>
       <h3 class="job">Web developer</h3>
@@ -26,7 +45,7 @@
       </div>
     </div>
   </div>
-  <div class="email-box" fxFlex="100" fxFlex.gt-sm="35">
+  <div class="email-box trans" fxFlex="35" fxFlex.sm="50" fxFlex.xs="100">
     <form
       class="tc"
       nz-form
@@ -117,7 +136,13 @@
       </button>
     </form>
   </div>
-  <div class="config-box tc" fxFlex="50" fxFlex.gt-sm="25">
+  <div
+    class="config-box tc trans"
+    fxFlex="25"
+    fxFlex.sm="50"
+    fxShow="false"
+    fxShow.gt-xs
+  >
     <nz-checkbox-group [(ngModel)]="checkOptions"></nz-checkbox-group>
   </div>
 </div>

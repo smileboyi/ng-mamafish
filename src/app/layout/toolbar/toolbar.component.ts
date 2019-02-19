@@ -1,4 +1,3 @@
-import { messages } from './../../mock/data.mock';
 import {
   Component,
   OnInit,
@@ -7,11 +6,11 @@ import {
   TemplateRef,
   ViewChild
 } from '@angular/core';
-import { Observable } from 'rxjs';
 import * as screenfull from 'screenfull';
 
 import { Message, File, Schedule } from '../../declare';
-import { MessageService } from '../../services/message.service';
+import { MessageService } from '@services/message.service';
+import { GlobalService } from '@services/global.service';
 
 interface UserMessage {
   messages: Array<Message>;
@@ -25,28 +24,30 @@ interface UserMessage {
 })
 export class ToolbarComponent implements OnInit {
   userMessage: UserMessage;
-  drawerVisible: boolean = false;
   searchBarState: boolean = false;
   isFullscreen: boolean = false;
+  showInfoContent: boolean = false;
+  moreHeaderState: boolean = false;
 
   @ViewChild('serchIpt')
   serchIpt: ElementRef;
 
-  constructor(private message: MessageService, private renderer: Renderer) {}
+  constructor(
+    private message: MessageService,
+    private renderer: Renderer,
+    private global: GlobalService
+  ) {}
 
   ngOnInit() {
-    this.message.getMessages().subscribe(res => (this.userMessage = res.data));
-  }
-
-  openSetting(): void {
-    this.drawerVisible = true;
-  }
-  handleDrawerClose(): void {
-    this.drawerVisible = false;
+    if (!this.global.isMobile) {
+      this.message
+        .getMessages()
+        .subscribe(res => (this.userMessage = res.data));
+    }
   }
 
   // 全屏切换
-  toggleFullscreen() {
+  toggleFullscreen(): void {
     if (screenfull.enabled) {
       screenfull.toggle();
       this.isFullscreen = !this.isFullscreen;
@@ -54,12 +55,22 @@ export class ToolbarComponent implements OnInit {
   }
 
   // 显示搜索框
-  showSearchBar() {
+  showSearchBar(): void {
     this.searchBarState = true;
     this.renderer.setElementAttribute(
       this.serchIpt.nativeElement,
       'autofocus',
       'autofocus'
     );
+  }
+
+  // 隐藏TopInfo组件
+  closeInfoContent(): void {
+    this.showInfoContent = false;
+  }
+
+  // 切换更多
+  toggleMoreHeader(): void {
+    this.moreHeaderState = !this.moreHeaderState;
   }
 }
