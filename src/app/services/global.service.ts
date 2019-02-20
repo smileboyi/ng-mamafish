@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalService {
   isMobile: boolean = false;
+  moreHeaderState: boolean = false;
 
   constructor() {}
 }

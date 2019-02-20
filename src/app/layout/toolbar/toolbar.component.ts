@@ -27,7 +27,6 @@ export class ToolbarComponent implements OnInit {
   searchBarState: boolean = false;
   isFullscreen: boolean = false;
   showInfoContent: boolean = false;
-  moreHeaderState: boolean = false;
 
   @ViewChild('serchIpt')
   serchIpt: ElementRef;
@@ -71,6 +70,6 @@ export class ToolbarComponent implements OnInit {
 
   // 切换更多
   toggleMoreHeader(): void {
-    this.moreHeaderState = !this.moreHeaderState;
+    this.global.moreHeaderState = !this.global.moreHeaderState;
   }
 }

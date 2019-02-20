@@ -6,6 +6,9 @@
     ></cat-top-info>
     <div nz-row class="z10">
       <div nz-col [nzSpan]="global.isMobile ? 14 : 8">
+        <!-- <button class="logo-text fl" nz-button nzType="large">
+          麻麻鱼
+        </button> -->
         <button nz-button nzType="large">
           <i nz-icon type="bars"></i>
         </button>
@@ -42,7 +45,10 @@
       </div>
     </div>
   </div>
-  <div class="header pre" [hidden]="!(global.isMobile && moreHeaderState)">
+  <div
+    class="header pre"
+    [hidden]="!(global.isMobile && global.moreHeaderState)"
+  >
     <div class="header-line"></div>
     <div nz-row class="z10">
       <div nz-col nzSpan="24" class="tr">

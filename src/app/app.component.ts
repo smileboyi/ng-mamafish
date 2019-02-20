@@ -22,7 +22,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.global.isMobile = isMobile;
     this.subscription = this.resize$
       .pipe(debounceTime(200))
-      .subscribe(state => (this.global.isMobile = state));
+      .subscribe(state => {
+        if (this.global.isMobile !== state) {
+          this.global.isMobile = state;
+          this.global.moreHeaderState = false;
+        }
+      });
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

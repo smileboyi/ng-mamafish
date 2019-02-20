@@ -1,3 +1,10 @@
-<p>
-  footer works!
-</p>
+<footer class="footer bsb" fxLayout="row">
+  <div fxFlex="40" fxFlex.xs="100" [ngStyle.xs]="{ 'text-align': 'center' }">
+    <a class="github" href="https://github.com/smileboyi">
+      <i nz-icon type="github"></i> Github
+    </a>
+  </div>
+  <div class="tr" fxFlex="60" nzSpan="12" fxHide="false" fxHide.xs>
+    <p class="copyright">Copyright 2018. All Rights Reserved by 麻麻鱼</p>
+  </div>
+</footer>
