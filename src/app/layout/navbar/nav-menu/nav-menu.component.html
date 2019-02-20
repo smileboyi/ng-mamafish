@@ -1,0 +1,16 @@
+<ul
+  nz-menu
+  [nzMode]="'inline'"
+  nzTheme="dark"
+  [nzInlineCollapsed]="isCollapsed"
+>
+  <ng-container *ngFor="let data of navData">
+    <li nz-menu-item>{{ data.groupTitle }}</li>
+    <ng-container *ngIf="data.children">
+      <cat-nav-menu-item
+        [item]="child"
+        *ngFor="let child of data.children"
+      ></cat-nav-menu-item>
+    </ng-container>
+  </ng-container>
+</ul>

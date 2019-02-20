@@ -10,6 +10,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "paths": {
+      "@config/*": [
+        "./src/app/config/*",
+      ],
       "@declare": [
         "./src/app/declare",
       ],

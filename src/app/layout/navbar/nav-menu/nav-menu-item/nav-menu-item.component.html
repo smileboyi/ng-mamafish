@@ -1,0 +1,15 @@
+<li nz-submenu>
+  <span title *ngIf="item.title">
+    <i nz-icon type="check-circle" *ngIf="item.icon"></i>
+    <span>{{ item.title }}</span>
+  </span>
+  <ul>
+    <ng-container *ngFor="let subItem of item.children">
+      <li nz-menu-item *ngIf="!subItem.children">{{ subItem.title }}</li>
+      <cat-nav-menu-item
+        [item]="subItem"
+        *ngIf="subItem.children"
+      ></cat-nav-menu-item>
+    </ng-container>
+  </ul>
+</li>
