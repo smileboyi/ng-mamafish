@@ -6,7 +6,8 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 
-import { navigation, NavigationItem } from '@config/navigation.config';
+import { NavigationItem } from '@config/navigation.config';
+import { GlobalService } from '@services/global.service';
 
 @Component({
   selector: 'cat-nav-menu',
@@ -17,7 +18,10 @@ export class NavMenuComponent implements OnInit, AfterViewInit {
   isCollapsed: boolean = true;
   @Input() navData: Array<NavigationItem> = [];
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {}
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private global: GlobalService
+  ) {}
 
   ngOnInit() {}
 

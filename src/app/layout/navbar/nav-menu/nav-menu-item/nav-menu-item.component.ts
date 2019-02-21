@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { navigation, NavigationItem } from '@config/navigation.config';
+import { NavigationItem } from '@config/navigation.config';
+import { GlobalService } from '@services/global.service';
 
 @Component({
   selector: 'cat-nav-menu-item',
@@ -10,7 +11,7 @@ import { navigation, NavigationItem } from '@config/navigation.config';
 export class NavMenuItemComponent implements OnInit {
   @Input() item: NavigationItem;
 
-  constructor() {}
+  constructor(private global: GlobalService) {}
 
   ngOnInit() {}
 }

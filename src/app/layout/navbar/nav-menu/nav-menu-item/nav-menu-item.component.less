@@ -1,0 +1,34 @@
+::ng-deep .ant-menu-inline-collapsed {
+  .ant-menu-submenu-title,
+  .ant-menu-item {
+    text-align: center;
+    i{
+      margin: 0;
+    }
+  }
+  .submenu-title i,
+  .subitem-title i {
+    font-size: 20px;
+  }
+  .submenu-title span,
+  .subitem-title span {
+    display: none;
+    max-width: 0;
+    opacity: 0;
+  }
+}
+
+::ng-deep
+  .ant-menu-inline-collapsed
+  [nz-submenu]
+  > .ant-menu-submenu-title
+  > .submenu-title
+  + i::after,
+::ng-deep
+  .ant-menu-inline-collapsed
+  [nz-submenu]
+  > .ant-menu-submenu-title
+  > .submenu-title
+  + i::before {
+  display: none;
+}

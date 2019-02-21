@@ -5,7 +5,14 @@
   [nzInlineCollapsed]="isCollapsed"
 >
   <ng-container *ngFor="let data of navData">
-    <li nz-menu-item>{{ data.groupTitle }}</li>
+    <li
+      nz-menu-item
+      [nzDisabled]="true"
+      class="group-item-title"
+      *ngIf="global.userRole >= data.role"
+    >
+      {{ data.groupTitle }}
+    </li>
     <ng-container *ngIf="data.children">
       <cat-nav-menu-item
         [item]="child"

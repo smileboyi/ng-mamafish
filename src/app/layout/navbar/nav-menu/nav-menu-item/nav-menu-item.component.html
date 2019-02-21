@@ -1,15 +1,37 @@
-<li nz-submenu>
-  <span title *ngIf="item.title">
-    <i nz-icon type="check-circle" *ngIf="item.icon"></i>
+<li nz-menu-item *ngIf="!item.children; else subMenuContent">
+  <span
+    class="subitem-title"
+    title
+    nz-tooltip
+    [nzTitle]="item.title"
+    nzPlacement="right"
+  >
+    <i nz-icon *ngIf="item.icon">
+      <svg aria-hidden="true">
+        <use [attr.xlink:href]="'#icon-' + item.icon"></use>
+      </svg>
+    </i>
     <span>{{ item.title }}</span>
   </span>
-  <ul>
-    <ng-container *ngFor="let subItem of item.children">
-      <li nz-menu-item *ngIf="!subItem.children">{{ subItem.title }}</li>
-      <cat-nav-menu-item
-        [item]="subItem"
-        *ngIf="subItem.children"
-      ></cat-nav-menu-item>
-    </ng-container>
-  </ul>
 </li>
+<ng-template #subMenuContent>
+  <li nz-submenu *ngIf="global.userRole >= item.role">
+    <span class="submenu-title" title>
+      <i nz-icon *ngIf="item.icon">
+        <svg aria-hidden="true">
+          <use [attr.xlink:href]="'#icon-' + item.icon"></use>
+        </svg>
+      </i>
+      <span>{{ item.title }}</span>
+    </span>
+    <ul>
+      <ng-container *ngFor="let subItem of item.children">
+        <li nz-menu-item *ngIf="!subItem.children">{{ subItem.title }}</li>
+        <cat-nav-menu-item
+          [item]="subItem"
+          *ngIf="subItem.children"
+        ></cat-nav-menu-item>
+      </ng-container>
+    </ul>
+  </li>
+</ng-template>

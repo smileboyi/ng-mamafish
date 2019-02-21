@@ -1,0 +1,52 @@
+:host {
+  .nav {
+    max-width: 220px;
+    background-color: rgb(0, 21, 41);
+  }
+  .nav.collapse {
+    width: 80px;
+    background-color: #1e88e5;
+    .logo-box {
+      height: 64px;
+      padding: 10px;
+      text-align: center;
+    }
+  }
+  .logo-box {
+    .bg {
+      position: relative;
+      top: -1px;
+      height: 165px;
+      background-color: #1e88e5;
+    }
+    .name {
+      height: 64px;
+      line-height: 64px;
+      font-size: 32px;
+      font-weight: 500;
+      text-align: center;
+      color: #fff;
+    }
+    .avatar {
+      &::before {
+        content: '';
+        display: block;
+        height: 32px;
+        background-color: #1e88e5;
+      }
+      &::after {
+        content: '';
+        display: block;
+        height: 32px;
+        background-color: rgb(0, 21, 41);
+      }
+      .center {
+        height: 80px;
+        width: 80px;
+        padding: 8px;
+        background-color: rgb(0, 21, 41);
+        border-radius: 50%;
+      }
+    }
+  }
+}

@@ -20,3 +20,8 @@ export interface Schedule {
   bgColor: string;
 }
 
+export enum UserRole {
+  Full = 1,
+  User = 5,
+  Manager = 10
+}
