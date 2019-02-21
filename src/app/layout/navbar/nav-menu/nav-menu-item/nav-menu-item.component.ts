@@ -14,4 +14,12 @@ export class NavMenuItemComponent implements OnInit {
   constructor(private global: GlobalService) {}
 
   ngOnInit() {}
+
+  clickMenuItem(urls: Array<string>, params: Object): void {
+    const url: string = urls.reduce(
+      (path: string, next: string) => path + '/' + next,
+      ''
+    );
+    console.log(url);
+  }
 }

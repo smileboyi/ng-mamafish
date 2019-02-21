@@ -1,4 +1,4 @@
-<li nz-menu-item *ngIf="!item.children; else subMenuContent">
+<li nz-menu-item *ngIf="!item.children; else subMenuContent" (click)="clickMenuItem(item.url)">
   <span
     class="subitem-title"
     title
@@ -26,7 +26,7 @@
     </span>
     <ul>
       <ng-container *ngFor="let subItem of item.children">
-        <li nz-menu-item *ngIf="!subItem.children">{{ subItem.title }}</li>
+        <li nz-menu-item *ngIf="!subItem.children" (click)="clickMenuItem(subItem.url)">{{ subItem.title }}</li>
         <cat-nav-menu-item
           [item]="subItem"
           *ngIf="subItem.children"
