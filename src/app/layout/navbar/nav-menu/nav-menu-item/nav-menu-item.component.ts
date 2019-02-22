@@ -10,8 +10,7 @@ import { GlobalService } from '@services/global.service';
 })
 export class NavMenuItemComponent implements OnInit {
   @Input() item: NavigationItem;
-
-  constructor(private global: GlobalService) {}
+  constructor(public global: GlobalService) {}
 
   ngOnInit() {}
 

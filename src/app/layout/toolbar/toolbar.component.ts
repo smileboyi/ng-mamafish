@@ -34,7 +34,7 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private message: MessageService,
     private renderer: Renderer,
-    private global: GlobalService
+    public global: GlobalService
   ) {}
 
   ngOnInit() {

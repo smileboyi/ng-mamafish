@@ -20,7 +20,7 @@ export class NavMenuComponent implements OnInit, AfterViewInit {
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
-    private global: GlobalService
+    public global: GlobalService
   ) {}
 
   ngOnInit() {}

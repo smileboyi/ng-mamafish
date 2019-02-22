@@ -2,7 +2,6 @@ import { UserRole } from '@declare';
 import { routingPathConfig as pathConfig } from './routing-path.config';
 
 export interface NavigationItem {
-  // 多级id共同组成一个路由地址
   id: string;
   groupTitle?: string;
   title?: string;
@@ -13,7 +12,7 @@ export interface NavigationItem {
   children?: Array<NavigationItem>;
 }
 
-export const navigation: Array<NavigationItem> = [
+export const navigationConfig: Array<NavigationItem> = [
   {
     id: 'general',
     groupTitle: '常规',
@@ -42,7 +41,7 @@ export const navigation: Array<NavigationItem> = [
           {
             id: 'profile',
             title: '个人主页',
-            role: UserRole.Full,
+            role: UserRole.User,
             url: [
               pathConfig.app.general,
               pathConfig.general.pages,

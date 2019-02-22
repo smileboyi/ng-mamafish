@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { navigation, NavigationItem } from '@config/navigation.config';
+import { navigationConfig, NavigationItem } from '@config/navigation.config';
 
 @Component({
   selector: 'cat-navbar',
@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
   navData: Array<NavigationItem>;
 
   constructor() {
-    this.navData = navigation;
+    this.navData = navigationConfig;
   }
 
   ngOnInit() {}

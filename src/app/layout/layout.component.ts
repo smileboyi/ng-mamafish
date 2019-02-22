@@ -12,7 +12,7 @@ import { GlobalService } from '@services/global.service';
 export class LayoutComponent implements OnInit, OnDestroy {
   drawerVisible: boolean = false;
 
-  constructor(private utils: UtilsService, private global: GlobalService) {}
+  constructor(private utils: UtilsService, public global: GlobalService) {}
 
   ngOnInit() {}
 
