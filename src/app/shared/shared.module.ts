@@ -5,9 +5,16 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { LAYOUT_CONFIG } from '@tokens';
 
+
+const APP_CORE_PROVIDERS = [
+  {
+    provide: LAYOUT_CONFIG,
+    useValue: 'layout_config'
+  }
+];
 
 @NgModule({
   imports: [
@@ -17,9 +24,10 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
     FormsModule,
     RouterModule,
     FlexLayoutModule,
-    NgZorroAntdModule,
+    NgZorroAntdModule
   ],
   declarations: [],
+  providers: [...APP_CORE_PROVIDERS],
   exports: [
     CommonModule,
     HttpClientModule,
@@ -27,7 +35,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
     FormsModule,
     RouterModule,
     FlexLayoutModule,
-    NgZorroAntdModule,
+    NgZorroAntdModule
   ]
 })
-export class SharedModule { }
+export class SharedModule {}

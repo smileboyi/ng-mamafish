@@ -19,6 +19,9 @@
       "@env": [
         "./src/environments/environment"
       ],
+      "@tokens": [
+        "./src/app/tokens",
+      ],
       "@services/*": [
         "./src/app/services/*",
       ],
