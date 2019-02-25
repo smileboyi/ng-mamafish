@@ -4,6 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { UtilsService } from '@services/utils.service';
 import { GlobalService } from '@services/global.service';
 import { LayoutConfigService } from '@services/layout-config.service';
+import { LayoutConfig } from '@config/layout.config';
 
 @Component({
   selector: 'cat-layout',
@@ -12,6 +13,7 @@ import { LayoutConfigService } from '@services/layout-config.service';
 })
 export class LayoutComponent implements OnInit, OnDestroy {
   drawerVisible: boolean = false;
+  configData: LayoutConfig;
 
   constructor(
     private utils: UtilsService,
@@ -21,21 +23,18 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.layoutConfig.config.subscribe(config => {
-      console.log(config);
+      this.configData = config;
     });
-    this.layoutConfig.config = {
-      navbar: {
-        collapsed: true
-      }
-    };
+    // this.layoutConfig.config = {
+    //   navbar: {
+    //     collapsed: true
+    //   }
+    // };
   }
 
   ngOnDestroy() {}
 
   openSetting(): void {
     this.drawerVisible = true;
-  }
-  handleDrawerClose(): void {
-    this.drawerVisible = false;
   }
 }

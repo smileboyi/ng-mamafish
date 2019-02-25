@@ -15,21 +15,21 @@ export interface LayoutConfig {
   navbar: {
     background: string;
     collapsed: boolean;
-    hidden: boolean;
+    show: boolean;
     position: Position;
   };
   toolbar: {
     background: string;
-    hidden: boolean;
+    show: boolean;
     position: Position;
   };
   footer: {
     background: string;
-    hidden: boolean;
+    show: boolean;
     position: Position;
   };
   sidepanel: {
-    hidden: boolean;
+    show: boolean;
     position: Position;
   };
 }
@@ -39,21 +39,21 @@ export const defaultLayoutConfig: LayoutConfig = {
   navbar: {
     background: '',
     collapsed: false,
-    hidden: false,
-    position: 'start'
+    show: true,
+    position: 'left'
   },
   toolbar: {
     background: '',
-    hidden: false,
-    position: 'below-fixed'
+    show: true,
+    position: 'above-fixed'
   },
   footer: {
     background: '',
-    hidden: false,
-    position: 'above'
+    show: true,
+    position: 'below-fixed'
   },
   sidepanel: {
-    hidden: false,
+    show: true,
     position: 'right'
   }
 };

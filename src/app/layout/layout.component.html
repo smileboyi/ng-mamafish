@@ -1,18 +1,121 @@
-<main id="main">
-  <!-- <cat-toolbar></cat-toolbar> -->
-  <!-- <cat-footer></cat-footer> -->
-  <cat-navbar></cat-navbar>
+<main id="main" class="wh100 grail pre">
+  <!-- toolbar -->
+  <ng-container *ngIf="configData.toolbar.show">
+    <cat-toolbar
+      class="pfi"
+      *ngIf="configData.toolbar.position === 'above'"
+    ></cat-toolbar>
+  </ng-container>
+  <!-- body -->
+  <div
+    class="flex fe pre bsb ovh"
+    [ngStyle]="{
+      'padding-top.px':
+        (configData.toolbar.position && configData.toolbar.show) === 'above'
+          ? '64'
+          : '0'
+    }"
+  >
+    <ng-container *ngIf="configData.toolbar.position !== 'above'">
+      <cat-navbar
+        *ngIf="configData.navbar.show"
+        [ngStyle]="{ order: configData.navbar.position === 'left' ? 1 : 3 }"
+      ></cat-navbar>
+    </ng-container>
 
-  <nz-drawer
-  [nzClosable]="false"
-  [nzWidth]="280"
-  [nzVisible]="drawerVisible"
-  nzPlacement="right"
-  (nzOnClose)="handleDrawerClose()"
->
-  <p>Some contents...</p>
-  <p>Some contents...</p>
-  <p>Some contents...</p>
-</nz-drawer>
+    <!-- body -->
+    <div
+      class="fe pre"
+      [class.flex]="configData.toolbar.position === 'above'"
+      [class.grail]="configData.toolbar.position === 'above-static'"
+      [style.display]="
+        configData.toolbar.position === 'above-static' ? 'block' : 'flex'
+      "
+      [style.overflow-y]="
+        configData.toolbar.position === 'above-static' ? 'auto' : 'hidden'
+      "
+      [style.padding-bottom.px]="
+        configData.footer.show &&
+        configData.footer.position === 'below-fixed' &&
+        configData.toolbar.position !== 'above'
+          ? '64'
+          : '0'
+      "
+      [ngStyle]="{ order: 2 }"
+    >
+      <!-- toolbar -->
+      <ng-container *ngIf="configData.toolbar.show">
+        <cat-toolbar
+          class="pre"
+          *ngIf="configData.toolbar.position === 'above-static'"
+        ></cat-toolbar>
+        <cat-toolbar
+          class="pab"
+          *ngIf="configData.toolbar.position === 'above-fixed'"
+        ></cat-toolbar>
+      </ng-container>
 
+      <!-- navbar -->
+      <div [ngStyle]="{ order: configData.navbar.position === 'left' ? 1 : 3 }">
+        <cat-navbar
+          *ngIf="
+            configData.navbar.show && configData.toolbar.position === 'above'
+          "
+        ></cat-navbar>
+      </div>
+
+      <!-- content -->
+      <cat-content
+        class="fe pre w100"
+        [style.order]="2"
+        [style.overflow-y]="
+          configData.toolbar.position !== 'above-static' ? 'auto' : 'hidden'
+        "
+        [style.padding-bottom.px]="
+          configData.footer.position === 'below-fixed' ? '64' : '0'
+        "
+        [style.padding-top.px]="
+          configData.toolbar.show &&
+          configData.toolbar.position === 'above-fixed'
+            ? '64'
+            : '0'
+        "
+      ></cat-content>
+
+      <!-- footer -->
+      <ng-container *ngIf="configData.footer.show">
+        <cat-footer
+          class="pfi nob"
+          [style.width]="'calc(100% - 124px)'"
+          *ngIf="
+            configData.navbar.show &&
+            !configData.navbar.collapsed &&
+            configData.footer.position === 'below-fixed'
+          "
+        ></cat-footer>
+        <cat-footer
+          class="pfi nob"
+          [style.width]="'calc(100% - 80px)'"
+          *ngIf="
+            configData.navbar.show &&
+            configData.navbar.collapsed &&
+            configData.footer.position === 'below-fixed'
+          "
+        ></cat-footer>
+        <cat-footer
+          class="pfi nob nor w100"
+          *ngIf="!configData.navbar.show"
+        ></cat-footer>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <cat-footer
+    *ngIf="configData.footer.show && configData.footer.position === 'below'"
+  ></cat-footer>
 </main>
+
+<!-- <cat-sidebar class="sidebar" [drawerVisible]="drawerVisible"
+    ></cat-sidebar
+  > -->
