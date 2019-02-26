@@ -35,7 +35,7 @@ export interface LayoutConfig {
 }
 
 export const defaultLayoutConfig: LayoutConfig = {
-  width: 'boxed',
+  width: 'fullwidth',
   navbar: {
     background: '',
     collapsed: false,
@@ -50,7 +50,7 @@ export const defaultLayoutConfig: LayoutConfig = {
   footer: {
     background: '',
     show: true,
-    position: 'below-fixed'
+    position: 'below'
   },
   sidepanel: {
     show: true,

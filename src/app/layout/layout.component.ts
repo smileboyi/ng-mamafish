@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
 
-import { UtilsService } from '@services/utils.service';
 import { GlobalService } from '@services/global.service';
 import { LayoutConfigService } from '@services/layout-config.service';
 import { LayoutConfig } from '@config/layout.config';
@@ -12,11 +10,10 @@ import { LayoutConfig } from '@config/layout.config';
   styleUrls: ['./layout.component.less']
 })
 export class LayoutComponent implements OnInit, OnDestroy {
-  drawerVisible: boolean = false;
+  drawerVisible: boolean = true;
   configData: LayoutConfig;
 
   constructor(
-    private utils: UtilsService,
     public global: GlobalService,
     private layoutConfig: LayoutConfigService
   ) {}
@@ -25,11 +22,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.layoutConfig.config.subscribe(config => {
       this.configData = config;
     });
-    // this.layoutConfig.config = {
-    //   navbar: {
-    //     collapsed: true
-    //   }
-    // };
   }
 
   ngOnDestroy() {}

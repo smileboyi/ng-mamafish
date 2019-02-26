@@ -11,6 +11,8 @@ import * as screenfull from 'screenfull';
 import { Message, File, Schedule } from '../../declare';
 import { MessageService } from '@services/message.service';
 import { GlobalService } from '@services/global.service';
+import { LayoutConfigService } from '@services/layout-config.service';
+import { LayoutConfig } from '@config/layout.config';
 
 interface UserMessage {
   messages: Array<Message>;
@@ -27,6 +29,7 @@ export class ToolbarComponent implements OnInit {
   searchBarState: boolean = false;
   isFullscreen: boolean = false;
   showInfoContent: boolean = false;
+  isCollapsed: boolean = false;
 
   @ViewChild('serchIpt')
   serchIpt: ElementRef;
@@ -34,7 +37,8 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private message: MessageService,
     private renderer: Renderer,
-    public global: GlobalService
+    public global: GlobalService,
+    private layoutConfig: LayoutConfigService
   ) {}
 
   ngOnInit() {
@@ -43,6 +47,9 @@ export class ToolbarComponent implements OnInit {
         .getMessages()
         .subscribe(res => (this.userMessage = res.data));
     }
+    this.layoutConfig.config.subscribe((config: LayoutConfig) => {
+      this.isCollapsed = config.navbar.collapsed;
+    });
   }
 
   // 全屏切换
@@ -71,5 +78,15 @@ export class ToolbarComponent implements OnInit {
   // 切换更多
   toggleMoreHeader(): void {
     this.global.moreHeaderState = !this.global.moreHeaderState;
+  }
+
+  // 折叠\显示导航菜单
+  toggleCollapsed(): void {
+    this.isCollapsed = !this.isCollapsed;
+    this.layoutConfig.config = {
+      navbar: {
+        collapsed: this.isCollapsed
+      }
+    };
   }
 }

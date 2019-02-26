@@ -5,12 +5,19 @@
       (onCloseInfoContent)="closeInfoContent()"
     ></cat-top-info>
     <div nz-row class="z10">
-      <div nz-col [nzSpan]="global.isMobile ? 14 : 8">
-        <!-- <button class="logo-text fl" nz-button nzType="large">
+      <div nz-col [nzSpan]="global.isMobile ? 12 : 8">
+        <div class="divider nol" fxShow="false" fxShow.gt-sm></div>
+        <button
+          class="logo-text fl"
+          nz-button
+          nzType="large"
+          fxShow="false"
+          fxShow.gt-sm
+        >
           麻麻鱼
-        </button> -->
+        </button>
         <div class="divider"></div>
-        <button nz-button nzType="large">
+        <button nz-button nzType="large" (click)="toggleCollapsed()">
           <i nz-icon type="bars"></i>
         </button>
         <div class="divider"></div>
@@ -21,12 +28,14 @@
         >
           <i nz-icon [type]="showInfoContent ? 'arrow-up' : 'arrow-down'"></i>
         </button>
-        <div class="divider"></div>
-        <button nz-button nzType="large">
-          <i nz-icon type="lock"></i>
-        </button>
+        <ng-container *ngIf="!global.isMobile">
+          <div class="divider"></div>
+          <button nz-button nzType="large">
+            <i nz-icon type="lock"></i>
+          </button>
+        </ng-container>
       </div>
-      <div class="tr" nz-col [nzSpan]="global.isMobile ? 10 : 16">
+      <div class="tr" nz-col [nzSpan]="global.isMobile ? 12 : 16">
         <ng-container *ngIf="!global.isMobile">
           <ng-container *ngTemplateOutlet="user"></ng-container>
         </ng-container>
@@ -50,6 +59,7 @@
     class="header pre"
     [hidden]="!(global.isMobile && global.moreHeaderState)"
   >
+    <div class="divider nol z50"></div>
     <div class="header-line"></div>
     <div nz-row class="z10">
       <div nz-col nzSpan="24" class="tr">
@@ -206,12 +216,14 @@
   <button nz-button nzType="large">
     <i nz-icon type="setting"></i>
   </button>
+  <div class="divider nor"></div>
 </ng-template>
 
 <ng-template #more>
   <button nz-button nzType="large" (click)="toggleMoreHeader()">
     <i nz-icon type="ellipsis"></i>
   </button>
+  <div class="divider nor"></div>
 </ng-template>
 
 <ng-template #titleTemplate1>

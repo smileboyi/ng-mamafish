@@ -1,0 +1,57 @@
+:host {
+  .sidebar {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+  .overlay {
+    background-color: transparent;
+  }
+  .main {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 280px;
+    background-color: #fff;
+  }
+  .tabs {
+    height: 60%;
+    ::ng-deep .ant-tabs-nav .ant-tabs-tab {
+      margin: 0 12px 0 0;
+    }
+    ::ng-deep .ant-tabs-tabpane {
+      padding: 0 24px 24px 24px;
+    }
+    nz-radio-group {
+      margin-top: -10px;
+    }
+    [nz-radio] {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.87);
+    }
+    [nz-button] {
+      margin-top: -10px;
+      margin-right: 12px;
+    }
+  }
+  .title {
+    margin-bottom: 26px;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.54);
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+  .reset-btn {
+    width: 224px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 14px;
+    color: #fff;
+  }
+}

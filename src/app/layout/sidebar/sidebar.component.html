@@ -1,11 +1,66 @@
-<nz-drawer
-[nzClosable]="false"
-[nzWidth]="280"
-[nzVisible]="drawerVisible"
-nzPlacement="right"
-(nzOnClose)="handleDrawerClose()"
->
-<p>Some contents...</p>
-<p>Some contents...</p>
-<p>Some contents...</p>
-</nz-drawer>
+<div class="sidebar">
+  <div class="bgctp wh100" (close)="handleDrawerClose()"></div>
+  <div class="main box-shadow h100">
+    <nz-tabset class="tabs" nzTabPosition="top" nzType="line">
+      <nz-tab nzTitle="布局宽度">
+        <h3 class="title">布局宽度</h3>
+        <nz-radio-group [(ngModel)]="pageWidth">
+          <label nz-radio nzValue="fullwidth">Fullwidth</label>
+          <label nz-radio nzValue="boxed">Boxed</label>
+        </nz-radio-group>
+      </nz-tab>
+      <nz-tab nzTitle="工具栏">
+        <h3 class="title">
+          隐藏<nz-switch class="fr" [(ngModel)]="toolbarShow"></nz-switch>
+        </h3>
+        <h3 class="title">位置</h3>
+        <nz-radio-group [(ngModel)]="toolbarPosition">
+          <label nz-radio nzValue="above">Above</label>
+          <label nz-radio nzValue="above-static">Above Static</label>
+          <label nz-radio nzValue="above-fixed">Above Fixed</label>
+        </nz-radio-group>
+        <h3 class="title">背景颜色</h3>
+        <button nz-button nzType="primary" nzShape="circle" nzSize="large">
+          <i nz-icon type="bg-colors" theme="outline"></i>
+        </button>
+      </nz-tab>
+      <nz-tab nzTitle="导航栏">
+        <h3 class="title">
+          隐藏<nz-switch class="fr" [(ngModel)]="navbarShow"></nz-switch>
+        </h3>
+        <h3 class="title">
+          折叠<nz-switch class="fr" [(ngModel)]="navbarCollapse"></nz-switch>
+        </h3>
+        <h3 class="title">位置</h3>
+        <nz-radio-group [(ngModel)]="navbarPosition">
+          <label nz-radio nzValue="left">Left</label>
+          <label nz-radio nzValue="right">Right</label>
+        </nz-radio-group>
+        <h3 class="title">背景颜色</h3>
+        <button nz-button nzType="primary" nzShape="circle" nzSize="large">
+          <i nz-icon type="bg-colors" theme="outline"></i>
+        </button>
+        <button nz-button nzType="primary" nzShape="circle" nzSize="large">
+          <i nz-icon type="bg-colors" theme="outline"></i>
+        </button>
+      </nz-tab>
+      <nz-tab nzTitle="页脚">
+        <h3 class="title">
+          隐藏<nz-switch class="fr" [(ngModel)]="footerShow"></nz-switch>
+        </h3>
+        <h3 class="title">位置</h3>
+        <nz-radio-group [(ngModel)]="footerPosition">
+          <label nz-radio nzValue="below">Below</label>
+          <label nz-radio nzValue="below-fixed">Below Fixed</label>
+        </nz-radio-group>
+        <h3 class="title">背景颜色</h3>
+        <button nz-button nzType="primary" nzShape="circle" nzSize="large">
+          <i nz-icon type="bg-colors" theme="outline"></i>
+        </button>
+      </nz-tab>
+    </nz-tabset>
+    <button class="reset-btn wauto tc box-shadow db" nz-button nzType="primary">
+      重置主题配置
+    </button>
+  </div>
+</div>

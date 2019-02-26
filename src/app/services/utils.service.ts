@@ -10,6 +10,6 @@ export class UtilsService {
   constructor() {}
 
   getMobileState(): boolean {
-    return window.innerWidth <= 650;
+    return window.innerWidth <= 600;
   }
 }

@@ -16,6 +16,7 @@
           : '0'
     }"
   >
+    <!-- navbar -->
     <ng-container *ngIf="configData.toolbar.position !== 'above'">
       <cat-navbar
         *ngIf="configData.navbar.show"
@@ -116,6 +117,5 @@
   ></cat-footer>
 </main>
 
-<!-- <cat-sidebar class="sidebar" [drawerVisible]="drawerVisible"
-    ></cat-sidebar
-  > -->
+<cat-sidebar class="pab not wh100 z100"></cat-sidebar>
+<!-- [drawerVisible]="drawerVisible" -->

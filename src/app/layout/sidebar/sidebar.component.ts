@@ -6,7 +6,20 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./sidebar.component.less']
 })
 export class SidebarComponent implements OnInit {
-  @Input() drawerVisible: boolean;
+  pageWidth: string = 'fullwidth';
+  toolbarShow: boolean = false;
+  toolbarPosition: string = 'below';
+  toolbarBgColor: string = '';
+  navbarShow: boolean = false;
+  navbarCollapse: boolean = false;
+  navbarPosition: string = 'left';
+  navbarHeadBgColor: string = '';
+  navbarBodyBgColor: string = '';
+  footerShow: boolean = false;
+  footerPosition: string = 'above';
+  footerBgColor: string = '';
+
+  // @Input() drawerVisible: boolean;
 
   constructor() {}
 

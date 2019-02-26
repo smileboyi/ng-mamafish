@@ -1,20 +1,32 @@
 <ng-container *ngIf="!item.children; else subMenuContent">
-  <li
-    nz-menu-item
-    nz-tooltip
-    [nzTitle]="item.title"
-    nzPlacement="right"
-    *ngIf="global.userRole >= item.role"
-  >
-    <span class="subitem-title" title>
-      <i nz-icon *ngIf="item.icon">
-        <svg aria-hidden="true">
-          <use [attr.xlink:href]="'#icon-' + item.icon"></use>
-        </svg>
-      </i>
-      <span>{{ item.title }}</span>
-    </span>
-  </li>
+  <ng-container *ngIf="global.userRole >= item.role">
+    <li nz-menu-item *ngIf="!isCollapsed">
+      <span class="subitem-title" title>
+        <i nz-icon *ngIf="item.icon">
+          <svg aria-hidden="true">
+            <use [attr.xlink:href]="'#icon-' + item.icon"></use>
+          </svg>
+        </i>
+        <span>{{ item.title }}</span>
+      </span>
+    </li>
+    <li
+      nz-menu-item
+      nz-tooltip
+      [nzTitle]="item.title"
+      [nzPlacement]="position === 'left' ? 'right' : 'left'"
+      *ngIf="isCollapsed"
+    >
+      <span class="subitem-title" title>
+        <i nz-icon *ngIf="item.icon">
+          <svg aria-hidden="true">
+            <use [attr.xlink:href]="'#icon-' + item.icon"></use>
+          </svg>
+        </i>
+        <span>{{ item.title }}</span>
+      </span>
+    </li>
+  </ng-container>
 </ng-container>
 <ng-template #subMenuContent>
   <li nz-submenu *ngIf="global.userRole >= item.role">
@@ -35,6 +47,8 @@
         </ng-container>
         <cat-nav-menu-item
           [item]="subItem"
+          [position]="position"
+          [isCollapsed]="isCollapsed"
           *ngIf="subItem.children"
         ></cat-nav-menu-item>
       </ng-container>

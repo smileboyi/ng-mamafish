@@ -16,6 +16,8 @@
     <ng-container *ngIf="data.children">
       <cat-nav-menu-item
         [item]="child"
+        [position]="position"
+        [isCollapsed]="isCollapsed"
         *ngFor="let child of data.children"
       ></cat-nav-menu-item>
     </ng-container>
