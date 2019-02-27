@@ -2,7 +2,8 @@
   <!-- toolbar -->
   <ng-container *ngIf="configData.toolbar.show">
     <cat-toolbar
-      class="pfi"
+      class="pre"
+      (openSetting)="openSetting()"
       *ngIf="configData.toolbar.position === 'above'"
     ></cat-toolbar>
   </ng-container>
@@ -48,10 +49,12 @@
       <ng-container *ngIf="configData.toolbar.show">
         <cat-toolbar
           class="pre"
+          (openSetting)="openSetting()"
           *ngIf="configData.toolbar.position === 'above-static'"
         ></cat-toolbar>
         <cat-toolbar
           class="pab"
+          (openSetting)="openSetting()"
           *ngIf="configData.toolbar.position === 'above-fixed'"
         ></cat-toolbar>
       </ng-container>
@@ -85,37 +88,68 @@
 
       <!-- footer -->
       <ng-container *ngIf="configData.footer.show">
-        <cat-footer
-          class="pfi nob"
-          [style.width]="'calc(100% - 124px)'"
-          *ngIf="
-            configData.navbar.show &&
-            !configData.navbar.collapsed &&
-            configData.footer.position === 'below-fixed'
-          "
-        ></cat-footer>
-        <cat-footer
-          class="pfi nob"
-          [style.width]="'calc(100% - 80px)'"
-          *ngIf="
-            configData.navbar.show &&
-            configData.navbar.collapsed &&
-            configData.footer.position === 'below-fixed'
-          "
-        ></cat-footer>
-        <cat-footer
-          class="pfi nob nor w100"
-          *ngIf="!configData.navbar.show"
-        ></cat-footer>
+        <ng-container *ngIf="!configData.navbar.show; else footerTemplate">
+          <cat-footer
+            class="pfi nob"
+            [style.width]="pageWithStyle"
+            *ngIf="configData.footer.position === 'below-fixed'"
+          ></cat-footer>
+        </ng-container>
+        <ng-template #footerTemplate>
+          <cat-footer
+            class="pfi nob"
+            [style.width]="'calc(' + pageWithStyle + ' - 124px)'"
+            [style.margin-left.px]="
+              configData.toolbar.position === 'above' &&
+              configData.navbar.position === 'left'
+                ? 124
+                : 0
+            "
+            *ngIf="
+              !configData.navbar.collapsed &&
+              configData.footer.position === 'below-fixed'
+            "
+          ></cat-footer>
+          <cat-footer
+            class="pfi nob"
+            [style.width]="'calc(' + pageWithStyle + ' - 80px)'"
+            [style.margin-left.px]="
+              configData.toolbar.position === 'above' &&
+              configData.navbar.position === 'left'
+                ? 80
+                : 0
+            "
+            *ngIf="
+              configData.navbar.collapsed &&
+              configData.footer.position === 'below-fixed'
+            "
+          ></cat-footer>
+        </ng-template>
       </ng-container>
     </div>
   </div>
 
   <!-- footer -->
   <cat-footer
+    [style.width]="pageWithStyle"
     *ngIf="configData.footer.show && configData.footer.position === 'below'"
   ></cat-footer>
 </main>
 
-<cat-sidebar class="pab not wh100 z100"></cat-sidebar>
-<!-- [drawerVisible]="drawerVisible" -->
+<button
+  class="setting-btn pab nor z100 bgctp nobd"
+  nz-button
+  [nzSize]="large"
+  nzType="primary"
+  [style.top.px]="global.isMobile ? 128 : 64"
+  (click)="drawerVisible = true"
+  *ngIf="!configData.toolbar.show"
+>
+  <i nz-icon type="setting" theme="fill"></i>
+</button>
+
+<cat-sidebar
+  class="pab not wh100 z500"
+  [(drawerVisible)]="drawerVisible"
+  *ngIf="drawerVisible"
+></cat-sidebar>

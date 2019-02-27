@@ -20,15 +20,19 @@
         <button nz-button nzType="large" (click)="toggleCollapsed()">
           <i nz-icon type="bars"></i>
         </button>
-        <div class="divider"></div>
-        <button
-          nz-button
-          nzType="large"
-          (click)="showInfoContent = !showInfoContent"
+        <ng-container *ngIf="global.userRole >= userRoles[1]">
+          <div class="divider"></div>
+          <button
+            nz-button
+            nzType="large"
+            (click)="showInfoContent = !showInfoContent"
+          >
+            <i nz-icon [type]="showInfoContent ? 'arrow-up' : 'arrow-down'"></i>
+          </button>
+        </ng-container>
+        <ng-container
+          *ngIf="!global.isMobile && global.userRole >= userRoles[1]"
         >
-          <i nz-icon [type]="showInfoContent ? 'arrow-up' : 'arrow-down'"></i>
-        </button>
-        <ng-container *ngIf="!global.isMobile">
           <div class="divider"></div>
           <button nz-button nzType="large">
             <i nz-icon type="lock"></i>
@@ -36,11 +40,15 @@
         </ng-container>
       </div>
       <div class="tr" nz-col [nzSpan]="global.isMobile ? 12 : 16">
-        <ng-container *ngIf="!global.isMobile">
+        <ng-container
+          *ngIf="!global.isMobile && global.userRole >= userRoles[1]"
+        >
           <ng-container *ngTemplateOutlet="user"></ng-container>
         </ng-container>
         <ng-container *ngTemplateOutlet="search"></ng-container>
-        <ng-container *ngIf="!global.isMobile">
+        <ng-container
+          *ngIf="!global.isMobile && global.userRole >= userRoles[1]"
+        >
           <ng-container *ngTemplateOutlet="bell"></ng-container>
         </ng-container>
         <ng-container *ngIf="!global.isMobile">
@@ -213,7 +221,7 @@
 </ng-template>
 
 <ng-template #settings>
-  <button nz-button nzType="large">
+  <button nz-button nzType="large" (click)="handleOpen()">
     <i nz-icon type="setting"></i>
   </button>
   <div class="divider nor"></div>

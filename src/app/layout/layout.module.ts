@@ -5,10 +5,10 @@ import { ToolbarModule } from './toolbar/toolbar.module';
 import { FooterModule } from './footer/footer.module';
 import { NavbarModule } from './navbar/navbar.module';
 import { ContentModule } from './content/content.module';
-import { SharedModule } from '../shared/shared.module';
+import { SidebarModule } from './sidebar/sidebar.module';
+import { SharedModule } from '@shared';
 
 import { LayoutComponent } from './layout.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   // 可以导入模块管道指令
@@ -19,9 +19,10 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     ToolbarModule,
     FooterModule,
     NavbarModule,
-    ContentModule
+    ContentModule,
+    SidebarModule
   ],
-  declarations: [LayoutComponent, SidebarComponent],
+  declarations: [LayoutComponent],
   exports: [LayoutComponent]
 })
 export class LayoutModule {}

@@ -1,4 +1,4 @@
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { NgForage } from 'ngforage';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as _ from 'lodash';
@@ -30,11 +30,19 @@ export class LayoutConfigService {
     @Inject(LAYOUT_CONFIG) public layoutConfig: string
   ) {
     this.defaultConfig = defaultLayoutConfig;
-    this.config$ = new BehaviorSubject(_.cloneDeep(this.defaultConfig));
+    this.initConfig();
   }
 
   async setStorageConfig(config: LayoutConfig) {
     await this.ngForage.setItem(this.layoutConfig, config);
+  }
+
+  async initConfig() {
+    this.config$ = new BehaviorSubject(_.cloneDeep(this.defaultConfig));
+    const storageConfig = await this.ngForage.getItem(this.layoutConfig);
+    if (storageConfig) {
+      this.config$.next(_.cloneDeep(storageConfig));
+    }
   }
 
   resetToDefaults(): void {

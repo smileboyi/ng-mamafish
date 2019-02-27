@@ -12,6 +12,7 @@ import { LayoutConfig } from '@config/layout.config';
 export class LayoutComponent implements OnInit, OnDestroy {
   drawerVisible: boolean = true;
   configData: LayoutConfig;
+  pageWithStyle: '1200px' | '100%';
 
   constructor(
     public global: GlobalService,
@@ -19,8 +20,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.layoutConfig.config.subscribe(config => {
+    this.layoutConfig.config.subscribe((config: LayoutConfig) => {
       this.configData = config;
+      this.pageWithStyle = config.width === 'fullwidth' ? '100%' : '1200px';
     });
   }
 

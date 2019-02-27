@@ -3,7 +3,6 @@ declare type Position =
   | 'above-static'
   | 'above-fixed'
   | 'below'
-  | 'below-static'
   | 'below-fixed'
   | 'left'
   | 'right'
@@ -13,7 +12,8 @@ declare type Position =
 export interface LayoutConfig {
   width: 'fullwidth' | 'boxed';
   navbar: {
-    background: string;
+    headBackground: string;
+    bodyBackground: string;
     collapsed: boolean;
     show: boolean;
     position: Position;
@@ -37,7 +37,8 @@ export interface LayoutConfig {
 export const defaultLayoutConfig: LayoutConfig = {
   width: 'fullwidth',
   navbar: {
-    background: '',
+    headBackground: '',
+    bodyBackground: '',
     collapsed: false,
     show: true,
     position: 'left'

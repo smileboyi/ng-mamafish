@@ -7,6 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { LAYOUT_CONFIG } from '@tokens';
+import { ThrottleClickDirective } from './directives/throttle-click.directive';
 
 
 const APP_CORE_PROVIDERS = [
@@ -26,7 +27,7 @@ const APP_CORE_PROVIDERS = [
     FlexLayoutModule,
     NgZorroAntdModule
   ],
-  declarations: [],
+  declarations: [ThrottleClickDirective],
   providers: [...APP_CORE_PROVIDERS],
   exports: [
     CommonModule,
@@ -35,7 +36,8 @@ const APP_CORE_PROVIDERS = [
     FormsModule,
     RouterModule,
     FlexLayoutModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    ThrottleClickDirective
   ]
 })
 export class SharedModule {}

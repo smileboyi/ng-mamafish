@@ -4,7 +4,9 @@ import {
   ElementRef,
   Renderer,
   TemplateRef,
-  ViewChild
+  ViewChild,
+  EventEmitter,
+  Output
 } from '@angular/core';
 import * as screenfull from 'screenfull';
 
@@ -13,6 +15,7 @@ import { MessageService } from '@services/message.service';
 import { GlobalService } from '@services/global.service';
 import { LayoutConfigService } from '@services/layout-config.service';
 import { LayoutConfig } from '@config/layout.config';
+import { UserRole } from '@declare';
 
 interface UserMessage {
   messages: Array<Message>;
@@ -30,9 +33,13 @@ export class ToolbarComponent implements OnInit {
   isFullscreen: boolean = false;
   showInfoContent: boolean = false;
   isCollapsed: boolean = false;
+  userRoles: Array<UserRole> = [UserRole.Full, UserRole.User, UserRole.Manager];
 
   @ViewChild('serchIpt')
   serchIpt: ElementRef;
+
+  @Output()
+  openSetting: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private message: MessageService,
@@ -88,5 +95,11 @@ export class ToolbarComponent implements OnInit {
         collapsed: this.isCollapsed
       }
     };
+  }
+
+  // 打开设置
+  handleOpen(): void {
+    this.showInfoContent = false;
+    this.openSetting.emit();
   }
 }
