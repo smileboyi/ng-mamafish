@@ -9,6 +9,7 @@ export interface NavigationItem {
   // 权限：游客<普通用户<管理员
   role: UserRole;
   url?: Array<string>;
+  isOpen?: boolean;
   children?: Array<NavigationItem>;
 }
 
@@ -23,6 +24,7 @@ export const navigationConfig: Array<NavigationItem> = [
         title: '仪表盘',
         icon: 'dashboard',
         role: UserRole.Full,
+        isOpen: false,
         children: [
           {
             id: 'analytics',
@@ -37,6 +39,7 @@ export const navigationConfig: Array<NavigationItem> = [
         title: '页面',
         icon: 'page',
         role: UserRole.Full,
+        isOpen: false,
         children: [
           {
             id: 'profile',
@@ -52,6 +55,7 @@ export const navigationConfig: Array<NavigationItem> = [
             id: 'errors',
             title: '错误页',
             role: UserRole.Full,
+            isOpen: false,
             children: [
               {
                 id: 'error_403',

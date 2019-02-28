@@ -29,7 +29,12 @@
   </ng-container>
 </ng-container>
 <ng-template #subMenuContent>
-  <li nz-submenu *ngIf="global.userRole >= item.role" [nzOpen]="true">
+  <li
+    nz-submenu
+    *ngIf="global.userRole >= item.role"
+    [nzOpen]="item.isOpen"
+    (nzOpenChange)="clickSubMenu(item.id)"
+  >
     <span class="submenu-title" title>
       <i nz-icon *ngIf="item.icon">
         <svg aria-hidden="true">
