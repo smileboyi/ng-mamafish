@@ -1,7 +1,11 @@
-import { map } from 'rxjs/operators';
 import { Component, OnInit, Input } from '@angular/core';
 
-import { navigationConfig, NavigationItem } from '@config/navigation.config';
+import {
+  navigationConfig,
+  NavigationItem,
+  equalLevelsubMenuInfo,
+  relyLevelsubMenuInfo
+} from '@config/navigation.config';
 import { GlobalService } from '@services/global.service';
 import * as _ from 'lodash';
 
@@ -43,18 +47,10 @@ const getClickSubMenuIdx = (id: string): number => {
   const paths: Array<string> = menuPathSet.filter((path: string) => {
     return path.indexOf(id) > -1;
   });
-  if (!paths.length) {
-    return;
-  }
   let ids: Array<string> = paths[0].split('/').reverse();
   ids.length = ids.length - 1;
   ids = ids.reverse();
   return ids.indexOf(id);
-};
-
-// 根据当前subMenu位置关闭同层级的其他subMenu
-const closeSubMenu = (idx: number): void => {
-  // let obj = navigationConfig;
 };
 
 @Component({
@@ -63,6 +59,8 @@ const closeSubMenu = (idx: number): void => {
   styleUrls: ['./nav-menu-item.component.less']
 })
 export class NavMenuItemComponent implements OnInit {
+  private isOpen = false;
+
   @Input() item: NavigationItem;
   @Input() isCollapsed: boolean;
   @Input() position: string;
@@ -79,9 +77,36 @@ export class NavMenuItemComponent implements OnInit {
     console.log(url);
   }
 
-  clickSubMenu(id: string): void {
-    const idx: number = getClickSubMenuIdx(id);
-    console.log(idx);
-    console.log(menuIdSet);
+  openSubMenu(open: boolean): void {
+    this.isOpen = open;
+  }
+
+  clickSubMenu(event: Event, subMenuId: string): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.global.subMenuOpenState[subMenuId] = this.isOpen;
+    if (this.isOpen) {
+      const idx: number = getClickSubMenuIdx(subMenuId);
+      const key: string = 'v' + idx;
+      // 需要关闭的subMenu名单
+      const ids = equalLevelsubMenuInfo[key].filter(
+        (val: string) => val !== subMenuId
+      );
+      ids.forEach((id: string) => {
+        this.global.subMenuOpenState[id] = false;
+      });
+    } else {
+      // 关闭时把子subMenu也关闭掉
+      const relyArr: Array<Array<string>> = relyLevelsubMenuInfo.filter(
+        (arr: Array<string>) => arr.includes(subMenuId)
+      );
+      const relyIdx: number = relyArr[0].findIndex(item => item === subMenuId);
+      relyArr[0].forEach((id: string, idx: number) => {
+        if (idx > relyIdx) {
+          this.global.subMenuOpenState[id] = false;
+        }
+      });
+    }
   }
 }

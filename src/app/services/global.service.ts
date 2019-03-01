@@ -13,5 +13,12 @@ export class GlobalService {
   moreHeaderState: boolean = false;
   userRole: UserRole = UserRole.Manager;
 
+  // 所有subMenu展开状态量
+  subMenuOpenState = {
+    dashboards: false,
+    pages: false,
+    errors: false
+  };
+
   constructor() {}
 }

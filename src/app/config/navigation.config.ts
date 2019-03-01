@@ -9,7 +9,6 @@ export interface NavigationItem {
   // 权限：游客<普通用户<管理员
   role: UserRole;
   url?: Array<string>;
-  isOpen?: boolean;
   children?: Array<NavigationItem>;
 }
 
@@ -24,7 +23,6 @@ export const navigationConfig: Array<NavigationItem> = [
         title: '仪表盘',
         icon: 'dashboard',
         role: UserRole.Full,
-        isOpen: false,
         children: [
           {
             id: 'analytics',
@@ -39,7 +37,6 @@ export const navigationConfig: Array<NavigationItem> = [
         title: '页面',
         icon: 'page',
         role: UserRole.Full,
-        isOpen: false,
         children: [
           {
             id: 'profile',
@@ -55,7 +52,6 @@ export const navigationConfig: Array<NavigationItem> = [
             id: 'errors',
             title: '错误页',
             role: UserRole.Full,
-            isOpen: false,
             children: [
               {
                 id: 'error_403',
@@ -162,4 +158,16 @@ export const navigationConfig: Array<NavigationItem> = [
       }
     ]
   }
+];
+
+// 兄弟subMenu info,数组索引代表这个subMenu在navigationConfig中的位置
+export const equalLevelsubMenuInfo: { [key: string]: Array<any> } = {
+  v1: ['dashboards', 'pages'],
+  v2: ['', 'errors']
+};
+
+// 父子subMenu依赖关系
+export const relyLevelsubMenuInfo: Array<Array<string>> = [
+  ['dashboards'],
+  ['pages', 'errors']
 ];

@@ -32,8 +32,9 @@
   <li
     nz-submenu
     *ngIf="global.userRole >= item.role"
-    [nzOpen]="item.isOpen"
-    (nzOpenChange)="clickSubMenu(item.id)"
+    [nzOpen]="global.subMenuOpenState[item.id]"
+    (click)="clickSubMenu($event, item.id)"
+    (nzOpenChange)="openSubMenu($event)"
   >
     <span class="submenu-title" title>
       <i nz-icon *ngIf="item.icon">
