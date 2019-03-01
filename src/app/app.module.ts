@@ -10,11 +10,15 @@ import en from '@angular/common/locales/en';
 
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
+import { RegisterComponent } from './main/general/pages/register/register.component';
+import { LoginComponent } from './main/general/pages/login/login.component';
+import { ErrorsComponent } from './main/general/pages/errors/errors.component';
+import { ProfileComponent } from './main/general/pages/profile/profile.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, RegisterComponent, LoginComponent, ErrorsComponent, ProfileComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
