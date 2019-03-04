@@ -1,3 +1,71 @@
-<p>
-  login works!
-</p>
+<div class="wh100 bi cover-full ovh">
+  <div class="form-box pab centre2 tc">
+    <h3 class="title">麻麻鱼</h3>
+    <p class="text">Sign into your pages account</p>
+    <nz-form-control>
+      <nz-input-group class="item" [nzPrefix]="prefixUser">
+        <input
+          type="text"
+          nz-input
+          placeholder="Username/Email*"
+          [(ngModel)]="account"
+        />
+      </nz-input-group>
+    </nz-form-control>
+
+    <nz-form-control>
+      <nz-input-group class="item" [nzPrefix]="prefixLock">
+        <input
+          type="text"
+          nz-input
+          placeholder="Password*"
+          [(ngModel)]="password"
+        />
+      </nz-input-group>
+    </nz-form-control>
+
+    <nz-form-control>
+      <div class="flex w100" [style.margin-bottom.px]="15">
+        <label nz-checkbox class="fe tl">
+          <span>Remember me</span>
+        </label>
+        <a class="fe tr">Forgot password?</a>
+      </div>
+    </nz-form-control>
+
+    <nz-form-control>
+      <button
+        nz-button
+        class="form-button"
+        [nzType]="'primary'"
+        (click)="submitForm()"
+      >
+        Sign in
+      </button>
+    </nz-form-control>
+
+    <p class="text">
+      Still no account? Please go to
+      <a routerLink="/general/pages/register">Register</a>
+    </p>
+
+    <div class="tc copyright">
+      <p class="website">WEBSITE BY 麻麻鱼</p>
+      <p class="member">© 2019. All RIGHT RESERVED.</p>
+      <div class="button-group">
+        <button nz-tooltip nzPlacement="bottom" nzTitle="weibo">
+          <i nz-icon type="weibo"></i>
+        </button>
+        <button nz-tooltip nzPlacement="bottom" nzTitle="qq">
+          <i nz-icon type="qq"></i>
+        </button>
+        <button nz-tooltip nzPlacement="bottom" nzTitle="google">
+          <i nz-icon type="google"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #prefixUser><i nz-icon type="user"></i></ng-template>
+<ng-template #prefixLock><i nz-icon type="lock"></i></ng-template>
