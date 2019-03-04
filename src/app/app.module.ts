@@ -10,21 +10,19 @@ import en from '@angular/common/locales/en';
 
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
-import { RegisterComponent } from './main/general/pages/register/register.component';
-import { LoginComponent } from './main/general/pages/login/login.component';
-import { ErrorsComponent } from './main/general/pages/errors/errors.component';
-import { ProfileComponent } from './main/general/pages/profile/profile.component';
+import { AppRoutingModule } from './app-routing.module';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent, RegisterComponent, LoginComponent, ErrorsComponent, ProfileComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     NgForageModule.forRoot(),
     LayoutModule,
-    SharedModule
+    SharedModule,
+    AppRoutingModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

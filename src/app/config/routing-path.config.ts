@@ -3,7 +3,8 @@ export const routingPathConfig = {
     default: '',
     general: 'general',
     applications: 'applications',
-    services: 'services'
+    services: 'services',
+    wildcard: '**'
   },
 
   general: {
