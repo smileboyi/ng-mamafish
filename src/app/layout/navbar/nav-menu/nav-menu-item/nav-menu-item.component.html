@@ -1,6 +1,10 @@
 <ng-container *ngIf="!item.children; else subMenuContent">
   <ng-container *ngIf="global.userRole >= item.role">
-    <li nz-menu-item *ngIf="!isCollapsed">
+    <li
+      nz-menu-item
+      (click)="clickMenuItem(item.id, item.hashs, item.params)"
+      *ngIf="!isCollapsed"
+    >
       <span class="subitem-title" title>
         <i nz-icon *ngIf="item.icon">
           <svg aria-hidden="true">
@@ -15,6 +19,7 @@
       nz-tooltip
       [nzTitle]="item.title"
       [nzPlacement]="position === 'left' ? 'right' : 'left'"
+      (click)="clickMenuItem(item.id, item.hashs, item.params)"
       *ngIf="isCollapsed"
     >
       <span class="subitem-title" title>
@@ -47,7 +52,11 @@
     <ul>
       <ng-container *ngFor="let subItem of item.children">
         <ng-container *ngIf="!subItem.children">
-          <li nz-menu-item *ngIf="global.userRole >= subItem.role">
+          <li
+            nz-menu-item
+            (click)="clickMenuItem(subItem.id, subItem.hashs, subItem.params)"
+            *ngIf="global.userRole >= subItem.role"
+          >
             {{ subItem.title }}
           </li>
         </ng-container>

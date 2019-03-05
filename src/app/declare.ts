@@ -25,3 +25,8 @@ export enum UserRole {
   User = 5,
   Manager = 10
 }
+
+export interface UserInfo {
+  name: string;
+  token: string;
+}

@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./errors.component.less']
 })
 export class ErrorsComponent implements OnInit {
+  errorMeta: { [key: number]: string } = {
+    403: 'Forbidden',
+    404: 'Not Found',
+    500: 'Internal Server Error'
+  };
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { UserRole } from '@declare';
 import { routingPathConfig as pathConfig } from './routing-path.config';
 
@@ -9,6 +11,8 @@ export interface NavigationItem {
   // 权限：游客<普通用户<管理员
   role: UserRole;
   url?: Array<string>;
+  hashs?: Array<string | number>;
+  params?: Object;
   children?: Array<NavigationItem>;
 }
 
@@ -61,7 +65,8 @@ export const navigationConfig: Array<NavigationItem> = [
                   pathConfig.app.general,
                   pathConfig.general.pages,
                   pathConfig.pages.errors
-                ]
+                ],
+                hashs: [403]
               },
               {
                 id: 'error_404',
@@ -71,7 +76,8 @@ export const navigationConfig: Array<NavigationItem> = [
                   pathConfig.app.general,
                   pathConfig.general.pages,
                   pathConfig.pages.errors
-                ]
+                ],
+                hashs: [404]
               },
               {
                 id: 'error_500',
@@ -81,7 +87,8 @@ export const navigationConfig: Array<NavigationItem> = [
                   pathConfig.app.general,
                   pathConfig.general.pages,
                   pathConfig.pages.errors
-                ]
+                ],
+                hashs: [500]
               }
             ]
           },
@@ -171,3 +178,35 @@ export const relyLevelsubMenuInfo: Array<Array<string>> = [
   ['dashboards'],
   ['pages', 'errors']
 ];
+
+// 返回所有NavigationItem中id的集合
+const getIdFromArr = (arr: Array<NavigationItem>): Array<any> => {
+  return arr.map(item => {
+    if (item.children) {
+      return {
+        [item.id]: getIdFromArr(item.children)
+      };
+    } else {
+      return item.id;
+    }
+  });
+};
+
+// 返回所有NavigationItem中根节点到叶节点的path
+const getMenuItemPath = (arr: Array<any>, path: string = ''): Array<any> => {
+  return arr.map(item => {
+    if (typeof item === 'object') {
+      const keys: Array<string> = Object.keys(item);
+      const id: string = keys[0];
+      const a: Array<any> = item[id];
+      return getMenuItemPath(a, path + `/${id}`);
+    } else {
+      return path + `/${item}`;
+    }
+  });
+};
+
+export const menuIdSet: Array<any> = getIdFromArr(navigationConfig);
+export const menuIdPathSet: Array<string> = _.flattenDeep(
+  getMenuItemPath(menuIdSet)
+);

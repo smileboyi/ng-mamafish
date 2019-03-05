@@ -1,6 +1,6 @@
 import Mock from 'mockjs';
 
-import { Message, File, Schedule } from '../declare';
+import { Message, File, Schedule, UserInfo } from '../declare';
 
 export const messages: Array<Message> = [
   {
@@ -125,3 +125,20 @@ export const schedules: Array<Schedule> = [
     bgColor: '#ffd86f'
   }
 ];
+
+export const userInfos: Array<UserInfo> = [
+  {
+    name: 'visitor',
+    token: '111aaa222bbb333ccc'
+  },
+  {
+    name: 'smileboyi',
+    token: '111222333aaabbbccc'
+  },
+  {
+    name: 'admin',
+    token: 'aaabbbccc111222333'
+  }
+];
+
+export const userPermissions: Array<Array<string>> = [[], [], []];

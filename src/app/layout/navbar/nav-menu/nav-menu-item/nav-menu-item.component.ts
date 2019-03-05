@@ -1,50 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import {
-  navigationConfig,
   NavigationItem,
   equalLevelsubMenuInfo,
-  relyLevelsubMenuInfo
+  relyLevelsubMenuInfo,
+  menuIdPathSet
 } from '@config/navigation.config';
 import { GlobalService } from '@services/global.service';
-import * as _ from 'lodash';
-
-// 返回所有NavigationItem中id的集合
-const getIdFromArr = (arr: Array<NavigationItem>): Array<any> => {
-  return arr.map(item => {
-    if (item.children) {
-      return {
-        [item.id]: getIdFromArr(item.children)
-      };
-    } else {
-      return item.id;
-    }
-  });
-};
-
-// 返回所有NavigationItem中根节点到叶节点的path
-const getMenuItemPath = (arr: Array<any>, path: string = ''): Array<any> => {
-  return arr.map(item => {
-    if (typeof item === 'object') {
-      const keys: Array<string> = Object.keys(item);
-      const id: string = keys[0];
-      const a: Array<any> = item[id];
-      return getMenuItemPath(a, path + `/${id}`);
-    } else {
-      return path + `/${item}`;
-    }
-  });
-};
-
-const menuIdSet: Array<any> = getIdFromArr(navigationConfig);
-const menuPathSet: Array<string> = _.flattenDeep(getMenuItemPath(menuIdSet));
+import { UtilsService } from '@services/utils.service';
 
 /**
  * 返回当前点击subMenu的层级位置
  * @param id - 点击的submenu的id
  */
 const getClickSubMenuIdx = (id: string): number => {
-  const paths: Array<string> = menuPathSet.filter((path: string) => {
+  const paths: Array<string> = menuIdPathSet.filter((path: string) => {
     return path.indexOf(id) > -1;
   });
   let ids: Array<string> = paths[0].split('/').reverse();
@@ -65,16 +35,18 @@ export class NavMenuItemComponent implements OnInit {
   @Input() isCollapsed: boolean;
   @Input() position: string;
 
-  constructor(public global: GlobalService) {}
+  constructor(public global: GlobalService, private utils: UtilsService) {}
 
   ngOnInit() {}
 
-  clickMenuItem(urls: Array<string>, params: Object): void {
-    const url: string = urls.reduce(
-      (path: string, next: string) => path + '/' + next,
-      ''
-    );
-    console.log(url);
+  clickMenuItem(
+    pathId: string,
+    hashs: Array<number | string>,
+    params: Object
+  ): void {
+    const h = hashs ? hashs : [];
+    const p = params ? params : {};
+    this.utils.gotoOtherPage(pathId, h, p);
   }
 
   openSubMenu(open: boolean): void {
