@@ -6,14 +6,17 @@ import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { LAYOUT_CONFIG } from '@tokens';
+import { LAYOUT_CONFIG, PROFILE_INFO } from '@tokens';
 import { ThrottleClickDirective } from './directives/throttle-click.directive';
-
 
 const APP_CORE_PROVIDERS = [
   {
     provide: LAYOUT_CONFIG,
     useValue: 'layout_config'
+  },
+  {
+    provide: PROFILE_INFO,
+    useValue: 'profile_info'
   }
 ];
 

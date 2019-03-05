@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd';
+import { NgForage } from 'ngforage';
 
 import { GlobalService } from '@services/global.service';
 import { UtilsService } from '@services/utils.service';
-import { UserRole } from '@declare';
 import { userInfos, userPermissions } from '@mock/data.mock';
-import { routingPathConfig as pathConfig } from '@config/routing-path.config';
-import { NzMessageService } from 'ng-zorro-antd';
+import { PROFILE_INFO } from '@tokens';
+import { UserRole } from '@declare';
 
 @Component({
   selector: 'cat-login',
@@ -17,9 +18,11 @@ export class LoginComponent implements OnInit {
   password: string = '';
 
   constructor(
+    private ngForage: NgForage,
     public global: GlobalService,
     private utils: UtilsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    @Inject(PROFILE_INFO) private profileInfo: string
   ) {}
 
   ngOnInit() {}
@@ -44,6 +47,11 @@ export class LoginComponent implements OnInit {
       this.global.permissionList = userPermissions[0];
     }
     this.message.create('success', `登录成功，用户角色为${roleState}`);
-    this.utils.gotoOtherPage(pathConfig.dashboard.default);
+    this.utils.gotoOtherPage('profile');
+    this.ngForage.setItem(this.profileInfo, {
+      userRole: this.global.userRole,
+      userInfo: this.global.userInfo,
+      permissionList: this.global.permissionList
+    });
   }
 }

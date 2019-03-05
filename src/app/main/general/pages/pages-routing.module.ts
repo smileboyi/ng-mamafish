@@ -18,8 +18,7 @@ const routes: Routes = [
     path: routingPathConfig.pages.profile,
     component: ProfileComponent,
     data: {
-      title: '个人主页',
-      hasContentHeader: false
+      title: '个人主页'
     }
   },
   {

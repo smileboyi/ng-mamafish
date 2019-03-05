@@ -10,7 +10,7 @@ import { LayoutConfig } from '@config/layout.config';
   styleUrls: ['./layout.component.less']
 })
 export class LayoutComponent implements OnInit, OnDestroy {
-  drawerVisible: boolean = true;
+  drawerVisible: boolean = false;
   configData: LayoutConfig;
   pageWithStyle: '1200px' | '100%';
 

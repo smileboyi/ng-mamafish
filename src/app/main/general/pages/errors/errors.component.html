@@ -1,3 +1,25 @@
-<p>
-  errors works!
-</p>
+<div class="errors pre wh100">
+  <div class="main pab centre2 tc">
+    <h1 class="code">{{ httpCode }}</h1>
+    <p class="info">{{ errorInfo[httpCode] }}</p>
+    <p class="advise">YOU SEEM TO BE TRYING TO FIND HIS WAY HOME</p>
+    <button nz-button nzType="primary" (click)="gotoHomePage()">
+      GO TO HOME PAGE
+    </button>
+    <div class="tc copyright">
+      <p class="website">WEBSITE BY 麻麻鱼</p>
+      <p class="member">© 2019. All RIGHT RESERVED.</p>
+      <div class="button-group">
+        <button nz-tooltip nzPlacement="bottom" nzTitle="weibo">
+          <i nz-icon type="weibo"></i>
+        </button>
+        <button nz-tooltip nzPlacement="bottom" nzTitle="qq">
+          <i nz-icon type="qq"></i>
+        </button>
+        <button nz-tooltip nzPlacement="bottom" nzTitle="google">
+          <i nz-icon type="google"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

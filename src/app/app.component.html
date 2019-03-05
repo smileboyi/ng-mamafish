@@ -1,2 +1,6 @@
-<!-- <cat-layout class="wh100 pre flex"></cat-layout> -->
-<router-outlet></router-outlet>
+<ng-container *ngIf="isFullScreen; else isNotFullScreen">
+  <router-outlet></router-outlet>
+</ng-container>
+<ng-template #isNotFullScreen>
+  <cat-layout class="wh100 pre flex"></cat-layout>
+</ng-template>

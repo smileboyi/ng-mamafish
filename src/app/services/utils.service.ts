@@ -53,7 +53,6 @@ export class UtilsService {
     let path = this.getPagePath(pageId);
     // 去掉':code'类似的字符串
     path = path.split(':')[0];
-    const pathArr = [path, ...hashConfig];
     this.router.navigate([path, ...hashConfig], {
       queryParams: paramConfig
     });
