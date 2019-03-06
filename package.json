@@ -33,6 +33,7 @@
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.4.0",
     "screenfull": "^4.0.0",
+    "xlsx": "^0.14.1",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

@@ -30,3 +30,11 @@ export interface UserInfo {
   name: string;
   token: string;
 }
+
+export interface PersonInfo {
+  no: number;
+  name: string;
+  weight: number;
+  sex: 'man' | 'woman';
+  symbol: string;
+}

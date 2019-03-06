@@ -15,6 +15,11 @@ const routes: Routes = [
     data: { title: '常规' }
   },
   {
+    path: routingPathConfig.app.services,
+    loadChildren: './main/services/services.module#ServicesModule',
+    data: { title: '服务' }
+  },
+  {
     path: routingPathConfig.app.wildcard,
     redirectTo: 'general/pages/errors/404'
   }

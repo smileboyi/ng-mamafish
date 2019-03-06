@@ -1,0 +1,38 @@
+<div class="btns">
+  <button
+    nz-button
+    nzType="primary"
+    class="btn box-shadow"
+    (click)="exportNormal()"
+  >
+    Export with normal
+  </button>
+  <button
+    nz-button
+    nzType="primary"
+    class="btn box-shadow"
+    (click)="exportSpecified()"
+  >
+    Export by specified rows and columns
+  </button>
+</div>
+<nz-table #basicTable [nzData]="listOfData">
+  <thead>
+    <tr class="thead-tr">
+      <th>No.</th>
+      <th>Name</th>
+      <th>Weight</th>
+      <th>Sex</th>
+      <th>Symbol</th>
+    </tr>
+  </thead>
+  <tbody class="tbody">
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.no }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.weight }}</td>
+      <td>{{ data.sex }}</td>
+      <td>{{ data.symbol }}</td>
+    </tr>
+  </tbody>
+</nz-table>

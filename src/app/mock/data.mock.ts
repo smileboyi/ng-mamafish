@@ -1,6 +1,6 @@
 import Mock from 'mockjs';
 
-import { Message, File, Schedule, UserInfo } from '../declare';
+import { Message, File, Schedule, UserInfo, PersonInfo } from '@declare';
 
 export const messages: Array<Message> = [
   {
@@ -142,3 +142,17 @@ export const userInfos: Array<UserInfo> = [
 ];
 
 export const userPermissions: Array<Array<string>> = [[], [], []];
+
+const _personInfos: Array<PersonInfo> = [];
+for (let i = 1; i <= 100; i++) {
+  _personInfos.push(
+    Mock.mock({
+      no: i,
+      name: Mock.Random.name(),
+      'weight|45-80.2': 1,
+      'sex|1': ['man', 'woman'],
+      'symbol|1': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+    })
+  );
+}
+export const personInfos: Array<PersonInfo> = _personInfos;
