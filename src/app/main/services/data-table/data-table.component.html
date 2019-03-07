@@ -11,12 +11,16 @@
     nz-button
     nzType="primary"
     class="btn box-shadow"
-    (click)="exportSpecified()"
+    (click)="isVisible = true"
   >
     Export by specified rows and columns
   </button>
 </div>
-<nz-table #basicTable [nzData]="listOfData">
+<nz-table
+  #basicTable
+  [nzData]="dataSource"
+  [nzSize]="global.isMobile ? 'middle' : 'default'"
+>
   <thead>
     <tr class="thead-tr">
       <th>No.</th>
@@ -36,3 +40,63 @@
     </tr>
   </tbody>
 </nz-table>
+
+<nz-modal
+  nzWrapClassName="vertical-center-modal"
+  [(nzVisible)]="isVisible"
+  [nzClosable]="false"
+  [nzClassName]="'export-modal'"
+  (nzOnCancel)="handleModalCancel()"
+  (nzOnOk)="exportSpecified()"
+  [nzContent]="modalContent"
+  [nzBodyStyle]="{ padding: '10px' }"
+  nzCancelText="取消"
+  nzOkText="导出"
+>
+</nz-modal>
+
+<ng-template #modalContent>
+  <div class="export-modal-content">
+    <h3 class="title">选择导出数据</h3>
+    <h4 class="sub-title">表头</h4>
+    <nz-checkbox-wrapper
+      class="w100 checkbox"
+      (nzOnChange)="selectCheckbox($event)"
+    >
+      <div nz-row>
+        <ng-container *ngFor="let item of fieldOptions">
+          <div nz-col nzSpan="8">
+            <label
+              nz-checkbox
+              [nzValue]="item.value"
+              [ngModel]="item.checked"
+              >{{ item.label }}</label
+            >
+          </div>
+        </ng-container>
+      </div>
+      <p class="error" *ngIf="checkboxError">至少选择一项</p>
+    </nz-checkbox-wrapper>
+    <h4 class="sub-title">行数</h4>
+    <nz-radio-group class="radio-group" [(ngModel)]="radioValue">
+      <label nz-radio class="db" nzValue="all"> 全部</label>
+      <div class="pre">
+        <label nz-radio nzValue="specified"> </label>
+        <input
+          #ipt
+          class="ipt pab nob"
+          type="text"
+          (focus)="radioValue = 'specified'"
+          (keyup)="keyupOnInput($event, ipt.value)"
+          placeholder="例如：1-5、8、11-13,16"
+        />
+      </div>
+    </nz-radio-group>
+    <p class="error" *ngIf="radioError1">
+      行数超出范围，应为 1 - {{ dataSource.length }} 之间
+    </p>
+    <p class="error" *ngIf="radioError2">
+      行数范围无效，例如：1-5、8、11-13,16
+    </p>
+  </div>
+</ng-template>

@@ -1,6 +1,7 @@
 :host {
-  width: 100%;
+  width: auto;
   height: 100%;
+  flex: 1;
   background-color: #f1f4f5;
   .btns {
     padding: 20px;
@@ -18,5 +19,83 @@
   .tbody {
     font-weight: 500;
     background-color: #fff;
+  }
+}
+
+::ng-deep .vertical-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .export-modal {
+    top: 0;
+    max-width: 362px;
+    .ant-modal-content {
+      padding: 20px 20px 0 20px;
+    }
+    .export-modal-content {
+      font-family: Roboto, 'Helvetica Neue', sans-serif;
+      font-weight: 500;
+      .title {
+        margin-bottom: 20px;
+        line-height: 32px;
+        font-size: 20px;
+      }
+      .sub-title {
+        margin-bottom: 12px;
+        line-height: 22px;
+        font-size: 16px;
+      }
+      .checkbox {
+        margin-bottom: 20px;
+        [nz-col] > label {
+          margin-bottom: 5px;
+          font-size: 16px;
+          color: #03a9f4;
+        }
+      }
+      .error {
+        color: #f44336;
+      }
+      .radio-group {
+        > * {
+          margin-bottom: 15px;
+        }
+        span.ant-radio + * {
+          padding: 0;
+        }
+        .ant-radio-inner {
+          transform: scale(1.2);
+        }
+        [nz-radio] {
+          font-size: 16px;
+        }
+        .ipt {
+          width: 180px;
+          font-size: 16px;
+          border-bottom: 1px solid #000;
+          &:focus {
+            border-bottom-width: 2px;
+          }
+        }
+      }
+    }
+
+    .ant-btn {
+      border: none;
+      background-color: transparent;
+      box-shadow: none;
+      &:first-of-type {
+        color: #212121;
+      }
+      &:first-of-type:hover {
+        background-color: #f5f5f5;
+      }
+      &:last-of-type {
+        color: #039be5;
+      }
+      &:last-of-type:hover {
+        background-color: #f6fbfe;
+      }
+    }
   }
 }
