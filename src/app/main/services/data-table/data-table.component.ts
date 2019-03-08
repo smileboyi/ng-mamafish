@@ -5,7 +5,6 @@ import { PersonInfo } from '@declare';
 import { personInfos } from '@mock/data.mock';
 import { GlobalService } from '@services/global.service';
 import { XlsxService } from '@services/xlsx.service';
-import { isNumber } from 'util';
 
 interface CheckDataField {
   label: string;
@@ -69,12 +68,17 @@ export class DataTableComponent implements OnInit {
       return;
     }
 
-    const newDatas = this.dataSource.map((item: Object) => {
+    const tempDatas = this.dataSource.map((item: Object) => {
       return _.pick(item, this.checkFields);
     });
+    const sheetDatas: Array<Object> = [];
+    const idxArr = this.idxArr;
+    for (let i = 0, j = idxArr.length; i < j; i++) {
+      sheetDatas.push(tempDatas[idxArr[i] - 1]);
+    }
 
     this.xlsx.exportExcel(
-      newDatas,
+      sheetDatas,
       'Export by specified rows and columns',
       this.tableHeaders
     );
@@ -98,7 +102,11 @@ export class DataTableComponent implements OnInit {
           const [_str1, _str2] = item.split('-');
           const str1 = Number(_str1);
           const str2 = Number(_str2);
-          if (!(str1 >= 0 && str1 <= str2 && str2 <= dataNum)) {
+          if (!(str1 >= 1 && str1 <= str2 && str2 <= dataNum)) {
+            if (str1 === 0) {
+              this.radioError1 = true;
+              break;
+            }
             if (str1 > str2) {
               this.radioError2 = true;
               break;
@@ -108,14 +116,12 @@ export class DataTableComponent implements OnInit {
           this.radioError2 = true;
           break;
         }
-      } else if (!(item >= '0' && Number(item) <= dataNum)) {
+      } else if (!(Number(item) >= 1 && Number(item) <= dataNum)) {
         this.radioError1 = true;
         break;
       }
     }
-    if (this.radioError1 || this.radioError2) {
-      return;
-    } else {
+    if (!(this.radioError1 || this.radioError2)) {
       const idxArr = arr.map(item => {
         if (/^\d+-\d+$/.test(item)) {
           const [_str1, _str2] = item.split('-');
@@ -130,7 +136,7 @@ export class DataTableComponent implements OnInit {
           return Number(item);
         }
       });
-      return (this.idxArr = _.flattenDeep(idxArr));
+      this.idxArr = _.flattenDeep(idxArr);
     }
   }
 }
