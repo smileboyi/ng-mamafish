@@ -4,8 +4,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+
 import { LAYOUT_CONFIG, PROFILE_INFO } from '@tokens';
 import { ThrottleClickDirective } from './directives/throttle-click.directive';
 
@@ -28,7 +29,8 @@ const APP_CORE_PROVIDERS = [
     FormsModule,
     RouterModule,
     FlexLayoutModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    NgxPermissionsModule
   ],
   declarations: [ThrottleClickDirective],
   providers: [...APP_CORE_PROVIDERS],
@@ -40,6 +42,7 @@ const APP_CORE_PROVIDERS = [
     RouterModule,
     FlexLayoutModule,
     NgZorroAntdModule,
+    NgxPermissionsModule,
     ThrottleClickDirective
   ]
 })

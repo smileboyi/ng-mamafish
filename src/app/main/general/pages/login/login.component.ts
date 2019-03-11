@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { NgForage } from 'ngforage';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 import { GlobalService } from '@services/global.service';
 import { UtilsService } from '@services/utils.service';
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
     public global: GlobalService,
     private utils: UtilsService,
     private message: NzMessageService,
+    private permissionsService: NgxPermissionsService,
     @Inject(PROFILE_INFO) private profileInfo: string
   ) {}
 
@@ -53,5 +55,6 @@ export class LoginComponent implements OnInit {
       userInfo: this.global.userInfo,
       permissionList: this.global.permissionList
     });
+    this.permissionsService.loadPermissions(this.global.permissionList);
   }
 }

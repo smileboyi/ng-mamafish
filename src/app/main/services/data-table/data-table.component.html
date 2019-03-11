@@ -1,4 +1,4 @@
-<div class="btns">
+<div class="btns" *ngxPermissionsOnly="['Manager', 'exportDataToExcel']">
   <button
     nz-button
     nzType="primary"

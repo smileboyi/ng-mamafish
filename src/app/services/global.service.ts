@@ -25,8 +25,4 @@ export class GlobalService {
   };
 
   constructor() {}
-
-  hasPermission(permission: string): boolean {
-    return this.permissionList.includes(permission);
-  }
 }

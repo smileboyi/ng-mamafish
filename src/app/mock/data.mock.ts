@@ -141,7 +141,11 @@ export const userInfos: Array<UserInfo> = [
   }
 ];
 
-export const userPermissions: Array<Array<string>> = [[], [], []];
+export const userPermissions: Array<Array<string>> = [
+  ['Full'],
+  ['User'],
+  ['Manager', 'exportDataToExcel']
+];
 
 const _personInfos: Array<PersonInfo> = [];
 for (let i = 1; i <= 100; i++) {

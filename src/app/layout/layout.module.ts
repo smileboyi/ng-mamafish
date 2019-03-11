@@ -11,7 +11,6 @@ import { SharedModule } from '@shared';
 import { LayoutComponent } from './layout.component';
 
 @NgModule({
-  // 可以导入模块管道指令
   imports: [
     CommonModule,
     SharedModule,
