@@ -6,6 +6,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { GlobalService } from '@services/global.service';
 import { UtilsService } from '@services/utils.service';
 import { userInfos, userPermissions } from '@mock/data.mock';
+import { messageText } from '@config/message-text.config';
 import { PROFILE_INFO } from '@tokens';
 import { UserRole } from '@declare';
 
@@ -48,7 +49,10 @@ export class LoginComponent implements OnInit {
       this.global.userInfo = userInfos[0];
       this.global.permissionList = userPermissions[0];
     }
-    this.message.create('success', `登录成功，用户角色为${roleState}`);
+    this.message.create(
+      'success',
+      `${messageText.SUC_USER_LOGIN}，角色为${roleState}`
+    );
     this.utils.gotoOtherPage('profile');
     this.ngForage.setItem(this.profileInfo, {
       userRole: this.global.userRole,
