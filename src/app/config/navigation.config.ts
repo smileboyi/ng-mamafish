@@ -210,3 +210,9 @@ export const menuIdSet: Array<any> = getIdFromArr(navigationConfig);
 export const menuIdPathSet: Array<string> = _.flattenDeep(
   getMenuItemPath(menuIdSet)
 );
+
+export const pageIdmap = {
+  '403': 'error_403',
+  '404': 'error_404',
+  '500': 'error_500'
+};

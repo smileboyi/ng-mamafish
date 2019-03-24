@@ -23,6 +23,7 @@ export class GlobalService {
     pages: false,
     errors: false
   };
+  pageRouteInfo: any;
 
   constructor() {}
 }

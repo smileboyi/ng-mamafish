@@ -13,7 +13,6 @@ import { NgForage } from 'ngforage';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
-import { userPermissions } from '@mock/data.mock';
 
 registerLocaleData(en);
 

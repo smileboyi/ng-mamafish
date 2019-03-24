@@ -2,7 +2,7 @@ import {
   Component,
   OnInit,
   ElementRef,
-  Renderer,
+  Renderer2,
   TemplateRef,
   ViewChild,
   EventEmitter,
@@ -43,7 +43,7 @@ export class ToolbarComponent implements OnInit {
 
   constructor(
     private message: MessageService,
-    private renderer: Renderer,
+    private renderer2: Renderer2,
     public global: GlobalService,
     private layoutConfig: LayoutConfigService
   ) {}
@@ -70,7 +70,7 @@ export class ToolbarComponent implements OnInit {
   // 显示搜索框
   showSearchBar(): void {
     this.searchBarState = true;
-    this.renderer.setElementAttribute(
+    this.renderer2.setAttribute(
       this.serchIpt.nativeElement,
       'autofocus',
       'autofocus'
@@ -80,6 +80,7 @@ export class ToolbarComponent implements OnInit {
   // 隐藏TopInfo组件
   closeInfoContent(): void {
     this.showInfoContent = false;
+    this.renderer2.removeAttribute(this.serchIpt.nativeElement, 'autofocus');
   }
 
   // 切换更多

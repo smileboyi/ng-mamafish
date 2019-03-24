@@ -67,16 +67,12 @@
           "
         ></cat-navbar>
       </div>
-
       <!-- content -->
       <cat-content
         class="fe pre w100"
         [style.order]="2"
         [style.overflow-y]="
           configData.toolbar.position !== 'above-static' ? 'auto' : 'hidden'
-        "
-        [style.padding-bottom.px]="
-          configData.footer.position === 'below-fixed' ? '64' : '0'
         "
         [style.padding-top.px]="
           configData.toolbar.show &&
@@ -137,10 +133,9 @@
 </main>
 
 <button
-  class="setting-btn pab nor z100 bgctp nobd"
+  class="setting-btn pab nor z100 bgctp nobd bsb"
   nz-button
   [nzSize]="large"
-  nzType="primary"
   [style.top.px]="global.isMobile ? 128 : 64"
   (click)="drawerVisible = true"
   *ngIf="!configData.toolbar.show"

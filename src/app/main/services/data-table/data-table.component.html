@@ -92,11 +92,13 @@
         />
       </div>
     </nz-radio-group>
-    <p class="error" *ngIf="radioError1">
-      行数超出范围，应为 1 - {{ dataSource.length }} 之间
-    </p>
-    <p class="error" *ngIf="radioError2">
-      行数范围无效，例如：1-5、8、11-13,16
-    </p>
+    <ng-container *ngIf="radioValue === 'specified'">
+      <p class="error" *ngIf="radioError1">
+        行数超出范围，应为 1 - {{ dataSource.length }} 之间
+      </p>
+      <p class="error" *ngIf="radioError2">
+        行数范围无效，例如：1-5、8、11-13,16
+      </p>
+    </ng-container>
   </div>
 </ng-template>

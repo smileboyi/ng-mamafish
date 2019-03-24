@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
+import { NzMessageService } from 'ng-zorro-antd';
 
 import { PersonInfo } from '@declare';
 import { personInfos } from '@mock/data.mock';
 import { GlobalService } from '@services/global.service';
 import { XlsxService } from '@services/xlsx.service';
+import { messageText } from '@config/message-text.config';
 
 interface CheckDataField {
   label: string;
@@ -47,7 +49,11 @@ export class DataTableComponent implements OnInit {
   radioError2: boolean = false;
   idxArr: Array<number> = [];
 
-  constructor(public global: GlobalService, private xlsx: XlsxService) {}
+  constructor(
+    public global: GlobalService,
+    private xlsx: XlsxService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit() {}
 
@@ -64,19 +70,30 @@ export class DataTableComponent implements OnInit {
   }
 
   exportSpecified(): void {
-    if (this.checkboxError || this.radioError1 || this.radioError2) {
+    const radioError = this.radioError1 || this.radioError2;
+    let sheetDatas: Array<Object> = [];
+    if (this.radioValue === 'all') {
+      if (this.checkboxError) {
+        return;
+      }
+      sheetDatas = this.dataSource;
+    } else {
+      if (this.checkboxError || radioError) {
+        return;
+      }
+      const tempDatas = this.dataSource.map((item: Object) => {
+        return _.pick(item, this.checkFields);
+      });
+      const idxArr = this.idxArr;
+      for (let i = 0, j = idxArr.length; i < j; i++) {
+        sheetDatas.push(tempDatas[idxArr[i] - 1]);
+      }
+    }
+
+    if (!sheetDatas.length) {
+      this.message.create('error', messageText.ERR_EXPORT_TO_EXCEL);
       return;
     }
-
-    const tempDatas = this.dataSource.map((item: Object) => {
-      return _.pick(item, this.checkFields);
-    });
-    const sheetDatas: Array<Object> = [];
-    const idxArr = this.idxArr;
-    for (let i = 0, j = idxArr.length; i < j; i++) {
-      sheetDatas.push(tempDatas[idxArr[i] - 1]);
-    }
-
     this.xlsx.exportExcel(
       sheetDatas,
       'Export by specified rows and columns',

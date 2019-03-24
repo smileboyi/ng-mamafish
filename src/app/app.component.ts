@@ -75,6 +75,8 @@ export class AppComponent implements OnInit, OnDestroy {
           while (route.firstChild) {
             route = route.firstChild;
           }
+          const arr = (route.url as any).value;
+          this.global.pageRouteInfo = arr[arr.length - 1];
           return route;
         }),
         mergeMap(route => route.data)
