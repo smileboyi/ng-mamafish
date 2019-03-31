@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { routingPathConfig } from '@config/routing-path.config';
 import { DataTableComponent } from './data-table/data-table.component';
+import { ScreenshotComponent } from './screenshot/screenshot.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,13 @@ const routes: Routes = [
     component: DataTableComponent,
     data: {
       title: '数据表'
+    }
+  },
+  {
+    path: routingPathConfig.services.screenshot,
+    component: ScreenshotComponent,
+    data: {
+      title: '屏幕截图'
     }
   }
 ];
