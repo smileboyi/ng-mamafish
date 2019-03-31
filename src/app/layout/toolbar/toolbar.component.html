@@ -51,9 +51,7 @@
         >
           <ng-container *ngTemplateOutlet="bell"></ng-container>
         </ng-container>
-        <ng-container *ngIf="!global.isMobile">
-          <ng-container *ngTemplateOutlet="fullscreen"></ng-container>
-        </ng-container>
+        <ng-container *ngTemplateOutlet="fullscreen"></ng-container>
         <ng-container *ngIf="!global.isMobile">
           <ng-container *ngTemplateOutlet="settings"></ng-container>
         </ng-container>
@@ -134,7 +132,13 @@
 </ng-template>
 
 <ng-template #fullscreen>
-  <button nz-button nzType="large" (click)="toggleFullscreen()">
+  <button
+    nz-button
+    nzType="large"
+    (click)="toggleFullscreen()"
+    fxShow="false"
+    fxShow.gt-sm
+  >
     <i nz-icon [type]="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"></i>
   </button>
   <div class="divider"></div>

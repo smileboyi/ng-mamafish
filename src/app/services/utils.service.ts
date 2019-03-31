@@ -15,7 +15,7 @@ export class UtilsService {
   constructor(private router: Router) {}
 
   getMobileState(): boolean {
-    return window.innerWidth <= 600;
+    return window.innerWidth <= 620;
   }
 
   // 根据页面id返回页面路径

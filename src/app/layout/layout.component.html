@@ -28,11 +28,9 @@
     <!-- body -->
     <div
       class="fe pre"
+      [style.display]="'flex'"
       [class.flex]="configData.toolbar.position === 'above'"
       [class.grail]="configData.toolbar.position === 'above-static'"
-      [style.display]="
-        configData.toolbar.position === 'above-static' ? 'block' : 'flex'
-      "
       [style.overflow-y]="
         configData.toolbar.position === 'above-static' ? 'auto' : 'hidden'
       "
@@ -71,15 +69,13 @@
       <cat-content
         class="fe pre w100"
         [style.order]="2"
-        [style.overflow-y]="
-          configData.toolbar.position !== 'above-static' ? 'auto' : 'hidden'
-        "
         [style.padding-top.px]="
           configData.toolbar.show &&
           configData.toolbar.position === 'above-fixed'
             ? '64'
             : '0'
         "
+        [class.ovys]="configData.toolbar.position !== 'above-static'"
       ></cat-content>
 
       <!-- footer -->

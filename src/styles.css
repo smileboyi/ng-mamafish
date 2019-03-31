@@ -335,13 +335,13 @@ a,img{-webkit-touch-callout: none;}
   overflow: scroll;
 }
 .ovxs {
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
 }
 .ovys {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .nobd {
   border: none;
