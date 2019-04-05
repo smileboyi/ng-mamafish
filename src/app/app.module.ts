@@ -2,13 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { NZ_I18N, en_US } from 'ng-zorro-antd';
+import { NZ_I18N, en_US, NZ_ICONS } from 'ng-zorro-antd';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import { Driver, NgForageConfig, NgForageModule } from 'ngforage';
 import en from '@angular/common/locales/en';
 import { NgxPermissionsService, NgxPermissionsModule } from 'ngx-permissions';
 import { NgForage } from 'ngforage';
+import icons from './app.icon';
 
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
@@ -42,7 +43,8 @@ const loadFactory = (forage: NgForage, ps: NgxPermissionsService) =>
       useFactory: loadFactory,
       deps: [NgForage, NgxPermissionsService],
       multi: true
-    }
+    },
+    { provide: NZ_ICONS, useValue: icons }
   ],
   bootstrap: [AppComponent]
 })
