@@ -15,6 +15,11 @@ const routes: Routes = [
     data: { title: '常规' }
   },
   {
+    path: routingPathConfig.app.applications,
+    loadChildren: './main/applications/applications.module#ApplicationsModule',
+    data: { title: '应用' }
+  },
+  {
     path: routingPathConfig.app.services,
     loadChildren: './main/services/services.module#ServicesModule',
     data: { title: '服务' }
