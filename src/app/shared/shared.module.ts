@@ -9,6 +9,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { LAYOUT_CONFIG, PROFILE_INFO } from '@tokens';
 import { ThrottleClickDirective } from './directives/throttle-click.directive';
+import { BgHeaderComponent } from './components/bg-header/bg-header.component';
 
 const APP_CORE_PROVIDERS = [
   {
@@ -32,7 +33,7 @@ const APP_CORE_PROVIDERS = [
     NgZorroAntdModule,
     NgxPermissionsModule
   ],
-  declarations: [ThrottleClickDirective],
+  declarations: [ThrottleClickDirective, BgHeaderComponent],
   providers: [...APP_CORE_PROVIDERS],
   exports: [
     CommonModule,
@@ -43,7 +44,8 @@ const APP_CORE_PROVIDERS = [
     FlexLayoutModule,
     NgZorroAntdModule,
     NgxPermissionsModule,
-    ThrottleClickDirective
+    ThrottleClickDirective,
+    BgHeaderComponent
   ]
 })
 export class SharedModule {}

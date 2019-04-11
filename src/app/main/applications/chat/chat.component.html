@@ -1,3 +1,99 @@
-<p>
-  chat works!
-</p>
+<div class="users grail wh100">
+  <div class="top">
+    <cat-bg-header
+      headerTitle="Chat"
+      describe="View information about the users, search, add, edit or delete any user."
+    >
+      <div class="bottom-users-bar flex">
+        <button nz-button (click)="fold = !fold">
+          <i nz-icon [type]="fold ? 'menu-unfold' : 'menu-fold'"></i>
+        </button>
+        <div class="dn">
+          <nz-avatar nzIcon="user" [nzSrc]="avatarImg"></nz-avatar>
+          <span class="name">{{ userName }}</span>
+          <nz-dropdown
+            [nzClickHide]="false"
+            [(nzVisible)]="visible"
+            [nzPlacement]="'bottomRight'"
+            [nzTrigger]="'click'"
+          >
+            <a nz-dropdown class="dash-btn dib pre">
+              <i nz-icon type="ellipsis" theme="outline"></i>
+            </a>
+            <ul nz-menu class="more-op-list">
+              <li nz-menu-item>
+                <i nz-icon type="contacts" theme="fill"></i>Contact info
+              </li>
+              <li nz-menu-item><i nz-icon type="bell" theme="fill"></i>Mute</li>
+              <li nz-menu-item>
+                <i nz-icon type="delete" theme="fill"></i>Clear Chat
+              </li>
+            </ul>
+          </nz-dropdown>
+        </div>
+      </div>
+    </cat-bg-header>
+  </div>
+  <div class="main flex pre fe">
+    <div [ngClass]="{ 'person-box': true, in: fold }">
+      <div class="person h100">
+        <nz-avatar nzIcon="user" nzSrc=""></nz-avatar>
+        <div class="fe">
+          <p class="name">drhrsheh</p>
+          <p class="status">
+            <i nz-icon type="stop" theme="outline"></i>Do not disturb
+          </p>
+        </div>
+      </div>
+      <div class="person h100">
+        <nz-avatar nzIcon="user" nzSrc=""></nz-avatar>
+        <div class="fe">
+          <p class="name">drhrsheh</p>
+          <p><i nz-icon type="close-circle" theme="outline"></i>Offline</p>
+        </div>
+      </div>
+      <div class="person h100">
+        <nz-avatar nzIcon="user" nzSrc=""></nz-avatar>
+        <div class="fe">
+          <p class="name">drhrsheh</p>
+          <p><i nz-icon type="close-circle" theme="outline"></i>Offline</p>
+        </div>
+      </div>
+      <div class="person h100">
+        <nz-avatar nzIcon="user" nzSrc=""></nz-avatar>
+        <div class="fe">
+          <p class="name">drhrsheh</p>
+          <p><i nz-icon type="close-circle" theme="outline"></i>Offline</p>
+        </div>
+      </div>
+      <div class="person h100">
+        <nz-avatar nzIcon="user" nzSrc=""></nz-avatar>
+        <div class="fe">
+          <p class="name">drhrsheh</p>
+          <p><i nz-icon type="close-circle" theme="outline"></i>Offline</p>
+        </div>
+      </div>
+      <div class="person h100">
+        <nz-avatar nzIcon="user" nzSrc=""></nz-avatar>
+        <div class="fe">
+          <p class="name">drhrsheh</p>
+          <p><i nz-icon type="close-circle" theme="outline"></i>Offline</p>
+        </div>
+      </div>
+    </div>
+    <div class="chat-box fe pre">
+      <div class="no-data tc pab centre2">
+        <i nz-icon type="message" theme="outline"></i>
+        <p class="text">Select a interlocutor for talk</p>
+      </div>
+    </div>
+    <div class="info-box"></div>
+  </div>
+</div>
+
+<!-- 
+<p><i nz-icon type="stop" theme="outline"></i>Do not disturb</p>
+<p><i nz-icon type="clock-circle" theme="outline"></i>Away</p>
+<p><i nz-icon type="close-circle" theme="outline"></i>Offline</p>
+<p><i nz-icon type="check-circle" theme="fill">Online</i></p>
+ -->

@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat.component.less']
 })
 export class ChatComponent implements OnInit {
+  avatarImg = '';
+  userName = '深入骨髓';
+  visible = false;
+  fold: false;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

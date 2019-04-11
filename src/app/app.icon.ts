@@ -18,6 +18,17 @@ import {
   QqOutline,
   GoogleOutline,
   GithubOutline,
+  MenuFoldOutline,
+  MenuUnfoldOutline,
+  ContactsFill,
+  BellFill,
+  DeleteFill,
+  SearchOutline,
+  StopOutline,
+  ClockCircleOutline,
+  CloseCircleOutline,
+  CheckCircleFill,
+  MessageOutline
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -38,7 +49,18 @@ const icons: IconDefinition[] = [
   WeiboOutline,
   QqOutline,
   GoogleOutline,
-  GithubOutline
+  GithubOutline,
+  MenuFoldOutline,
+  MenuUnfoldOutline,
+  ContactsFill,
+  BellFill,
+  DeleteFill,
+  SearchOutline,
+  StopOutline,
+  ClockCircleOutline,
+  CloseCircleOutline,
+  CheckCircleFill,
+  MessageOutline
 ];
 
 export default icons;
