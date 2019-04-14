@@ -27,8 +27,12 @@ import {
   StopOutline,
   ClockCircleOutline,
   CloseCircleOutline,
-  CheckCircleFill,
-  MessageOutline
+  MessageOutline,
+  CloseOutline,
+  CheckCircleOutline,
+  PhoneFill,
+  EnvironmentFill,
+  MailFill
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -59,8 +63,12 @@ const icons: IconDefinition[] = [
   StopOutline,
   ClockCircleOutline,
   CloseCircleOutline,
-  CheckCircleFill,
-  MessageOutline
+  CheckCircleOutline,
+  MessageOutline,
+  CloseOutline,
+  MailFill,
+  PhoneFill,
+  EnvironmentFill
 ];
 
 export default icons;

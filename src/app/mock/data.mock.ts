@@ -1,6 +1,14 @@
 import Mock from 'mockjs';
 
-import { Message, File, Schedule, UserInfo, PersonInfo } from '@declare';
+import {
+  Message,
+  File,
+  Schedule,
+  UserInfo,
+  PersonInfo,
+  ChatUser,
+  ChatTalk
+} from '@declare';
 
 export const messages: Array<Message> = [
   {
@@ -160,3 +168,83 @@ for (let i = 1; i <= 100; i++) {
   );
 }
 export const personInfos: Array<PersonInfo> = _personInfos;
+
+export const chatUsers: Array<ChatUser> = [
+  new ChatUser('assets/images/ashley.jpg', 'Ashley Ahlberg', 'Online'),
+  new ChatUser('assets/images/bruno.jpg', 'Bruno Vespa', 'Do not disturb'),
+  new ChatUser('assets/images/julia.jpg', 'Julia Aniston', 'Away'),
+  new ChatUser('assets/images/adam.jpg', 'Adam Sandler', 'Online'),
+  new ChatUser('assets/images/tereza.jpg', 'Tereza Stiles', 'Offline'),
+  new ChatUser('assets/images/michael.jpg', 'Michael Blair', 'Online')
+];
+
+export const getChatTalks = (user: ChatUser): Array<ChatTalk> => {
+  const date = new Date(),
+    day = date.getDate(),
+    month = date.getMonth(),
+    year = date.getFullYear(),
+    hour = date.getHours(),
+    minute = date.getMinutes();
+  return [
+    new ChatTalk(
+      user.avatar,
+      user.author,
+      'So, Emilio Verdines, you\'ve got a brother named Kirk!',
+      new Date(year, month, day - 2, hour, minute + 9),
+      false
+    ),
+    new ChatTalk(
+      'assets/images/user.jpg',
+      'Emilio Verdines',
+      'Yes, that\'s right. He is two and a half years older than I am, and we get along very well now.',
+      new Date(year, month, day - 2, hour, minute + 8),
+      true
+    ),
+    new ChatTalk(
+      user.avatar,
+      user.author,
+      'You get along very well now! How did you get along in the past?',
+      new Date(year, month, day - 2, hour, minute + 7),
+      false
+    ),
+    new ChatTalk(
+      'assets/images/user.jpg',
+      'Emilio Verdines',
+      'Not very well at all actually. He was always very mean and heartless, should we say.',
+      new Date(year, month, day - 2, hour, minute + 6),
+      true
+    ),
+    new ChatTalk(
+      user.avatar,
+      user.author,
+      'What was the first thing you remember him doing to you?',
+      new Date(year, month, day - 2, hour, minute + 5),
+      false
+    ),
+    new ChatTalk(
+      'assets/images/user.jpg',
+      'Emilio Verdines',
+      'Perhaps the first thing was the time I fell asleep on the bus when I was on kindergarten.\
+			He actually left me there sleeping, and I didn\'t wake up until my lunch box fell on the ground,\
+			when the bus driver was parking1 in the bus garage. So anyway, yeah,\
+			I learned2 at that point not to really depend on him so much.',
+      new Date(year, month, day - 2, hour, minute + 4),
+      true
+    ),
+    new ChatTalk(
+      user.avatar,
+      user.author,
+      'What did your mum say when you got home?',
+      new Date(year, month, day - 2, hour, minute + 3),
+      false
+    ),
+    new ChatTalk(
+      'assets/images/user.jpg',
+      'Emilio Verdines',
+      'My mom asked my brother,\'Hey! Aren\'t you forgetting something?\',\
+			referring to me, and he responded3, \'Hey! How did you know I forgot my homework!\'',
+      new Date(year, month, day - 2, hour, minute + 2),
+      true
+    )
+  ];
+};

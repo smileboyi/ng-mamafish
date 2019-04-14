@@ -38,3 +38,21 @@ export interface PersonInfo {
   sex: 'man' | 'woman';
   symbol: string;
 }
+
+export class ChatUser {
+  constructor(
+    public avatar: string,
+    public author: string,
+    public status: string
+  ) {}
+}
+
+export class ChatTalk {
+  constructor(
+    public avatar: string,
+    public author: string,
+    public text: string,
+    public date: Date,
+    public me: boolean
+  ) {}
+}

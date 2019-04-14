@@ -1,5 +1,4 @@
-import { map } from 'rxjs/operators';
-import { Injectable, HostListener } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
 
@@ -13,6 +12,32 @@ import { navigationConfig, menuIdPathSet } from '@config/navigation.config';
 })
 export class UtilsService {
   constructor(private router: Router) {}
+
+  // 节流装饰器
+  static throttle(delay: number = 100): MethodDecorator {
+    return function(
+      target: any,
+      propertyKey: string,
+      descriptor: PropertyDescriptor
+    ) {
+      const original = descriptor.value;
+      descriptor.value = _.throttle(original, delay);
+      return descriptor;
+    };
+  }
+
+  // 防抖装饰器
+  static debounce(delay: number = 100): MethodDecorator {
+    return function(
+      target: any,
+      propertyKey: string,
+      descriptor: PropertyDescriptor
+    ) {
+      const original = descriptor.value;
+      descriptor.value = _.debounce(original, delay);
+      return descriptor;
+    };
+  }
 
   getMobileState(): boolean {
     return window.innerWidth <= 620;
