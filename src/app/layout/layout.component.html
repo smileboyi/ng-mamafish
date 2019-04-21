@@ -75,6 +75,13 @@
             ? '64'
             : '0'
         "
+        [style.padding-bottom.px]="
+          configData.footer.show &&
+          configData.toolbar.position === 'above' &&
+          configData.footer.position === 'below-fixed'
+            ? '64'
+            : '0'
+        "
         [class.ovys]="configData.toolbar.position !== 'above-static'"
       ></cat-content>
 

@@ -1,38 +1,36 @@
-<div class="users grail wh100">
-  <div class="top">
-    <cat-bg-header
-      headerTitle="Chat"
-      describe="View information about the users, search, add, edit or delete any user."
-    >
-      <div class="bottom-users-bar flex">
-        <button nz-button (click)="fold = !fold">
-          <i nz-icon [type]="fold ? 'menu-unfold' : 'menu-fold'"></i>
-        </button>
-        <div [hidden]="!currentUser.avatar">
-          <nz-avatar nzIcon="user" [nzSrc]="currentUser.avatar"></nz-avatar>
-          <span class="name">{{ currentUser.author }}</span>
-          <nz-dropdown
-            [nzClickHide]="true"
-            [nzPlacement]="'bottomRight'"
-            [nzTrigger]="'click'"
-          >
-            <a nz-dropdown class="dash-btn dib pre">
-              <i nz-icon type="ellipsis" theme="outline"></i>
-            </a>
-            <ul nz-menu class="more-op-list">
-              <li nz-menu-item (click)="drawer = !drawer">
-                <i nz-icon type="contacts" theme="fill"></i>Contact info
-              </li>
-              <li nz-menu-item><i nz-icon type="bell" theme="fill"></i>Mute</li>
-              <li nz-menu-item (click)="deleteChatUser()">
-                <i nz-icon type="delete" theme="fill"></i>Clear Chat
-              </li>
-            </ul>
-          </nz-dropdown>
-        </div>
+<div class="users grail wh100 ovh">
+  <cat-bg-header
+    headerTitle="Chat"
+    describe="View information about the users, search, add, edit or delete any user."
+  >
+    <div class="bottom-users-bar flex">
+      <button nz-button (click)="fold = !fold">
+        <i nz-icon [type]="fold ? 'menu-unfold' : 'menu-fold'"></i>
+      </button>
+      <div [hidden]="!currentUser.avatar">
+        <nz-avatar nzIcon="user" [nzSrc]="currentUser.avatar"></nz-avatar>
+        <span class="name">{{ currentUser.author }}</span>
+        <nz-dropdown
+          [nzClickHide]="true"
+          [nzPlacement]="'bottomRight'"
+          [nzTrigger]="'click'"
+        >
+          <a nz-dropdown class="dash-btn dib pre">
+            <i nz-icon type="ellipsis" theme="outline"></i>
+          </a>
+          <ul nz-menu class="more-op-list">
+            <li nz-menu-item (click)="drawer = !drawer">
+              <i nz-icon type="contacts" theme="fill"></i>Contact info
+            </li>
+            <li nz-menu-item><i nz-icon type="bell" theme="fill"></i>Mute</li>
+            <li nz-menu-item (click)="deleteChatUser()">
+              <i nz-icon type="delete" theme="fill"></i>Clear Chat
+            </li>
+          </ul>
+        </nz-dropdown>
       </div>
-    </cat-bg-header>
-  </div>
+    </div>
+  </cat-bg-header>
   <div class="main flex pre fe">
     <div
       class="person-box-cover"

@@ -23,7 +23,7 @@ export class ChatComponent implements OnInit {
   currentUserIndex: number;
   newMessage = '';
 
-  constructor(public utils: UtilsService, private chatService: ChatService) {}
+  constructor(private utils: UtilsService, private chatService: ChatService) {}
 
   ngOnInit() {
     this.mobile = this.utils.getMobileState();

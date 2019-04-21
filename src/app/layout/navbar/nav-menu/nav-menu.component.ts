@@ -58,10 +58,13 @@ export class NavMenuComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         const path = this.global.pageRouteInfo.path;
         const id = this.getMenuItemId(path);
-        this.renderer2.addClass(
-          this.el.nativeElement.querySelector('#' + id),
-          className
-        );
+        const el = this.el.nativeElement.querySelector('#' + id);
+        if (el) {
+          this.renderer2.addClass(
+            this.el.nativeElement.querySelector('#' + id),
+            className
+          );
+        }
       }
     }, 100);
   }
