@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+// import { QuillModule } from 'ngx-quill';
 
 import { LAYOUT_CONFIG, PROFILE_INFO } from '@tokens';
 import { ThrottleClickDirective } from './directives/throttle-click.directive';
@@ -31,7 +32,8 @@ const APP_CORE_PROVIDERS = [
     RouterModule,
     FlexLayoutModule,
     NgZorroAntdModule,
-    NgxPermissionsModule
+    NgxPermissionsModule,
+    // QuillModule
   ],
   declarations: [ThrottleClickDirective, BgHeaderComponent],
   providers: [...APP_CORE_PROVIDERS],
@@ -43,6 +45,7 @@ const APP_CORE_PROVIDERS = [
     RouterModule,
     FlexLayoutModule,
     NgZorroAntdModule,
+    // QuillModule,
     NgxPermissionsModule,
     ThrottleClickDirective,
     BgHeaderComponent

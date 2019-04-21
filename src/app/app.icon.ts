@@ -32,7 +32,9 @@ import {
   CheckCircleOutline,
   PhoneFill,
   EnvironmentFill,
-  MailFill
+  MailFill,
+  AlignCenterOutline,
+  ArrowLeftOutline
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -68,7 +70,9 @@ const icons: IconDefinition[] = [
   CloseOutline,
   MailFill,
   PhoneFill,
-  EnvironmentFill
+  EnvironmentFill,
+  AlignCenterOutline,
+  ArrowLeftOutline
 ];
 
 export default icons;

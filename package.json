@@ -33,6 +33,7 @@
     "ng-zorro-antd": "^7.0.0-rc.3",
     "ngforage": "^4.0.2",
     "ngx-permissions": "^6.0.5",
+    "ngx-quill": "^4.8.0",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.4.0",
     "screenfull": "^4.0.0",

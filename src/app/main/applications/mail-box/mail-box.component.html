@@ -1,3 +1,170 @@
-<p>
-  mail-box works!
-</p>
+<div class="mail-box grail wh100 ovh">
+  <cat-bg-header headerTitle="Inbox">
+    <div class="bottom-inbox-bar flex">
+      <div>
+        <button nz-button (click)="fold = !fold">
+          <i nz-icon [type]="fold ? 'menu-unfold' : 'menu-fold'"></i>
+        </button>
+        <nz-dropdown
+          [nzClickHide]="true"
+          [nzPlacement]="'bottomCenter'"
+          [nzTrigger]="'click'"
+        >
+          <a nz-dropdown>
+            <i nz-icon type="align-center" theme="outline"></i>
+          </a>
+          <ul nz-menu class="inbox-header-dropdown">
+            <li nz-menu-item (click)="searchMails('all')">All</li>
+            <li nz-menu-item (click)="searchMails('starred')">Starred</li>
+            <li nz-menu-item (click)="searchMails('sent')">Sent</li>
+            <li nz-menu-item (click)="searchMails('drafts')">Drafts</li>
+            <li nz-menu-item (click)="searchMails('trash')">Trash</li>
+          </ul>
+        </nz-dropdown>
+        <button nz-button (click)="search = !search">
+          <i nz-icon type="search" theme="outline"></i>
+        </button>
+      </div>
+      <div class="fe">
+        <label [ngClass]="{ search: true, ac: search }">
+          <input
+            class="tc ipt wh100"
+            type="text"
+            [(ngModel)]="searchText"
+            (keyup)="searchMails()"
+            placeholder="Search mail..."
+          />
+        </label>
+      </div>
+      <div>
+        <ng-container *ngIf="!mobile && mail">
+          <button
+            nz-button
+            nz-tooltip
+            nzTitle="Mark as important"
+            (click)="mail.starred = !mail.starred"
+          >
+            <i nz-icon type="star" theme="fill" *ngIf="mail.starred"></i>
+            <i nz-icon type="star" theme="outline" *ngIf="!mail.starred"></i>
+          </button>
+          <button nz-button nz-tooltip nzTitle="Report spam">
+            <i nz-icon type="exclamation-circle" theme="fill"></i>
+          </button>
+          <button
+            nz-button
+            nz-tooltip
+            nzTitle="Move to trash"
+            (click)="delete()"
+          >
+            <i nz-icon type="delete" theme="fill"></i>
+          </button>
+          <nz-dropdown
+            [nzClickHide]="true"
+            [nzPlacement]="'bottomCenter'"
+            [nzTrigger]="'click'"
+          >
+            <a nz-dropdown>
+              <i
+                nz-icon
+                class="rotate-icon"
+                type="ellipsis"
+                theme="outline"
+              ></i>
+            </a>
+            <ul nz-menu class="inbox-header-dropdown">
+              <li nz-menu-item (click)="setAsRead()">Mark as read</li>
+              <li nz-menu-item (click)="setAsUnRead()">Mark as unread</li>
+              <li nz-menu-item (click)="delete()">Delete</li>
+            </ul>
+          </nz-dropdown>
+        </ng-container>
+        <button nz-button nz-tooltip nzTitle="Back">
+          <i nz-icon type="arrow-left" theme="outline"></i>
+        </button>
+        <a class="compose pre" href="javascript:;">Compose</a>
+      </div>
+    </div>
+  </cat-bg-header>
+  <div class="main fe flex pre">
+    <div
+      class="person-box-cover"
+      (click)="fold = true"
+      *ngIf="mobile && !fold"
+    ></div>
+    <div
+      [ngClass]="{ 'person-box': true, 'person-box--mobile': mobile, in: fold }"
+    >
+      <div class="tc no-data pab hauto2" *ngIf="!mails.length">
+        <img src="/assets/icons/no-data.png" alt="no-data" />
+        <p>暂无数据</p>
+      </div>
+      <div class="person" *ngFor="let m of mails" (click)="viewDetail(m)">
+        <nz-avatar nzIcon="user" [nzSrc]="m.senderPhoto"></nz-avatar>
+        <div [ngClass]="{ right: true, unread: m.unread }">
+          <h4 class="title">
+            {{ m.sender }}<time>{{ m.date }}</time>
+          </h4>
+          <p class="text">{{ m.subject }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="content-box fe h100 pre ovys">
+      <div class="no-data tc pab centre2" *ngIf="!mail">
+        <i nz-icon type="mail" theme="outline"></i>
+        <p class="text">Select a mail to read</p>
+      </div>
+      <div class="receive-box" *ngIf="mail">
+        <h2 class="subject">{{ mail.subject }}</h2>
+        <div class="header">
+          <nz-avatar nzIcon="user" [nzSrc]="mail.senderPhoto"></nz-avatar>
+          <div class="right">
+            <p class="bar">
+              <span class="name">{{ mail.sender }}</span>
+              <span class="email">{{ mail.senderMail }}</span>
+              <span class="time">{{ mail.date }}</span>
+            </p>
+            <p class="text">to me</p>
+          </div>
+        </div>
+        <div class="body" [innerHTML]="mail.body"></div>
+        <div class="body" *ngIf="mail.attachments.length">
+          <div class="attachments">
+            <p>
+              {{ mail.attachments.length }} attachments
+              <i nz-icon type="upload" theme="outline"></i
+              ><i nz-icon type="eye" theme="outline"></i>
+            </p>
+            <div class="attachment" *ngFor="let attachment of mail.attachments">
+              <img [src]="attachment" alt="attachment" />
+              <h3>{{ attachment.split('images/')[1] }}</h3>
+              <p>
+                541k <i nz-icon type="upload" theme="outline"></i
+                ><i nz-icon type="eye" theme="outline"></i>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="send-box" *ngIf="newMail">
+        <form nz-form (ngSubmit)="onSubmit(form.value)">
+          <nz-form-item>
+            <nz-form-control>
+              <input nz-input placeholder="To" formControlName="to" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control>
+              <input nz-input placeholder="Cc/Bcc" formControlName="cc" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control>
+              <input nz-input placeholder="Subject" formControlName="subject" />
+            </nz-form-control>
+          </nz-form-item>
+          <quill-editor formControlName="message"></quill-editor>
+        </form>
+      </div> -->
+    </div>
+  </div>
+</div>

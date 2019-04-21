@@ -7,7 +7,8 @@ import {
   UserInfo,
   PersonInfo,
   ChatUser,
-  ChatTalk
+  ChatTalk,
+  Mail
 } from '@declare';
 
 export const messages: Array<Message> = [
@@ -248,3 +249,139 @@ export const getChatTalks = (user: ChatUser): Array<ChatTalk> => {
     )
   ];
 };
+
+
+
+export const Mails: Array<Mail> = [
+  new Mail(
+    2,
+    'Josiah Fromdahl',
+    'assets/images/bruno.jpg',
+    'Reekie8647@gmail.com',
+    'Useful tool for those who are involved in SEO',
+    '9:47 AM',
+    '<p>Hi, I want to introduce the Website Reviewer is an incredibly useful tool for those who are involved in SEO and web designing. ' +
+      'This particular tool will provide you with quick website review and SEO audit of the websites you’ve created so ' +
+      'you will be able to determine if and where any changes should be made so you can make it as effective ' +
+      'as possible when it comes to getting visitors and keeping them interested. ' +
+      'Unlike many similar tools, website reviewer is completely free.</p>',
+    true,
+    [
+      '/assets/images/image-1.gif',
+      '/assets/images/image-2.jpg',
+      '/assets/images/image-3.webp'
+    ],
+    true,
+    false,
+    true,
+    false,
+    false,
+    false
+  ),
+  new Mail(
+    3,
+    'Google Cloud Platform',
+    'assets/images/google-platform.png',
+    'CloudPlatform-noreply@google.com',
+    'Lessons from the field: surviving success with Customer Reliability Engineering',
+    'Jan 5',
+    '<h4>TRENDING</h4>' +
+      '<p>For those who missed the early adoption of Infrastructure as a Service circa 2007,' +
+      'this in-depth history stresses why businesses need to begin building around "serverless" architectures.</p>' +
+      '<p>A stress test led by Pivotal’s Cloud Foundry team ran 250,000 real-life app containers on Google Compute Engine. ' +
+      'GCP made it possible to stand the environment up in hours, and scaled it without pre-planning.</p>' +
+      '<p>Dig in to a new site packed with open-source tools and resources that aims to make it easy for anyone to explore,' +
+      'develop, and share AI creations. Play an AI duet, or have your phone guess what you’re drawing.</p>',
+    false,
+    [],
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ),
+  new Mail(
+    4,
+    'Microsoft Visual Studio',
+    'assets/images/vs.jpg',
+    'MVS@e-mail.microsoft.com',
+    'Welcome to Visual Studio Team Services',
+    '24.12.2016',
+    '<p>Whether your teams develop in Java, .NET, or in multiple languages, Visual Studio Team Services offers an open,' +
+      'cloud-hosted development hub. Use your favorite IDE, develop in any language, and empower your teams to iterate ' +
+      'rapidly.</p> <p>Rogue security software scams. Rogue security software, also known as "scareware," is software that ' +
+      'appears to be beneficial from a security perspective but provides limited or no security, generates erroneous or ' +
+      'misleading alerts, or attempts to lure you into participating in fraudulent transactions. These scams can appear ' +
+      'in email, online advertisements, your social networking site, search engine results, or even in pop-up windows on ' +
+      'your computer that might appear to be part of your operating system, but are not.</p>',
+    false,
+    [],
+    true,
+    false,
+    false,
+    false,
+    false,
+    false
+  ),
+  new Mail(
+    6,
+    'Draft',
+    '',
+    '',
+    'Please confirm your email',
+    'Jan 7',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum interdum ex, sed aliquet nisl maximus imperdiet.' +
+      'Phasellus pharetra nunc eu dui hendrerit, quis ullamcorper tortor malesuada.' +
+      'Nullam ante mi, auctor eu nunc vitae, gravida molestie arcu.',
+    false,
+    [],
+    false,
+    false,
+    false,
+    true,
+    false,
+    false
+  ),
+  new Mail(
+    7,
+    'MailChimp',
+    'assets/images/mailchimp.jpg',
+    'hello@mailchimp.com',
+    'Our 2016 annual report',
+    '22.12.2016',
+    '<p>For our 2016 annual report, we let our design team run wild with our most fun facts and proudest moments from the year.' +
+      'From GIFs in email campaigns to physical tons of infrastructure added to dollars raised for charity, it’s our year in numbers.</p>' +
+      '<p>We’re proud of our new features, our customer support tickets solved, and our philanthropy in Atlanta.' +
+      'But we’re even more proud of you and the billions of emails you’ve sent to grow your businesses your way in 2016.' +
+      'Keep up the good work!</p><p>Cheers to the new year,</p><p>MailChimp</p>',
+    false,
+    [],
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ),
+  new Mail(
+    8,
+    'Bluehost',
+    'assets/images/bluehost.jpg',
+    'no-reply@e.bluehost.com',
+    'Your domain privacy may be at risk',
+    '20.12.2016',
+    '<h4>New ICANN Rules Require Accurate Contact Information</h4>' +
+      '<p>Your domain information may be at risk. However, you can protect your information with domain privacy.</p>' +
+      '<p>Protect yourself with Domain Privacy.</p><p><small>Only $11.88 per year.**</small></p>' +
+      '<p><a href="http://bluehost.com/" target="blank" class="btn btn-success">Get started</a></p>',
+    false,
+    [],
+    false,
+    false,
+    true,
+    false,
+    false,
+    false
+  ),
+];
