@@ -1,8 +1,17 @@
-import { filter } from 'rxjs/operators';
-import { Component, OnInit, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  Renderer2,
+  ElementRef
+} from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NzMessageService } from 'ng-zorro-antd';
 
+import { messageText } from '@config/message-text.config';
 import { UtilsService } from '@services/utils.service';
 import { MailBoxService } from './mail-box.service';
+
 import { Mail } from '@declare';
 
 @Component({
@@ -14,23 +23,41 @@ export class MailBoxComponent implements OnInit {
   fold = false;
   search = false;
   mobile = false;
+  ltMd = false;
   newMail = false;
   type = 'all';
   mail: Mail;
   mails: Array<Mail> = [];
   searchText = '';
+  form: FormGroup;
+  oldElIdx = -1;
 
-  constructor(private utils: UtilsService, private mailBox: MailBoxService) {}
+  constructor(
+    private el: ElementRef,
+    private fb: FormBuilder,
+    private utils: UtilsService,
+    private renderer2: Renderer2,
+    private mailBox: MailBoxService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit() {
     this.mobile = this.utils.getMobileState();
+    this.ltMd = window.innerWidth < 960;
     this.searchMails();
+    this.form = this.fb.group({
+      to: [null, [Validators.email, Validators.required]],
+      cc: null,
+      subject: null,
+      message: [null, [Validators.required]]
+    });
   }
 
   @HostListener('window:resize')
   @UtilsService.throttle(200)
   public onWindowResize(): void {
     this.mobile = this.utils.getMobileState();
+    this.ltMd = window.innerWidth < 960;
     if (this.mobile) {
       this.fold = true;
     }
@@ -58,10 +85,21 @@ export class MailBoxComponent implements OnInit {
     }
   }
 
-  viewDetail(mail: Mail): void {
-    this.mail = mail;
-    this.mail.selected = true;
-    this.mail.unread = false;
+  viewDetail(mail: Mail, index: number): void {
+    if (this.oldElIdx !== index) {
+      this.mail = mail;
+      this.mail.selected = true;
+      this.mail.unread = false;
+      this.newMail = false;
+      const els = this.el.nativeElement.querySelectorAll(
+        '.mail-box .main .person'
+      );
+      this.renderer2.addClass(els[index], 'ac');
+      if (this.oldElIdx > -1) {
+        this.renderer2.removeClass(els[this.oldElIdx], 'ac');
+      }
+      this.oldElIdx = index;
+    }
   }
 
   setAsRead(): void {
@@ -91,5 +129,13 @@ export class MailBoxComponent implements OnInit {
     this.getMails();
     // 断开原对象的链接
     this.mail = null;
+  }
+
+  onSubmit(mail) {
+    console.log(mail);
+    if (this.form.valid) {
+      this.message.create('success', messageText.SUC_SEND_MAIL);
+      this.form.reset();
+    }
   }
 }

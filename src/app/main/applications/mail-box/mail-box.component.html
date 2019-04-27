@@ -37,7 +37,7 @@
         </label>
       </div>
       <div>
-        <ng-container *ngIf="!mobile && mail">
+        <ng-container *ngIf="!mobile && mail && !newMail">
           <button
             nz-button
             nz-tooltip
@@ -78,10 +78,20 @@
             </ul>
           </nz-dropdown>
         </ng-container>
-        <button nz-button nz-tooltip nzTitle="Back">
+        <button
+          nz-button
+          nz-tooltip
+          nzTitle="Back"
+          (click)="newMail = false"
+          [hidden]="!newMail"
+        >
           <i nz-icon type="arrow-left" theme="outline"></i>
         </button>
-        <a class="compose pre" href="javascript:;">Compose</a>
+        <div class="dib fr" [ngStyle]="{ 'height.px': 40 }">
+          <a class="compose pre" href="javascript:;" (click)="newMail = true"
+            >Compose</a
+          >
+        </div>
       </div>
     </div>
   </cat-bg-header>
@@ -89,16 +99,20 @@
     <div
       class="person-box-cover"
       (click)="fold = true"
-      *ngIf="mobile && !fold"
+      *ngIf="ltMd && !fold"
     ></div>
     <div
-      [ngClass]="{ 'person-box': true, 'person-box--mobile': mobile, in: fold }"
+      [ngClass]="{ 'person-box': true, 'person-box--lt-md': ltMd, in: fold }"
     >
       <div class="tc no-data pab hauto2" *ngIf="!mails.length">
         <img src="/assets/icons/no-data.png" alt="no-data" />
         <p>暂无数据</p>
       </div>
-      <div class="person" *ngFor="let m of mails" (click)="viewDetail(m)">
+      <div
+        class="person"
+        *ngFor="let m of mails; let i = index"
+        (click)="viewDetail(m, i)"
+      >
         <nz-avatar nzIcon="user" [nzSrc]="m.senderPhoto"></nz-avatar>
         <div [ngClass]="{ right: true, unread: m.unread }">
           <h4 class="title">
@@ -109,11 +123,11 @@
       </div>
     </div>
     <div class="content-box fe h100 pre ovys">
-      <div class="no-data tc pab centre2" *ngIf="!mail">
+      <div class="no-data tc pab centre2" *ngIf="!mail && !newMail">
         <i nz-icon type="mail" theme="outline"></i>
         <p class="text">Select a mail to read</p>
       </div>
-      <div class="receive-box" *ngIf="mail">
+      <div class="receive-box" *ngIf="mail && !newMail">
         <h2 class="subject">{{ mail.subject }}</h2>
         <div class="header">
           <nz-avatar nzIcon="user" [nzSrc]="mail.senderPhoto"></nz-avatar>
@@ -145,11 +159,16 @@
           </div>
         </div>
       </div>
-      <!-- <div class="send-box" *ngIf="newMail">
-        <form nz-form (ngSubmit)="onSubmit(form.value)">
+      <div class="send-box h100" *ngIf="newMail">
+        <form nz-form [formGroup]="form">
           <nz-form-item>
             <nz-form-control>
               <input nz-input placeholder="To" formControlName="to" />
+              <nz-form-explain
+                *ngIf="form.get('to')?.dirty && form.get('to')?.errors"
+              >
+                The input is not valid E-mail!
+              </nz-form-explain>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
@@ -163,8 +182,14 @@
             </nz-form-control>
           </nz-form-item>
           <quill-editor formControlName="message"></quill-editor>
+          <div class="btns flex">
+            <button class="btn cancel" (click)="newMail = false">Cancel</button>
+            <button class="btn send" (click)="onSubmit(form.value)">
+              Send
+            </button>
+          </div>
         </form>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>
