@@ -3,17 +3,19 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NZ_I18N, en_US, NZ_ICONS } from 'ng-zorro-antd';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import { Driver, NgForageConfig, NgForageModule } from 'ngforage';
 import en from '@angular/common/locales/en';
-import { NgxPermissionsService, NgxPermissionsModule } from 'ngx-permissions';
 import { NgForage } from 'ngforage';
-import icons from './app.icon';
-
+import { NgxPermissionsService, NgxPermissionsModule } from 'ngx-permissions';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
+
+import { UsersData } from './main/applications/users/users.service';
+import icons from './app.icon';
 
 registerLocaleData(en);
 
@@ -32,6 +34,7 @@ const loadFactory = (forage: NgForage, ps: NgxPermissionsService) =>
     BrowserAnimationsModule,
     NgForageModule.forRoot(),
     NgxPermissionsModule.forRoot(),
+    InMemoryWebApiModule.forRoot(UsersData, { delay: 500 }),
     LayoutModule,
     SharedModule,
     AppRoutingModule

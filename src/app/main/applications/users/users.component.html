@@ -1,3 +1,313 @@
-<p>
-  users works!
-</p>
+<div class="users-box pre h100">
+  <cat-bg-header
+    headerTitle="Users"
+    describe="View information about the users, search, add, edit or delete any user."
+  >
+    <div class="bottom-users-bar flex">
+      <div>
+        <button nz-button>
+          <i nz-icon type="user-add" theme="outline"></i>
+        </button>
+        <button nz-button (click)="search = !search">
+          <i nz-icon type="search" theme="outline"></i>
+        </button>
+      </div>
+      <div class="fe">
+        <label [ngClass]="{ search: true, ac: search }">
+          <input
+            class="tc ipt wh100"
+            type="text"
+            [(ngModel)]="searchText"
+            (keyup)="searchUser()"
+            placeholder="Search user by name..."
+          />
+        </label>
+      </div>
+      <div>
+        <button nz-button (click)="showWay = 'grid'">
+          <i nz-icon type="appstore" theme="outline"></i>
+        </button>
+        <button nz-button (click)="showWay = 'module'">
+          <i nz-icon type="ordered-list" theme="outline"></i>
+        </button>
+      </div>
+    </div>
+  </cat-bg-header>
+  <div class="main fe" *ngIf="fetchState">
+    <div class="grid-list" fxLayout="row wrap" *ngIf="showWay === 'grid'">
+      <nz-skeleton
+        [nzAvatar]="true"
+        [nzParagraph]="{ rows: 4 }"
+        fxFlex="100"
+        fxFlex.gt-lg="25"
+        fxFlex.gt-md="33.3"
+        fxFlex.md="50"
+        fxFlex.sm="50"
+        [nzActive]="true"
+      ></nz-skeleton>
+      <nz-skeleton
+        [nzAvatar]="true"
+        [nzParagraph]="{ rows: 4 }"
+        fxFlex="100"
+        fxFlex.gt-lg="25"
+        fxFlex.gt-md="33.3"
+        fxFlex.md="50"
+        fxFlex.sm="50"
+        [nzActive]="true"
+      ></nz-skeleton>
+      <nz-skeleton
+        [nzAvatar]="true"
+        [nzParagraph]="{ rows: 4 }"
+        fxFlex="100"
+        fxFlex.gt-lg="25"
+        fxFlex.gt-md="33.3"
+        fxFlex.md="50"
+        fxFlex.sm="50"
+        [nzActive]="true"
+      ></nz-skeleton>
+    </div>
+    <div class="module-list" *ngIf="showWay === 'module'">
+      <nz-skeleton
+        [nzActive]="true"
+        [nzAvatar]="true"
+        [nzParagraph]="{ rows: 4 }"
+      ></nz-skeleton>
+      <nz-skeleton
+        [nzActive]="true"
+        [nzAvatar]="true"
+        [nzParagraph]="{ rows: 4 }"
+      ></nz-skeleton
+      ><nz-skeleton
+        [nzActive]="true"
+        [nzAvatar]="true"
+        [nzParagraph]="{ rows: 4 }"
+      ></nz-skeleton>
+    </div>
+  </div>
+  <div class="main fe" *ngIf="!fetchState && users.length">
+    <div class="grid-list" fxLayout="row wrap" *ngIf="showWay === 'grid'">
+      <div
+        fxFlex="100"
+        fxFlex.gt-lg="25"
+        fxFlex.gt-md="33.3"
+        fxFlex.md="50"
+        fxFlex.sm="50"
+        *ngFor="let user of users | paginate: { pageIndex: pageIndex }"
+      >
+        <div [ngClass]="{ cart: true, in: user.settings.isDeleted }">
+          <div
+            class="user-avatar"
+            [ngClass]="user.settings.isDeleted ? '' : user.settings.bgColor"
+          >
+            <label class="block-bg">
+              <img [src]="user.profile.image" />
+              <i
+                nz-icon
+                type="stop"
+                theme="outline"
+                *ngIf="user.settings.isDeleted"
+              ></i>
+            </label>
+            <div class="button-group">
+              <a [href]="user.social.weibo" target="_blank">
+                <i nz-icon type="weibo"></i>
+              </a>
+              <a [href]="user.social.qq" target="_blank">
+                <i nz-icon type="qq"></i>
+              </a>
+              <a [href]="user.social.google" target="_blank">
+                <i nz-icon type="google"></i>
+              </a>
+            </div>
+          </div>
+          <div class="user-details">
+            <div class="name-bar">
+              <h4 class="name">
+                {{ user.profile.name | uppercase }}
+                {{ user.profile.surname | uppercase }}
+              </h4>
+              <nz-dropdown
+                [nzClickHide]="true"
+                [nzPlacement]="'bottomRight'"
+                [nzTrigger]="'click'"
+              >
+                <a nz-dropdown class="dash-btn">
+                  <i nz-icon type="ellipsis" theme="outline"></i>
+                </a>
+                <ul nz-menu class="more-op-list">
+                  <li nz-menu-item>
+                    <i nz-icon type="edit" theme="fill"></i>Edit
+                  </li>
+                  <li nz-menu-item (click)="deleteUser(user)">
+                    <i nz-icon type="delete" theme="fill"></i>Delete
+                  </li>
+                  <li
+                    nz-menu-item
+                    (click)="user.settings.isDeleted = !user.settings.isDeleted"
+                  >
+                    <i nz-icon type="stop" theme="fill"></i>
+                    {{ user.settings.isDeleted ? 'Unblock' : 'Block' }}
+                  </li>
+                </ul>
+              </nz-dropdown>
+            </div>
+            <nz-divider></nz-divider>
+            <div class="info-list">
+              <p class="item">
+                <i nz-icon type="desktop" theme="outline"></i
+                >{{ user.work.position }}
+              </p>
+              <p class="item">
+                <i nz-icon type="mail" theme="outline"></i
+                >{{ user.contacts.email }}
+              </p>
+              <p class="item">
+                <i nz-icon type="phone" theme="outline"></i
+                >{{ user.contacts.phone }}
+              </p>
+              <p class="item">
+                <i nz-icon type="environment" theme="outline"></i
+                >{{ user.contacts.address }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-list" *ngIf="showWay === 'module'">
+      <div
+        [ngClass]="{ cart: true, in: user.settings.isDeleted }"
+        *ngFor="let user of users | paginate: { pageIndex: pageIndex }"
+      >
+        <div
+          class="user-avatar"
+          [ngClass]="user.settings.isDeleted ? '' : user.settings.bgColor"
+        >
+          <label class="block-bg">
+            <img [src]="user.profile.image" />
+            <i
+              nz-icon
+              type="stop"
+              theme="outline"
+              *ngIf="user.settings.isDeleted"
+            ></i>
+          </label>
+          <div class="button-group">
+            <a [href]="user.social.weibo" target="_blank">
+              <i nz-icon type="weibo"></i>
+            </a>
+            <a [href]="user.social.qq" target="_blank">
+              <i nz-icon type="qq"></i>
+            </a>
+            <a [href]="user.social.google" target="_blank">
+              <i nz-icon type="google"></i>
+            </a>
+          </div>
+        </div>
+        <div class="user-details">
+          <div class="name-bar">
+            <h4 class="name">
+              {{ user.profile.name | uppercase }}
+              {{ user.profile.surname | uppercase }}
+            </h4>
+            <nz-dropdown
+              [nzClickHide]="true"
+              [nzPlacement]="'bottomRight'"
+              [nzTrigger]="'click'"
+            >
+              <a nz-dropdown class="dash-btn">
+                <i nz-icon type="ellipsis" theme="outline"></i>
+              </a>
+              <ul nz-menu class="more-op-list">
+                <li nz-menu-item>
+                  <i nz-icon type="edit" theme="fill"></i>Edit
+                </li>
+                <li nz-menu-item (click)="deleteUser(user)">
+                  <i nz-icon type="delete" theme="fill"></i>Delete
+                </li>
+                <li
+                  nz-menu-item
+                  (click)="user.settings.isDeleted = !user.settings.isDeleted"
+                >
+                  <i nz-icon type="stop" theme="fill"></i>
+                  {{ user.settings.isDeleted ? 'Unblock' : 'Block' }}
+                </li>
+              </ul>
+            </nz-dropdown>
+          </div>
+          <nz-divider></nz-divider>
+          <div nz-row>
+            <div class="info-list" nz-col nzXs="24" nzSm="8">
+              <p class="item">
+                <i nz-icon type="table" theme="outline"></i
+                >{{ user.work.company }}
+              </p>
+              <p class="item">
+                <i nz-icon type="desktop" theme="outline"></i
+                >{{ user.work.position }}
+              </p>
+              <p class="item">
+                <i nz-icon type="pay-circle" theme="outline"></i
+                >{{ user.work.salary }}
+              </p>
+            </div>
+            <div class="info-list" nz-col nzXs="24" nzSm="8">
+              <p class="item">
+                <i nz-icon type="mail" theme="outline"></i
+                >{{ user.contacts.email }}
+              </p>
+              <p class="item">
+                <i nz-icon type="phone" theme="outline"></i
+                >{{ user.contacts.phone }}
+              </p>
+              <p class="item">
+                <i nz-icon type="environment" theme="outline"></i
+                >{{ user.contacts.address }}
+              </p>
+            </div>
+            <div class="info-list" nz-col nzXs="24" nzSm="8">
+              <p class="item">
+                <i nz-icon type="tag" theme="outline"></i>Registration
+                {{
+                  user.settings.registrationDate
+                    | date: "dd MMMM, yyyy 'at' HH:mm"
+                }}
+              </p>
+              <p class="item">
+                <i nz-icon type="calendar" theme="outline"></i>Joined
+                {{
+                  user.settings.joinedDate | date: "dd MMMM, yyyy 'at' HH:mm"
+                }}
+              </p>
+              <p class="item">
+                <i nz-icon type="user" theme="outline"></i
+                >{{ user.settings.isDeleted ? 'Blocked' : 'Active' }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-bar tc" *ngIf="users.length > 8">
+      <nz-pagination
+        [(nzPageIndex)]="pageIndex"
+        [nzTotal]="users.length"
+        [nzSize]="'small'"
+        [nzPageSize]="8"
+        [nzItemRender]="renderItemTemplate"
+        (nzPageIndexChange)="handlePageIndexChange($event)"
+      ></nz-pagination>
+    </div>
+  </div>
+  <div class="tc no-data pab centre2" *ngIf="!fetchState && !users.length">
+    <img src="/assets/icons/no-data.png" alt="no-data" />
+    <p>暂无数据</p>
+  </div>
+</div>
+
+<ng-template #renderItemTemplate let-type let-page="page">
+  <a *ngIf="type === 'pre'">« Previous </a>
+  <a *ngIf="type === 'next'"> Next »</a>
+  <a *ngIf="type === 'page'">{{ page }}</a>
+</ng-template>

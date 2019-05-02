@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^7.2.5",
     "@angular/platform-browser-dynamic": "^7.2.5",
     "@angular/router": "^7.2.5",
+    "angular-in-memory-web-api": "^0.8.0",
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.16.0",
     "core-js": "^2.5.4",

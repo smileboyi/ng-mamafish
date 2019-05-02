@@ -34,7 +34,19 @@ import {
   EnvironmentFill,
   MailFill,
   AlignCenterOutline,
-  ArrowLeftOutline
+  ArrowLeftOutline,
+  StopFill,
+  EditFill,
+  AppstoreOutline,
+  OrderedListOutline,
+  UserAddOutline,
+  TableOutline,
+  DesktopOutline,
+  PayCircleOutline,
+  EnvironmentOutline,
+  TagOutline,
+  CalendarOutline,
+  PhoneOutline
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -72,7 +84,19 @@ const icons: IconDefinition[] = [
   PhoneFill,
   EnvironmentFill,
   AlignCenterOutline,
-  ArrowLeftOutline
+  ArrowLeftOutline,
+  StopFill,
+  EditFill,
+  AppstoreOutline,
+  OrderedListOutline,
+  UserAddOutline,
+  TableOutline,
+  DesktopOutline,
+  PayCircleOutline,
+  EnvironmentOutline,
+  TagOutline,
+  CalendarOutline,
+  PhoneOutline
 ];
 
 export default icons;
