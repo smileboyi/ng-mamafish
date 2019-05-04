@@ -1,4 +1,3 @@
-// @import '/assets/styles/_gradients.less';
 @import '../../../../assets/styles/_gradients';
 
 :host {
@@ -48,6 +47,10 @@
   .module-list {
     nz-skeleton {
       margin-bottom: 20px;
+      ::ng-deep .ant-skeleton-header {
+        vertical-align: middle;
+        padding-left: 16px;
+      }
     }
     .cart {
       display: flex;

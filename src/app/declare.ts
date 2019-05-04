@@ -77,7 +77,7 @@ export class Mail {
   ) {}
 }
 
-export interface UserProfile {
+export class UserProfile {
   name: string;
   surname: string;
   birthday: Object;
@@ -85,25 +85,25 @@ export interface UserProfile {
   image: string;
 }
 
-export interface UserWork {
+export class UserWork {
   company: string;
   position: string;
   salary: number;
 }
 
-export interface UserContacts {
+export class UserContacts {
   email: string;
   phone: string;
   address: string;
 }
 
-export interface UserSocial {
+export class UserSocial {
   weibo: string;
   qq: string;
   google: string;
 }
 
-export interface UserSettings {
+export class UserSettings {
   isActive: boolean;
   isDeleted: boolean;
   registrationDate: string;
@@ -111,7 +111,7 @@ export interface UserSettings {
   bgColor: string;
 }
 
-export interface User {
+export class User {
   id: number;
   username: string;
   password: string;

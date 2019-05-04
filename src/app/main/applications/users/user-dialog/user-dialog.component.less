@@ -1,0 +1,101 @@
+:host {
+  width: 100%;
+  height: 100%;
+  .user-dialog {
+    z-index: 1000;
+    .cover {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .dialog {
+      max-width: 520px;
+      padding: 24px;
+      border-radius: 6px;
+      background-color: #fff;
+      .title {
+        line-height: 32px;
+        margin-bottom: 20px;
+        font-size: 20px;
+        color: #212121;
+      }
+      .btns {
+        margin-top: 20px;
+        button {
+          display: inline-block;
+          height: 36px;
+          line-height: 36px;
+          padding: 0 16px;
+          font-size: 14px;
+          color: #fff;
+          border: none;
+          border-radius: 6px;
+          box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+            0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+            0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        }
+        .save {
+          background-color: #1e88e5;
+        }
+        .cancel {
+          display: inline-block;
+          background-color: #f44336;
+        }
+        [disabled] {
+          color: rgba(0, 0, 0, 0.26);
+          background-color: rgba(0, 0, 0, 0.12);
+        }
+      }
+      .main {
+        .nav {
+          width: 168px;
+          height: 288px;
+          .item {
+            line-height: 48px;
+            text-align: center;
+            font-size: 14px;
+            color: #7a7a7a;
+            &:hover,
+            &.ac {
+              color: #212121;
+              background-color: #b6ddff;
+            }
+          }
+        }
+        .form-box {
+          width: 290px;
+          .tabs-box {
+            height: 100%;
+            width: 300%;
+            transform: translateX(-290px);
+            .tab-content {
+              flex: 1;
+              padding: 5px;
+              box-sizing: border-box;
+            }
+            nz-form-item {
+              margin-bottom: 15px;
+              nz-form-explain {
+                font-size: 10px;
+                font-family: Roboto, 'Helvetica Neue', sans-serif;
+              }
+              ::ng-deep .ant-calendar-picker {
+                width: 100%;
+              }
+              ::ng-deep .ant-input,
+              ::ng-deep .ant-select-selection {
+                color: #212121;
+                border: none;
+                border-bottom: 1px solid #949494;
+                border-radius: 0;
+                box-shadow: none;
+                &:focus {
+                  box-shadow: none;
+                  border-bottom: 2px solid #1e88e5;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

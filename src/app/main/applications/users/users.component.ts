@@ -1,5 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ComponentRef,
+  ViewContainerRef,
+  ComponentFactoryResolver
+} from '@angular/core';
 
+import { UserDialogComponent } from './user-dialog/user-dialog.component';
+import { UtilsService } from '@services/utils.service';
 import { UsersService } from './users.service';
 import { User } from '@declare';
 
@@ -11,24 +20,57 @@ import { User } from '@declare';
 export class UsersComponent implements OnInit {
   search = false;
   searchText = '';
+  oldSearchText = '';
   showWay: 'grid' | 'module' = 'grid';
   users: User[];
   pageIndex = 1;
   fetchState = false;
 
-  constructor(private usersService: UsersService) {}
+  @ViewChild('userDialogContainer', { read: ViewContainerRef })
+  userDialogContainer: ViewContainerRef;
+
+  userDialog: ComponentRef<UserDialogComponent>;
+
+  constructor(
+    private usersService: UsersService,
+    private componentFactoryResolver: ComponentFactoryResolver
+  ) {}
 
   ngOnInit() {
     this.getUsers();
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+      UserDialogComponent
+    );
+    this.userDialog = this.userDialogContainer.createComponent(
+      componentFactory
+    );
+    (<UserDialogComponent>this.userDialog.instance).subscriptionForm(
+      (user: User) => {
+        user.id ? this.updateUser(user) : this.addUser(user);
+      }
+    );
   }
 
   getUsers(): void {
     this.users = [];
     this.fetchState = true;
     this.usersService.getUsers().subscribe(users => {
-      this.users = users;
+      const searchText = this.searchText.trim().toLowerCase();
+      this.oldSearchText = searchText;
+      this.users = users.filter((u: User) => {
+        const fullName = u.profile.name + ' ' + u.profile.surname;
+        return fullName.toLowerCase().indexOf(searchText) > -1;
+      });
       this.fetchState = false;
     });
+  }
+
+  addUser(user: User): void {
+    this.usersService.addUser(user).subscribe(() => this.getUsers());
+  }
+
+  updateUser(user: User): void {
+    this.usersService.updateUser(user).subscribe(() => this.getUsers());
   }
 
   deleteUser(user: User): void {
@@ -42,10 +84,31 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  searchUser(): void {}
+  // 本地变量中搜索200，请求搜索300
+  @UtilsService.throttle(300)
+  searchUser(): void {
+    const searchText = this.searchText.trim().toLowerCase();
+    if (this.oldSearchText !== searchText) {
+      this.getUsers();
+    }
+  }
+
+  toggleSearch(): void {
+    this.search = !this.search;
+    if (!this.search) {
+      if (this.searchText.trim()) {
+        this.getUsers();
+      }
+      this.searchText = '';
+    }
+  }
 
   handlePageIndexChange(index: number): void {
     this.pageIndex = index;
     this.getUsers();
+  }
+
+  openUserDialog(user: User) {
+    (<UserDialogComponent>this.userDialog.instance).initForm(user);
   }
 }

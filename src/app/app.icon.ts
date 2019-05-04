@@ -46,7 +46,13 @@ import {
   EnvironmentOutline,
   TagOutline,
   CalendarOutline,
-  PhoneOutline
+  PhoneOutline,
+  StarFill,
+  StarOutline,
+  BgColorsOutline,
+  SettingFill,
+  EyeOutline,
+  EyeFill
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -96,7 +102,13 @@ const icons: IconDefinition[] = [
   EnvironmentOutline,
   TagOutline,
   CalendarOutline,
-  PhoneOutline
+  PhoneOutline,
+  StarFill,
+  StarOutline,
+  BgColorsOutline,
+  SettingFill,
+  EyeOutline,
+  EyeFill
 ];
 
 export default icons;

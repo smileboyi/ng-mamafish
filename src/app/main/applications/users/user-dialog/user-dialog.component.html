@@ -1,0 +1,318 @@
+<div class="user-dialog wh100 pfi not nol" [hidden]="!dialogShow">
+  <div class="cover wh100" (click)="handleCancel()"></div>
+  <div class="dialog centre2">
+    <h3 class="title">{{ type === 'add' ? 'Add' : 'Edit' }} User</h3>
+    <div class="main flex">
+      <nav class="nav">
+        <div
+          class="item"
+          [class.ac]="contentIndex === 1"
+          (click)="toggleTabContent(1)"
+        >
+          Basic
+        </div>
+        <div
+          class="item"
+          [class.ac]="contentIndex === 2"
+          (click)="toggleTabContent(2)"
+        >
+          Personal
+        </div>
+        <div
+          class="item"
+          [class.ac]="contentIndex === 3"
+          (click)="toggleTabContent(3)"
+        >
+          Work
+        </div>
+        <div
+          class="item"
+          [class.ac]="contentIndex === 4"
+          (click)="toggleTabContent(4)"
+        >
+          Contacts
+        </div>
+        <div
+          class="item"
+          [class.ac]="contentIndex === 5"
+          (click)="toggleTabContent(5)"
+        >
+          Social life
+        </div>
+        <div
+          class="item"
+          [class.ac]="contentIndex === 6"
+          (click)="toggleTabContent(6)"
+        >
+          Settings
+        </div>
+      </nav>
+      <form class="ovh form-box" [formGroup]="form">
+        <!-- nz-carousel组件中添加的表单元素一直获取不到焦点，这里手写一个走马灯 -->
+        <div class="tabs-box flex" #tabsBox>
+          <div class="tab-content" *ngIf="contentShow[0]"></div>
+          <div class="tab-content" *ngIf="contentShow[1]">
+            <nz-form-item>
+              <nz-form-control>
+                <input
+                  nz-input
+                  placeholder="Username *"
+                  formControlName="username"
+                  required
+                />
+                <nz-form-explain
+                  *ngIf="
+                    form.get('username')?.dirty &&
+                    form.get('username')?.errors?.required
+                  "
+                >
+                  Username is required
+                </nz-form-explain>
+                <nz-form-explain
+                  *ngIf="
+                    form.get('username')?.dirty &&
+                    form.get('username').hasError('minlength')
+                  "
+                >
+                  Username isn't long enough, minimum of 5 characters
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <nz-input-group [nzSuffix]="passwordSuffixTemplate">
+                  <input
+                    nz-input
+                    [type]="passwordVisible ? 'text' : 'password'"
+                    placeholder="Password *"
+                    formControlName="password"
+                    required
+                  />
+                </nz-input-group>
+
+                <nz-form-explain
+                  *ngIf="
+                    form.get('password')?.dirty &&
+                    form.get('password')?.errors?.required
+                  "
+                >
+                  Password is required
+                </nz-form-explain>
+                <nz-form-explain
+                  *ngIf="
+                    form.get('password')?.dirty &&
+                    form.get('password').hasError('minlength')
+                  "
+                >
+                  Password isn't long enough, minimum of 6 characters
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div
+            class="tab-content"
+            formGroupName="profile"
+            *ngIf="contentShow[2]"
+          >
+            <nz-form-item>
+              <nz-form-control>
+                <input nz-input placeholder="Name" formControlName="name" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <input
+                  nz-input
+                  placeholder="Surname"
+                  formControlName="surname"
+                />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <nz-date-picker
+                  nzPlaceHolder="Birthday"
+                  formControlName="birthday"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <nz-select
+                  nzAllowClear
+                  nzPlaceHolder="Gender"
+                  formControlName="gender"
+                >
+                  <nz-option nzLabel="Male" nzValue="male"></nz-option>
+                  <nz-option nzLabel="Female" nzValue="female"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <input
+                  nz-input
+                  placeholder="Image Url"
+                  formControlName="image"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="tab-content" formGroupName="work" *ngIf="contentShow[3]">
+            <nz-form-item>
+              <nz-form-control>
+                <input
+                  nz-input
+                  placeholder="company"
+                  formControlName="company"
+                />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <input
+                  nz-input
+                  placeholder="Position"
+                  formControlName="position"
+                />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <nz-input-group
+                  [nzSuffix]="salarySuffixTemplate"
+                  [nzPrefix]="salaryPrefixTemplate"
+                >
+                  <input
+                    type="number"
+                    nz-input
+                    placeholder="Salary"
+                    formControlName="salary"
+                  />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div
+            class="tab-content"
+            formGroupName="contacts"
+            *ngIf="contentShow[4]"
+          >
+            <nz-form-item>
+              <nz-form-control>
+                <input nz-input placeholder="Email" formControlName="email" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <input
+                  type="number"
+                  nz-input
+                  placeholder="Phone"
+                  formControlName="phone"
+                />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <input
+                  nz-input
+                  placeholder="Address"
+                  formControlName="address"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div
+            class="tab-content"
+            formGroupName="social"
+            *ngIf="contentShow[5]"
+          >
+            <nz-form-item>
+              <nz-form-control>
+                <input nz-input placeholder="Weibo" formControlName="weibo" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <input nz-input placeholder="Qq" formControlName="qq" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <input nz-input placeholder="Google" formControlName="google" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div
+            class="tab-content"
+            formGroupName="settings"
+            *ngIf="contentShow[6]"
+          >
+            <nz-form-item>
+              <label nz-checkbox formControlName="isActive">isActive</label>
+            </nz-form-item>
+            <nz-form-item>
+              <label nz-checkbox formControlName="isDeleted">isDeleted</label>
+            </nz-form-item>
+
+            <p
+              [ngStyle]="{ 'font-size.px': 12, 'margin-bottom.px': 15 }"
+              *ngIf="user.id"
+            >
+              <span>Registration date:</span>
+              <i>{{
+                user.settings.registrationDate
+                  | date: "dd MMMM, yyyy 'at' HH:mm"
+              }}</i>
+            </p>
+            <p
+              [ngStyle]="{ 'font-size.px': 12, 'margin-bottom.px': 15 }"
+              *ngIf="user.id"
+            >
+              <span>Last joined date:</span>
+              <i>{{
+                user.settings.joinedDate | date: "dd MMMM, yyyy 'at' HH:mm"
+              }}</i>
+            </p>
+            <nz-form-item>
+              <nz-form-control>
+                <nz-select
+                  nzAllowClear
+                  nzPlaceHolder="Choose bg color"
+                  formControlName="bgColor"
+                >
+                  <nz-option
+                    [nzLabel]="color.viewValue"
+                    [nzValue]="color.value"
+                    *ngFor="let color of colors"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="tab-content" *ngIf="contentShow[7]"></div>
+        </div>
+      </form>
+    </div>
+    <div class="btns flex">
+      <button class="save" [disabled]="!form.valid" (click)="handleSave()">
+        {{ type === 'add' ? 'Save' : 'Update' }}
+      </button>
+      <button class="cancel" (click)="handleCancel()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #passwordSuffixTemplate>
+  <i
+    nz-icon
+    type="eye"
+    [theme]="passwordVisible ? 'fill' : 'outline'"
+    (click)="passwordVisible = !passwordVisible"
+  ></i>
+</ng-template>
+<ng-template #salaryPrefixTemplate>
+  <i nz-icon type="pay-circle"></i>
+</ng-template>
+<ng-template #salarySuffixTemplate>.00</ng-template>
