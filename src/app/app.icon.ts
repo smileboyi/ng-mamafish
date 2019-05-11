@@ -52,7 +52,8 @@ import {
   BgColorsOutline,
   SettingFill,
   EyeOutline,
-  EyeFill
+  EyeFill,
+  FacebookOutline
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -108,7 +109,8 @@ const icons: IconDefinition[] = [
   BgColorsOutline,
   SettingFill,
   EyeOutline,
-  EyeFill
+  EyeFill,
+  GithubOutline
 ];
 
 export default icons;

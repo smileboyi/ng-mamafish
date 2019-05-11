@@ -251,8 +251,6 @@ export const getChatTalks = (user: ChatUser): Array<ChatTalk> => {
   ];
 };
 
-
-
 export const Mails: Array<Mail> = [
   new Mail(
     2,
@@ -384,9 +382,8 @@ export const Mails: Array<Mail> = [
     false,
     false,
     false
-  ),
+  )
 ];
-
 
 export const users: Array<User> = [
   {
@@ -1000,5 +997,56 @@ export const users: Array<User> = [
       joinedDate: '2015-03-29T17:20:40.511Z',
       bgColor: 'gradient-amber'
     }
+  }
+];
+
+export const activities = [
+  {
+    name: 'Herman Beck',
+    avatar: '/assets/images/ashley.jpg',
+    type: 'posted a new note',
+    time: 'active 14 minutes ago',
+    images: [],
+    text: '“Check if it can be corrected with overflow : hidden”'
+  },
+  {
+    name: 'June Lane',
+    avatar: '/assets/images/bruno.jpg',
+    type: 'uploaded 4 photos',
+    time: 'active 14 minutes ago',
+    images: [
+      '/assets/images/sunflower1.jpg',
+      '/assets/images/sunflower2.jpg',
+      '/assets/images/sunflower3.jpg',
+      '/assets/images/sunflower4.jpg'
+    ],
+    text: ''
+  },
+  {
+    name: 'Mary Adams',
+    avatar: '/assets/images/tereza.jpg',
+    type: 'posted an updated',
+    time: 'active 14 minutes ago',
+    images: ['/assets/images/cat.jpg'],
+    text:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. \
+       Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.\
+      Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.'
+  },
+  {
+    name: 'Herman Lucy',
+    avatar: '/assets/images/user.jpg',
+    type: 'posted an updated',
+    time: 'active 14 minutes ago',
+    images: [],
+    text: '“Check if it can be corrected with overflow : hidden”'
+  },
+  {
+    name: 'Caleb Richards',
+    avatar: '/assets/images/adam.jpg',
+    type: 'posted an new activity comment',
+    time: 'active 14 minutes ago',
+    images: [],
+    text: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus.'
   }
 ];

@@ -1,3 +1,112 @@
-<p>
-  profile works!
-</p>
+<div class="profile wh100 bsb clear ovh">
+  <div class="card box-shadow ovh fl">
+    <div class="content tc bsb">
+      <nz-avatar
+        [nzSize]="130"
+        nzIcon="user"
+        nzSrc="/assets/images/avatar.jpg"
+      ></nz-avatar>
+      <h2 class="name">smileboyi</h2>
+      <h3 class="job">Web developer</h3>
+      <p class="intro">Don't be a programmer, be a problem solver.</p>
+      <div class="link-group">
+        <a href="javascript:;">
+          <i nz-icon type="weibo"></i>
+        </a>
+        <a href="javascript:;">
+          <i nz-icon type="qq"></i>
+        </a>
+        <a href="javascript:;">
+          <i nz-icon type="github"></i>
+        </a>
+        <a href="javascript:;">
+          <i nz-icon type="google"></i>
+        </a>
+      </div>
+      <button nz-button nzType="primary">
+        Follow
+      </button>
+    </div>
+    <div class="footer flex w100 tc">
+      <div class="fe">
+        <strong class="count">120</strong>
+        <span class="label">Follower</span>
+      </div>
+      <div class="fe">
+        <strong class="count">300</strong>
+        <span class="label">Following</span>
+      </div>
+      <div class="fe">
+        <strong class="count">2200</strong>
+        <span class="label">Tweets</span>
+      </div>
+    </div>
+  </div>
+  <div class="board-box fr">
+    <div class="board h100 grail">
+      <div class="tabs w100">
+        <div class="tab">Activities</div>
+        <div class="tab">Profile</div>
+        <div class="tab">Messages</div>
+        <div class="ink-bar"></div>
+      </div>
+      <div class="content-box ovys fe flex">
+        <div class="content">
+          <div class="item" *ngFor="let activitie of activities">
+            <div class="info flex">
+              <img class="avatar" [src]="activitie.avatar" />
+              <div class="fe">
+                <div class="name">
+                  {{ activitie.name }}
+                  <span class="sub">{{ activitie.type }}</span>
+                </div>
+                <div class="time">{{ activitie.time }}</div>
+              </div>
+            </div>
+            <div class="main">
+              <img [src]="images" *ngFor="let images of activitie.images" />
+              <p>{{ activitie.text }}</p>
+            </div>
+          </div>
+          <div class="status-bar">{{ showStatus }}</div>
+        </div>
+        <div class="content">
+          <div class="item" *ngFor="let activitie of activities">
+            <div class="info flex">
+              <img class="avatar" [src]="activitie.avatar" />
+              <div class="fe">
+                <div class="name">
+                  {{ activitie.name }}
+                  <span class="sub">{{ activitie.type }}</span>
+                </div>
+                <div class="time">{{ activitie.time }}</div>
+              </div>
+            </div>
+            <div class="main">
+              <img [src]="images" *ngFor="let images of activitie.images" />
+              <p>{{ activitie.text }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="content">
+          <div class="item" *ngFor="let activitie of activities">
+            <div class="info flex">
+              <img class="avatar" [src]="activitie.avatar" />
+              <div class="fe">
+                <div class="name">
+                  {{ activitie.name }}
+                  <span class="sub">{{ activitie.type }}</span>
+                </div>
+                <div class="time">{{ activitie.time }}</div>
+              </div>
+            </div>
+            <div class="main">
+              <img [src]="images" *ngFor="let images of activitie.images" />
+              <p>{{ activitie.text }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
