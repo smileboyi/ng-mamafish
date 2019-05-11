@@ -129,6 +129,7 @@ export class MailBoxComponent implements OnInit {
     this.getMails();
     // 断开原对象的链接
     this.mail = null;
+    this.oldElIdx = -1;
   }
 
   onSubmit(mail) {

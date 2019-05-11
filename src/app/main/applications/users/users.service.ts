@@ -18,7 +18,8 @@ export class UsersData implements InMemoryDbService {
   providedIn: 'root'
 })
 export class UsersService {
-  private url = 'api/users';
+  private url = '/api/users';
+
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<User[]> {
