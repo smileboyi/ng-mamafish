@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -29,12 +30,13 @@ const APP_CORE_PROVIDERS = [
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
+    QuillModule,
     FormsModule,
     RouterModule,
     FlexLayoutModule,
     NgZorroAntdModule,
     NgxPermissionsModule,
-    QuillModule
+    ScrollDispatchModule
   ],
   declarations: [ThrottleClickDirective, BgHeaderComponent, PaginatePipe],
   providers: [...APP_CORE_PROVIDERS],
@@ -42,11 +44,12 @@ const APP_CORE_PROVIDERS = [
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
+    QuillModule,
     FormsModule,
     RouterModule,
     FlexLayoutModule,
     NgZorroAntdModule,
-    QuillModule,
+    ScrollDispatchModule,
     NgxPermissionsModule,
     ThrottleClickDirective,
     BgHeaderComponent,

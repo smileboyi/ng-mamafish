@@ -9,6 +9,11 @@
       min-width: 300px;
       background-color: #fff;
       border-radius: 5px;
+      &.ltMd {
+        width: 100%;
+        float: none;
+        margin-bottom: 15px;
+      }
       .content {
         padding: 49px 24px;
         .name {
@@ -64,6 +69,20 @@
       width: 70%;
       height: calc(100% + 30px);
       max-width: calc(100% - 300px);
+      &.ltMd {
+        width: 100%;
+        height: 100%;
+        max-width: 1000px;
+        float: none;
+        .board {
+          padding-top: 0;
+          margin-left: 0px;
+          .tab,
+          .ink-bar {
+            width: 33.3333%;
+          }
+        }
+      }
     }
     .board {
       margin-left: 30px;
@@ -76,25 +95,31 @@
         border-bottom: 1px solid #e0e0e0;
         .tab {
           display: inline-block;
-          width: 160px;
+          width: 10vw;
           height: 48px;
           line-height: 48px;
           font-size: 14px;
           text-align: center;
           color: #212121;
+          cursor: pointer;
         }
         .ink-bar {
-          width: 160px;
+          width: 10vw;
           height: 0px;
           border-bottom: 2px solid #3c4252;
         }
       }
-      .content-box {
+      .content-main {
         width: 300%;
       }
-      .content {
+      .content-box {
+        position: relative;
+        float: left;
         width: 33.3333%;
+        height: 100%;
         padding: 0 30px;
+        overflow-x: hidden;
+        overflow-y: auto;
       }
       .item {
         padding: 25px 16px;
@@ -147,5 +172,12 @@
         background-color: #eee;
       }
     }
+  }
+}
+
+::ng-deep .ant-back-top {
+  bottom: 180px;
+  .ant-back-top-content {
+    background-color: #1e88e5;
   }
 }

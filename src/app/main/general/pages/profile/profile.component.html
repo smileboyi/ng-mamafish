@@ -1,5 +1,10 @@
-<div class="profile wh100 bsb clear ovh">
-  <div class="card box-shadow ovh fl">
+<div
+  class="profile wh100 bsb clear trans ovh"
+  ngStyle.lt-md="padding: 15px;overflow-y: auto"
+  cdkScrollable
+  #profile
+>
+  <div class="card box-shadow ovh fl trans" #card ngClass.lt-md="ltMd">
     <div class="content tc bsb">
       <nz-avatar
         [nzSize]="130"
@@ -42,16 +47,33 @@
       </div>
     </div>
   </div>
-  <div class="board-box fr">
-    <div class="board h100 grail">
+  <div class="board-box fr trans" ngClass.lt-md="ltMd">
+    <div class="board h100 grail box-shadow ovh">
       <div class="tabs w100">
-        <div class="tab">Activities</div>
-        <div class="tab">Profile</div>
-        <div class="tab">Messages</div>
-        <div class="ink-bar"></div>
+        <div class="tab" (click)="handleFirstLoad(0)">
+          Activities
+        </div>
+        <div class="tab" (click)="handleFirstLoad(1)">
+          Profile
+        </div>
+        <div class="tab" (click)="handleFirstLoad(2)">
+          Messages
+        </div>
+        <div class="ink-bar trans" #inkBar></div>
       </div>
-      <div class="content-box ovys fe flex">
-        <div class="content">
+      <div class="ovh fe trans content-main" #contentMain>
+        <nz-back-top
+          [nzTarget]="contentBox"
+          [hidden]="!backTopShow"
+        ></nz-back-top>
+        <div class="content-box" #contentBox>
+          <p
+            class="tc"
+            [ngStyle]="{ 'margin.px': 50 }"
+            *ngIf="!activities.length"
+          >
+            <nz-spin nzSimple [nzSize]="'large'" nzTip="Loading..."></nz-spin>
+          </p>
           <div class="item" *ngFor="let activitie of activities">
             <div class="info flex">
               <img class="avatar" [src]="activitie.avatar" />
@@ -68,41 +90,61 @@
               <p>{{ activitie.text }}</p>
             </div>
           </div>
-          <div class="status-bar">{{ showStatus }}</div>
+          <div
+            class="status-bar"
+            *ngIf="activities.length"
+            (click)="fetchMoreData()"
+          >
+            {{ showStatus }}
+          </div>
         </div>
-        <div class="content">
-          <div class="item" *ngFor="let activitie of activities">
+        <div class="content-box">
+          <p
+            class="tc"
+            [ngStyle]="{ 'margin.px': 50 }"
+            *ngIf="!profiles.length"
+          >
+            <nz-spin nzSimple [nzSize]="'large'" nzTip="Loading..."></nz-spin>
+          </p>
+          <div class="item" *ngFor="let profiles of profiles">
             <div class="info flex">
-              <img class="avatar" [src]="activitie.avatar" />
+              <img class="avatar" [src]="profiles.avatar" />
               <div class="fe">
                 <div class="name">
-                  {{ activitie.name }}
-                  <span class="sub">{{ activitie.type }}</span>
+                  {{ profiles.name }}
+                  <span class="sub">{{ profiles.type }}</span>
                 </div>
-                <div class="time">{{ activitie.time }}</div>
+                <div class="time">{{ profiles.time }}</div>
               </div>
             </div>
             <div class="main">
-              <img [src]="images" *ngFor="let images of activitie.images" />
-              <p>{{ activitie.text }}</p>
+              <img [src]="images" *ngFor="let images of profiles.images" />
+              <p>{{ profiles.text }}</p>
             </div>
           </div>
         </div>
-        <div class="content">
-          <div class="item" *ngFor="let activitie of activities">
+        <div class="content-box">
+          <p
+            class="tc"
+            [ngStyle]="{ 'margin.px': 50 }"
+            *ngIf="!messages.length"
+          >
+            <nz-spin nzSimple [nzSize]="'large'" nzTip="Loading..."></nz-spin>
+          </p>
+          <div class="item" *ngFor="let message of messages">
             <div class="info flex">
-              <img class="avatar" [src]="activitie.avatar" />
+              <img class="avatar" [src]="message.avatar" />
               <div class="fe">
                 <div class="name">
-                  {{ activitie.name }}
-                  <span class="sub">{{ activitie.type }}</span>
+                  {{ message.name }}
+                  <span class="sub">{{ message.type }}</span>
                 </div>
-                <div class="time">{{ activitie.time }}</div>
+                <div class="time">{{ message.time }}</div>
               </div>
             </div>
             <div class="main">
-              <img [src]="images" *ngFor="let images of activitie.images" />
-              <p>{{ activitie.text }}</p>
+              <img [src]="images" *ngFor="let images of message.images" />
+              <p>{{ message.text }}</p>
             </div>
           </div>
         </div>
