@@ -4,6 +4,7 @@
   .profile {
     padding: 30px;
     background-color: #f1f4f5;
+    -webkit-overflow-scrolling: touch;
     .card {
       width: 30%;
       min-width: 300px;
@@ -120,6 +121,34 @@
         padding: 0 30px;
         overflow-x: hidden;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        .reload {
+          position: absolute;
+          right: 50px;
+          height: 50px;
+          width: 2px;
+          background-color: #1e88e5;
+          [nz-button] {
+            position: absolute;
+            bottom: -20px;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+            width: 22px;
+            height: 22px;
+            background-color: #fff;
+            border: none;
+            &.ac {
+              -webkit-transition: all 0.5s;
+              transition: all 0.5s;
+              -webkit-transform: translateX(-50%) rotate(180deg);
+              transform: translateX(-50%) rotate(180deg);
+            }
+          }
+          [nz-icon] {
+            font-size: 22px;
+            color: #1e88e5;
+          }
+        }
       }
       .item {
         padding: 25px 16px;

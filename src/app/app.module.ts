@@ -15,6 +15,10 @@ import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { UsersData } from './main/applications/users/users.service';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers } from '@reducers/index';
+import { effects } from '@effects/index';
 import icons from './app.icon';
 
 registerLocaleData(en);
@@ -37,7 +41,9 @@ const loadFactory = (forage: NgForage, ps: NgxPermissionsService) =>
     InMemoryWebApiModule.forRoot(UsersData, { delay: 500 }),
     LayoutModule,
     SharedModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot(effects)
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

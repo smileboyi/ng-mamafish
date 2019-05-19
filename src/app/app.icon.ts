@@ -53,7 +53,7 @@ import {
   SettingFill,
   EyeOutline,
   EyeFill,
-  FacebookOutline
+  SyncOutline
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -74,7 +74,6 @@ const icons: IconDefinition[] = [
   WeiboOutline,
   QqOutline,
   GoogleOutline,
-  GithubOutline,
   MenuFoldOutline,
   MenuUnfoldOutline,
   ContactsFill,
@@ -110,7 +109,8 @@ const icons: IconDefinition[] = [
   SettingFill,
   EyeOutline,
   EyeFill,
-  GithubOutline
+  GithubOutline,
+  SyncOutline
 ];
 
 export default icons;

@@ -30,7 +30,16 @@
       ],
       "@mock/*": [
         "./src/app/mock/*"
-      ]
+      ],
+      "@actions/*": [
+        "./src/app/stores/actions/*"
+      ],
+      "@effects/*": [
+        "./src/app/stores/effects/*"
+      ],
+      "@reducers/*": [
+        "./src/app/stores/reducers/*"
+      ],
     },
     "target": "es5",
     "typeRoots": [

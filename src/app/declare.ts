@@ -121,3 +121,12 @@ export class User {
   social: UserSocial;
   settings: UserSettings;
 }
+
+export class Activitie {
+  name: string;
+  avatar: string;
+  type: string;
+  time: string;
+  images: string[] = [];
+  text: string;
+}

@@ -67,6 +67,16 @@
           [hidden]="!backTopShow"
         ></nz-back-top>
         <div class="content-box" #contentBox>
+          <div class="reload">
+            <button
+              nz-button
+              nzType="default"
+              nzShape="circle"
+              (click)="reloadData(0)"
+            >
+              <i nz-icon type="sync" theme="outline"></i>
+            </button>
+          </div>
           <p
             class="tc"
             [ngStyle]="{ 'margin.px': 50 }"
@@ -99,6 +109,16 @@
           </div>
         </div>
         <div class="content-box">
+          <div class="reload">
+            <button
+              nz-button
+              nzType="default"
+              nzShape="circle"
+              (click)="reloadData(1)"
+            >
+              <i nz-icon type="sync" theme="outline"></i>
+            </button>
+          </div>
           <p
             class="tc"
             [ngStyle]="{ 'margin.px': 50 }"
@@ -124,6 +144,16 @@
           </div>
         </div>
         <div class="content-box">
+          <div class="reload">
+            <button
+              nz-button
+              nzType="default"
+              nzShape="circle"
+              (click)="reloadData(2)"
+            >
+              <i nz-icon type="sync" theme="outline"></i>
+            </button>
+          </div>
           <p
             class="tc"
             [ngStyle]="{ 'margin.px': 50 }"

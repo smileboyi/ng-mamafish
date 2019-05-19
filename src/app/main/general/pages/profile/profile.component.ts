@@ -10,15 +10,15 @@ import {
 } from '@angular/core';
 import * as _ from 'lodash';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import {
-  CdkScrollable,
-  ScrollDispatcher,
-  ViewportRuler
-} from '@angular/cdk/overlay';
+import { ScrollDispatcher } from '@angular/cdk/overlay';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 
+import * as actions from '@actions/profile.action';
+import { ProfileState } from '@reducers/profile.reducer';
+import * as fromReducer from '@reducers/index';
 import { UtilsService } from '@services/utils.service';
-import { activities } from '@mock/data.mock';
+import { Activitie } from '@declare';
 
 @Component({
   selector: 'cat-profile',
@@ -27,13 +27,15 @@ import { activities } from '@mock/data.mock';
 })
 export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   index = 0;
-  activities: Array<any> = [];
-  profiles: Array<any> = [];
-  messages: Array<any> = [];
+  activities: Array<Activitie> = [];
+  profiles: Array<Activitie> = [];
+  messages: Array<Activitie> = [];
   backTopShow = true;
   showStatus: 'Show more' | 'Loading more' | 'No more' = 'Show more';
   watcher: Subscription;
-  activeMediaQuery = '';
+  subscriptionA: Subscription;
+  subscriptionP: Subscription;
+  subscriptionM: Subscription;
   cardHeight = 0;
   oldScrollTop = 0;
 
@@ -54,7 +56,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private renderer2: Renderer2,
-    private viewPortRuler: ViewportRuler,
+    private store: Store<ProfileState>,
     private mediaObserver: MediaObserver,
     private scrollDispatcher: ScrollDispatcher
   ) {}
@@ -69,11 +71,27 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     );
 
-    // 模拟延迟
-    const t = setTimeout(() => {
-      this.activities = _.cloneDeep(activities);
-      clearTimeout(t);
-    }, 300);
+    this.subscriptionA = this.store
+      .select(fromReducer.selectActivities)
+      .subscribe(res => {
+        if (this.activities.length) {
+          const start = this.activities.length - 1;
+          const end = res.length - 1;
+          res.slice(start, end).forEach(item => {
+            this.activities.push(item);
+          });
+        } else {
+          this.activities = res;
+        }
+      });
+    this.subscriptionP = this.store
+      .select(fromReducer.selectProfiles)
+      .subscribe(res => (this.profiles = res));
+    this.subscriptionM = this.store
+      .select(fromReducer.selectMessages)
+      .subscribe(res => (this.messages = res));
+
+    this.handleFirstLoad(0);
   }
 
   ngAfterViewInit() {
@@ -95,7 +113,11 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // 希望ng支持hook
     this.watcher.unsubscribe();
+    this.subscriptionA.unsubscribe();
+    this.subscriptionP.unsubscribe();
+    this.subscriptionM.unsubscribe();
   }
 
   handleFirstLoad(index: number): void {
@@ -117,48 +139,67 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       'style',
       `transform: translateX(${100 * index}%)`
     );
-    if (index === 1 && !this.profiles.length) {
-      const t = setTimeout(() => {
-        this.profiles = _.cloneDeep(activities).sort(() =>
-          Math.random() > 0.5 ? -1 : 1
+
+    // 模拟延迟
+    const t = setTimeout(() => {
+      if (index === 1 && !this.profiles.length) {
+        this.store.dispatch(new actions.FetchProfileReq({ type: 'profiles' }));
+      } else if (index === 2 && !this.messages.length) {
+        this.store.dispatch(new actions.FetchProfileReq({ type: 'messages' }));
+      } else if (!this.activities.length) {
+        this.store.dispatch(
+          new actions.FetchProfileReq({ type: 'activities' })
         );
-        clearTimeout(t);
-      }, 300);
-    } else if (index === 2 && !this.messages.length) {
-      const t = setTimeout(() => {
-        this.messages = _.cloneDeep(activities).sort(() =>
-          Math.random() > 0.5 ? -1 : 1
-        );
-        clearTimeout(t);
-      }, 300);
+      }
+      clearTimeout(t);
+    }, 300);
+  }
+
+  @UtilsService.debounce()
+  reloadData(index: number): void {
+    let type;
+    if (index === 1) {
+      type = 'profiles';
+    } else if (index === 2) {
+      type = 'messages';
+    } else {
+      type = 'activities';
+      this.showStatus = 'Show more';
     }
+    this[type] = [];
+    this.store.dispatch(new actions.ClearProfileDatas({ type }));
+    const btns: NodeListOf<HTMLButtonElement> = document.querySelectorAll(
+      '.content-box .reload button'
+    );
+    const btn = btns[index];
+    this.renderer2.setAttribute(btn, 'class', 'ac');
+    this.handleFirstLoad(index);
+    const t = setTimeout(() => {
+      this.renderer2.removeAttribute(btn, 'class');
+      clearTimeout(t);
+    }, 500);
   }
 
   fetchMoreData() {
     this.showStatus = 'Loading more';
-    // 加载5次，不再加载
-    if (this.activities.length < activities.length * 5) {
-      const scrollTop = this.contentBox.nativeElement.scrollTop;
-      const t1 = setTimeout(() => {
-        _.cloneDeep(activities)
-          .sort(() => (Math.random() > 0.5 ? -1 : 1))
-          .forEach(activitie => {
-            this.activities.push(activitie);
-          });
+    const t = setTimeout(() => {
+      // 加载5次，不再加载
+      if (this.activities.length < 25) {
+        const scrollTop = this.contentBox.nativeElement.scrollTop;
         this.showStatus = 'Show more';
-        clearTimeout(t1);
-      }, 300);
-      // 等列表渲染好了，调整列表滚动条的位置
-      const t2 = setTimeout(() => {
-        this.contentBox.nativeElement.scrollTo(0, scrollTop);
-        clearTimeout(t2);
-      }, 300);
-    } else {
-      const t = setTimeout(() => {
+        this.store.dispatch(
+          new actions.FetchProfileReq({ type: 'activities' })
+        );
+        // 等列表渲染好了，调整列表滚动条的位置
+        const t2 = setTimeout(() => {
+          this.contentBox.nativeElement.scrollTo(0, scrollTop);
+          clearTimeout(t2);
+        }, 300);
+      } else {
         this.showStatus = 'No more';
-        clearTimeout(t);
-      }, 300);
-    }
+      }
+      clearTimeout(t);
+    }, 300);
   }
 
   @HostListener('window:resize')
