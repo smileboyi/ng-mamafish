@@ -1,7 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-
-import { AppComponent } from './app.component';
 import { NZ_I18N, en_US, NZ_ICONS } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import { Driver, NgForageConfig, NgForageModule } from 'ngforage';
@@ -10,13 +8,14 @@ import { NgForage } from 'ngforage';
 import { NgxPermissionsService, NgxPermissionsModule } from 'ngx-permissions';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+
+import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
-
 import { UsersData } from './main/applications/users/users.service';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 import { reducers } from '@reducers/index';
 import { effects } from '@effects/index';
 import icons from './app.icon';

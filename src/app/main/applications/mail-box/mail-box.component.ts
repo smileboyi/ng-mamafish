@@ -7,19 +7,19 @@ import {
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
+import { Observable } from 'rxjs';
 
 import { messageText } from '@config/message-text.config';
 import { UtilsService } from '@services/utils.service';
 import { MailBoxService } from './mail-box.service';
-
-import { Mail } from '@declare';
+import { Mail, CanDeactivateComponent } from '@declare';
 
 @Component({
   selector: 'cat-mail-box',
   templateUrl: './mail-box.component.html',
   styleUrls: ['./mail-box.component.less']
 })
-export class MailBoxComponent implements OnInit {
+export class MailBoxComponent implements OnInit, CanDeactivateComponent {
   fold = false;
   search = false;
   mobile = false;
@@ -85,6 +85,14 @@ export class MailBoxComponent implements OnInit {
     }
   }
 
+  isFormDirty(): boolean {
+    return this.newMail ? this.form.dirty : false;
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    return this.utils.canActivateModal();
+  }
+
   viewDetail(mail: Mail, index: number): void {
     if (this.oldElIdx !== index) {
       this.mail = mail;
@@ -133,8 +141,8 @@ export class MailBoxComponent implements OnInit {
   }
 
   onSubmit(mail) {
-    console.log(mail);
     if (this.form.valid) {
+      console.log(mail);
       this.message.create('success', messageText.SUC_SEND_MAIL);
       this.form.reset();
     }

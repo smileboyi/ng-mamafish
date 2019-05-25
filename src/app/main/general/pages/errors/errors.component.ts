@@ -21,11 +21,15 @@ export class ErrorsComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.httpCode = params.code;
+      if (['403', '404', '500'].includes(params.code)) {
+        this.httpCode = params.code;
+      } else {
+        this.httpCode = '404';
+      }
     });
   }
 
   gotoHomePage(): void {
-    this.utils.gotoOtherPage('profile');
+    this.utils.gotoOtherPage('analytics');
   }
 }

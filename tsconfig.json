@@ -40,6 +40,9 @@
       "@reducers/*": [
         "./src/app/stores/reducers/*"
       ],
+      "@guard/*": [
+        "./src/app/guard/*"
+      ],
     },
     "target": "es5",
     "typeRoots": [

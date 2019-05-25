@@ -24,6 +24,7 @@ export class GlobalService {
     errors: false
   };
   pageRouteInfo: any;
+  selectMenuItemId: string;
 
   constructor() {}
 }

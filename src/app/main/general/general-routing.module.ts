@@ -9,13 +9,13 @@ const routes: Routes = [
     redirectTo: routingPathConfig.general.pages,
     pathMatch: 'full'
   },
-  // {
-  //   path: routingPathConfig.general.dashboards,
-  //   loadChildren: './dashboards/dashboards.module#DashboardsModule',
-  //   data: {
-  //     title: '仪表盘'
-  //   }
-  // },
+  {
+    path: routingPathConfig.general.dashboards,
+    loadChildren: './dashboards/dashboards.module#DashboardsModule',
+    data: {
+      title: '仪表盘'
+    }
+  },
   {
     // 根路由配置的是路由模块，不是组件
     path: routingPathConfig.general.pages,

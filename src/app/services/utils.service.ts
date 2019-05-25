@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
-
+import { Observable, Observer } from 'rxjs';
+import { NzModalService } from 'ng-zorro-antd';
+import { Subject } from 'rxjs/Subject';
 import { navigationConfig, menuIdPathSet } from '@config/navigation.config';
 
 /**
@@ -11,7 +13,9 @@ import { navigationConfig, menuIdPathSet } from '@config/navigation.config';
   providedIn: 'root'
 })
 export class UtilsService {
-  constructor(private router: Router) {}
+  static menuItemChange$: Subject<any> = new Subject<any>();
+
+  constructor(private router: Router, private modal: NzModalService) {}
 
   // 节流装饰器
   static throttle(delay: number = 100): MethodDecorator {
@@ -80,6 +84,27 @@ export class UtilsService {
     path = path.split(':')[0];
     this.router.navigate([path, ...hashConfig], {
       queryParams: paramConfig
+    });
+  }
+
+  /**
+   * 表单未保存或提交，离开页面时弹出确认框
+   */
+  canActivateModal(): Observable<boolean> {
+    return new Observable<boolean>((observer: Observer<boolean>) => {
+      this.modal.confirm({
+        nzTitle: '确认要离开这个页面吗？',
+        nzContent:
+          '这个页面有未提交的的信息，如果离开页面将丢失所有未提交的信息。确认要离开这个页面吗？',
+        nzOkText: '确认',
+        nzCancelText: '取消',
+        nzOnOk: () => observer.next(true),
+        nzOnCancel: () => {
+          // 修正menuItem选中位置
+          UtilsService.menuItemChange$.next();
+          observer.next(false);
+        }
+      });
     });
   }
 }

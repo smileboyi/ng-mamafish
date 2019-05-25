@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 export interface Message {
   avatar: string;
   name: string;
@@ -129,4 +131,9 @@ export class Activitie {
   time: string;
   images: string[] = [];
   text: string;
+}
+
+export interface CanDeactivateComponent {
+  isFormDirty: () => boolean;
+  canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
 }

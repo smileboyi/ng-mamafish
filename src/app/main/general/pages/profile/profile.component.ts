@@ -113,11 +113,12 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // 希望ng支持hook
-    this.watcher.unsubscribe();
-    this.subscriptionA.unsubscribe();
-    this.subscriptionP.unsubscribe();
-    this.subscriptionM.unsubscribe();
+    if (this.watcher) {
+      this.watcher.unsubscribe();
+      this.subscriptionA.unsubscribe();
+      this.subscriptionP.unsubscribe();
+      this.subscriptionM.unsubscribe();
+    }
   }
 
   handleFirstLoad(index: number): void {

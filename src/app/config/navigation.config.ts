@@ -14,6 +14,7 @@ export interface NavigationItem {
   hashs?: Array<string | number>;
   params?: Object;
   children?: Array<NavigationItem>;
+  childrenIds?: Array<string>;
 }
 
 export const navigationConfig: Array<NavigationItem> = [
@@ -34,7 +35,8 @@ export const navigationConfig: Array<NavigationItem> = [
             role: UserRole.Full,
             url: [pathConfig.app.general, pathConfig.general.dashboards]
           }
-        ]
+        ],
+        childrenIds: ['analytics']
       },
       {
         id: 'pages',
@@ -90,7 +92,8 @@ export const navigationConfig: Array<NavigationItem> = [
                 ],
                 hashs: [500]
               }
-            ]
+            ],
+            childrenIds: ['error_403', 'error_404', 'error_500']
           },
           {
             id: 'login',
@@ -112,9 +115,11 @@ export const navigationConfig: Array<NavigationItem> = [
               pathConfig.pages.register
             ]
           }
-        ]
+        ],
+        childrenIds: ['profile', 'errors', 'login', 'register']
       }
-    ]
+    ],
+    childrenIds: ['dashboards', 'pages']
   },
   {
     id: 'applications',
@@ -129,7 +134,7 @@ export const navigationConfig: Array<NavigationItem> = [
         url: [pathConfig.app.applications, pathConfig.applications.users]
       },
       {
-        id: 'mailbox',
+        id: 'mail-box',
         title: '邮箱',
         icon: 'youxiang',
         role: UserRole.User,
@@ -142,7 +147,8 @@ export const navigationConfig: Array<NavigationItem> = [
         role: UserRole.User,
         url: [pathConfig.app.applications, pathConfig.applications.chat]
       }
-    ]
+    ],
+    childrenIds: ['users', 'mail-box', 'chat']
   },
   {
     id: 'services',
@@ -163,7 +169,8 @@ export const navigationConfig: Array<NavigationItem> = [
         role: UserRole.User,
         url: [pathConfig.app.services, pathConfig.services.screenshot]
       }
-    ]
+    ],
+    childrenIds: ['data-table', 'screenshot']
   }
 ];
 
@@ -211,7 +218,7 @@ export const menuIdPathSet: Array<string> = _.flattenDeep(
   getMenuItemPath(menuIdSet)
 );
 
-export const pageIdmap = {
+export const pageIdMap = {
   '403': 'error_403',
   '404': 'error_404',
   '500': 'error_500'

@@ -11,9 +11,10 @@ import {
 
 import { NavigationItem } from '@config/navigation.config';
 import { GlobalService } from '@services/global.service';
+import { UtilsService } from '@services/utils.service';
 import { LayoutConfigService } from '@services/layout-config.service';
 import { LayoutConfig } from '@config/layout.config';
-import { pageIdmap } from '@config/navigation.config';
+import { pageIdMap } from '@config/navigation.config';
 
 @Component({
   selector: 'cat-nav-menu',
@@ -24,14 +25,16 @@ export class NavMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   isCollapsed: boolean = false;
   position: string;
   timer: any;
+
   @Input() navData: Array<NavigationItem> = [];
 
   constructor(
-    private changeDetectorRef: ChangeDetectorRef,
-    public global: GlobalService,
-    private layoutConfig: LayoutConfigService,
     private el: ElementRef,
-    private renderer2: Renderer2
+    public utils: UtilsService,
+    public global: GlobalService,
+    private renderer2: Renderer2,
+    private layoutConfig: LayoutConfigService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -39,11 +42,14 @@ export class NavMenuComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isCollapsed = config.navbar.collapsed;
       this.position = config.navbar.position;
     });
+    UtilsService.menuItemChange$.subscribe(() => {
+      this.selectMenuItemLetActive();
+    });
   }
 
   ngAfterViewInit() {
     this.changeDetectorRef.detectChanges();
-    this.addMenuItemClass('ant-menu-item-selected');
+    this.selectMenuItemLetActive();
   }
 
   ngOnDestroy() {
@@ -51,25 +57,32 @@ export class NavMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // 如果刷新页面，通过页面地址查找到当前的menuItem，添加一个激活className
-  addMenuItemClass(className: string): void {
+  selectMenuItemLetActive(): void {
     this.timer = setTimeout(() => {
       if (!this.global.pageRouteInfo) {
-        this.addMenuItemClass(className);
+        this.selectMenuItemLetActive();
       } else {
         const path = this.global.pageRouteInfo.path;
         const id = this.getMenuItemId(path);
         const el = this.el.nativeElement.querySelector('#' + id);
         if (el) {
+          this.renderer2.removeClass(
+            this.el.nativeElement.querySelector(
+              '#' + this.global.selectMenuItemId
+            ),
+            'ant-menu-item-selected'
+          );
           this.renderer2.addClass(
             this.el.nativeElement.querySelector('#' + id),
-            className
+            'ant-menu-item-selected'
           );
+          this.global.selectMenuItemId = id;
         }
       }
     }, 100);
   }
 
   getMenuItemId(id: string): string {
-    return id in pageIdmap ? pageIdmap[id] : id;
+    return id in pageIdMap ? pageIdMap[id] : id;
   }
 }

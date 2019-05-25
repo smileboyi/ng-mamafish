@@ -5,8 +5,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { ErrorsComponent } from './errors/errors.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-
 import { routingPathConfig } from '@config/routing-path.config';
+import { AuthGuard } from '@guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -17,6 +17,7 @@ const routes: Routes = [
   {
     path: routingPathConfig.pages.profile,
     component: ProfileComponent,
+    canActivate: [AuthGuard],
     data: {
       title: '个人主页'
     }

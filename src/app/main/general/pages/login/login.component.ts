@@ -1,7 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
-import { NgForage } from 'ngforage';
+import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { NgxPermissionsService } from 'ngx-permissions';
+import { NzMessageService } from 'ng-zorro-antd';
+import { ActivatedRoute } from '@angular/router';
+import { NgForage } from 'ngforage';
 
 import { GlobalService } from '@services/global.service';
 import { UtilsService } from '@services/utils.service';
@@ -16,19 +17,36 @@ import { UserRole } from '@declare';
   styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit {
-  account: string = '';
-  password: string = '';
+  account = '';
+  password = '';
+  redirectUrl = '';
 
   constructor(
     private ngForage: NgForage,
-    public global: GlobalService,
     private utils: UtilsService,
+    private route: ActivatedRoute,
+    private global: GlobalService,
     private message: NzMessageService,
     private permissionsService: NgxPermissionsService,
     @Inject(PROFILE_INFO) private profileInfo: string
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.queryParams.subscribe((query: any) => {
+      this.redirectUrl = query.redirectUrl || '';
+    });
+    if (this.redirectUrl) {
+      history.pushState(null, null, document.URL);
+      history.pushState(null, null, document.URL);
+    }
+  }
+
+  @HostListener('window:popstate')
+  onHistoryBack() {
+    if (this.redirectUrl) {
+      history.pushState(null, null, document.URL);
+    }
+  }
 
   submitForm(): void {
     const account = this.account.trim();
@@ -53,12 +71,16 @@ export class LoginComponent implements OnInit {
       'success',
       `${messageText.SUC_USER_LOGIN}，角色为${roleState}`
     );
-    this.utils.gotoOtherPage('profile');
     this.ngForage.setItem(this.profileInfo, {
       userRole: this.global.userRole,
       userInfo: this.global.userInfo,
       permissionList: this.global.permissionList
     });
     this.permissionsService.loadPermissions(this.global.permissionList);
+    if (this.redirectUrl) {
+      this.utils.gotoOtherPage(this.redirectUrl);
+    } else {
+      this.utils.gotoOtherPage('profile');
+    }
   }
 }

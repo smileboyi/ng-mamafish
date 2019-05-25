@@ -46,6 +46,7 @@ export class NavMenuItemComponent implements OnInit {
   ): void {
     const h = hashs ? hashs : [];
     const p = params ? params : {};
+    this.global.selectMenuItemId = pathId;
     this.utils.gotoOtherPage(pathId, h, p);
   }
 

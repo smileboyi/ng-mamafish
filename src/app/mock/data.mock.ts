@@ -154,7 +154,13 @@ export const userInfos: Array<UserInfo> = [
 export const userPermissions: Array<Array<string>> = [
   ['Full'],
   ['User'],
-  ['Manager', 'exportDataToExcel']
+  [
+    'Manager',
+    'exportDataToExcel',
+    'addUser',
+    'deteleUser',
+    'updateUser',
+  ]
 ];
 
 const _personInfos: Array<PersonInfo> = [];
