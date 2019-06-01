@@ -6,6 +6,7 @@ import {
   Input,
   ElementRef,
   Renderer2,
+  HostListener,
   ChangeDetectorRef
 } from '@angular/core';
 
@@ -22,7 +23,8 @@ import { pageIdMap } from '@config/navigation.config';
   styleUrls: ['./nav-menu.component.less']
 })
 export class NavMenuComponent implements OnInit, AfterViewInit, OnDestroy {
-  isCollapsed: boolean = false;
+  isPageMini = false;
+  isCollapsed = false;
   position: string;
   timer: any;
 
@@ -38,6 +40,8 @@ export class NavMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.isPageMini = this.utils.getMiniState();
+
     this.layoutConfig.config.subscribe((config: LayoutConfig) => {
       this.isCollapsed = config.navbar.collapsed;
       this.position = config.navbar.position;
@@ -84,5 +88,11 @@ export class NavMenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getMenuItemId(id: string): string {
     return id in pageIdMap ? pageIdMap[id] : id;
+  }
+
+  @HostListener('window:resize')
+  @UtilsService.throttle(200)
+  onWindowResize(): void {
+    this.isPageMini = this.utils.getMiniState();
   }
 }

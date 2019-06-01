@@ -47,6 +47,10 @@ export class UtilsService {
     return window.innerWidth <= 620;
   }
 
+  getMiniState(): boolean {
+    return window.innerWidth <= 450;
+  }
+
   // 根据页面id返回页面路径
   getPagePath(pageId: string): string {
     let idPathStr = '';

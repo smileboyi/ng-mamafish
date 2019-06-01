@@ -18,6 +18,7 @@ import * as actions from '@actions/profile.action';
 import { ProfileState } from '@reducers/profile.reducer';
 import * as fromReducer from '@reducers/index';
 import { UtilsService } from '@services/utils.service';
+import { GlobalService } from '@services/global.service';
 import { Activitie } from '@declare';
 
 @Component({
@@ -31,6 +32,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   profiles: Array<Activitie> = [];
   messages: Array<Activitie> = [];
   backTopShow = true;
+  isPageMini = false;
   showStatus: 'Show more' | 'Loading more' | 'No more' = 'Show more';
   watcher: Subscription;
   subscriptionA: Subscription;
@@ -56,12 +58,16 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private renderer2: Renderer2,
+    private utils: UtilsService,
+    private global: GlobalService,
     private store: Store<ProfileState>,
     private mediaObserver: MediaObserver,
     private scrollDispatcher: ScrollDispatcher
   ) {}
 
   ngOnInit() {
+    this.isPageMini = this.utils.getMiniState();
+
     this.watcher = this.mediaObserver.media$.subscribe(
       (change: MediaChange) => {
         if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
@@ -208,5 +214,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   onWindowResize(): void {
     // 如果在滑动时获取高度性能不好
     this.cardHeight = this.card.nativeElement.clientHeight | 0;
+    this.isPageMini = this.utils.getMiniState();
   }
 }

@@ -31,6 +31,7 @@ const getClickSubMenuIdx = (id: string): number => {
 export class NavMenuItemComponent implements OnInit {
   private isOpen = false;
 
+  @Input() isPageMini: boolean;
   @Input() item: NavigationItem;
   @Input() isCollapsed: boolean;
   @Input() position: string;

@@ -1,24 +1,30 @@
 :host {
-  width: auto;
+  width: 100%;
   height: 100%;
   flex: 1;
-  background-color: #f1f4f5;
-  .btns {
-    padding: 20px;
-    .btn {
-      height: 36px;
-      line-height: 36px;
-      padding: 0 16px;
-      margin-right: 20px;
-      margin-bottom: 10px;
+  overflow: auto;
+  .data-table {
+    display: inline-block;
+    min-width: 100%;
+    min-height: 100%;
+    background-color: #f1f4f5;
+    .btns {
+      padding: 20px;
+      .btn {
+        height: 36px;
+        line-height: 36px;
+        padding: 0 16px;
+        margin-right: 20px;
+        margin-bottom: 10px;
+      }
     }
-  }
-  .thead-tr > th {
-    color: #888;
-  }
-  .tbody {
-    font-weight: 500;
-    background-color: #fff;
+    .thead-tr > th {
+      color: #888;
+    }
+    .tbody {
+      font-weight: 500;
+      background-color: #fff;
+    }
   }
 }
 

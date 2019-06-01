@@ -1,45 +1,47 @@
-<div class="btns" *ngxPermissionsOnly="['Manager', 'exportDataToExcel']">
-  <button
-    nz-button
-    nzType="primary"
-    class="btn box-shadow"
-    (click)="exportNormal()"
+<div class="data-table">
+  <div class="btns" *ngxPermissionsOnly="['Manager', 'exportDataToExcel']">
+    <button
+      nz-button
+      nzType="primary"
+      class="btn box-shadow"
+      (click)="exportNormal()"
+    >
+      Export with normal
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      class="btn box-shadow"
+      (click)="isVisible = true"
+    >
+      Export by specified rows and columns
+    </button>
+  </div>
+  <nz-table
+    #basicTable
+    [nzData]="dataSource"
+    [nzSize]="global.isMobile ? 'middle' : 'default'"
   >
-    Export with normal
-  </button>
-  <button
-    nz-button
-    nzType="primary"
-    class="btn box-shadow"
-    (click)="isVisible = true"
-  >
-    Export by specified rows and columns
-  </button>
+    <thead>
+      <tr class="thead-tr">
+        <th>No.</th>
+        <th>Name</th>
+        <th>Weight</th>
+        <th>Sex</th>
+        <th>Symbol</th>
+      </tr>
+    </thead>
+    <tbody class="tbody">
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.no }}</td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.weight }}</td>
+        <td>{{ data.sex }}</td>
+        <td>{{ data.symbol }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
 </div>
-<nz-table
-  #basicTable
-  [nzData]="dataSource"
-  [nzSize]="global.isMobile ? 'middle' : 'default'"
->
-  <thead>
-    <tr class="thead-tr">
-      <th>No.</th>
-      <th>Name</th>
-      <th>Weight</th>
-      <th>Sex</th>
-      <th>Symbol</th>
-    </tr>
-  </thead>
-  <tbody class="tbody">
-    <tr *ngFor="let data of basicTable.data">
-      <td>{{ data.no }}</td>
-      <td>{{ data.name }}</td>
-      <td>{{ data.weight }}</td>
-      <td>{{ data.sex }}</td>
-      <td>{{ data.symbol }}</td>
-    </tr>
-  </tbody>
-</nz-table>
 
 <nz-modal
   nzWrapClassName="vertical-center-modal"

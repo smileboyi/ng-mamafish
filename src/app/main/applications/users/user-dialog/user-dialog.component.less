@@ -45,6 +45,27 @@
         }
       }
       .main {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        &.mini {
+          flex-direction: column;
+          align-content: space-between;
+          height: 360px;
+          .nav {
+            width: 100%;
+            height: auto;
+            text-align: center;
+            .item {
+              display: inline-block;
+              width: 33.33%;
+            }
+          }
+          .form-box {
+            flex: 1;
+          }
+        }
         .nav {
           width: 168px;
           height: 288px;

@@ -128,35 +128,38 @@
         </div>
       </div>
     </div>
-    <div [ngClass]="{ 'info-box': true, ac: drawer }">
-      <div class="cover wh100 trans" (click)="drawer = false"></div>
-      <div class="drawer pab nor not h100 trans">
-        <div class="top grail pre">
-          <button nz-button [nzShape]="'circle'" (click)="drawer = false">
-            <i nz-icon type="close" theme="outline"></i>
-          </button>
-          <nz-avatar
-            nzIcon="user"
-            [nzSize]="120"
-            [nzSrc]="currentUser.avatar"
-          ></nz-avatar>
-          <span class="name">{{ currentUser.author }}</span>
-        </div>
-        <div class="info h100">
-          <div class="item">
-            <i nz-icon type="mail" theme="fill"></i>
-            <span class="text">author@gmail.com</span>
+    <!-- 防止移动端下进入会话页面时，info-box闪退（trans的影响） -->
+    <ng-container *ngIf="true">
+      <div [ngClass]="{ 'info-box': true, ac: drawer }">
+        <div class="cover wh100 trans" (click)="drawer = false"></div>
+        <div class="drawer pab nor not h100 trans">
+          <div class="top grail pre">
+            <button nz-button [nzShape]="'circle'" (click)="drawer = false">
+              <i nz-icon type="close" theme="outline"></i>
+            </button>
+            <nz-avatar
+              nzIcon="user"
+              [nzSize]="120"
+              [nzSrc]="currentUser.avatar"
+            ></nz-avatar>
+            <span class="name">{{ currentUser.author }}</span>
           </div>
-          <div class="item">
-            <i nz-icon type="phone" theme="fill"></i>
-            <span class="text">(202) 756-9756</span>
-          </div>
-          <div class="item">
-            <i nz-icon type="environment" theme="fill"></i>
-            <span class="text">2903 Avenue Z, Brooklyn, NY</span>
+          <div class="info h100">
+            <div class="item">
+              <i nz-icon type="mail" theme="fill"></i>
+              <span class="text">author@gmail.com</span>
+            </div>
+            <div class="item">
+              <i nz-icon type="phone" theme="fill"></i>
+              <span class="text">(202) 756-9756</span>
+            </div>
+            <div class="item">
+              <i nz-icon type="environment" theme="fill"></i>
+              <span class="text">2903 Avenue Z, Brooklyn, NY</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 </div>

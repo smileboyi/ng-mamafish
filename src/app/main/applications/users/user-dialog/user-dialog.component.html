@@ -2,7 +2,7 @@
   <div class="cover wh100" (click)="handleCancel()"></div>
   <div class="dialog centre2">
     <h3 class="title">{{ type === 'add' ? 'Add' : 'Edit' }} User</h3>
-    <div class="main flex">
+    <div class="main" [ngClass]="{ mini: isPageMini }">
       <nav class="nav">
         <div
           class="item"

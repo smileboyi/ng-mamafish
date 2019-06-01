@@ -9,8 +9,11 @@ import { UserRole, UserInfo } from '@declare';
   providedIn: 'root'
 })
 export class GlobalService {
-  isMobile: boolean = false;
-  moreHeaderState: boolean = false;
+  // < 620px （页面状态可以使用rxjs,这样不用在多个页面去监听window resize获取状态）
+  isMobile = false;
+  // < 450px
+  isMini = false;
+  moreHeaderState = false;
   userRole: UserRole = UserRole.Manager;
   userInfo: UserInfo = {
     name: '',

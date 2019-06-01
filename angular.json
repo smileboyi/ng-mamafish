@@ -34,7 +34,8 @@
             "styles": [
               "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
               "src/assets/styles/_reset.less",
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/styles/positionfix.less"
             ],
             "scripts": []
           },
@@ -97,7 +98,8 @@
             "styles": [
               "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
               "src/assets/styles/_reset.less",
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/styles/positionfix.less"
             ],
             "scripts": [],
             "assets": [

@@ -43,6 +43,9 @@
       "@guard/*": [
         "./src/app/guard/*"
       ],
+      "@animations": [
+        "./src/app/app.animations",
+      ],
     },
     "target": "es5",
     "typeRoots": [

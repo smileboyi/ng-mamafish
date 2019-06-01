@@ -46,6 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initConfig();
     // 窗口重置
+    this.toggleBodyMini();
     const isMobile = this.utils.getMobileState();
     this.global.isMobile = isMobile;
     this.subscription = this.resize$
@@ -55,6 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.global.isMobile = state;
           this.global.moreHeaderState = false;
         }
+        this.toggleBodyMini();
       });
 
     // 布局设置
@@ -62,7 +64,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.stop$))
       .subscribe((config: LayoutConfig) => {
         const bool = config.width === 'boxed';
-        this.togglebodyClass(bool);
+        this.toggleBodyBoxed(bool);
       });
 
     // 路由导航
@@ -110,11 +112,21 @@ export class AppComponent implements OnInit, OnDestroy {
     this.resize$.next(isMobile);
   }
 
-  private togglebodyClass(bool: boolean): void {
+  private toggleBodyBoxed(bool: boolean): void {
     if (bool) {
       this.document.body.classList.add('boxed');
     } else {
       this.document.body.classList.remove('boxed');
+    }
+  }
+
+  private toggleBodyMini(): void {
+    if (window.innerWidth <= 450) {
+      this.global.isMini = true;
+      this.document.body.classList.add('mini');
+    } else {
+      this.global.isMini = false;
+      this.document.body.classList.remove('mini');
     }
   }
 }

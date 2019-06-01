@@ -4,12 +4,15 @@ import {
   OnDestroy,
   ViewChild,
   Renderer2,
-  ElementRef
+  ElementRef,
+  HostListener
 } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { UtilsService } from '@services/utils.service';
+import { GlobalService } from '@services/global.service';
 import {
   User,
   UserProfile,
@@ -28,6 +31,7 @@ export class UserDialogComponent implements OnInit, OnDestroy {
   private form$: Subject<any> = new Subject<any>();
   private subscription: Subscription;
 
+  isPageMini = false;
   type: 'add' | 'edit';
   form: FormGroup;
   passwordVisible = false;
@@ -56,7 +60,12 @@ export class UserDialogComponent implements OnInit, OnDestroy {
     { value: 'gradient-lime', viewValue: 'Lime' }
   ];
 
-  constructor(private fb: FormBuilder, private renderer2: Renderer2) {
+  constructor(
+    private fb: FormBuilder,
+    private renderer2: Renderer2,
+    private utils: UtilsService,
+    private global: GlobalService
+  ) {
     this.form = this.fb.group({
       id: null,
       username: [
@@ -99,7 +108,9 @@ export class UserDialogComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isPageMini = this.utils.getMiniState();
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -191,5 +202,11 @@ export class UserDialogComponent implements OnInit, OnDestroy {
     this.contentIndex = 1;
     this.contentShow = [1, 1, 1, 0, 0, 0, 0, 0];
     this.dialogShow = false;
+  }
+
+  @HostListener('window:resize')
+  @UtilsService.throttle(200)
+  onWindowResize(): void {
+    this.isPageMini = this.utils.getMiniState();
   }
 }
