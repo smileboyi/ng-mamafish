@@ -41,19 +41,19 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   cardHeight = 0;
   oldScrollTop = 0;
 
-  @ViewChild('card')
+  @ViewChild('card', null)
   card: ElementRef;
 
-  @ViewChild('profile')
+  @ViewChild('profile', null)
   profile: ElementRef;
 
-  @ViewChild('inkBar')
+  @ViewChild('inkBar', null)
   inkBar: ElementRef;
 
-  @ViewChild('contentMain')
+  @ViewChild('contentMain', null)
   contentMain: ElementRef;
 
-  @ViewChild('contentBox')
+  @ViewChild('contentBox', null)
   contentBox: ElementRef;
 
   constructor(

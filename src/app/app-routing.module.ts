@@ -11,17 +11,17 @@ const routes: Routes = [
   },
   {
     path: routingPathConfig.app.general,
-    loadChildren: './main/general/general.module#GeneralModule',
+    loadChildren: () => import('./main/general/general.module').then(m => m.GeneralModule),
     data: { title: '常规' }
   },
   {
     path: routingPathConfig.app.applications,
-    loadChildren: './main/applications/applications.module#ApplicationsModule',
+    loadChildren: () => import('./main/applications/applications.module').then(m => m.ApplicationsModule),
     data: { title: '应用' }
   },
   {
     path: routingPathConfig.app.services,
-    loadChildren: './main/services/services.module#ServicesModule',
+    loadChildren: () => import('./main/services/services.module').then(m => m.ServicesModule),
     data: { title: '服务' }
   },
   {

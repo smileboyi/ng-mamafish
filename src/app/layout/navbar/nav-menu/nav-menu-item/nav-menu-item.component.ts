@@ -40,6 +40,14 @@ export class NavMenuItemComponent implements OnInit {
 
   ngOnInit() {}
 
+  // 项目升级菜单selected类切换不了，这里手动更新
+  fixMenuItemSelected(id: string): void {
+    document
+      .querySelector('.ant-menu-item-selected')
+      .classList.remove('ant-menu-item-selected');
+    document.getElementById(id).classList.add('ant-menu-item-selected');
+  }
+
   clickMenuItem(
     pathId: string,
     hashs: Array<number | string>,
@@ -48,6 +56,8 @@ export class NavMenuItemComponent implements OnInit {
     const h = hashs ? hashs : [];
     const p = params ? params : {};
     this.global.selectMenuItemId = pathId;
+    this.fixMenuItemSelected(pathId);
+    // 页面切换
     this.utils.gotoOtherPage(pathId, h, p);
   }
 
@@ -58,7 +68,6 @@ export class NavMenuItemComponent implements OnInit {
   clickSubMenu(event: Event, subMenuId: string): void {
     event.preventDefault();
     event.stopPropagation();
-
     this.global.subMenuOpenState[subMenuId] = this.isOpen;
     if (this.isOpen) {
       const idx: number = getClickSubMenuIdx(subMenuId);

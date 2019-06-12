@@ -42,7 +42,7 @@ export class UserDialogComponent implements OnInit, OnDestroy {
   title = 'Add User';
   dialogShow = false;
 
-  @ViewChild('tabsBox')
+  @ViewChild('tabsBox', null)
   tabsBox: ElementRef;
 
   colors = [

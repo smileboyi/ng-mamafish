@@ -26,7 +26,7 @@ export class UsersComponent implements OnInit {
   pageIndex = 1;
   fetchState = false;
 
-  @ViewChild('userDialogContainer', { read: ViewContainerRef })
+  @ViewChild('userDialogContainer', { read: ViewContainerRef, static: true })
   userDialogContainer: ViewContainerRef;
 
   userDialog: ComponentRef<UserDialogComponent>;

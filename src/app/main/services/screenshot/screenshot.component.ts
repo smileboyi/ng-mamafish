@@ -16,7 +16,7 @@ import { messageText } from '@config/message-text.config';
   styleUrls: ['./screenshot.component.less']
 })
 export class ScreenshotComponent implements OnInit, OnDestroy {
-  @ViewChild('screen') screen: ElementRef;
+  @ViewChild('screen', null) screen: ElementRef;
 
   constructor(
     private screenshot: ScreenshotService,

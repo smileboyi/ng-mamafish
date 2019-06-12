@@ -35,7 +35,7 @@ export class ToolbarComponent implements OnInit {
   isCollapsed: boolean = false;
   userRoles: Array<UserRole> = [UserRole.Full, UserRole.User, UserRole.Manager];
 
-  @ViewChild('serchIpt')
+  @ViewChild('serchIpt', null)
   serchIpt: ElementRef;
 
   @Output()
