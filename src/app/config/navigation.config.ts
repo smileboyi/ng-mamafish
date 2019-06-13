@@ -33,7 +33,11 @@ export const navigationConfig: Array<NavigationItem> = [
             id: 'analytics',
             title: '分析页',
             role: UserRole.Full,
-            url: [pathConfig.app.general, pathConfig.general.dashboards]
+            url: [
+              pathConfig.app.general,
+              pathConfig.general.dashboards,
+              pathConfig.dashboards.analytics
+            ]
           }
         ],
         childrenIds: ['analytics']

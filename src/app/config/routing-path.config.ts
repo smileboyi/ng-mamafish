@@ -13,7 +13,7 @@ export const routingPathConfig = {
     pages: 'pages'
   },
 
-  dashboard: {
+  dashboards: {
     default: '',
     analytics: 'analytics'
   },
