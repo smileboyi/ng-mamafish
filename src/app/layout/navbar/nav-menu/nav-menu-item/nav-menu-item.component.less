@@ -1,8 +1,9 @@
 ::ng-deep .ant-menu-inline-collapsed {
   .ant-menu-submenu-title,
   .ant-menu-item {
+    padding: 0;
     text-align: center;
-    i{
+    i {
       margin: 0;
     }
   }
@@ -31,4 +32,9 @@
   > .submenu-title
   + i::before {
   display: none;
+}
+
+::ng-deep .cdk-overlay-pane > .ant-menu-submenu {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
 }

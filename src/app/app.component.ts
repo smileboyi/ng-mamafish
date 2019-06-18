@@ -45,6 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initConfig();
+    this.onWindowPopstate();
     // 窗口重置
     this.toggleBodyMini();
     const isMobile = this.utils.getMobileState();
@@ -128,5 +129,12 @@ export class AppComponent implements OnInit, OnDestroy {
       this.global.isMini = false;
       this.document.body.classList.remove('mini');
     }
+  }
+
+  // 监听popstate: https://www.cnblogs.com/mininice/p/4064901.html
+  @HostListener('window:popstate')
+  onWindowPopstate(): void {
+    // 菜单定位
+    this.global.selectMenuItemId = this.utils.getRouteId();
   }
 }

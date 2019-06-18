@@ -72,6 +72,20 @@ export class UtilsService {
     return '/' + obj.url.join('/');
   }
 
+  // 根据页面路径返回页面id
+  getRouteId(): string {
+    const routeId: string = location.pathname.split('/').reverse()[0];
+    if (routeId === '403') {
+      return 'error_403';
+    } else if (routeId === '404') {
+      return 'error_404';
+    } else if (routeId === '500') {
+      return 'error_500';
+    } else {
+      return routeId;
+    }
+  }
+
   /**
    * 页面跳转
    * @param pageId - 页面路由id

@@ -59,7 +59,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private renderer2: Renderer2,
     private utils: UtilsService,
-    private global: GlobalService,
     private store: Store<ProfileState>,
     private mediaObserver: MediaObserver,
     private scrollDispatcher: ScrollDispatcher

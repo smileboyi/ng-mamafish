@@ -18,7 +18,7 @@ class ProfileService {
   constructor() {}
 
   public getProfiles(): Observable<any> {
-    const observable = Observable.create(function(observer) {
+    const observable = new Observable(function(observer) {
       observer.next(
         _.cloneDeep(activities).sort(() => (Math.random() > 0.5 ? -1 : 1))
       );

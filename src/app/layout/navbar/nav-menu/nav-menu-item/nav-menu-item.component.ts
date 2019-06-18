@@ -23,6 +23,18 @@ const getClickSubMenuIdx = (id: string): number => {
   return ids.indexOf(id);
 };
 
+// 项目升级后菜单selected类切换不了，这里手动更新
+const fixMenuItemSelected = (id: string): void => {
+  if (document.querySelector('.ant-menu-item-selected')) {
+    document
+      .querySelector('.ant-menu-item-selected')
+      .classList.remove('ant-menu-item-selected');
+  }
+  if (document.getElementById(id)) {
+    document.getElementById(id).classList.add('ant-menu-item-selected');
+  }
+};
+
 @Component({
   selector: 'cat-nav-menu-item',
   templateUrl: './nav-menu-item.component.html',
@@ -30,6 +42,7 @@ const getClickSubMenuIdx = (id: string): number => {
 })
 export class NavMenuItemComponent implements OnInit {
   private isOpen = false;
+  private errorsEle: Element;
 
   @Input() isPageMini: boolean;
   @Input() item: NavigationItem;
@@ -40,14 +53,6 @@ export class NavMenuItemComponent implements OnInit {
 
   ngOnInit() {}
 
-  // 项目升级菜单selected类切换不了，这里手动更新
-  fixMenuItemSelected(id: string): void {
-    document
-      .querySelector('.ant-menu-item-selected')
-      .classList.remove('ant-menu-item-selected');
-    document.getElementById(id).classList.add('ant-menu-item-selected');
-  }
-
   clickMenuItem(
     pathId: string,
     hashs: Array<number | string>,
@@ -56,7 +61,7 @@ export class NavMenuItemComponent implements OnInit {
     const h = hashs ? hashs : [];
     const p = params ? params : {};
     this.global.selectMenuItemId = pathId;
-    this.fixMenuItemSelected(pathId);
+    fixMenuItemSelected(pathId);
     // 页面切换
     this.utils.gotoOtherPage(pathId, h, p);
   }
@@ -90,6 +95,82 @@ export class NavMenuItemComponent implements OnInit {
           this.global.subMenuOpenState[id] = false;
         }
       });
+    }
+  }
+
+  /**
+   * 下面都是菜单bug修复代码：菜单折叠后的子菜单没有及时隐藏起来
+   * 可能是使用ant-menu的姿势不对以及项目升级后，导致有些menu切换效果不再生效
+   * 解决方式：通过css覆盖使子菜单默认隐藏，再通过js控制显示
+   * 折叠后的菜单的子菜单是由Angular cdk控制的，所以在cdk dom box里修复
+   * 还有一些已知bug不再解决
+   */
+
+  // 控制一级子菜单的显示
+  mouseenterSubMenu(id: string): void {
+    // 需等待渲染好了进行操作
+    const t = setTimeout(() => {
+      const submenuEles: NodeListOf<Element> = document.querySelectorAll(
+        '.cdk-overlay-container .ant-menu-submenu'
+      );
+      submenuEles.forEach(submenuEle => {
+        if (!submenuEle.hasAttribute('data-id')) {
+          const itemEle: Element = submenuEle.querySelector('.ant-menu-item');
+          if (itemEle) {
+            if (id === this.getParentId(itemEle.getAttribute('id'))) {
+              submenuEle.setAttribute('data-id', id);
+              submenuEle.setAttribute('style', 'position: relative');
+              const itemEles: NodeListOf<Element> = submenuEle.querySelectorAll(
+                '.ant-menu-item'
+              );
+              const currId = this.global.selectMenuItemId;
+              // 不会自动切换selected类，需手动控制
+              itemEles.forEach(item => {
+                if (currId === item.getAttribute('id')) {
+                  item.classList.add('ant-menu-item-selected');
+                } else {
+                  item.classList.remove('ant-menu-item-selected');
+                }
+              });
+            }
+          }
+        }
+      });
+      clearTimeout(t);
+    }, 170);
+  }
+
+  // 控制二级errors子菜单的显示
+  private hoverErrorSubMenu(): void {
+    const t = setTimeout(() => {
+      clearTimeout(t);
+      const box: NodeListOf<Element> = document.querySelectorAll(
+        '.cdk-overlay-connected-position-bounding-box'
+      );
+      const last = box[box.length - 1];
+      const errorsSubMenuEle = last.querySelector(
+        '.cdk-overlay-container .ant-menu-submenu'
+      );
+      errorsSubMenuEle.setAttribute('style', 'position: relative');
+    }, 170);
+  }
+
+  private getParentId(childId: string): string {
+    if (childId === 'analytics') {
+      return 'dashboards';
+    } else if (childId === 'profile') {
+      this.errorsEle = document.getElementsByName('cdk-submenu--errors')[0];
+      this.errorsEle.removeEventListener(
+        'mouseover',
+        this.hoverErrorSubMenu,
+        false
+      );
+      this.errorsEle.addEventListener(
+        'mouseover',
+        this.hoverErrorSubMenu,
+        false
+      );
+      return 'pages';
     }
   }
 }

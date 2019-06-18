@@ -42,7 +42,9 @@
     *ngIf="global.userRole >= item.role"
     [nzOpen]="global.subMenuOpenState[item.id]"
     (click)="clickSubMenu($event, item.id)"
+    (mouseenter)="mouseenterSubMenu(item.id)"
     (nzOpenChange)="openSubMenu($event)"
+    attr.name="{{ 'cdk-submenu--' + item.id }}"
   >
     <span class="submenu-title" title>
       <i nz-icon *ngIf="item.icon">
