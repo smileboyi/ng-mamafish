@@ -11,8 +11,10 @@ import { QuillModule } from 'ngx-quill';
 
 import { LAYOUT_CONFIG, PROFILE_INFO } from '@tokens';
 import { ThrottleClickDirective } from './directives/throttle-click.directive';
+import { ThemePanelComponent } from './components/theme-panel/theme-panel.component';
 import { BgHeaderComponent } from './components/bg-header/bg-header.component';
 import { PaginatePipe } from './pipes/paginate.pipe';
+import { KeysPipe } from './pipes/keys.pipe';
 
 const APP_CORE_PROVIDERS = [
   {
@@ -38,7 +40,13 @@ const APP_CORE_PROVIDERS = [
     NgxPermissionsModule,
     ScrollingModule
   ],
-  declarations: [ThrottleClickDirective, BgHeaderComponent, PaginatePipe],
+  declarations: [
+    ThrottleClickDirective,
+    BgHeaderComponent,
+    ThemePanelComponent,
+    PaginatePipe,
+    KeysPipe
+  ],
   providers: [...APP_CORE_PROVIDERS],
   exports: [
     CommonModule,
@@ -53,7 +61,9 @@ const APP_CORE_PROVIDERS = [
     NgxPermissionsModule,
     ThrottleClickDirective,
     BgHeaderComponent,
-    PaginatePipe
+    ThemePanelComponent,
+    PaginatePipe,
+    KeysPipe
   ]
 })
 export class SharedModule {}

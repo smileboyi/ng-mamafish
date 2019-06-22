@@ -1,3 +1,5 @@
+import { ThemeColor } from '@declare';
+
 declare type Position =
   | 'above'
   | 'above-static'
@@ -12,21 +14,20 @@ declare type Position =
 export interface LayoutConfig {
   width: 'fullwidth' | 'boxed';
   navbar: {
-    headBackground: string;
-    bodyBackground: string;
     collapsed: boolean;
     show: boolean;
     position: Position;
+    theme: ThemeColor;
   };
   toolbar: {
-    background: string;
     show: boolean;
     position: Position;
+    theme: ThemeColor;
   };
   footer: {
-    background: string;
     show: boolean;
     position: Position;
+    theme: ThemeColor;
   };
   sidepanel: {
     show: boolean;
@@ -37,24 +38,48 @@ export interface LayoutConfig {
 export const defaultLayoutConfig: LayoutConfig = {
   width: 'fullwidth',
   navbar: {
-    headBackground: '',
-    bodyBackground: '',
     collapsed: false,
     show: true,
-    position: 'left'
+    position: 'left',
+    theme: {
+      selectedFg: '#1e88e5',
+      selectedBg: '#fff'
+    }
   },
   toolbar: {
-    background: '',
     show: true,
-    position: 'above-fixed'
+    position: 'above-fixed',
+    theme: {
+      selectedFg: '#1e88e5',
+      selectedBg: 'rgba(255, 255, 255, 0.7)'
+    }
   },
   footer: {
-    background: '',
     show: true,
-    position: 'below'
+    position: 'below',
+    theme: {
+      selectedFg: '#2d323e',
+      selectedBg: 'rgba(255, 255, 255, 0.87)'
+    }
   },
   sidepanel: {
     show: true,
     position: 'right'
+  }
+};
+
+// 与_themeColor.less一致
+export const defaultThemeColor = {
+  toolbar: {
+    '--toolbarThemeFg': '#1e88e5',
+    '--toolbarThemeBg': 'rgba(255, 255, 255, 0.7)'
+  },
+  footer: {
+    '--footerThemeFg': '#2d323e',
+    '--footerThemeBg': 'rgba(255, 255, 255, 0.87)'
+  },
+  navbar: {
+    '--navbarThemeFg': '#1e88e5',
+    '--navbarThemeBg': '#fff'
   }
 };

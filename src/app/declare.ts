@@ -137,3 +137,9 @@ export interface CanDeactivateComponent {
   isFormDirty: () => boolean;
   canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
 }
+
+export interface ThemeColor {
+  selectedFg: string;
+  selectedBg: string;
+  selectedBc?: string;
+}

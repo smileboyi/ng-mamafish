@@ -43,9 +43,13 @@
           </nz-radio-group>
         </ng-container>
         <h3 class="title">背景颜色</h3>
-        <button nz-button nzType="primary" nzShape="circle" nzSize="large">
-          <i nz-icon type="bg-colors" theme="outline"></i>
-        </button>
+        <cat-theme-panel
+          (setThemeColor)="setToolbarThemeColor($event)"
+          (resetThemeColor)="resetThemeColor($event)"
+          [themeColor]="toolbarThemeColor"
+          themeType="toolbar"
+        >
+        </cat-theme-panel>
       </nz-tab>
       <nz-tab nzTitle="导航栏">
         <h3 class="title" *ngIf="!global.isMobile">
@@ -76,12 +80,13 @@
           <label nz-radio nzValue="right">Right</label>
         </nz-radio-group>
         <h3 class="title">背景颜色</h3>
-        <button nz-button nzType="primary" nzShape="circle" nzSize="large">
-          <i nz-icon type="bg-colors" theme="outline"></i>
-        </button>
-        <button nz-button nzType="primary" nzShape="circle" nzSize="large">
-          <i nz-icon type="bg-colors" theme="outline"></i>
-        </button>
+        <cat-theme-panel
+          (setThemeColor)="setNavbarThemeColor($event)"
+          (resetThemeColor)="resetThemeColor($event)"
+          [themeColor]="navbarThemeColor"
+          themeType="navbar"
+        >
+        </cat-theme-panel>
       </nz-tab>
       <nz-tab nzTitle="页脚">
         <h3 class="title">
@@ -103,9 +108,13 @@
           <label nz-radio nzValue="below-fixed">Below Fixed</label>
         </nz-radio-group>
         <h3 class="title">背景颜色</h3>
-        <button nz-button nzType="primary" nzShape="circle" nzSize="large">
-          <i nz-icon type="bg-colors" theme="outline"></i>
-        </button>
+        <cat-theme-panel
+          (setThemeColor)="setFooterThemeColor($event)"
+          (resetThemeColor)="resetThemeColor($event)"
+          [themeColor]="footerThemeColor"
+          themeType="footer"
+        >
+        </cat-theme-panel>
       </nz-tab>
     </nz-tabset>
     <button
