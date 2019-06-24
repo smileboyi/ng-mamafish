@@ -38,7 +38,8 @@
       *ngIf="mobile && !fold"
     ></div>
     <div
-      [ngClass]="{ 'person-box': true, 'person-box--mobile': mobile, in: fold }"
+      class="person-box scrollbar"
+      [ngClass]="{ 'person-box--mobile': mobile, in: fold }"
     >
       <div class="tc no-data pab hauto2" *ngIf="!chatUsers.length">
         <img src="/assets/icons/no-data.png" alt="no-data" />
@@ -75,7 +76,7 @@
         <p class="text">Select a interlocutor for talk</p>
       </div>
       <div class="wh100 grail" [hidden]="!currentUser.avatar">
-        <div class="content fe ovys">
+        <div class="content fe ovys scrollbar">
           <div
             [ngClass]="{ chat: true, me: talk.me }"
             *ngFor="let talk of chatTalks"

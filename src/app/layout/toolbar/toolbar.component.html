@@ -152,7 +152,7 @@
     <div class="box-shadow inform-box">
       <nz-tabset nzSize="small">
         <nz-tab [nzTitle]="titleTemplate1">
-          <div class="scrollbar wh100" *ngIf="userMessage">
+          <div class="scrollbar wh100 ovys" *ngIf="userMessage">
             <div
               class="message-item flex"
               *ngFor="let message of userMessage.messages"
@@ -175,7 +175,7 @@
           </div>
         </nz-tab>
         <nz-tab [nzTitle]="titleTemplate2">
-          <div class="scrollbar wh100" *ngIf="userMessage">
+          <div class="scrollbar wh100 ovys" *ngIf="userMessage">
             <div class="file-item" *ngFor="let file of userMessage.files">
               <div>
                 <span class="name">{{ file.name }}</span
@@ -191,7 +191,7 @@
           </div>
         </nz-tab>
         <nz-tab [nzTitle]="titleTemplate3">
-          <div class="scrollbar wh100" *ngIf="userMessage">
+          <div class="scrollbar wh100 ovys" *ngIf="userMessage">
             <div
               class="schedule-item flex"
               *ngFor="let schedule of userMessage.schedules"

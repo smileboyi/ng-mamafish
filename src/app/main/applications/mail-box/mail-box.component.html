@@ -102,7 +102,8 @@
       *ngIf="ltMd && !fold"
     ></div>
     <div
-      [ngClass]="{ 'person-box': true, 'person-box--lt-md': ltMd, in: fold }"
+      class="person-box scrollbar"
+      [ngClass]="{ 'person-box--lt-md': ltMd, in: fold }"
     >
       <div class="tc no-data pab hauto2" *ngIf="!mails.length">
         <img src="/assets/icons/no-data.png" alt="no-data" />
@@ -122,7 +123,7 @@
         </div>
       </div>
     </div>
-    <div class="content-box fe h100 pre ovys">
+    <div class="content-box fe h100 pre ovys scrollbar">
       <div class="no-data tc pab centre2" *ngIf="!mail && !newMail">
         <i nz-icon type="mail" theme="outline"></i>
         <p class="text">Select a mail to read</p>

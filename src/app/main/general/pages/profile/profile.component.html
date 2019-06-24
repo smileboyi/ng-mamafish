@@ -1,5 +1,5 @@
 <div
-  class="profile wh100 bsb clear trans ovh"
+  class="profile wh100 bsb clear trans ovh scrollbar"
   ngStyle.lt-md="padding: 15px;overflow-y: auto"
   cdkScrollable
   #profile
@@ -67,7 +67,7 @@
           [hidden]="!backTopShow"
         ></nz-back-top>
         <div
-          class="content-box"
+          class="content-box scrollbar"
           #contentBox
           [ngStyle]="{ padding: isPageMini ? '0' : '0 30px' }"
         >
@@ -112,7 +112,7 @@
             {{ showStatus }}
           </div>
         </div>
-        <div class="content-box">
+        <div class="content-box scrollbar">
           <div class="reload">
             <button
               nz-button
@@ -147,7 +147,7 @@
             </div>
           </div>
         </div>
-        <div class="content-box">
+        <div class="content-box scrollbar">
           <div class="reload">
             <button
               nz-button
