@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 import { UserRole, UserInfo } from '@declare';
 
@@ -9,6 +10,8 @@ import { UserRole, UserInfo } from '@declare';
   providedIn: 'root'
 })
 export class GlobalService {
+  static resetThemeColor$: Subject<any> = new Subject<any>();
+
   // < 620px （页面状态可以使用rxjs,这样不用在多个页面去监听window resize获取状态）
   isMobile = false;
   // < 450px

@@ -17,7 +17,7 @@ import { UtilsService } from '@services/utils.service';
 import { GlobalService } from '@services/global.service';
 import { LayoutConfigService } from '@services/layout-config.service';
 import { LayoutConfig } from '@config/layout.config';
-import { PROFILE_INFO } from '@tokens';
+import { PROFILE_INFO, LAYOUT_CONFIG } from '@tokens';
 
 @Component({
   selector: 'app-root',
@@ -40,7 +40,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private layoutConfig: LayoutConfigService,
     @Inject(DOCUMENT) private document: any,
-    @Inject(PROFILE_INFO) private profileInfo: string
+    @Inject(PROFILE_INFO) private profileInfoToken: string,
+    @Inject(LAYOUT_CONFIG) public layoutConfigToken: string
   ) {}
 
   ngOnInit() {
@@ -97,13 +98,30 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   async initConfig() {
-    const profileInfo: any = await this.ngForage.getItem(this.profileInfo);
+    const profileInfo: any = await this.ngForage.getItem(this.profileInfoToken);
     if (profileInfo) {
       this.global.userRole = profileInfo.userRole;
       this.global.userInfo = profileInfo.userInfo;
       this.global.permissionList = profileInfo.permissionList;
     } else {
       this.utils.gotoOtherPage('login');
+    }
+    const layoutConfig: any = await this.ngForage.getItem(
+      this.layoutConfigToken
+    );
+    if (layoutConfig) {
+      const htmlROOT = document.querySelector(':root');
+      htmlROOT.setAttribute(
+        'style',
+        `
+          --toolbarThemeFg: ${layoutConfig.toolbar.theme.selectedFg};
+          --toolbarThemeBg: ${layoutConfig.toolbar.theme.selectedBg};
+          --navbarThemeFg: ${layoutConfig.navbar.theme.selectedFg};
+          --navbarThemeBg: ${layoutConfig.navbar.theme.selectedBg};
+          --footerThemeFg: ${layoutConfig.footer.theme.selectedFg};
+          --footerThemeBg: ${layoutConfig.footer.theme.selectedBg};
+        `
+      );
     }
   }
 

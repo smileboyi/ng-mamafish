@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { ThemeColorService } from './theme-color.service';
+import { GlobalService } from '@services/global.service';
 import { ThemeColor } from '@declare';
 
 @Component({
@@ -46,6 +47,13 @@ export class ThemePanelComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    // 监听重置主题配置
+    GlobalService.resetThemeColor$.subscribe(type => {
+      if (this.themeType === type) {
+        this.deleteColor();
+      }
+    });
+
     if (this.themeColor) {
       this.selectedFg = this.themeColor.selectedFg;
       this.selectedBg = this.themeColor.selectedBg;
@@ -100,6 +108,7 @@ export class ThemePanelComponent implements OnInit {
     this.selectedColor = 'Select Color';
     this.selectedFg = '#1e88e5';
     this.selectedBg = '#bcdcf7';
+    this.selectedHueIndex = undefined;
     this.resetThemeColor.emit(this.themeType);
   }
 }

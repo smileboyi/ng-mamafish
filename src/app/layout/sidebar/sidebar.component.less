@@ -9,12 +9,13 @@
     background-color: transparent;
   }
   .main {
+    position: relative;
     height: auto;
     margin-bottom: 64px;
     background-color: #fff;
   }
   .tabs {
-    height: 60%;
+    height: 100%;
     ::ng-deep .ant-tabs-nav .ant-tabs-tab {
       margin: 0 12px 0 0;
     }
@@ -47,6 +48,8 @@
     }
   }
   .reset-btn {
+    position: absolute;
+    bottom: 30%;
     height: 36px;
     line-height: 36px;
     font-size: 14px;

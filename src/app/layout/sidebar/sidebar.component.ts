@@ -95,6 +95,7 @@ export class SidebarComponent implements OnInit {
     this.layoutConfig.config = { [key]: value };
     if (value.theme) {
       this.resetThemeColor(key);
+      GlobalService.resetThemeColor$.next(key);
     }
   }
 
@@ -142,7 +143,7 @@ export class SidebarComponent implements OnInit {
   }
 
   setNavbarThemeColor(themeColor: ThemeColor): void {
-    this.layoutConfig.config = { toolbar: { theme: themeColor } };
+    this.layoutConfig.config = { navbar: { theme: themeColor } };
     this.setThemeColor({
       '--navbarThemeFg': themeColor.selectedFg,
       '--navbarThemeBg': themeColor.selectedBg
