@@ -7,65 +7,64 @@
   [nzContent]="contentTemplate"
   nzTrigger="click"
   nzPlacement="bottomLeft"
+  [ngStyle]="{ 'background-color': selectedFg, 'border-color': selectedFg }"
 >
   <i nz-icon type="bg-colors" theme="outline"></i>
 </button>
 
 <ng-template #contentTemplate>
-  <div class="theme-panel"></div>
-</ng-template>
-
-<div class="theme-panel box-shadow ovh">
-  <header class="tc" [ngStyle]="{ 'background-color': selectedFg }">
-    <button
-      nz-button
-      class="fl"
-      (click)="view = 'palettes'"
-      [ngStyle]="{ color: selectedBg }"
-      [hidden]="view === 'palettes'"
-    >
-      <i nz-icon type="arrow-left" nzTheme="outline"></i>
-    </button>
-    <span class="select" [ngStyle]="{ color: selectedBg }">
-      {{ selectedColor }}
-    </span>
-    <button
-      nz-button
-      class="fr"
-      (click)="deleteColor()"
-      [hidden]="view === 'palettes'"
-      [ngStyle]="{ color: selectedBg }"
-    >
-      <i nz-icon type="delete" nzTheme="fill"></i>
-    </button>
-  </header>
-  <div class="views" [ngSwitch]="view">
-    <div class="colors bsb" *ngSwitchCase="'palettes'">
-      <div
-        class="color"
-        *ngFor="let color of paletteColors; let i = index"
-        [ngStyle]="{ 'background-color': color['500'] }"
-        (click)="selectPalette(i)"
-      ></div>
-      <div class="color pre" (click)="selectCustomize()">
-        <input
-          class="pab wh100 not nob"
-          [ngStyle]="{ clip: 'rect(0, 0, 0, 0)' }"
-          type="color"
-          id="colorCustomizeIpt"
-          (change)="colorChange()"
-        />
-        <img src="/assets/icons/watercolor.svg" />
+  <div class="theme-color-panel box-shadow ovh">
+    <header class="tc" [ngStyle]="{ 'background-color': selectedFg }">
+      <button
+        nz-button
+        class="fl"
+        (click)="view = 'palettes'"
+        [ngStyle]="{ color: selectedBg }"
+        [hidden]="view === 'palettes'"
+      >
+        <i nz-icon type="arrow-left" nzTheme="outline"></i>
+      </button>
+      <span class="select" [ngStyle]="{ color: selectedBg }">
+        {{ selectedColor }}
+      </span>
+      <button
+        nz-button
+        class="fr"
+        (click)="deleteColor()"
+        [hidden]="view === 'palettes'"
+        [ngStyle]="{ color: selectedBg }"
+      >
+        <i nz-icon type="delete" nzTheme="fill"></i>
+      </button>
+    </header>
+    <div class="views" [ngSwitch]="view">
+      <div class="colors bsb" *ngSwitchCase="'palettes'">
+        <div
+          class="color"
+          *ngFor="let color of paletteColors; let i = index"
+          [ngStyle]="{ 'background-color': color['500'] }"
+          (click)="selectPalette(i)"
+        ></div>
+        <div class="color pre" (click)="selectCustomize()">
+          <input
+            class="pab wh100 not nob"
+            [ngStyle]="{ clip: 'rect(0, 0, 0, 0)' }"
+            type="color"
+            id="colorCustomizeIpt"
+            (change)="colorChange()"
+          />
+          <img src="/assets/icons/watercolor.svg" />
+        </div>
+      </div>
+      <div class="colors bsb" *ngSwitchCase="'hues'">
+        <div
+          class="color"
+          *ngFor="let color of hueColors; let i = index"
+          [ngStyle]="{ 'background-color': color }"
+          [ngClass]="{ ac: i === selectedHueIndex }"
+          (click)="selectHue(i)"
+        ></div>
       </div>
     </div>
-    <div class="colors bsb" *ngSwitchCase="'hues'">
-      <div
-        class="color"
-        *ngFor="let color of hueColors; let i = index"
-        [ngStyle]="{ 'background-color': color }"
-        [ngClass]="{ ac: i === selectedHueIndex }"
-        (click)="selectHue(i)"
-      ></div>
-    </div>
   </div>
-</div>
+</ng-template>

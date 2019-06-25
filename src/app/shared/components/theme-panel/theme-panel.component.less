@@ -1,43 +1,52 @@
-:host {
-  .theme-panel {
-    width: 228px;
-    border-radius: 4px;
-    header {
-      [nz-button] {
+.theme-color-panel {
+  width: 228px;
+  border-radius: 4px;
+  header {
+    [nz-button] {
+      width: 40px;
+      height: 40px;
+      outline: none;
+      border: none;
+      background-color: transparent;
+    }
+    .select {
+      font-size: 15px;
+      line-height: 40px;
+    }
+  }
+  .views {
+    display: inline-block;
+    background-color: #4d4d4d;
+    .colors {
+      display: flex;
+      flex-flow: row wrap;
+      box-sizing: border-box;
+      padding: 4px;
+      .color {
         width: 40px;
         height: 40px;
-        outline: none;
-        border: none;
-        background-color: transparent;
-      }
-      .select {
-        font-size: 15px;
-        line-height: 40px;
-      }
-    }
-    .views {
-      display: inline-block;
-      background-color: #4d4d4d;
-      .colors {
-        display: flex;
-        flex-flow: row wrap;
-        box-sizing: border-box;
-        padding: 4px;
-        .color {
-          width: 40px;
-          height: 40px;
-          margin: 2px;
-          border-radius: 0;
-          cursor: pointer;
-          transition: all 0.2s;
-          &:hover {
-            border-radius: 20%;
-          }
-          &.ac {
-            border-radius: 50%;
-          }
+        margin: 2px;
+        border-radius: 0;
+        cursor: pointer;
+        transition: all 0.2s;
+        &:hover {
+          border-radius: 20%;
+        }
+        &.ac {
+          border-radius: 50%;
         }
       }
     }
   }
+}
+
+::ng-deep .ant-popover {
+  padding-top: 0;
+  .ant-popover-arrow {
+    display: none;
+  }
+}
+::ng-deep .ant-popover-inner-content {
+  padding: 0;
+  background-color: transparent;
 }

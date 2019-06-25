@@ -51,11 +51,14 @@ export class SidebarComponent implements OnInit {
       this.pageWidth = config.width;
       this.toolbarHide = !config.toolbar.show;
       this.toolbarPosition = config.toolbar.position;
+      this.toolbarThemeColor = config.toolbar.theme;
       this.navbarHide = !config.navbar.show;
       this.navbarCollapse = config.navbar.collapsed;
       this.navbarPosition = config.navbar.position;
+      this.navbarThemeColor = config.navbar.theme;
       this.footerHide = !config.footer.show;
       this.footerPosition = config.footer.position;
+      this.footerThemeColor = config.footer.theme;
     });
   }
 
