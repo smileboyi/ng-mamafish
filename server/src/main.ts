@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import 'reflect-metadata';
 import * as rateLimit from 'express-rate-limit';
 import * as cookieParser from 'cookie-parser';
 import * as compression from 'compression';
@@ -8,13 +9,19 @@ import * as csurf from 'csurf';
 
 declare const module: any;
 
+// 监听unhandledRejection错误
+process.on('unhandledRejection', (reason, p) => {
+  // tslint:disable-next-line: no-console
+  console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+});
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   app.setGlobalPrefix('api');
 
   app.use(helmet());
   app.use(cookieParser());
-  app.use(csurf({ cookie: true }));
+  // app.use(csurf({ cookie: true }));
   app.use(
     rateLimit({
       windowMs: 5 * 60 * 1000,

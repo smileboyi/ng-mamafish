@@ -34,7 +34,7 @@
     "express-rate-limit": "^5.0.0",
     "helmet": "^3.18.0",
     "mysql": "^2.17.1",
-    "reflect-metadata": "^0.1.12",
+    "reflect-metadata": "^0.1.13",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
     "typeorm": "^0.2.18"
@@ -59,7 +59,7 @@
     "typescript": "3.4.3",
     "wait-on": "^3.2.0",
     "webpack": "^4.35.0",
-    "webpack-cli": "^3.3.5",
+    "webpack-cli": "^3.3.6",
     "webpack-node-externals": "^1.7.2"
   },
   "jest": {

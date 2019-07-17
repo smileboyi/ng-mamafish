@@ -4,6 +4,7 @@ import {
   BeforeInsert,
   OneToMany,
   BeforeUpdate,
+  CreateDateColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IsEmail } from 'class-validator';
@@ -13,6 +14,10 @@ import { UserWithRole } from './user-with-role.entity';
 
 @Entity()
 export class UserInfo {
+  constructor(o: object) {
+    Object.assign(this, o);
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -22,21 +27,27 @@ export class UserInfo {
   @Column()
   password: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   avatar: string;
 
   @Column()
   @IsEmail()
   email: string;
 
-  @Column()
+  @Column({
+    default: '',
+  })
   salt: string;
 
   @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
-    const salt = bcrypt.genSaltSync(11);
-    const hash = bcrypt.hashSync(this.password, salt);
+    if (!this.salt) {
+      this.salt = bcrypt.genSaltSync(11);
+    }
+    const hash = bcrypt.hashSync(this.password, this.salt);
     this.password = hash;
   }
 
@@ -45,8 +56,9 @@ export class UserInfo {
   })
   signInCount: string;
 
-  @Column({
+  @CreateDateColumn({
     name: 'last_sign_in_at',
+    type: 'datetime',
   })
   lastSignInAt: Date;
 
@@ -65,11 +77,13 @@ export class UserInfo {
   })
   themeColorConfig: string;
 
-  @Column({
+  @CreateDateColumn({
     name: 'created_date',
+    type: 'timestamp',
   })
   createdDate: Date;
 
+  // 默认是一个user对应一个role（OneToOne），为了可拓展性，一个user可以有多个role，使用OneToMany
   @OneToMany(type => UserWithRole, userWithRole => userWithRole.userInfo)
   userWithRole: UserWithRole[];
 }

@@ -6,18 +6,20 @@ import {
   UseGuards,
   Headers,
   Req,
+  BadGatewayException,
 } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
+import { CreateUserDto } from './create-user.dto';
+
 import { UserInfo } from './../user/user-info.entity';
 
 @Controller('auth')
 export class AuthController {
-  // constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
-  @Get()
-  testAuth() {
-    return 'auth page';
+  @Post('register')
+  async register(@Body() createUserDto: CreateUserDto) {
+    this.authService.register(createUserDto);
   }
-
 }

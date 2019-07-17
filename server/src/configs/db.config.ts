@@ -1,3 +1,10 @@
+import { join } from 'path';
+
+import { UserPermission } from '../modules/user/user-permission.entity';
+import { UserRole } from '../modules/user/user-role.entity';
+import { UserInfo } from '../modules/user/user-info.entity';
+import { UserWithRole } from '../modules/user/user-with-role.entity';
+
 export const mysqlConfig = {
   type: 'mysql',
   host: 'localhost',
@@ -6,10 +13,11 @@ export const mysqlConfig = {
   password: '123456',
   database: 'mamafish',
   charset: 'utf8',
-  entities: [__dirname + '/../**/**.entity{.ts,.js}'],
+  // entities: [join(__dirname, '**/**.entity{.ts,.js}')],
+  entities: [UserPermission, UserRole, UserInfo, UserWithRole],
 
   // We are using migrations, synchronize should be set to false.
-  synchronize: false,
+  synchronize: true,
 
   // Run migrations automatically,
   // you can disable this if you prefer running migration manually.
