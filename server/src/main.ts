@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import 'reflect-metadata';
 import * as rateLimit from 'express-rate-limit';
 import * as cookieParser from 'cookie-parser';
 import * as compression from 'compression';
 import * as helmet from 'helmet';
 import * as csurf from 'csurf';
+import 'reflect-metadata';
 
 declare const module: any;
 

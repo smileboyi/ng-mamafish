@@ -1,3 +1,5 @@
+import * as redisStore from 'cache-manager-redis-store';
+import { ConnectionOptions } from 'typeorm';
 import { join } from 'path';
 
 import { UserPermission } from '../modules/user/user-permission.entity';
@@ -5,7 +7,7 @@ import { UserRole } from '../modules/user/user-role.entity';
 import { UserInfo } from '../modules/user/user-info.entity';
 import { UserWithRole } from '../modules/user/user-with-role.entity';
 
-export const mysqlConfig = {
+export const mysqlConfig: ConnectionOptions = {
   type: 'mysql',
   host: 'localhost',
   port: 3306,
@@ -34,4 +36,13 @@ export const mysqlConfig = {
     // to be compiled into dist/ folder.
     migrationsDir: 'src/migrations',
   },
+};
+
+export const redisConfig = {
+  store: redisStore,
+  host: 'localhost',
+  port: 6379,
+  auth_pass: '123456',
+  ttl: 20, // seconds
+  max: 15, // maximum number of items in cache
 };

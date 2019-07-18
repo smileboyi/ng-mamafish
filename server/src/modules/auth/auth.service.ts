@@ -3,24 +3,47 @@ import {
   BadGatewayException,
   HttpStatus,
   HttpException,
+  Inject,
 } from '@nestjs/common';
 import { validate } from 'class-validator';
 
 import { UserService } from '../user/user.service';
 import { UserInfo } from './../user/user-info.entity';
 import { CreateUserDto } from './create-user.dto';
+import { LoginInfo } from './auth.interface';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    @Inject('REDIS_CACHE_MANAGER') private readonly redisCacheManager: object,
+  ) {}
 
-  // async login(){
-  //   try{
+  async login(loginInfo: LoginInfo): Promise<any> {
+    try {
+      const user = await this.userService.findByUserName(loginInfo.username);
+      if (!user) {
+        throw new HttpException(
+          { message: `User ${loginInfo.username} not registered` },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
 
-  //   }  catch (error) {
-  //     throw new BadGatewayException(error);
-  //   }
-  // }
+      if (!this.userService.comparePassword(loginInfo.password, user)) {
+        throw new HttpException(
+          { message: 'Incorrect username or password' },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
+      user.signInCount = user.signInCount + 1;
+      user.lastSignInAt = loginInfo.signInAt;
+      user.lastSignInIp = loginInfo.signInIp;
+      return await this.userService.createOrUpdate(user);
+    } catch (error) {
+      throw new BadGatewayException(error);
+    }
+  }
 
   async register(createUserDto: CreateUserDto): Promise<any> {
     try {
@@ -49,7 +72,7 @@ export class AuthService {
             HttpStatus.BAD_REQUEST,
           );
         }
-        return await this.userService.create(newUser);
+        return await this.userService.createOrUpdate(newUser);
       }
     } catch (error) {
       throw new BadGatewayException(error);

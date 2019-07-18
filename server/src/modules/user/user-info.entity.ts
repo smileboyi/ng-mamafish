@@ -7,7 +7,7 @@ import {
   CreateDateColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { IsEmail } from 'class-validator';
+import { IsEmail, Length } from 'class-validator';
 import * as bcrypt from 'bcryptjs';
 
 import { UserWithRole } from './user-with-role.entity';
@@ -22,6 +22,7 @@ export class UserInfo {
   id: number;
 
   @Column()
+  @Length(5, 15)
   username: string;
 
   @Column()
@@ -47,14 +48,14 @@ export class UserInfo {
     if (!this.salt) {
       this.salt = bcrypt.genSaltSync(11);
     }
-    const hash = bcrypt.hashSync(this.password, this.salt);
-    this.password = hash;
+    this.password = bcrypt.hashSync(this.password, this.salt);
   }
 
   @Column({
     name: 'sign_in_count',
+    default: 0,
   })
-  signInCount: string;
+  signInCount: number;
 
   @CreateDateColumn({
     name: 'last_sign_in_at',
@@ -64,16 +65,19 @@ export class UserInfo {
 
   @Column({
     name: 'last_sign_in_ip',
+    nullable: true,
   })
   lastSignInIp: string;
 
   @Column({
     name: 'layout_config',
+    nullable: true,
   })
   layoutConfig: string;
 
   @Column({
     name: 'theme_color_config',
+    nullable: true,
   })
   themeColorConfig: string;
 
