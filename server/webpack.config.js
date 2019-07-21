@@ -33,6 +33,7 @@ module.exports = {
       '@middlewares': path.resolve('./src/middlewares'),
       '@modules': path.resolve('./src/modules'),
       '@pipes': path.resolve('./src/pipes'),
+      '@services': path.resolve('./src/services'),
     },
   },
   plugins: [

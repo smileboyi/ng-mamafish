@@ -22,7 +22,7 @@ export class UserInfo {
   id: number;
 
   @Column()
-  @Length(5, 15)
+  @Length(2, 15)
   username: string;
 
   @Column()

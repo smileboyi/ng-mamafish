@@ -3,21 +3,45 @@ import {
   BadGatewayException,
   HttpStatus,
   HttpException,
-  Inject,
 } from '@nestjs/common';
 import { validate } from 'class-validator';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 import { UserService } from '../user/user.service';
 import { UserInfo } from './../user/user-info.entity';
+import { UserRole } from './../user/user-role.entity';
+
 import { CreateUserDto } from './create-user.dto';
 import { LoginInfo } from './auth.interface';
+import {
+  redisCache,
+  redisClient,
+} from '@services/redis-store/redis-store.service';
 
 @Injectable()
 export class AuthService {
+  // 角色为User的UserRole id
+  roleUserId: number;
+
   constructor(
     private readonly userService: UserService,
-    @Inject('REDIS_CACHE_MANAGER') private readonly redisCacheManager: object,
-  ) {}
+    @InjectRepository(UserRole)
+    private readonly userRoleRepository: Repository<UserRole>,
+  ) {
+    this.getRoleUserId();
+  }
+
+  private async getRoleUserId(): Promise<any> {
+    try {
+      const role: UserRole = await this.userRoleRepository.findOne({
+        role: 'User',
+      });
+      this.roleUserId = role.id;
+    } catch (error) {
+      throw new BadGatewayException(error);
+    }
+  }
 
   async login(loginInfo: LoginInfo): Promise<any> {
     try {
@@ -72,7 +96,9 @@ export class AuthService {
             HttpStatus.BAD_REQUEST,
           );
         }
-        return await this.userService.createOrUpdate(newUser);
+        const dbUser = await this.userService.createOrUpdate(newUser);
+        this.userService.setUserRole(dbUser.id, this.roleUserId);
+        return dbUser;
       }
     } catch (error) {
       throw new BadGatewayException(error);

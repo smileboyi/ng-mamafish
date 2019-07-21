@@ -18,7 +18,8 @@
       "@interceptors/*": ["./src/interceptors/*"],
       "@middlewares/*": ["./src/middlewares/*"],
       "@modules/*": ["./src/modules/*"],
-      "@pipes/*": ["./src/pipes/*"]
+      "@pipes/*": ["./src/pipes/*"],
+      "@services/*": ["./src/services/*"],
     }
   },
   "exclude": ["node_modules", "dist"]

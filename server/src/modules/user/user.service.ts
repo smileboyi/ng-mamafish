@@ -9,12 +9,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
 
 import { UserInfo } from './user-info.entity';
+import { UserWithRole } from './user-with-role.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserInfo)
     private readonly userinfoRepository: Repository<UserInfo>,
+    @InjectRepository(UserWithRole)
+    private readonly userWithRoleRepository: Repository<UserWithRole>,
   ) {}
 
   async createOrUpdate(user: UserInfo) {
@@ -53,6 +56,19 @@ export class UserService {
     try {
       const hashPassword = bcrypt.hashSync(password, user.salt);
       return hashPassword === user.password;
+    } catch (error) {
+      throw new BadGatewayException(error);
+    }
+  }
+
+  async setUserRole(userId: number, roleId: number): Promise<any> {
+    try {
+      return await this.userWithRoleRepository.save(
+        new UserWithRole({
+          userRole: roleId,
+          userInfo: userId,
+        }),
+      );
     } catch (error) {
       throw new BadGatewayException(error);
     }
