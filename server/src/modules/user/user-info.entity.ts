@@ -14,7 +14,7 @@ import { UserWithRole } from './user-with-role.entity';
 
 @Entity()
 export class UserInfo {
-  constructor(o: object) {
+  constructor(o: Partial<UserInfo>) {
     Object.assign(this, o);
   }
 
@@ -45,10 +45,13 @@ export class UserInfo {
   @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
-    if (!this.salt) {
-      this.salt = bcrypt.genSaltSync(11);
+    // 哈希密码比较长(固定长)，通过length比较判断密码是否加密过
+    if (this.password.length <= 30) {
+      if (!this.salt) {
+        this.salt = bcrypt.genSaltSync(11);
+      }
+      this.password = bcrypt.hashSync(this.password, this.salt);
     }
-    this.password = bcrypt.hashSync(this.password, this.salt);
   }
 
   @Column({
@@ -88,6 +91,8 @@ export class UserInfo {
   createdDate: Date;
 
   // 默认是一个user对应一个role（OneToOne），为了可拓展性，一个user可以有多个role，使用OneToMany
-  @OneToMany(type => UserWithRole, userWithRole => userWithRole.userInfo)
+  @OneToMany(type => UserWithRole, userWithRole => userWithRole.userInfo, {
+    cascade: true,
+  })
   userWithRole: UserWithRole[];
 }

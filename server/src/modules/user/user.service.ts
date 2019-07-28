@@ -54,8 +54,7 @@ export class UserService {
 
   async comparePassword(password: string, user: UserInfo): Promise<boolean> {
     try {
-      const hashPassword = bcrypt.hashSync(password, user.salt);
-      return hashPassword === user.password;
+      return bcrypt.compareSync(password, user.password);
     } catch (error) {
       throw new BadGatewayException(error);
     }

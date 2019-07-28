@@ -7,17 +7,16 @@ import {
 import { validate } from 'class-validator';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { JwtService } from '@nestjs/jwt';
+import * as uuid from 'uuid/v4';
 
 import { UserService } from '../user/user.service';
 import { UserInfo } from './../user/user-info.entity';
 import { UserRole } from './../user/user-role.entity';
-
+import { JWT_EXPIRES } from '@configs/app.config';
 import { CreateUserDto } from './create-user.dto';
-import { LoginInfo } from './auth.interface';
-import {
-  redisCache,
-  redisClient,
-} from '@services/redis-store/redis-store.service';
+import { LoginInfo, JwtToken, JwtPayload } from './auth.interface';
+import { redisClient } from '@services/redis-store/redis-store.service';
 
 @Injectable()
 export class AuthService {
@@ -25,6 +24,7 @@ export class AuthService {
   roleUserId: number;
 
   constructor(
+    private readonly jwtService: JwtService,
     private readonly userService: UserService,
     @InjectRepository(UserRole)
     private readonly userRoleRepository: Repository<UserRole>,
@@ -43,27 +43,54 @@ export class AuthService {
     }
   }
 
-  async login(loginInfo: LoginInfo): Promise<any> {
+  async validateUser(username: string, password: string): Promise<UserInfo> {
     try {
-      const user = await this.userService.findByUserName(loginInfo.username);
+      const user = await this.userService.findByUserName(username);
       if (!user) {
         throw new HttpException(
-          { message: `User ${loginInfo.username} not registered` },
+          { message: `User ${username} not registered` },
           HttpStatus.BAD_REQUEST,
         );
       }
-
-      if (!this.userService.comparePassword(loginInfo.password, user)) {
+      if (!(await this.userService.comparePassword(password, user))) {
         throw new HttpException(
-          { message: 'Incorrect username or password' },
+          { message: 'Invalid username or password' },
           HttpStatus.BAD_REQUEST,
         );
       }
+      return user;
+    } catch (error) {
+      throw new BadGatewayException(error);
+    }
+  }
 
+  async createToken(signedUser: Partial<UserInfo>): Promise<JwtToken> {
+    const user: JwtPayload = {
+      sub: signedUser.id,
+      username: signedUser.username,
+    };
+    return {
+      expires_in: JWT_EXPIRES,
+      access_token: await this.jwtService.sign(user),
+    };
+  }
+
+  async login(loginInfo: LoginInfo): Promise<any> {
+    try {
+      const user = await this.validateUser(
+        loginInfo.username,
+        loginInfo.password,
+      );
       user.signInCount = user.signInCount + 1;
-      user.lastSignInAt = loginInfo.signInAt;
       user.lastSignInIp = loginInfo.signInIp;
-      return await this.userService.createOrUpdate(user);
+      await this.userService.createOrUpdate(user);
+      // const token = uuid();
+      // redisClient.set(token, user.username, 'EX', 60 * 30);
+      const token = this.createToken({
+        id: user.id,
+        username: user.username,
+      });
+      return token;
     } catch (error) {
       throw new BadGatewayException(error);
     }
