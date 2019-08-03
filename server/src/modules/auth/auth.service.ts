@@ -13,6 +13,8 @@ import * as uuid from 'uuid/v4';
 import { UserService } from '../user/user.service';
 import { UserInfo } from './../user/user-info.entity';
 import { UserRole } from './../user/user-role.entity';
+import { UserPermission } from './../user/user-permission.entity';
+import { UserWithRole } from './../user/user-with-role.entity';
 import { JWT_EXPIRES } from '@configs/app.config';
 import { CreateUserDto } from './create-user.dto';
 import { LoginInfo, JwtToken, JwtPayload } from './auth.interface';
@@ -22,12 +24,17 @@ import { redisClient } from '@services/redis-store/redis-store.service';
 export class AuthService {
   // 角色为User的UserRole id
   roleUserId: number;
+  regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 
   constructor(
     private readonly jwtService: JwtService,
     private readonly userService: UserService,
     @InjectRepository(UserRole)
     private readonly userRoleRepository: Repository<UserRole>,
+    @InjectRepository(UserWithRole)
+    private readonly userWithRoleRepository: Repository<UserWithRole>,
+    @InjectRepository(UserPermission)
+    private readonly userPermissionRepository: Repository<UserPermission>,
   ) {
     this.getRoleUserId();
   }
@@ -43,12 +50,56 @@ export class AuthService {
     }
   }
 
-  async validateUser(username: string, password: string): Promise<UserInfo> {
+  async getRole(uid: any): Promise<UserRole> {
     try {
-      const user = await this.userService.findByUserName(username);
+      const userWithRole: UserWithRole = await this.userWithRoleRepository.findOne(
+        {
+          userInfo: uid,
+        },
+        {
+          relations: ['userRole'],
+        },
+      );
+      return userWithRole.userRole;
+    } catch (error) {
+      throw new BadGatewayException(error);
+    }
+  }
+
+  async getPermissions(rid: any): Promise<string[]> {
+    try {
+      // 如果有临时权限,可以将临时权限存在mongoose里
+      const userPermissions: UserPermission[] = await this.userPermissionRepository.find(
+        {
+          userRole: rid,
+        },
+      );
+      const permissions = userPermissions.map(item => item.permission);
+      return permissions;
+    } catch (error) {
+      throw new BadGatewayException(error);
+    }
+  }
+
+  async validateUser({
+    username,
+    email,
+    password,
+  }: {
+    username?: string;
+    email?: string;
+    password: string;
+  }): Promise<UserInfo> {
+    try {
+      let user;
+      if (username) {
+        user = await this.userService.findByUserName(username);
+      } else {
+        user = await this.userService.findByEmail(email);
+      }
       if (!user) {
         throw new HttpException(
-          { message: `User ${username} not registered` },
+          { message: `User ${username || ''}${email || ''} not registered` },
           HttpStatus.BAD_REQUEST,
         );
       }
@@ -77,20 +128,38 @@ export class AuthService {
 
   async login(loginInfo: LoginInfo): Promise<any> {
     try {
-      const user = await this.validateUser(
-        loginInfo.username,
-        loginInfo.password,
-      );
+      let user: UserInfo;
+      if (this.regEmail.test(loginInfo.account)) {
+        user = await this.validateUser({
+          email: loginInfo.account,
+          password: loginInfo.password,
+        });
+      } else {
+        user = await this.validateUser({
+          username: loginInfo.account,
+          password: loginInfo.password,
+        });
+      }
+
       user.signInCount = user.signInCount + 1;
       user.lastSignInIp = loginInfo.signInIp;
       await this.userService.createOrUpdate(user);
       // const token = uuid();
       // redisClient.set(token, user.username, 'EX', 60 * 30);
-      const token = this.createToken({
+      const token = await this.createToken({
         id: user.id,
         username: user.username,
       });
-      return token;
+      delete user.salt;
+      delete user.password;
+      const userRole: UserRole = await this.getRole(user.id);
+      const permissionList = await this.getPermissions(userRole.id);
+      return {
+        token,
+        userInfo: user,
+        userRole,
+        permissionList,
+      };
     } catch (error) {
       throw new BadGatewayException(error);
     }

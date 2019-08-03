@@ -37,6 +37,7 @@
     "compression": "^1.7.4",
     "connect-redis": "^3.4.2",
     "cookie-parser": "^1.4.4",
+    "crypto": "^1.0.1",
     "csurf": "^1.10.0",
     "express-rate-limit": "^5.0.0",
     "express-session": "^1.16.2",

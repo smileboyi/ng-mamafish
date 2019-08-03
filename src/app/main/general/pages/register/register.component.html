@@ -1,33 +1,58 @@
 <div class="wh100 bi cover-full ovh">
-  <div class="form-box pab centre2 tc">
+  <form class="form-box pab centre2 tc" nz-form [formGroup]="validateForm">
     <h3 class="title">麻麻鱼</h3>
     <p class="text">Sign up to find interesting thing</p>
     <nz-form-control>
       <nz-input-group class="item" [nzPrefix]="prefixUser">
-        <input type="text" nz-input placeholder="Username*" />
+        <input
+          type="text"
+          nz-input
+          placeholder="Username*"
+          formControlName="username"
+        />
       </nz-input-group>
     </nz-form-control>
 
     <nz-form-control>
       <nz-input-group class="item" [nzPrefix]="prefixMail">
-        <input type="text" nz-input placeholder="Email*" />
+        <input
+          type="text"
+          nz-input
+          placeholder="Email*"
+          formControlName="email"
+        />
       </nz-input-group>
     </nz-form-control>
 
     <nz-form-control>
       <nz-input-group class="item" [nzPrefix]="prefixLock">
-        <input type="text" nz-input placeholder="Password*" />
+        <input
+          type="Password"
+          nz-input
+          placeholder="Password*"
+          formControlName="password"
+        />
       </nz-input-group>
     </nz-form-control>
 
     <nz-form-control>
       <nz-input-group class="item" [nzPrefix]="prefixLock">
-        <input type="text" nz-input placeholder="Retype Password*" />
+        <input
+          type="Password"
+          nz-input
+          placeholder="Retype Password*"
+          formControlName="rptPassword"
+        />
       </nz-input-group>
     </nz-form-control>
 
     <nz-form-control>
-      <button nz-button class="form-button" [nzType]="'primary'">
+      <button
+        nz-button
+        class="form-button"
+        [nzType]="'primary'"
+        (click)="handleRegister()"
+      >
         Register
       </button>
     </nz-form-control>
@@ -52,7 +77,7 @@
         </button>
       </div>
     </div>
-  </div>
+  </form>
 </div>
 
 <ng-template #prefixUser><i nz-icon type="user"></i></ng-template>

@@ -1,5 +1,5 @@
 export interface LoginInfo {
-  username: string;
+  account: string;
   password: string;
   signInIp: string;
 }

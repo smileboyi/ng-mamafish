@@ -29,8 +29,26 @@ export enum UserRole {
 }
 
 export interface UserInfo {
-  name: string;
-  token: string;
+  avatar: string | null;
+  createdDate: string;
+  email: string;
+  id: number;
+  lastSignInAt: string;
+  lastSignInIp: string;
+  layoutConfig: string | null;
+  signInCount: number;
+  themeColorConfig: string | null;
+  token: {
+    access_token: string;
+    expires_in: number | string;
+  };
+  userRole: {
+    description: string;
+    id: number;
+    role: string;
+    value: string;
+  };
+  username: string;
 }
 
 export interface PersonInfo {

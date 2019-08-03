@@ -18,10 +18,7 @@ export class GlobalService {
   isMini = false;
   moreHeaderState = false;
   userRole: UserRole = UserRole.Manager;
-  userInfo: UserInfo = {
-    name: '',
-    token: ''
-  };
+  userInfo: Partial<UserInfo>;
   permissionList: Array<string> = [];
   // 所有subMenu展开状态量
   subMenuOpenState = {
@@ -33,4 +30,29 @@ export class GlobalService {
   selectMenuItemId: string;
 
   constructor() {}
+
+  resetUserInfo(): void {
+    this.userInfo = {
+      avatar: null,
+      createdDate: '',
+      email: '',
+      id: 0,
+      lastSignInAt: '',
+      lastSignInIp: '',
+      layoutConfig: null,
+      signInCount: 0,
+      themeColorConfig: null,
+      token: {
+        access_token: '',
+        expires_in: 0
+      },
+      userRole: {
+        description: '',
+        id: 0,
+        role: '',
+        value: ''
+      },
+      username: ''
+    };
+  }
 }

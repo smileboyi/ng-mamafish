@@ -1,5 +1,5 @@
 <div class="wh100 bi cover-full ovh">
-  <div class="form-box pab centre2 tc">
+  <div class="form-box pab centre2 tc" nz-form [formGroup]="validateForm">
     <h3 class="title">麻麻鱼</h3>
     <p class="text">Sign into your pages account</p>
     <nz-form-control>
@@ -8,7 +8,7 @@
           type="text"
           nz-input
           placeholder="Username/Email*"
-          [(ngModel)]="account"
+          formControlName="account"
         />
       </nz-input-group>
     </nz-form-control>
@@ -19,7 +19,7 @@
           type="password"
           nz-input
           placeholder="Password*"
-          [(ngModel)]="password"
+          formControlName="password"
         />
       </nz-input-group>
     </nz-form-control>
@@ -38,9 +38,20 @@
         nz-button
         class="form-button"
         [nzType]="'primary'"
-        (click)="submitForm()"
+        (click)="handleLogin()"
       >
         Sign in
+      </button>
+    </nz-form-control>
+
+    <nz-form-control>
+      <button
+        nz-button
+        class="form-button"
+        [nzType]="'primary'"
+        (click)="handleVisitor()"
+      >
+        Visitor enter
       </button>
     </nz-form-control>
 

@@ -3,6 +3,7 @@ import {
   Post,
   Body,
   Get,
+  Put,
   UseGuards,
   Headers,
   Res,
@@ -13,7 +14,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
-import { join } from 'path';
+import * as crypto from 'crypto';
+import * as path from 'path';
 import * as fs from 'fs';
 
 import { AuthService } from './auth.service';
@@ -24,9 +26,30 @@ import { UserInfo } from './../user/user-info.entity';
 @ApiUseTags('auth')
 @Controller('auth')
 export class AuthController {
-  publicKey = fs.readFileSync(join(__dirname, '/rsa_public_key.pem'), 'utf-8');
+  // 编译或者打包需要把pem文件复制到dist文件夹下面去
+  // 这里使用openssl生成的pem文件，也可以使用node-rsa生成公钥密钥
+  publicKey = fs.readFileSync(
+    path.join(__dirname, '/rsa_public_key.pem'),
+    'utf-8',
+  );
+
+  privateKey = fs.readFileSync(
+    path.join(__dirname, '/rsa_private_key.pem'),
+    'utf-8',
+  );
 
   constructor(private readonly authService: AuthService) {}
+
+  decryptHash(hash: string): string {
+    const decrypt = crypto.privateDecrypt(
+      {
+        key: this.privateKey,
+        padding: (crypto as any).constants.RSA_PKCS1_PADDING,
+      },
+      new Buffer(hash.replace(/\s+/g, '+'), 'base64'),
+    );
+    return decrypt.toString('utf-8');
+  }
 
   @Get('/rsapubkey')
   async rsaPubKey(@Res() res): Promise<any> {
@@ -41,30 +64,35 @@ export class AuthController {
   async login(
     @Req() req,
     @Res() res,
-    @Body('username') username,
+    @Body('account') account,
     @Body('password') password,
   ): Promise<any> {
     const signInIp = req.ip;
+
     const loginInfo: LoginInfo = {
-      username,
-      password,
+      account,
+      password: this.decryptHash(password),
       signInIp,
     };
-    this.authService.login(loginInfo).then((token: string) =>
+    this.authService.login(loginInfo).then(result =>
       res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        data: { token },
+        data: result,
         message: 'Login successful',
       }),
     );
   }
 
-  @Post('register')
+  @Put('register')
   async register(
     @Res() res,
     @Body() createUserDto: CreateUserDto,
   ): Promise<any> {
-    this.authService.register(createUserDto).then((user: UserInfo) =>
+    const dto = {
+      ...createUserDto,
+      password: this.decryptHash(createUserDto.password),
+    };
+    this.authService.register(dto).then((user: UserInfo) =>
       res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
         data: null,

@@ -136,24 +136,9 @@ export const schedules: Array<Schedule> = [
   }
 ];
 
-export const userInfos: Array<UserInfo> = [
-  {
-    name: 'visitor',
-    token: '111aaa222bbb333ccc'
-  },
-  {
-    name: 'smileboyi',
-    token: '111222333aaabbbccc'
-  },
-  {
-    name: 'admin',
-    token: 'aaabbbccc111222333'
-  }
-];
-
 export const userPermissions: Array<Array<string>> = [
   ['Full'],
-  ['User'],
+  ['User', 'exportDataToExcel'],
   [
     'Manager',
     'exportDataToExcel',

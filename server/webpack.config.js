@@ -22,6 +22,10 @@ module.exports = {
     ],
   },
   mode: 'development',
+  node: {
+    __filename: false,
+    __dirname: false,
+  },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {

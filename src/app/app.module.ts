@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
+import { AppInterceptorProviders } from './interceptor/index';
 import { UsersData } from './main/applications/users/users.service';
 import { reducers } from '@reducers/index';
 import { effects } from '@effects/index';
@@ -52,7 +53,8 @@ const loadFactory = (forage: NgForage, ps: NgxPermissionsService) =>
       deps: [NgForage, NgxPermissionsService],
       multi: true
     },
-    { provide: NZ_ICONS, useValue: icons }
+    { provide: NZ_ICONS, useValue: icons },
+    AppInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

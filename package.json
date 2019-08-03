@@ -30,6 +30,7 @@
     "eslint": "^5.16.0",
     "file-saver": "^2.0.2",
     "html2canvas": "^1.0.0-alpha.12",
+    "jsencrypt": "^3.0.0-rc.1",
     "localforage": "^1.7.3",
     "lodash": "^4.17.11",
     "mockjs": "^1.0.1-beta3",
