@@ -4,7 +4,9 @@ import * as _ from 'lodash';
 import { Observable, Observer } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd';
 import { Subject } from 'rxjs/Subject';
+
 import { navigationConfig, menuIdPathSet } from '@config/navigation.config';
+import { GlobalService } from '@services/global.service';
 
 /**
  * 基础服务
@@ -44,11 +46,11 @@ export class UtilsService {
   }
 
   getMobileState(): boolean {
-    return window.innerWidth <= 620;
+    return window.innerWidth <= GlobalService.mobileWidth;
   }
 
   getMiniState(): boolean {
-    return window.innerWidth <= 450;
+    return window.innerWidth <= GlobalService.miniWidth;
   }
 
   // 根据页面id返回页面路径

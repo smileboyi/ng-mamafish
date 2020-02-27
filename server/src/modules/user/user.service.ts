@@ -72,4 +72,14 @@ export class UserService {
       throw new BadGatewayException(error);
     }
   }
+
+  async saveLayoutConfig(username: string, layoutConfig: string): Promise<any> {
+    try {
+      const user: UserInfo = await this.findByUserName(username);
+      user.layoutConfig = layoutConfig;
+      return await this.createOrUpdate(user);
+    } catch (error) {
+      throw new BadGatewayException(error);
+    }
+  }
 }

@@ -1,10 +1,10 @@
 {
-  "/api": {
-    "target": "http://127.0.0.1:4200/api",
+  "/mockapi": {
+    "target": "http://127.0.0.1:4200/mockapi",
     "secure": false,
     "proxyTimeout": 5,
     "pathRewrite": {
-      "^/api": "api"
+      "^/mockapi": "mockapi"
     }
   }
 }

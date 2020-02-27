@@ -1,9 +1,20 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
+import { NgForage } from 'ngforage';
+import { HttpClient } from '@angular/common/http';
 
 import { GlobalService } from '@services/global.service';
 import { LayoutConfigService } from '@services/layout-config.service';
 import { LayoutConfig, defaultThemeColor } from '@config/layout.config';
+import { appConfig } from '@config/app.config';
 import { ThemeColor } from '@declare';
+import { LAYOUT_CONFIG } from '@tokens';
 
 @Component({
   selector: 'cat-sidebar',
@@ -42,8 +53,11 @@ export class SidebarComponent implements OnInit {
   drawerVisibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
+    private http: HttpClient,
+    private ngForage: NgForage,
     public global: GlobalService,
-    private layoutConfig: LayoutConfigService
+    private layoutConfig: LayoutConfigService,
+    @Inject(LAYOUT_CONFIG) public layoutConfigToken: string
   ) {}
 
   ngOnInit() {
@@ -82,8 +96,24 @@ export class SidebarComponent implements OnInit {
     this.htmlROOT.setAttribute('style', `${themeStr}`);
   }
 
-  handleDrawerClose(): void {
+  async handleDrawerClose(): Promise<any> {
     this.drawerVisible = false;
+    const storageConfig = await this.ngForage.getItem(this.layoutConfigToken);
+    if (storageConfig) {
+      // this.http
+      //   .post(appConfig.SERVER_API_URL_BASE + '/user/layout-config', {
+      //     username: this.global.userInfo.username,
+      //     layoutConfig: JSON.stringify(storageConfig)
+      //   })
+      //   .subscribe(
+      //     (res: any) => {
+      //       console.log(res);
+      //     },
+      //     error => {
+      //       console.log('Error', error);
+      //     }
+      //   );
+    }
   }
 
   onSelectedIndexChange(idx: number): void {

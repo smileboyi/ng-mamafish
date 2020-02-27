@@ -10,7 +10,7 @@ const mock = new MockAdapter(axios);
 export default {
   // 开启mock接口
   start() {
-    mock.onGet('/api/user/message').reply(config => {
+    mock.onGet('/mockapi/user/message').reply(config => {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([

@@ -22,6 +22,7 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from './create-user.dto';
 import { LoginInfo } from './auth.interface';
 import { UserInfo } from './../user/user-info.entity';
+import { JWT_EXPIRES } from '@configs/app.config';
 
 @ApiUseTags('auth')
 @Controller('auth')
@@ -51,7 +52,7 @@ export class AuthController {
     return decrypt.toString('utf-8');
   }
 
-  @Get('/rsapubkey')
+  @Get('rsapubkey')
   async rsaPubKey(@Res() res): Promise<any> {
     return res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
@@ -74,13 +75,20 @@ export class AuthController {
       password: this.decryptHash(password),
       signInIp,
     };
-    this.authService.login(loginInfo).then(result =>
-      res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.OK,
-        data: result,
-        message: 'Login successful',
-      }),
-    );
+    const result: any = await this.authService.login(loginInfo);
+    res.cookie('userRole', result.userRole, {
+      maxAge: JWT_EXPIRES,
+      httpOnly: true,
+    });
+    res.cookie('permissionList', result.permissionList, {
+      maxAge: JWT_EXPIRES,
+      httpOnly: true,
+    });
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: result,
+      message: 'Login successful',
+    });
   }
 
   @Put('register')
@@ -92,12 +100,11 @@ export class AuthController {
       ...createUserDto,
       password: this.decryptHash(createUserDto.password),
     };
-    this.authService.register(dto).then((user: UserInfo) =>
-      res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.OK,
-        data: null,
-        message: 'Register successful',
-      }),
-    );
+    const result: UserInfo = await this.authService.register(dto);
+    res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: null,
+      message: 'Register successful',
+    });
   }
 }

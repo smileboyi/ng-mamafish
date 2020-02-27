@@ -103,7 +103,8 @@ export class LoginComponent implements OnInit {
             this.ngForage.setItem(this.profileInfo, {
               userRole: userRole.value,
               userInfo,
-              permissionList
+              permissionList,
+              rsapubKey: this.publicKey
             });
 
             this.permissionsService.loadPermissions(permissionList);

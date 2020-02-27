@@ -140,7 +140,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private toggleBodyMini(): void {
-    if (window.innerWidth <= 450) {
+    if (window.innerWidth <= GlobalService.miniWidth) {
       this.global.isMini = true;
       this.document.body.classList.add('mini');
     } else {

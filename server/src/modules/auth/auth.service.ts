@@ -68,7 +68,7 @@ export class AuthService {
 
   async getPermissions(rid: any): Promise<string[]> {
     try {
-      // 如果有临时权限,可以将临时权限存在mongoose里
+      // 如果有临时权限,可以将临时权限存在mongodb里
       const userPermissions: UserPermission[] = await this.userPermissionRepository.find(
         {
           userRole: rid,
@@ -99,13 +99,13 @@ export class AuthService {
       }
       if (!user) {
         throw new HttpException(
-          { message: `User ${username || ''}${email || ''} not registered` },
+          { message: `User ${username || email} not registered` },
           HttpStatus.BAD_REQUEST,
         );
       }
       if (!(await this.userService.comparePassword(password, user))) {
         throw new HttpException(
-          { message: 'Invalid username or password' },
+          { message: `Invalid ${username ? 'username' : 'email'} or password` },
           HttpStatus.BAD_REQUEST,
         );
       }
@@ -121,8 +121,8 @@ export class AuthService {
       username: signedUser.username,
     };
     return {
-      expires_in: JWT_EXPIRES,
-      access_token: await this.jwtService.sign(user),
+      expiresIn: JWT_EXPIRES,
+      accessToken: await this.jwtService.sign(user),
     };
   }
 

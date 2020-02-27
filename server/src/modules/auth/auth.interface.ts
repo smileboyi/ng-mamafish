@@ -8,6 +8,6 @@ export interface JwtPayload {
   username: string;
 }
 export interface JwtToken {
-  expires_in: string | number;
-  access_token: string;
+  expiresIn: string | number;
+  accessToken: string;
 }

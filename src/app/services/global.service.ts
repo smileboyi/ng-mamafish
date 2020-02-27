@@ -11,10 +11,10 @@ import { UserRole, UserInfo } from '@declare';
 })
 export class GlobalService {
   static resetThemeColor$: Subject<any> = new Subject<any>();
-
-  // < 620px （页面状态可以使用rxjs,这样不用在多个页面去监听window resize获取状态）
+  static mobileWidth = 620;
+  static miniWidth = 450;
+  // < mobileWidth （页面状态可以使用rxjs,这样不用在多个页面去监听window resize获取状态）
   isMobile = false;
-  // < 450px
   isMini = false;
   moreHeaderState = false;
   userRole: UserRole = UserRole.Manager;
@@ -41,10 +41,9 @@ export class GlobalService {
       lastSignInIp: '',
       layoutConfig: null,
       signInCount: 0,
-      themeColorConfig: null,
       token: {
-        access_token: '',
-        expires_in: 0
+        accessToken: '',
+        expiresIn: 0
       },
       userRole: {
         description: '',

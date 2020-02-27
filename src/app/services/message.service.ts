@@ -13,7 +13,7 @@ export class MessageService {
   constructor(private http: HttpClient) {}
 
   public getMessages() {
-    // return this.http.get('/api/user/message');
-    return from(axios.get('/api/user/message'));
+    // return this.http.get('/mockapi/user/message');
+    return from(axios.get('/mockapi/user/message'));
   }
 }

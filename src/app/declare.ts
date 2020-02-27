@@ -37,10 +37,9 @@ export interface UserInfo {
   lastSignInIp: string;
   layoutConfig: string | null;
   signInCount: number;
-  themeColorConfig: string | null;
   token: {
-    access_token: string;
-    expires_in: number | string;
+    accessToken: string;
+    expiresIn: number | string;
   };
   userRole: {
     description: string;

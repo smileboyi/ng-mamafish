@@ -78,12 +78,6 @@ export class UserInfo {
   })
   layoutConfig: string;
 
-  @Column({
-    name: 'theme_color_config',
-    nullable: true,
-  })
-  themeColorConfig: string;
-
   @CreateDateColumn({
     name: 'created_date',
     type: 'timestamp',

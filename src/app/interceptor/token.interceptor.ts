@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ɵConsole } from '@angular/core';
 import {
   HttpEvent,
   HttpInterceptor,
@@ -13,8 +13,14 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(private global: GlobalService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const accessToken = this.global.userInfo.token.access_token;
-    const tokenReq = req.clone({ setHeaders: { Authorization: accessToken } });
-    return next.handle(tokenReq);
+    const accessToken = this.global.userInfo.token.accessToken;
+    if (accessToken) {
+      const tokenReq = req.clone({
+        setHeaders: { Authorization: 'bearer ' + accessToken }
+      });
+      return next.handle(tokenReq);
+    } else {
+      return next.handle(req);
+    }
   }
 }
