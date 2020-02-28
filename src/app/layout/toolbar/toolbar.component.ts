@@ -3,15 +3,16 @@ import {
   OnInit,
   ElementRef,
   Renderer2,
-  TemplateRef,
   ViewChild,
   EventEmitter,
   Output
 } from '@angular/core';
 import * as screenfull from 'screenfull';
+import { NgForage } from 'ngforage';
 
 import { Message, File, Schedule } from '../../declare';
 import { MessageService } from '@services/message.service';
+import { UtilsService } from '@services/utils.service';
 import { GlobalService } from '@services/global.service';
 import { LayoutConfigService } from '@services/layout-config.service';
 import { LayoutConfig } from '@config/layout.config';
@@ -44,6 +45,8 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private message: MessageService,
     private renderer2: Renderer2,
+    private ngForage: NgForage,
+    private utils: UtilsService,
     public global: GlobalService,
     private layoutConfig: LayoutConfigService
   ) {}
@@ -102,5 +105,13 @@ export class ToolbarComponent implements OnInit {
   handleOpen(): void {
     this.showInfoContent = false;
     this.openSetting.emit();
+  }
+
+  handleLogout(): void {
+    this.ngForage.clear();
+    this.global.resetUserInfo();
+    this.global.rsapubKey = '';
+    this.global.userRole = UserRole.Full;
+    this.utils.gotoOtherPage('login');
   }
 }

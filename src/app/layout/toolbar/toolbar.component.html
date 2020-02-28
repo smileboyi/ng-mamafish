@@ -13,6 +13,7 @@
           nzType="large"
           fxShow="false"
           fxShow.gt-sm
+          (click)="utils.gotoOtherPage('analytics')"
         >
           麻麻鱼
         </button>
@@ -34,7 +35,16 @@
           *ngIf="!global.isMobile && global.userRole >= userRoles[1]"
         >
           <div class="divider"></div>
-          <button nz-button nzType="large">
+          <button
+            nz-button
+            nzType="large"
+            (click)="
+              utils.gotoOtherPage('login', [], {
+                redirectUrl: 'analytics',
+                lock: true
+              })
+            "
+          >
             <i nz-icon type="lock"></i>
           </button>
         </ng-container>
@@ -92,17 +102,25 @@
     </div>
     <ul nz-menu class="user-menu">
       <li nz-menu-item>
-        <button nz-button nzType="default">
+        <button
+          nz-button
+          nzType="default"
+          (click)="utils.gotoOtherPage('profile')"
+        >
           <i nz-icon type="user"></i>个人信息
         </button>
       </li>
       <li nz-menu-item>
-        <button nz-button nzType="default">
+        <button
+          nz-button
+          nzType="default"
+          (click)="utils.gotoOtherPage('mail-box')"
+        >
           <i nz-icon type="mail"></i>收件箱
         </button>
       </li>
       <li nz-menu-item>
-        <button nz-button nzType="default">
+        <button nz-button nzType="default" (click)="handleLogout()">
           <i nz-icon type="poweroff"></i>退出
         </button>
       </li>

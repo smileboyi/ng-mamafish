@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   password = '';
   redirectUrl = '';
   publicKey = '';
+  accountLock = false;
   validateForm: FormGroup;
 
   constructor(
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe((query: any) => {
       this.redirectUrl = query.redirectUrl || '';
+      this.accountLock = Boolean(query.lock);
     });
     if (this.redirectUrl) {
       history.pushState(null, null, document.URL);
@@ -50,7 +52,10 @@ export class LoginComponent implements OnInit {
     }
 
     this.validateForm = this.fb.group({
-      account: ['', [Validators.required]],
+      account: [
+        '',
+        [Validators.required, Validators.minLength(2), Validators.maxLength(15)]
+      ],
       password: [
         '',
         [Validators.required, Validators.minLength(8), Validators.maxLength(30)]
@@ -74,12 +79,17 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin(): void {
+    if (this.accountLock) {
+      this.handleLockLogin();
+      return;
+    }
     const submitPayload = _.cloneDeep(this.validateForm.value);
-
+    sessionStorage.setItem('accountPassw', submitPayload.password);
+    submitPayload.account = submitPayload.account.trim();
     // 密码加密
     const jsencrypt = new JSEncrypt();
     jsencrypt.setPublicKey(this.publicKey);
-    submitPayload.password = jsencrypt.encrypt(submitPayload.password);
+    submitPayload.password = jsencrypt.encrypt(submitPayload.password.trim());
 
     this.http
       .post(appConfig.SERVER_API_URL_BASE + '/auth/login', submitPayload)
@@ -100,6 +110,7 @@ export class LoginComponent implements OnInit {
             this.global.userInfo = userInfo;
             permissionList.push(userRole.role);
             this.global.permissionList = permissionList;
+            this.global.rsapubKey = this.publicKey;
             this.ngForage.setItem(this.profileInfo, {
               userRole: userRole.value,
               userInfo,
@@ -120,6 +131,23 @@ export class LoginComponent implements OnInit {
           console.log('Error', error);
         }
       );
+  }
+
+  // 锁定登录输入密码解锁
+  handleLockLogin(): void {
+    const accountPassw = sessionStorage.getItem('accountPassw');
+    const submitPayload = _.cloneDeep(this.validateForm.value);
+    const password = submitPayload.password.trim();
+    // 这里应该在后台判断，把密码存浏览器不安全
+    if (accountPassw === password) {
+      if (this.redirectUrl) {
+        this.utils.gotoOtherPage(this.redirectUrl);
+      } else {
+        this.utils.gotoOtherPage('analytics');
+      }
+    } else {
+      this.message.create('error', '密码错误');
+    }
   }
 
   handleVisitor(): void {

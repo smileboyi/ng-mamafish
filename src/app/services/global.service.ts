@@ -17,9 +17,10 @@ export class GlobalService {
   isMobile = false;
   isMini = false;
   moreHeaderState = false;
-  userRole: UserRole = UserRole.Manager;
+  userRole: UserRole = UserRole.Full;
   userInfo: Partial<UserInfo>;
   permissionList: Array<string> = [];
+  rsapubKey: string;
   // 所有subMenu展开状态量
   subMenuOpenState = {
     dashboards: false,

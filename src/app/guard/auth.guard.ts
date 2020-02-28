@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 
 import { navigationConfig, NavigationItem } from '@config/navigation.config';
 import { UtilsService } from '@services/utils.service';
+import { GlobalService } from '@services/global.service';
 import { UserRole } from '@declare';
 
 @Injectable({
@@ -17,12 +18,17 @@ import { UserRole } from '@declare';
 export class AuthGuard implements CanActivate {
   userRole: UserRole;
 
-  constructor(private forage: NgForage, private utils: UtilsService) {}
+  constructor(
+    private ngForage: NgForage,
+    private utils: UtilsService,
+    public global: GlobalService
+  ) {}
 
   async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const profileInfo: any = await this.forage.getItem('profile_info');
+    const profileInfo: any = await this.ngForage.getItem('profile_info');
     if (!profileInfo) {
       // 未登录状态
+      this.handleLogout();
       history.pushState(null, null, document.URL);
       const pathIds = state.url.split('/').reverse();
       this.utils.gotoOtherPage('login', [], {
@@ -61,5 +67,12 @@ export class AuthGuard implements CanActivate {
     } else {
       return this.userRole >= navConfig.role;
     }
+  }
+
+  handleLogout(): void {
+    this.ngForage.clear();
+    this.global.resetUserInfo();
+    this.global.rsapubKey = '';
+    this.global.userRole = UserRole.Full;
   }
 }

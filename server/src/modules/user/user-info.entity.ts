@@ -26,6 +26,7 @@ export class UserInfo {
   username: string;
 
   @Column()
+  @Length(8, 30)
   password: string;
 
   @Column({

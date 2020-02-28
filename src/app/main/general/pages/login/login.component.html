@@ -2,7 +2,8 @@
   <div class="form-box pab centre2 tc" nz-form [formGroup]="validateForm">
     <h3 class="title">麻麻鱼</h3>
     <p class="text">Sign into your pages account</p>
-    <nz-form-control>
+
+    <nz-form-control [hidden]="accountLock">
       <nz-input-group class="item" [nzPrefix]="prefixUser">
         <input
           type="text"
@@ -43,22 +44,23 @@
         Sign in
       </button>
     </nz-form-control>
+    <ng-container *ngIf="!accountLock">
+      <nz-form-control>
+        <button
+          nz-button
+          class="form-button"
+          [nzType]="'primary'"
+          (click)="handleVisitor()"
+        >
+          Visitor enter
+        </button>
+      </nz-form-control>
 
-    <nz-form-control>
-      <button
-        nz-button
-        class="form-button"
-        [nzType]="'primary'"
-        (click)="handleVisitor()"
-      >
-        Visitor enter
-      </button>
-    </nz-form-control>
-
-    <p class="text">
-      Still no account? Please go to
-      <a routerLink="/general/pages/register">Register</a>
-    </p>
+      <p class="text">
+        Still no account? Please go to
+        <a routerLink="/general/pages/register">Register</a>
+      </p>
+    </ng-container>
 
     <div class="tc copyright">
       <p class="website">WEBSITE BY 麻麻鱼</p>

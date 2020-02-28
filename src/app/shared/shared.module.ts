@@ -32,7 +32,7 @@ const APP_CORE_PROVIDERS = [
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    QuillModule,
+    QuillModule.forRoot(),
     FormsModule,
     RouterModule,
     FlexLayoutModule,

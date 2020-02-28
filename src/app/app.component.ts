@@ -102,6 +102,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (profileInfo) {
       this.global.userRole = profileInfo.userRole;
       this.global.userInfo = profileInfo.userInfo;
+      this.global.rsapubKey = profileInfo.rsapubKey;
       this.global.permissionList = profileInfo.permissionList;
     } else {
       this.utils.gotoOtherPage('login');
