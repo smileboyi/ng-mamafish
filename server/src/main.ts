@@ -11,6 +11,7 @@ import * as csurf from 'csurf';
 import 'reflect-metadata';
 
 import { redisClient } from '@services/redis-store/redis-store.service';
+import { HttpExceptionFilter } from '@filters/http-exception-filter.filter';
 
 declare const module: any;
 
@@ -39,7 +40,7 @@ async function bootstrap() {
       cookie: {
         httpOnly: true, // readonly
         secure: false, // only https
-        maxAge: 1000 * 60 * 60 * 24, // 7 days
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
       },
     }),
   );
@@ -55,10 +56,12 @@ async function bootstrap() {
   );
   app.use(compression());
 
+  app.useGlobalFilters(new HttpExceptionFilter());
+
   const options = new DocumentBuilder()
     .setTitle('Mamafish Api Swagger')
     .setDescription('Mamafish backend server api')
-    .setVersion('1.0')
+    .setVersion('1.0.0')
     .setContactEmail('15215212143@163.com')
     .addBearerAuth('Authorization', 'header', 'apiKey')
     .build();

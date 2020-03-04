@@ -29,6 +29,7 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {
+      '@beans': path.resolve('./src/beans'),
       '@configs': path.resolve('./src/configs'),
       '@decorators': path.resolve('./src/decorators'),
       '@filters': path.resolve('./src/filters'),

@@ -91,7 +91,7 @@ export class RegisterComponent implements OnInit {
       submitPayload.password = jsencrypt.encrypt(submitPayload.password);
 
       this.http
-        .put(appConfig.SERVER_API_URL_BASE + '/auth/register', submitPayload)
+        .post(appConfig.SERVER_API_URL_BASE + '/auth/register', submitPayload)
         .subscribe(
           (res: any) => {
             if (res.statusCode === 200) {

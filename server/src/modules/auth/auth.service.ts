@@ -1,8 +1,8 @@
 import {
   Injectable,
-  BadGatewayException,
   HttpStatus,
   HttpException,
+  BadRequestException,
 } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { Repository } from 'typeorm';
@@ -40,79 +40,62 @@ export class AuthService {
   }
 
   private async getRoleUserId(): Promise<any> {
-    try {
-      const role: UserRole = await this.userRoleRepository.findOne({
-        role: 'User',
-      });
-      this.roleUserId = role.id;
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+    const role: UserRole = await this.userRoleRepository.findOne({
+      role: 'User',
+    });
+    this.roleUserId = role.id;
   }
 
   async getRole(uid: any): Promise<UserRole> {
-    try {
-      const userWithRole: UserWithRole = await this.userWithRoleRepository.findOne(
-        {
-          userInfo: uid,
-        },
-        {
-          relations: ['userRole'],
-        },
-      );
-      return userWithRole.userRole;
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+    const userWithRole: UserWithRole = await this.userWithRoleRepository.findOne(
+      {
+        userInfo: uid,
+      },
+      {
+        relations: ['userRole'],
+      },
+    );
+    return userWithRole.userRole;
   }
 
   async getPermissions(rid: any): Promise<string[]> {
-    try {
-      // 如果有临时权限,可以将临时权限存在mongodb里
-      const userPermissions: UserPermission[] = await this.userPermissionRepository.find(
-        {
-          userRole: rid,
-        },
-      );
-      const permissions = userPermissions.map(item => item.permission);
-      return permissions;
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+    // 如果有临时权限,可以将临时权限存在mongodb里
+    const userPermissions: UserPermission[] = await this.userPermissionRepository.find(
+      {
+        userRole: rid,
+      },
+    );
+    const permissions = userPermissions.map(item => item.permission);
+    return permissions;
   }
 
   async validateUser({
     username,
     email,
     password,
-  }: {
-    username?: string;
-    email?: string;
-    password: string;
-  }): Promise<UserInfo> {
-    try {
-      let user;
-      if (username) {
-        user = await this.userService.findByUserName(username);
-      } else {
-        user = await this.userService.findByEmail(email);
-      }
-      if (!user) {
-        throw new HttpException(
-          { message: `User ${username || email} not registered` },
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-      if (!(await this.userService.comparePassword(password, user))) {
-        throw new HttpException(
-          { message: `Invalid ${username ? 'username' : 'email'} or password` },
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-      return user;
-    } catch (error) {
-      throw new BadGatewayException(error);
+  }: CreateUserDto): Promise<UserInfo> {
+    if (!(username || email)) {
+      throw new BadRequestException('Input data validation failed');
     }
+    let user;
+    if (username) {
+      user = await this.userService.findByUserName(username);
+    } else {
+      user = await this.userService.findByEmail(email);
+    }
+    if (!user) {
+      throw new HttpException(
+        { message: `User ${username || email} not registered` },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    if (!(await this.userService.comparePassword(password, user))) {
+      throw new HttpException(
+        { message: `Invalid ${username ? 'username' : 'email'} or password` },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return user;
   }
 
   async createToken(signedUser: Partial<UserInfo>): Promise<JwtToken> {
@@ -127,77 +110,68 @@ export class AuthService {
   }
 
   async login(loginInfo: LoginInfo): Promise<any> {
-    try {
-      let user: UserInfo;
-      if (this.regEmail.test(loginInfo.account)) {
-        user = await this.validateUser({
-          email: loginInfo.account,
-          password: loginInfo.password,
-        });
-      } else {
-        user = await this.validateUser({
-          username: loginInfo.account,
-          password: loginInfo.password,
-        });
-      }
-
-      user.signInCount = user.signInCount + 1;
-      user.lastSignInIp = loginInfo.signInIp;
-      await this.userService.createOrUpdate(user);
-      // const token = uuid();
-      // redisClient.set(token, user.username, 'EX', 60 * 30);
-      const token = await this.createToken({
-        id: user.id,
-        username: user.username,
+    let user: UserInfo;
+    if (this.regEmail.test(loginInfo.account)) {
+      user = await this.validateUser({
+        email: loginInfo.account,
+        password: loginInfo.password,
       });
-      delete user.salt;
-      delete user.password;
-      const userRole: UserRole = await this.getRole(user.id);
-      const permissionList = await this.getPermissions(userRole.id);
-      return {
-        token,
-        userInfo: user,
-        userRole,
-        permissionList,
-      };
-    } catch (error) {
-      throw new BadGatewayException(error);
+    } else {
+      user = await this.validateUser({
+        username: loginInfo.account,
+        password: loginInfo.password,
+      });
     }
+
+    user.signInCount = user.signInCount + 1;
+    user.lastSignInIp = loginInfo.signInIp;
+    await this.userService.createOrUpdate(user);
+    // const token = uuid();
+    // redisClient.set(token, user.username, 'EX', 60 * 30);
+    const token: JwtToken = await this.createToken({
+      id: user.id,
+      username: user.username,
+    });
+    delete user.salt;
+    delete user.password;
+    const userRole: UserRole = await this.getRole(user.id);
+    const permissionList = await this.getPermissions(userRole.id);
+    return {
+      token,
+      userInfo: user,
+      userRole,
+      permissionList,
+    };
   }
 
-  async register(createUserDto: CreateUserDto): Promise<any> {
-    try {
-      const { username, email } = createUserDto;
+  async register(createUserDto: CreateUserDto): Promise<UserInfo> {
+    const { username, email } = createUserDto;
 
-      let user1: UserInfo;
-      let user2: UserInfo;
-      if (email) {
-        user1 = await this.userService.findByEmail(email);
-      }
-      if (username) {
-        user2 = await this.userService.findByUserName(username);
-      }
-
-      if (user1 || user2) {
-        throw new HttpException(
-          { message: 'Username or email has been registered' },
-          HttpStatus.BAD_REQUEST,
-        );
-      } else {
-        const newUser = new UserInfo(createUserDto);
-        const validateErrors = await validate(newUser);
-        if (validateErrors.length > 0) {
-          throw new HttpException(
-            { message: 'Input data validation failed' },
-            HttpStatus.BAD_REQUEST,
-          );
-        }
-        const dbUser = await this.userService.createOrUpdate(newUser);
-        this.userService.setUserRole(dbUser.id, this.roleUserId);
-        return dbUser;
-      }
-    } catch (error) {
-      throw new BadGatewayException(error);
+    let user1: UserInfo;
+    let user2: UserInfo;
+    if (email) {
+      user1 = await this.userService.findByEmail(email);
     }
+    if (username) {
+      user2 = await this.userService.findByUserName(username);
+    }
+
+    if (user1 || user2) {
+      throw new HttpException(
+        { message: 'Username or email has been registered' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const newUser = new UserInfo(createUserDto);
+    const validateErrors = await validate(newUser);
+    if (validateErrors.length > 0) {
+      // 这里可以把validateErrors的错误信息提取出来传给前端
+      throw new BadRequestException('Input data validation failed');
+    }
+
+    const dbUser: UserInfo = await this.userService.createOrUpdate(newUser);
+    this.userService.setUserRole(dbUser.id, this.roleUserId);
+    return dbUser;
   }
 }

@@ -101,7 +101,7 @@ export class SidebarComponent implements OnInit {
     const storageConfig = await this.ngForage.getItem(this.layoutConfigToken);
     if (storageConfig) {
       // this.http
-      //   .post(appConfig.SERVER_API_URL_BASE + '/user/layout-config', {
+      //   .put(appConfig.SERVER_API_URL_BASE + '/user/layout-config', {
       //     username: this.global.userInfo.username,
       //     layoutConfig: JSON.stringify(storageConfig)
       //   })

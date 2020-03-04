@@ -9,12 +9,15 @@ import {
   Res,
   Req,
   BadGatewayException,
+  BadRequestException,
+  NotFoundException,
   HttpCode,
   HttpStatus,
   Query,
 } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
 
+import { HttpResultResponse } from '@beans/response.bean';
 import { UserService } from './user.service';
 import { UserInfo } from './user-info.entity';
 
@@ -26,13 +29,14 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  async findone(@Res() res, @Query() query): Promise<any> {
+  async findone(@Res() res, @Query() query): Promise<HttpResultResponse> {
     const { id, username, email } = query;
     const condition: {
       id?: number;
       email?: string;
       username?: string;
     } = {};
+
     let canFind = 0;
     if (id && !isNaN(+id)) {
       condition.id = (+id).toFixed(0) as any;
@@ -47,50 +51,57 @@ export class UserController {
       condition.username = name;
       canFind += 1;
     }
-    if (canFind) {
+    if (!canFind) {
+      throw new BadRequestException('Condition validation failed');
+    }
+
+    try {
       const user: UserInfo = await this.userService.findByCondition(condition);
-      if (user) {
-        res.status(HttpStatus.OK).json({
-          statusCode: HttpStatus.OK,
-          data: {
-            user: {
-              id: user.id,
-              username: user.username,
-              avatar: user.avatar,
-              email: user.email,
-            },
-          },
-          message: 'Find successful',
-        });
-      } else {
-        res.status(HttpStatus.OK).json({
-          statusCode: HttpStatus.OK,
-          data: {
-            user: null,
-          },
-          message: 'Not found',
-        });
+      if (!user) {
+        throw new NotFoundException('Not found');
       }
-    } else {
-      res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.BAD_REQUEST,
-        data: null,
-        message: 'Condition validation failed',
-      });
+
+      const response: HttpResultResponse = {
+        statusCode: HttpStatus.OK,
+        data: {
+          user: {
+            id: user.id,
+            username: user.username,
+            avatar: user.avatar,
+            email: user.email,
+          },
+        },
+        message: 'Find successful',
+      };
+      return res.status(HttpStatus.OK).json(response);
+    } catch (error) {
+      if (error.status) {
+        throw error;
+      } else {
+        throw new BadGatewayException(error);
+      }
     }
   }
 
-  @Post('layout-config')
+  @Put('layout-config')
   async saveLayoutConfig(
     @Res() res,
     @Body('username') username,
     @Body('layoutConfig') layoutConfig,
-  ): Promise<any> {
-    const result = await this.userService.saveLayoutConfig(username, layoutConfig);
-    res.status(HttpStatus.OK).json({
-      statusCode: HttpStatus.OK,
-      data: null,
-      message: 'Update successful',
-    });
+  ): Promise<HttpResultResponse> {
+    try {
+      const result: UserInfo = await this.userService.saveLayoutConfig(
+        username,
+        layoutConfig,
+      );
+      const response: HttpResultResponse = {
+        statusCode: HttpStatus.OK,
+        data: null,
+        message: 'Update successful',
+      };
+      return res.status(HttpStatus.OK).json(response);
+    } catch (error) {
+      throw new BadGatewayException(error);
+    }
   }
 }

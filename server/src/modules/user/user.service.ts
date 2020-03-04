@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  BadGatewayException,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
@@ -20,66 +15,41 @@ export class UserService {
     private readonly userWithRoleRepository: Repository<UserWithRole>,
   ) {}
 
-  async createOrUpdate(user: UserInfo) {
-    try {
-      return await this.userinfoRepository.save(user);
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+  async createOrUpdate(user: UserInfo): Promise<UserInfo> {
+    return await this.userinfoRepository.save(user);
   }
 
   async findByEmail(email: string): Promise<UserInfo> {
-    try {
-      return await this.userinfoRepository.findOne({ email });
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+    return await this.userinfoRepository.findOne({ email });
   }
 
   async findByUserName(username: string): Promise<UserInfo> {
-    try {
-      return await this.userinfoRepository.findOne({ username });
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+    return await this.userinfoRepository.findOne({ username });
   }
 
   async findByCondition(condition: Partial<UserInfo>): Promise<UserInfo> {
-    try {
-      return await this.userinfoRepository.findOne(condition);
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+    return await this.userinfoRepository.findOne(condition);
   }
 
   async comparePassword(password: string, user: UserInfo): Promise<boolean> {
-    try {
-      return bcrypt.compareSync(password, user.password);
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+    return bcrypt.compareSync(password, user.password);
   }
 
-  async setUserRole(userId: number, roleId: number): Promise<any> {
-    try {
-      return await this.userWithRoleRepository.save(
-        new UserWithRole({
-          userRole: roleId,
-          userInfo: userId,
-        }),
-      );
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+  async setUserRole(userId: number, roleId: number): Promise<UserWithRole> {
+    return await this.userWithRoleRepository.save(
+      new UserWithRole({
+        userRole: roleId,
+        userInfo: userId,
+      }),
+    );
   }
 
-  async saveLayoutConfig(username: string, layoutConfig: string): Promise<any> {
-    try {
-      const user: UserInfo = await this.findByUserName(username);
-      user.layoutConfig = layoutConfig;
-      return await this.createOrUpdate(user);
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+  async saveLayoutConfig(
+    username: string,
+    layoutConfig: string,
+  ): Promise<UserInfo> {
+    const user: UserInfo = await this.findByUserName(username);
+    user.layoutConfig = layoutConfig;
+    return await this.createOrUpdate(user);
   }
 }

@@ -18,6 +18,7 @@ import * as crypto from 'crypto';
 import * as path from 'path';
 import * as fs from 'fs';
 
+import { HttpResultResponse } from '@beans/response.bean';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './create-user.dto';
 import { LoginInfo } from './auth.interface';
@@ -53,12 +54,17 @@ export class AuthController {
   }
 
   @Get('rsapubkey')
-  async rsaPubKey(@Res() res): Promise<any> {
-    return res.status(HttpStatus.OK).json({
-      statusCode: HttpStatus.OK,
-      data: { pubkey: this.publicKey },
-      message: 'Rsa public key',
-    });
+  async rsaPubKey(@Res() res): Promise<HttpResultResponse> {
+    try {
+      const response: HttpResultResponse = {
+        statusCode: HttpStatus.OK,
+        data: { pubkey: this.publicKey },
+        message: 'Rsa public key',
+      };
+      return res.status(HttpStatus.OK).json(response);
+    } catch (error) {
+      throw new BadGatewayException(error);
+    }
   }
 
   @Post('login')
@@ -67,44 +73,62 @@ export class AuthController {
     @Res() res,
     @Body('account') account,
     @Body('password') password,
-  ): Promise<any> {
-    const signInIp = req.ip;
+  ): Promise<HttpResultResponse> {
+    try {
+      const signInIp = req.ip;
 
-    const loginInfo: LoginInfo = {
-      account,
-      password: this.decryptHash(password),
-      signInIp,
-    };
-    const result: any = await this.authService.login(loginInfo);
-    res.cookie('userRole', result.userRole, {
-      maxAge: JWT_EXPIRES,
-      httpOnly: true,
-    });
-    res.cookie('permissionList', result.permissionList, {
-      maxAge: JWT_EXPIRES,
-      httpOnly: true,
-    });
-    return res.status(HttpStatus.OK).json({
-      statusCode: HttpStatus.OK,
-      data: result,
-      message: 'Login successful',
-    });
+      const loginInfo: LoginInfo = {
+        account,
+        password: this.decryptHash(password),
+        signInIp,
+      };
+      const result: any = await this.authService.login(loginInfo);
+      res.cookie('userRole', result.userRole, {
+        maxAge: JWT_EXPIRES,
+        httpOnly: true,
+      });
+      res.cookie('permissionList', result.permissionList, {
+        maxAge: JWT_EXPIRES,
+        httpOnly: true,
+      });
+      const response: HttpResultResponse = {
+        statusCode: HttpStatus.OK,
+        data: result,
+        message: 'Login successful',
+      };
+      return res.status(HttpStatus.OK).json(response);
+    } catch (error) {
+      if (error.status) {
+        throw error;
+      } else {
+        throw new BadGatewayException(error);
+      }
+    }
   }
 
-  @Put('register')
+  @Post('register')
   async register(
     @Res() res,
     @Body() createUserDto: CreateUserDto,
-  ): Promise<any> {
-    const dto = {
-      ...createUserDto,
-      password: this.decryptHash(createUserDto.password),
-    };
-    const result: UserInfo = await this.authService.register(dto);
-    res.status(HttpStatus.OK).json({
-      statusCode: HttpStatus.OK,
-      data: null,
-      message: 'Register successful',
-    });
+  ): Promise<HttpResultResponse> {
+    try {
+      const dto = {
+        ...createUserDto,
+        password: this.decryptHash(createUserDto.password),
+      };
+      const result: UserInfo = await this.authService.register(dto);
+      const response: HttpResultResponse = {
+        statusCode: HttpStatus.OK,
+        data: null,
+        message: 'Register successful',
+      };
+      return res.status(HttpStatus.OK).json(response);
+    } catch (error) {
+      if (error.status) {
+        throw error;
+      } else {
+        throw new BadGatewayException(error);
+      }
+    }
   }
 }
