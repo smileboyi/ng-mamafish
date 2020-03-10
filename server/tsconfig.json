@@ -11,7 +11,7 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
-      "@beans/*": ["./src/beans/*"],
+      "@declares/*": ["./src/declares/*"],
       "@configs/*": ["./src/configs/*"],
       "@decorators/*": ["./src/decorators/*"],
       "@filters/*": ["./src/filters/*"],

@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Logger } from 'winston';
 
-import { HttpExceptionResponse } from '@beans/response.bean';
+import { HttpExceptionResponse } from '@declares/response.declare';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {

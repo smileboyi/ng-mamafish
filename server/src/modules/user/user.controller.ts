@@ -17,7 +17,7 @@ import {
 } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
 
-import { HttpResultResponse } from '@beans/response.bean';
+import { HttpResultResponse } from '@declares/response.declare';
 import { UserService } from './user.service';
 import { UserInfo } from './user-info.entity';
 

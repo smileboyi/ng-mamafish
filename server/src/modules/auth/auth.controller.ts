@@ -18,7 +18,7 @@ import * as crypto from 'crypto';
 import * as path from 'path';
 import * as fs from 'fs';
 
-import { HttpResultResponse } from '@beans/response.bean';
+import { HttpResultResponse } from '@declares/response.declare';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './create-user.dto';
 import { LoginInfo } from './auth.interface';
