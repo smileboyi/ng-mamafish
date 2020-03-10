@@ -83,6 +83,9 @@ export class AuthController {
         signInIp,
       };
       const result: any = await this.authService.login(loginInfo);
+      // 用于日志等服务
+      req.session.account = account;
+      // userRole和permissionList用于接口鉴权
       res.cookie('userRole', result.userRole, {
         maxAge: JWT_EXPIRES,
         httpOnly: true,

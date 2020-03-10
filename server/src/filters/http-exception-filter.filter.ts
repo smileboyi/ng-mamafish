@@ -4,12 +4,16 @@ import {
   ExceptionFilter,
   HttpException,
   HttpStatus,
+  Inject,
 } from '@nestjs/common';
+import { Logger } from 'winston';
 
 import { HttpExceptionResponse } from '@beans/response.bean';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
+  constructor(@Inject('mamafish') private readonly logger: Logger) {}
+
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
@@ -34,6 +38,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
       path: request.originalUrl,
       timestamp: new Date().toISOString(),
     };
+
+    const account = request.session.account || 'anonymous';
+    this.logger.error({
+      errorMessage: message,
+      statusCode: status,
+      account,
+    });
+
     response.header('Content-Type', 'application/json; charset=utf-8');
     response.send(errorResponse);
   }
