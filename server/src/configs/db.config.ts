@@ -46,3 +46,11 @@ export const redisConfig = {
   ttl: 20, // seconds
   max: 15, // maximum number of items in cache
 };
+
+export const mongooseUrl = 'mongodb://localhost:27017/mamafish';
+
+export const mongooseConfig = {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+};
