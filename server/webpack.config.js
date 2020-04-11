@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: ['webpack/hot/poll?100', './src/main.ts'],
@@ -42,6 +43,20 @@ module.exports = {
     },
   },
   plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: path.join(__dirname,'./src/modules/auth/*.pem'),
+        to: path.join(__dirname, 'dist'),
+        flatten: true,
+      },
+      {
+        from: path.join(__dirname, './src/**/*.html'),
+        to: path.join(__dirname, 'dist'),
+        flatten: true,
+      },
+    ], {
+      copyUnmodified: true
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['*.hot-update.js', '*.hot-update.json'],

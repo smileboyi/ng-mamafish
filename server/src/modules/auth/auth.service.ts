@@ -8,9 +8,9 @@ import { validate } from 'class-validator';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
-import * as uuid from 'uuid/v4';
 
 import { UserService } from '../user/user.service';
+import { MailerService } from '@services/mailer/mailer.service';
 import { UserInfo } from './../user/user-info.entity';
 import { UserRole } from './../user/user-role.entity';
 import { UserPermission } from './../user/user-permission.entity';
@@ -29,6 +29,7 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly userService: UserService,
+    private readonly mailerService: MailerService,
     @InjectRepository(UserRole)
     private readonly userRoleRepository: Repository<UserRole>,
     @InjectRepository(UserWithRole)
@@ -46,7 +47,7 @@ export class AuthService {
     this.roleUserId = role.id;
   }
 
-  async getRole(uid: any): Promise<UserRole> {
+  private async getRole(uid: any): Promise<UserRole> {
     const userWithRole: UserWithRole = await this.userWithRoleRepository.findOne(
       {
         userInfo: uid,
@@ -58,7 +59,7 @@ export class AuthService {
     return userWithRole.userRole;
   }
 
-  async getPermissions(rid: any): Promise<string[]> {
+  private async getPermissions(rid: any): Promise<string[]> {
     // 如果有临时权限,可以将临时权限存在mongodb里
     const userPermissions: UserPermission[] = await this.userPermissionRepository.find(
       {
@@ -69,7 +70,7 @@ export class AuthService {
     return permissions;
   }
 
-  async validateUser({
+ async validateUser({
     username,
     email,
     password,
@@ -96,6 +97,20 @@ export class AuthService {
       );
     }
     return user;
+  }
+
+   async sendVerificationMail(
+    to,
+    type,
+    captcha,
+    account,
+  ): Promise<any> {
+    return await this.mailerService.sendVerificationMail(
+      to,
+      type,
+      captcha,
+      account,
+    );
   }
 
   async createToken(signedUser: Partial<UserInfo>): Promise<JwtToken> {
@@ -126,8 +141,6 @@ export class AuthService {
     user.signInCount = user.signInCount + 1;
     user.lastSignInIp = loginInfo.signInIp;
     await this.userService.createOrUpdate(user);
-    // const token = uuid();
-    // redisClient.set(token, user.username, 'EX', 60 * 30);
     const token: JwtToken = await this.createToken({
       id: user.id,
       username: user.username,
@@ -158,7 +171,7 @@ export class AuthService {
 
     if (user1 || user2) {
       throw new HttpException(
-        { message: 'Username or email has been registered' },
+        { message: 'Username or email had been registered' },
         HttpStatus.BAD_REQUEST,
       );
     }

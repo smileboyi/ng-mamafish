@@ -4,6 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
 import { AuthService } from './auth.service';
+import { MailerService } from '@services/mailer/mailer.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
 import { UserModule } from '../user/user.module';
@@ -26,6 +27,6 @@ import { JWT_SECRET, JWT_EXPIRES } from '@configs/app.config';
     TypeOrmModule.forFeature([UserRole, UserWithRole, UserPermission]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, MailerService],
 })
 export class AuthModule {}

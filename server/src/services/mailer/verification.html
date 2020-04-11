@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mamafish email</title>
+  </head>
+  <body style="background-color: #f7f9fa;">
+    <div
+      style="position: fixed;width: 100%;height: 100%;padding: 20px;background-color: #f7f9fa;"
+    >
+      <table style="margin: 0px auto;width: 550px;">
+        <tr>
+          <th align="center" style="background-color: #1e88e5;">
+            <a
+              href="127.0.0.1:4200"
+              target="_blank"
+              style="text-decoration:none"
+            >
+              <h1
+                style="font-size: 22px;font-weight: 500;color: #ffffff;text-align: center;"
+              >
+                麻麻鱼
+              </h1>
+            </a>
+          </th>
+        </tr>
+        <tr>
+          <td align="center" style="background-color: #ffffff;">
+            <div style="width: 480px;text-align: left;">
+              <h4
+                style="margin: 0;line-height: 25px;padding: 28px 0 0 0;font-size: 17px;color: #7b7b7b;"
+              >
+                {{ account }}，你好，
+              </h4>
+              <p
+                style="margin: 0;padding: 20px 0px 20px 0px;line-height: 25px;font-size: 14px;font-family: Hiragino Sans GB;color: #7b7b7b;"
+              >
+                你此次{{ type }}的验证码如下，请在 30
+                分钟内输入验证码进行下一步操作。 如非你本人操作，请忽略此邮件。
+              </p>
+              <div style="margin: 0 auto 40px;text-align: center;">
+                <span
+                  style="display:inline-block;padding: 10px 18px 10px 18px;text-align: center;font-size: 20px;border-radius: 3px;font-weight: 700;letter-spacing: 2px;color: #4581E9;background-color: #ecf4fb;"
+                  >{{ captcha }}</span
+                >
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+type NumOrStr = number | string;
