@@ -23,9 +23,11 @@ export interface Schedule {
 }
 
 export enum UserRole {
-  Full = 1,
-  User = 5,
-  Manager = 10
+  Visitor = 1,
+  Lower = 2,
+  User = 4,
+  Manager = 8,
+  Dictator = 16
 }
 
 export interface UserInfo {

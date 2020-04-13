@@ -34,7 +34,7 @@ export class ToolbarComponent implements OnInit {
   isFullscreen: boolean = false;
   showInfoContent: boolean = false;
   isCollapsed: boolean = false;
-  userRoles: Array<UserRole> = [UserRole.Full, UserRole.User, UserRole.Manager];
+  userRoles: Array<UserRole> = [UserRole.Visitor, UserRole.User, UserRole.Manager];
 
   @ViewChild('serchIpt', null)
   serchIpt: ElementRef;
@@ -111,7 +111,7 @@ export class ToolbarComponent implements OnInit {
     this.ngForage.clear();
     this.global.resetUserInfo();
     this.global.rsapubKey = '';
-    this.global.userRole = UserRole.Full;
+    this.global.userRole = UserRole.Visitor;
     this.utils.gotoOtherPage('login');
   }
 }

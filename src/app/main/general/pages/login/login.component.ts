@@ -151,12 +151,12 @@ export class LoginComponent implements OnInit {
   }
 
   handleVisitor(): void {
-    this.global.userRole = UserRole.Full;
+    this.global.userRole = UserRole.Visitor;
     this.global.permissionList = userPermissions[0];
     this.global.resetUserInfo();
     this.global.userInfo.username = 'Visitor';
     this.ngForage.setItem(this.profileInfo, {
-      userRole: UserRole.Full,
+      userRole: UserRole.Visitor,
       userInfo: this.global.userInfo,
       permissionList: userPermissions[0]
     });

@@ -73,6 +73,6 @@ export class AuthGuard implements CanActivate {
     this.ngForage.clear();
     this.global.resetUserInfo();
     this.global.rsapubKey = '';
-    this.global.userRole = UserRole.Full;
+    this.global.userRole = UserRole.Visitor;
   }
 }

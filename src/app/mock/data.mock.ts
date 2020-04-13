@@ -137,7 +137,7 @@ export const schedules: Array<Schedule> = [
 ];
 
 export const userPermissions: Array<Array<string>> = [
-  ['Full'],
+  ['Visitor'],
   ['User', 'exportDataToExcel'],
   [
     'Manager',

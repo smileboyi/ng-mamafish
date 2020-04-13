@@ -21,18 +21,18 @@ export const navigationConfig: Array<NavigationItem> = [
   {
     id: 'general',
     groupTitle: '常规',
-    role: UserRole.Full,
+    role: UserRole.Visitor,
     children: [
       {
         id: 'dashboards',
         title: '仪表盘',
         icon: 'dashboard',
-        role: UserRole.Full,
+        role: UserRole.Visitor,
         children: [
           {
             id: 'analytics',
             title: '分析页',
-            role: UserRole.Full,
+            role: UserRole.Visitor,
             url: [
               pathConfig.app.general,
               pathConfig.general.dashboards,
@@ -46,7 +46,7 @@ export const navigationConfig: Array<NavigationItem> = [
         id: 'pages',
         title: '页面',
         icon: 'page',
-        role: UserRole.Full,
+        role: UserRole.Visitor,
         children: [
           {
             id: 'profile',
@@ -61,12 +61,12 @@ export const navigationConfig: Array<NavigationItem> = [
           {
             id: 'errors',
             title: '错误页',
-            role: UserRole.Full,
+            role: UserRole.Visitor,
             children: [
               {
                 id: 'error_403',
                 title: '403',
-                role: UserRole.Full,
+                role: UserRole.Visitor,
                 url: [
                   pathConfig.app.general,
                   pathConfig.general.pages,
@@ -77,7 +77,7 @@ export const navigationConfig: Array<NavigationItem> = [
               {
                 id: 'error_404',
                 title: '404',
-                role: UserRole.Full,
+                role: UserRole.Visitor,
                 url: [
                   pathConfig.app.general,
                   pathConfig.general.pages,
@@ -88,7 +88,7 @@ export const navigationConfig: Array<NavigationItem> = [
               {
                 id: 'error_500',
                 title: '500',
-                role: UserRole.Full,
+                role: UserRole.Visitor,
                 url: [
                   pathConfig.app.general,
                   pathConfig.general.pages,
@@ -102,7 +102,7 @@ export const navigationConfig: Array<NavigationItem> = [
           {
             id: 'login',
             title: '登录',
-            role: UserRole.Full,
+            role: UserRole.Visitor,
             url: [
               pathConfig.app.general,
               pathConfig.general.pages,
@@ -112,7 +112,7 @@ export const navigationConfig: Array<NavigationItem> = [
           {
             id: 'register',
             title: '注册',
-            role: UserRole.Full,
+            role: UserRole.Visitor,
             url: [
               pathConfig.app.general,
               pathConfig.general.pages,
@@ -157,20 +157,20 @@ export const navigationConfig: Array<NavigationItem> = [
   {
     id: 'services',
     groupTitle: '服务',
-    role: UserRole.User,
+    role: UserRole.Lower,
     children: [
       {
         id: 'data-table',
         title: '数据表',
         icon: 'biao',
-        role: UserRole.User,
+        role: UserRole.Manager,
         url: [pathConfig.app.services, pathConfig.services.dataTable]
       },
       {
         id: 'screenshot',
         title: '屏幕截图',
         icon: 'screenshot',
-        role: UserRole.User,
+        role: UserRole.Lower,
         url: [pathConfig.app.services, pathConfig.services.screenshot]
       }
     ],

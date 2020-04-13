@@ -43,6 +43,10 @@ export class UserInfo {
   })
   salt: string;
 
+  @Column()
+  @Length(2, 15)
+  github: string;
+
   @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
