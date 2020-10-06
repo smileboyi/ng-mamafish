@@ -5,4 +5,5 @@ module.exports = {
 	semi: true,
 	// 使用单引号
 	singleQuote: true,
+	useTabs: false,
 };

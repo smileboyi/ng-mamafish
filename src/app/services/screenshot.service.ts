@@ -1,5 +1,5 @@
 import { Injectable, ElementRef } from '@angular/core';
-import * as html2canvas from 'html2canvas';
+import html2canvas from 'html2canvas';
 import { NzModalService } from 'ng-zorro-antd';
 
 @Injectable({
@@ -72,7 +72,7 @@ export class ScreenshotService {
           nzMaskClosable: false,
           nzClosable: false,
           nzWidth: this.modelWidth,
-          nzClassName: 'centre2',
+          // nzClassName: 'centre2',
           nzOnOk: () => {
             // 保存
             const downloadLink = document.createElement('a');

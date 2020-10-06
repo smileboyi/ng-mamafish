@@ -12,7 +12,7 @@
     [ngStyle]="{ animation: !showInfoContent ? 'none' : 'scale .6s ease-out' }"
     (click)="onCloseInfoContent.emit()"
   >
-    <i nz-icon type="close"></i>
+    <i nz-icon nzType="close"></i>
   </button>
   <div
     class="info-box centre3 tc trans"
@@ -33,14 +33,14 @@
       <h3 class="job">Web developer</h3>
       <p class="member">Member since May. 2016</p>
       <div class="button-group">
-        <button nz-tooltip nzPlacement="bottom" nzTitle="weibo">
-          <i nz-icon type="weibo"></i>
+        <button nz-tooltip nzTooltipPlacement="bottom" nzTooltipTitle="weibo">
+          <i nz-icon nzType="weibo"></i>
         </button>
-        <button nz-tooltip nzPlacement="bottom" nzTitle="qq">
-          <i nz-icon type="qq"></i>
+        <button nz-tooltip nzTooltipPlacement="bottom" nzTooltipTitle="qq">
+          <i nz-icon nzType="qq"></i>
         </button>
-        <button nz-tooltip nzPlacement="bottom" nzTitle="google">
-          <i nz-icon type="google"></i>
+        <button nz-tooltip nzTooltipPlacement="bottom" nzTooltipTitle="google">
+          <i nz-icon nzType="google"></i>
         </button>
       </div>
     </div>
@@ -113,7 +113,7 @@
           </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
-      <button class="box-shadow send-btn" nz-button nzType="primary">
+      <button class="box-shadow send-btn flex" nz-button nzType="primary">
         <img class="send" src="/assets/icons/send.svg" />
         <span class="text">Send</span>
       </button>

@@ -71,7 +71,9 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       (change: MediaChange) => {
         if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
         } else {
-          this.profile.nativeElement.scrollTo(0, 0);
+          if (this.profile) {
+            this.profile.nativeElement.scrollTo(0, 0);
+          }
         }
       }
     );
@@ -82,9 +84,11 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.activities.length) {
           const start = this.activities.length - 1;
           const end = res.length - 1;
+          const activities = this.activities.concat();
           res.slice(start, end).forEach(item => {
-            this.activities.push(item);
+            activities.push(item);
           });
+          this.activities = activities;
         } else {
           this.activities = res;
         }
@@ -127,6 +131,24 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handleFirstLoad(index: number): void {
+    // 模拟延迟
+    const t = setTimeout(() => {
+      if (index === 1 && !this.profiles.length) {
+        this.store.dispatch(new actions.FetchProfileReq({ type: 'profiles' }));
+      } else if (index === 2 && !this.messages.length) {
+        this.store.dispatch(new actions.FetchProfileReq({ type: 'messages' }));
+      } else if (!this.activities.length) {
+        this.store.dispatch(
+          new actions.FetchProfileReq({ type: 'activities' })
+        );
+      }
+      clearTimeout(t);
+    }, 300);
+
+    if (!this.contentMain) {
+      return;
+    }
+
     if (index) {
       this.backTopShow = false;
       this.renderer2.setAttribute(
@@ -145,20 +167,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       'style',
       `transform: translateX(${100 * index}%)`
     );
-
-    // 模拟延迟
-    const t = setTimeout(() => {
-      if (index === 1 && !this.profiles.length) {
-        this.store.dispatch(new actions.FetchProfileReq({ type: 'profiles' }));
-      } else if (index === 2 && !this.messages.length) {
-        this.store.dispatch(new actions.FetchProfileReq({ type: 'messages' }));
-      } else if (!this.activities.length) {
-        this.store.dispatch(
-          new actions.FetchProfileReq({ type: 'activities' })
-        );
-      }
-      clearTimeout(t);
-    }, 300);
   }
 
   @UtilsService.debounce()

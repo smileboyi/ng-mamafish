@@ -19,9 +19,9 @@
       nz-menu-item
       nz-tooltip
       [id]="item.id"
-      [nzTitle]="item.title"
-      [nzMouseEnterDelay]="isPageMini ? 100000 : 0.015"
-      [nzPlacement]="position === 'left' ? 'right' : 'left'"
+      [nzTooltipTitle]="item.title"
+      [nzTooltipMouseEnterDelay]="isPageMini ? 100000 : 0.015"
+      [nzTooltipPlacement]="position === 'left' ? 'right' : 'left'"
       (click)="clickMenuItem(item.id, item.hashs, item.params)"
       *ngIf="isCollapsed"
     >

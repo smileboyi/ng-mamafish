@@ -27,7 +27,7 @@
 
     <nz-form-control>
       <div class="flex w100" [style.margin-bottom.px]="15">
-        <label nz-checkbox class="fe tl">
+        <label nz-checkbox class="fe tl" [style.color]="'#fff'">
           <span>Remember me</span>
         </label>
         <a class="fe tr">Forgot password?</a>
@@ -66,19 +66,31 @@
       <p class="website">WEBSITE BY 麻麻鱼</p>
       <p class="member">© 2019. All RIGHT RESERVED.</p>
       <div class="button-group">
-        <button nz-tooltip nzPlacement="bottom" nzTitle="weibo">
-          <i nz-icon type="weibo"></i>
+        <button
+          nz-tooltip
+          nzTooltipPlacement="bottom"
+          nzTooltipTitle="nzTooltipTitle"
+        >
+          <i nz-icon nzType="weibo"></i>
         </button>
-        <button nz-tooltip nzPlacement="bottom" nzTitle="qq">
-          <i nz-icon type="qq"></i>
+        <button
+          nz-tooltip
+          nzTooltipPlacement="bottom"
+          nzTooltipTitle="nzTooltipTitle"
+        >
+          <i nz-icon nzType="qq"></i>
         </button>
-        <button nz-tooltip nzPlacement="bottom" nzTitle="google">
-          <i nz-icon type="google"></i>
+        <button
+          nz-tooltip
+          nzTooltipPlacement="bottom"
+          nzTooltipTitle="nzTooltipTitle"
+        >
+          <i nz-icon nzType="google"></i>
         </button>
       </div>
     </div>
   </div>
 </div>
 
-<ng-template #prefixUser><i nz-icon type="user"></i></ng-template>
-<ng-template #prefixLock><i nz-icon type="lock"></i></ng-template>
+<ng-template #prefixUser><i nz-icon nzType="user"></i></ng-template>
+<ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>

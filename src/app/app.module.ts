@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { NZ_I18N, en_US, NZ_ICONS } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
-import { Driver, NgForageConfig, NgForageModule } from 'ngforage';
+import { Driver, NgForageConfig } from 'ngforage';
 import en from '@angular/common/locales/en';
 import { NgForage } from 'ngforage';
 import { NgxPermissionsService, NgxPermissionsModule } from 'ngx-permissions';
@@ -36,7 +36,6 @@ const loadFactory = (forage: NgForage, ps: NgxPermissionsService) =>
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    NgForageModule.forRoot(),
     NgxPermissionsModule.forRoot(),
     InMemoryWebApiModule.forRoot(UsersData, { delay: 500 }),
     LayoutModule,

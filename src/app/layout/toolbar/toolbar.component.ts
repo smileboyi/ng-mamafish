@@ -7,11 +7,12 @@ import {
   EventEmitter,
   Output
 } from '@angular/core';
+import { from } from 'rxjs';
 import * as screenfull from 'screenfull';
 import { NgForage } from 'ngforage';
+import axios from 'axios';
 
 import { Message, File, Schedule } from '../../declare';
-import { MessageService } from '@services/message.service';
 import { UtilsService } from '@services/utils.service';
 import { GlobalService } from '@services/global.service';
 import { LayoutConfigService } from '@services/layout-config.service';
@@ -34,7 +35,13 @@ export class ToolbarComponent implements OnInit {
   isFullscreen: boolean = false;
   showInfoContent: boolean = false;
   isCollapsed: boolean = false;
-  userRoles: Array<UserRole> = [UserRole.Visitor, UserRole.User, UserRole.Manager];
+  userRoles: Array<UserRole> = [
+    UserRole.Visitor,
+    UserRole.Lower,
+    UserRole.User,
+    UserRole.Manager,
+    UserRole.Dictator
+  ];
 
   @ViewChild('serchIpt', null)
   serchIpt: ElementRef;
@@ -43,7 +50,6 @@ export class ToolbarComponent implements OnInit {
   openSetting: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
-    private message: MessageService,
     private renderer2: Renderer2,
     private ngForage: NgForage,
     private utils: UtilsService,
@@ -53,9 +59,9 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit() {
     if (!this.global.isMobile) {
-      this.message
-        .getMessages()
-        .subscribe(res => (this.userMessage = res.data));
+      from(axios.get('/mockapi/user/message')).subscribe(
+        (res) => (this.userMessage = res.data)
+      );
     }
     this.layoutConfig.config.subscribe((config: LayoutConfig) => {
       this.isCollapsed = config.navbar.collapsed;
@@ -64,7 +70,7 @@ export class ToolbarComponent implements OnInit {
 
   // 全屏切换
   toggleFullscreen(): void {
-    if (screenfull.enabled) {
+    if (screenfull.isEnabled) {
       screenfull.toggle();
       this.isFullscreen = !this.isFullscreen;
     }

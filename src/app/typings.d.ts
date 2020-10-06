@@ -1,4 +1,4 @@
 declare module 'screenfull' {
-  export const enabled: boolean;
+  export const isEnabled: boolean;
   export const toggle: () => any;
 }

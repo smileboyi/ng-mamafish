@@ -17,7 +17,7 @@ export class GlobalService {
   isMobile = false;
   isMini = false;
   moreHeaderState = false;
-  userRole: UserRole = UserRole.Visitor;
+  userRole: UserRole = UserRole.Manager;
   userInfo: Partial<UserInfo>;
   permissionList: Array<string> = [];
   rsapubKey: string;

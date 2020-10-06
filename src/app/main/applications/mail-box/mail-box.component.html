@@ -3,16 +3,18 @@
     <div class="bottom-inbox-bar flex">
       <div>
         <button nz-button (click)="fold = !fold">
-          <i nz-icon [type]="fold ? 'menu-unfold' : 'menu-fold'"></i>
+          <i nz-icon [nzType]="fold ? 'menu-unfold' : 'menu-fold'"></i>
         </button>
-        <nz-dropdown
+        <a
+          nz-dropdown
           [nzClickHide]="true"
           [nzPlacement]="'bottomCenter'"
           [nzTrigger]="'click'"
+          [nzDropdownMenu]="menu"
         >
-          <a nz-dropdown>
-            <i nz-icon type="align-center" theme="outline"></i>
-          </a>
+          <i nz-icon nzType="align-center" nzTheme="outline"></i>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu class="inbox-header-dropdown">
             <li nz-menu-item (click)="searchMails('all')">All</li>
             <li nz-menu-item (click)="searchMails('starred')">Starred</li>
@@ -20,16 +22,16 @@
             <li nz-menu-item (click)="searchMails('drafts')">Drafts</li>
             <li nz-menu-item (click)="searchMails('trash')">Trash</li>
           </ul>
-        </nz-dropdown>
+        </nz-dropdown-menu>
         <button nz-button (click)="search = !search">
-          <i nz-icon type="search" theme="outline"></i>
+          <i nz-icon nzType="search" nzTheme="outline"></i>
         </button>
       </div>
       <div class="fe">
         <label [ngClass]="{ search: true, ac: search }">
           <input
             class="tc ipt wh100"
-            type="text"
+            nzType="text"
             [(ngModel)]="searchText"
             (keyup)="searchMails()"
             placeholder="Search mail..."
@@ -41,51 +43,58 @@
           <button
             nz-button
             nz-tooltip
-            nzTitle="Mark as important"
+            nzTooltipTitle="Mark as important"
             (click)="mail.starred = !mail.starred"
           >
-            <i nz-icon type="star" theme="fill" *ngIf="mail.starred"></i>
-            <i nz-icon type="star" theme="outline" *ngIf="!mail.starred"></i>
+            <i nz-icon nzType="star" nzTheme="fill" *ngIf="mail.starred"></i>
+            <i
+              nz-icon
+              nzType="star"
+              nzTheme="outline"
+              *ngIf="!mail.starred"
+            ></i>
           </button>
-          <button nz-button nz-tooltip nzTitle="Report spam">
-            <i nz-icon type="exclamation-circle" theme="fill"></i>
+          <button nz-button nz-tooltip nzTooltipTitle="Report spam">
+            <i nz-icon nzType="exclamation-circle" nzTheme="fill"></i>
           </button>
           <button
             nz-button
             nz-tooltip
-            nzTitle="Move to trash"
+            nzTooltipTitle="Move to trash"
             (click)="delete()"
           >
-            <i nz-icon type="delete" theme="fill"></i>
+            <i nz-icon nzType="delete" nzTheme="fill"></i>
           </button>
-          <nz-dropdown
+          <a
+            nz-dropdown
             [nzClickHide]="true"
             [nzPlacement]="'bottomCenter'"
             [nzTrigger]="'click'"
+            [nzDropdownMenu]="menu"
           >
-            <a nz-dropdown>
-              <i
-                nz-icon
-                class="rotate-icon"
-                type="ellipsis"
-                theme="outline"
-              ></i>
-            </a>
+            <i
+              nz-icon
+              class="rotate-icon"
+              nzType="ellipsis"
+              nzTheme="outline"
+            ></i>
+          </a>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu class="inbox-header-dropdown">
               <li nz-menu-item (click)="setAsRead()">Mark as read</li>
               <li nz-menu-item (click)="setAsUnRead()">Mark as unread</li>
               <li nz-menu-item (click)="delete()">Delete</li>
             </ul>
-          </nz-dropdown>
+          </nz-dropdown-menu>
         </ng-container>
         <button
           nz-button
           nz-tooltip
-          nzTitle="Back"
+          nzTooltipTitle="Back"
           (click)="newMail = false"
           [hidden]="!newMail"
         >
-          <i nz-icon type="arrow-left" theme="outline"></i>
+          <i nz-icon nzType="arrow-left" nzTheme="outline"></i>
         </button>
         <div class="dib fr" [ngStyle]="{ 'height.px': 40 }">
           <a class="compose pre" href="javascript:;" (click)="newMail = true"
@@ -95,7 +104,7 @@
       </div>
     </div>
   </cat-bg-header>
-  <div class="main fe flex pre">
+  <div class="main fe flex pre h100">
     <div
       class="person-box-cover"
       (click)="fold = true"
@@ -125,7 +134,7 @@
     </div>
     <div class="content-box fe h100 pre ovys scrollbar">
       <div class="no-data tc pab centre2" *ngIf="!mail && !newMail">
-        <i nz-icon type="mail" theme="outline"></i>
+        <i nz-icon nzType="mail" nzTheme="outline"></i>
         <p class="text">Select a mail to read</p>
       </div>
       <div class="receive-box" *ngIf="mail && !newMail">
@@ -146,15 +155,15 @@
           <div class="attachments">
             <p>
               {{ mail.attachments.length }} attachments
-              <i nz-icon type="upload" theme="outline"></i
-              ><i nz-icon type="eye" theme="outline"></i>
+              <i nz-icon nzType="upload" nzTheme="outline"></i
+              ><i nz-icon nzType="eye" nzTheme="outline"></i>
             </p>
             <div class="attachment" *ngFor="let attachment of mail.attachments">
               <img [src]="attachment" alt="attachment" />
               <h3>{{ attachment.split('images/')[1] }}</h3>
               <p>
-                541k <i nz-icon type="upload" theme="outline"></i
-                ><i nz-icon type="eye" theme="outline"></i>
+                541k <i nz-icon nzType="upload" nzTheme="outline"></i
+                ><i nz-icon nzType="eye" nzTheme="outline"></i>
               </p>
             </div>
           </div>

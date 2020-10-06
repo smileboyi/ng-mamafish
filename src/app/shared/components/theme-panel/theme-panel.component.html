@@ -4,12 +4,12 @@
   nzShape="circle"
   nzSize="large"
   nz-popover
-  [nzContent]="contentTemplate"
-  nzTrigger="click"
-  nzPlacement="bottomLeft"
+  [nzPopoverContent]="contentTemplate"
+  nzPopoverTrigger="click"
+  nzPopoverPlacement="bottomLeft"
   [ngStyle]="{ 'background-color': selectedFg, 'border-color': selectedFg }"
 >
-  <i nz-icon type="bg-colors" theme="outline"></i>
+  <i nz-icon nzType="bg-colors" nzTheme="outline"></i>
 </button>
 
 <ng-template #contentTemplate>
@@ -22,7 +22,7 @@
         [ngStyle]="{ color: selectedBg }"
         [hidden]="view === 'palettes'"
       >
-        <i nz-icon type="arrow-left" nzTheme="outline"></i>
+        <i nz-icon nzType="arrow-left" nzTheme="outline"></i>
       </button>
       <span class="select" [ngStyle]="{ color: selectedBg }">
         {{ selectedColor }}
@@ -34,7 +34,7 @@
         [hidden]="view === 'palettes'"
         [ngStyle]="{ color: selectedBg }"
       >
-        <i nz-icon type="delete" nzTheme="fill"></i>
+        <i nz-icon nzType="delete" nzTheme="fill"></i>
       </button>
     </header>
     <div class="views" [ngSwitch]="view">

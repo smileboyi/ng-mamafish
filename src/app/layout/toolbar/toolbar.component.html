@@ -19,7 +19,7 @@
         </button>
         <div class="divider"></div>
         <button nz-button nzType="large" (click)="toggleCollapsed()">
-          <i nz-icon type="bars"></i>
+          <i nz-icon nzType="bars"></i>
         </button>
         <ng-container *ngIf="global.userRole >= userRoles[1]">
           <div class="divider"></div>
@@ -28,7 +28,10 @@
             nzType="large"
             (click)="showInfoContent = !showInfoContent"
           >
-            <i nz-icon [type]="showInfoContent ? 'arrow-up' : 'arrow-down'"></i>
+            <i
+              nz-icon
+              [nzType]="showInfoContent ? 'arrow-up' : 'arrow-down'"
+            ></i>
           </button>
         </ng-container>
         <ng-container
@@ -45,11 +48,16 @@
               })
             "
           >
-            <i nz-icon type="lock"></i>
+            <i nz-icon nzType="lock"></i>
           </button>
         </ng-container>
       </div>
-      <div class="tr" nz-col [nzSpan]="global.isMobile ? 12 : 16">
+      <div
+        nz-col
+        class="tr"
+        [nzSpan]="global.isMobile ? 12 : 16"
+        [style.position]="searchBarState ? 'static' : 'relative'"
+      >
         <ng-container
           *ngIf="!global.isMobile && global.userRole >= userRoles[1]"
         >
@@ -87,19 +95,25 @@
 </header>
 
 <ng-template #user>
-  <nz-dropdown [nzTrigger]="'click'" [nzPlacement]="'bottomCenter'" class="tc">
-    <div class="dib user-box" nz-dropdown>
-      <nz-avatar
-        [nzSize]="40"
-        nzIcon="user"
-        nzSrc="/assets/images/avatar.jpg"
-        class="avatar fl"
-      ></nz-avatar>
-      <button nz-button nzType="primary" class="user-btn">
-        <span class="ell name">smileboyi</span>
-        <i nz-icon type="down" theme="outline"></i>
-      </button>
-    </div>
+  <div
+    class="dib user-box"
+    nz-dropdown
+    [nzTrigger]="'click'"
+    [nzDropdownMenu]="menu1"
+    [nzPlacement]="'bottomCenter'"
+  >
+    <nz-avatar
+      [nzSize]="40"
+      nzIcon="user"
+      nzSrc="/assets/images/avatar.jpg"
+      class="avatar fl"
+    ></nz-avatar>
+    <button nz-button nzType="primary" class="user-btn">
+      <span class="ell name">smileboyi</span>
+      <i nz-icon nzType="down" nzTheme="outline"></i>
+    </button>
+  </div>
+  <nz-dropdown-menu class="tc" #menu1="nzDropdownMenu">
     <ul nz-menu class="user-menu">
       <li nz-menu-item>
         <button
@@ -107,7 +121,7 @@
           nzType="default"
           (click)="utils.gotoOtherPage('profile')"
         >
-          <i nz-icon type="user"></i>个人信息
+          <i nz-icon nzType="user"></i>个人信息
         </button>
       </li>
       <li nz-menu-item>
@@ -116,24 +130,24 @@
           nzType="default"
           (click)="utils.gotoOtherPage('mail-box')"
         >
-          <i nz-icon type="mail"></i>收件箱
+          <i nz-icon nzType="mail"></i>收件箱
         </button>
       </li>
       <li nz-menu-item>
         <button nz-button nzType="default" (click)="handleLogout()">
-          <i nz-icon type="poweroff"></i>退出
+          <i nz-icon nzType="poweroff"></i>退出
         </button>
       </li>
     </ul>
-  </nz-dropdown>
+  </nz-dropdown-menu>
   <div class="divider"></div>
 </ng-template>
 
 <ng-template #search>
   <button nz-button nzType="large" (click)="showSearchBar()">
-    <i nz-icon type="search"></i>
+    <i nz-icon nzType="search"></i>
   </button>
-  <div class="search-bar pab wh100 not nol z50 flex" [hidden]="!searchBarState">
+  <div class="search-bar pab wh100 nob nol z50 flex" [hidden]="!searchBarState">
     <label class="fe">
       <input class="wh100 ipt" type="text" placeholder="搜索" #serchIpt />
     </label>
@@ -143,7 +157,7 @@
       nzShape="circle"
       (click)="searchBarState = false"
     >
-      <i nz-icon type="close" theme="outline"></i>
+      <i nz-icon nzType="close" nzTheme="outline"></i>
     </button>
   </div>
   <div class="divider"></div>
@@ -157,16 +171,22 @@
     fxShow="false"
     fxShow.gt-sm
   >
-    <i nz-icon [type]="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"></i>
+    <i nz-icon [nzType]="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"></i>
   </button>
   <div class="divider"></div>
 </ng-template>
 
 <ng-template #bell>
-  <nz-dropdown [nzTrigger]="'click'" [nzPlacement]="'bottomCenter'">
-    <button nz-button nz-dropdown nzTrigger="click">
-      <i nz-icon type="bell"></i>
-    </button>
+  <button
+    nz-button
+    nz-dropdown
+    [nzTrigger]="'click'"
+    [nzDropdownMenu]="menu2"
+    [nzPlacement]="'bottomCenter'"
+  >
+    <i nz-icon nzType="bell"></i>
+  </button>
+  <nz-dropdown-menu #menu2="nzDropdownMenu">
     <div class="box-shadow inform-box">
       <nz-tabset nzSize="small">
         <nz-tab [nzTitle]="titleTemplate1">
@@ -232,30 +252,30 @@
         </nz-tab>
       </nz-tabset>
     </div>
-  </nz-dropdown>
+  </nz-dropdown-menu>
   <div class="divider"></div>
 </ng-template>
 
 <ng-template #settings>
   <button nz-button nzType="large" (click)="handleOpen()">
-    <i nz-icon type="setting"></i>
+    <i nz-icon nzType="setting"></i>
   </button>
   <div class="divider nor"></div>
 </ng-template>
 
 <ng-template #more>
   <button nz-button nzType="large" (click)="toggleMoreHeader()">
-    <i nz-icon type="ellipsis"></i>
+    <i nz-icon nzType="ellipsis"></i>
   </button>
   <div class="divider nor"></div>
 </ng-template>
 
 <ng-template #titleTemplate1>
-  <i nz-icon type="message" theme="fill"></i>
+  <i nz-icon nzType="message" nzTheme="fill"></i>
 </ng-template>
 <ng-template #titleTemplate2>
-  <i nz-icon type="file" theme="fill"></i>
+  <i nz-icon nzType="file" nzTheme="fill"></i>
 </ng-template>
 <ng-template #titleTemplate3>
-  <i nz-icon type="schedule" theme="fill"></i>
+  <i nz-icon nzType="schedule" nzTheme="fill"></i>
 </ng-template>

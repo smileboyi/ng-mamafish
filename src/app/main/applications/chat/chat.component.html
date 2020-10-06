@@ -5,33 +5,38 @@
   >
     <div class="bottom-users-bar flex">
       <button nz-button (click)="fold = !fold">
-        <i nz-icon [type]="fold ? 'menu-unfold' : 'menu-fold'"></i>
+        <i nz-icon [nzType]="fold ? 'menu-unfold' : 'menu-fold'"></i>
       </button>
       <div [hidden]="!currentUser.avatar">
         <nz-avatar nzIcon="user" [nzSrc]="currentUser.avatar"></nz-avatar>
         <span class="name">{{ currentUser.author }}</span>
-        <nz-dropdown
+        <a
+          nz-dropdown
+          class="dash-btn dib pre"
           [nzClickHide]="true"
           [nzPlacement]="'bottomRight'"
           [nzTrigger]="'click'"
+          [nzDropdownMenu]="menu"
         >
-          <a nz-dropdown class="dash-btn dib pre">
-            <i nz-icon type="ellipsis" theme="outline"></i>
-          </a>
+          <i nz-icon nzType="ellipsis" nzTheme="outline"></i>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu class="more-op-list">
             <li nz-menu-item (click)="drawer = !drawer">
-              <i nz-icon type="contacts" theme="fill"></i>Contact info
+              <i nz-icon nzType="contacts" nzTheme="fill"></i>Contact info
             </li>
-            <li nz-menu-item><i nz-icon type="bell" theme="fill"></i>Mute</li>
+            <li nz-menu-item>
+              <i nz-icon nzType="bell" nzTheme="fill"></i>Mute
+            </li>
             <li nz-menu-item (click)="deleteChatUser()">
-              <i nz-icon type="delete" theme="fill"></i>Clear Chat
+              <i nz-icon nzType="delete" nzTheme="fill"></i>Clear Chat
             </li>
           </ul>
-        </nz-dropdown>
+        </nz-dropdown-menu>
       </div>
     </div>
   </cat-bg-header>
-  <div class="main flex pre fe">
+  <div class="main flex pre fe ovh">
     <div
       class="person-box-cover"
       (click)="fold = true"
@@ -55,16 +60,16 @@
           <p class="name">{{ user.author }}</p>
           <ng-container [ngSwitch]="user.status">
             <p *ngSwitchCase="'Do not disturb'">
-              <i nz-icon type="stop" theme="outline"></i>Do not disturb
+              <i nz-icon nzType="stop" nzTheme="outline"></i>Do not disturb
             </p>
             <p *ngSwitchCase="'Away'">
-              <i nz-icon type="clock-circle" theme="outline"></i>Away
+              <i nz-icon nzType="clock-circle" nzTheme="outline"></i>Away
             </p>
             <p *ngSwitchCase="'Offline'">
-              <i nz-icon type="close-circle" theme="outline"></i>Offline
+              <i nz-icon nzType="close-circle" nzTheme="outline"></i>Offline
             </p>
             <p *ngSwitchCase="'Online'">
-              <i nz-icon type="check-circle" theme="outline"></i>Online
+              <i nz-icon nzType="check-circle" nzTheme="outline"></i>Online
             </p>
           </ng-container>
         </div>
@@ -72,25 +77,27 @@
     </div>
     <div class="content-box fe h100 pre">
       <div class="no-data tc pab centre2" *ngIf="!currentUser.avatar">
-        <i nz-icon type="message" theme="outline"></i>
+        <i nz-icon nzType="message" nzTheme="outline"></i>
         <p class="text">Select a interlocutor for talk</p>
       </div>
       <div class="wh100 grail" [hidden]="!currentUser.avatar">
         <div class="content fe ovys scrollbar">
-          <div
-            [ngClass]="{ chat: true, me: talk.me }"
-            *ngFor="let talk of chatTalks"
-          >
-            <nz-avatar
-              nzIcon="user"
-              [nzSize]="40"
-              [nzSrc]="talk.avatar"
-            ></nz-avatar>
-            <div class="main">
-              <div class="text">
-                {{ talk.text }}
+          <div>
+            <div
+              [ngClass]="{ chat: true, me: talk.me }"
+              *ngFor="let talk of chatTalks"
+            >
+              <nz-avatar
+                nzIcon="user"
+                [nzSize]="40"
+                [nzSrc]="talk.avatar"
+              ></nz-avatar>
+              <div class="main">
+                <div class="text">
+                  {{ talk.text }}
+                </div>
+                <p class="time">{{ talk.date }}</p>
               </div>
-              <p class="time">{{ talk.date }}</p>
             </div>
           </div>
         </div>
@@ -120,7 +127,7 @@
         <div class="drawer pab nor not h100 trans">
           <div class="top grail pre">
             <button nz-button [nzShape]="'circle'" (click)="drawer = false">
-              <i nz-icon type="close" theme="outline"></i>
+              <i nz-icon nzType="close" nzTheme="outline"></i>
             </button>
             <nz-avatar
               nzIcon="user"
@@ -131,15 +138,15 @@
           </div>
           <div class="info h100">
             <div class="item">
-              <i nz-icon type="mail" theme="fill"></i>
+              <i nz-icon nzType="mail" nzTheme="fill"></i>
               <span class="text">author@gmail.com</span>
             </div>
             <div class="item">
-              <i nz-icon type="phone" theme="fill"></i>
+              <i nz-icon nzType="phone" nzTheme="fill"></i>
               <span class="text">(202) 756-9756</span>
             </div>
             <div class="item">
-              <i nz-icon type="environment" theme="fill"></i>
+              <i nz-icon nzType="environment" nzTheme="fill"></i>
               <span class="text">2903 Avenue Z, Brooklyn, NY</span>
             </div>
           </div>

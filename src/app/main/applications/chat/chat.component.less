@@ -121,7 +121,7 @@
       padding: 20px 35px;
       .chat {
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         margin-bottom: 17px;
         nz-avatar {
           order: 1;
@@ -149,7 +149,7 @@
         }
       }
       .chat.me {
-        justify-content: end;
+        justify-content: flex-end;
         nz-avatar {
           order: 3;
           margin: 0 0 0 16px;
@@ -164,6 +164,7 @@
     }
     .bottom {
       padding: 12px;
+      min-height: 64px;
       background-color: #fff;
       [nz-input] {
         position: relative;

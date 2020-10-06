@@ -6,10 +6,10 @@
     <div class="bottom-users-bar flex">
       <div>
         <button nz-button (click)="openUserDialog(null)">
-          <i nz-icon type="user-add" theme="outline"></i>
+          <i nz-icon nzType="user-add" nzTheme="outline"></i>
         </button>
         <button nz-button (click)="toggleSearch()">
-          <i nz-icon type="search" theme="outline"></i>
+          <i nz-icon nzType="search" nzTheme="outline"></i>
         </button>
       </div>
       <div class="fe">
@@ -25,10 +25,10 @@
       </div>
       <div>
         <button nz-button (click)="showWay = 'grid'">
-          <i nz-icon type="appstore" theme="outline"></i>
+          <i nz-icon nzType="appstore" nzTheme="outline"></i>
         </button>
         <button nz-button (click)="showWay = 'module'">
-          <i nz-icon type="ordered-list" theme="outline"></i>
+          <i nz-icon nzType="ordered-list" nzTheme="outline"></i>
         </button>
       </div>
     </div>
@@ -103,20 +103,20 @@
               <img [src]="user.profile.image" />
               <i
                 nz-icon
-                type="stop"
-                theme="outline"
+                nzType="stop"
+                nzTheme="outline"
                 *ngIf="user.settings.isDeleted"
               ></i>
             </label>
             <div class="button-group">
               <a [href]="user.social.weibo" target="_blank">
-                <i nz-icon type="weibo"></i>
+                <i nz-icon nzType="weibo"></i>
               </a>
               <a [href]="user.social.qq" target="_blank">
-                <i nz-icon type="qq"></i>
+                <i nz-icon nzType="qq"></i>
               </a>
               <a [href]="user.social.google" target="_blank">
-                <i nz-icon type="google"></i>
+                <i nz-icon nzType="google"></i>
               </a>
             </div>
           </div>
@@ -126,47 +126,50 @@
                 {{ user.profile.name | uppercase }}
                 {{ user.profile.surname | uppercase }}
               </h4>
-              <nz-dropdown
+              <a
+                nz-dropdown
+                class="dash-btn"
                 [nzClickHide]="true"
                 [nzPlacement]="'bottomRight'"
                 [nzTrigger]="'click'"
+                [nzDropdownMenu]="menu"
               >
-                <a nz-dropdown class="dash-btn">
-                  <i nz-icon type="ellipsis" theme="outline"></i>
-                </a>
+                <i nz-icon nzType="ellipsis" nzTheme="outline"></i>
+              </a>
+              <nz-dropdown-menu #menu="nzDropdownMenu">
                 <ul nz-menu class="more-op-list">
                   <li nz-menu-item (click)="openUserDialog(user)">
-                    <i nz-icon type="edit" theme="fill"></i>Edit
+                    <i nz-icon nzType="edit" nzTheme="fill"></i>Edit
                   </li>
                   <li nz-menu-item (click)="deleteUser(user)">
-                    <i nz-icon type="delete" theme="fill"></i>Delete
+                    <i nz-icon nzType="delete" nzTheme="fill"></i>Delete
                   </li>
                   <li
                     nz-menu-item
                     (click)="user.settings.isDeleted = !user.settings.isDeleted"
                   >
-                    <i nz-icon type="stop" theme="fill"></i>
+                    <i nz-icon nzType="stop" nzTheme="fill"></i>
                     {{ user.settings.isDeleted ? 'Unblock' : 'Block' }}
                   </li>
                 </ul>
-              </nz-dropdown>
+              </nz-dropdown-menu>
             </div>
             <nz-divider></nz-divider>
             <div class="info-list">
               <p class="item">
-                <i nz-icon type="desktop" theme="outline"></i
+                <i nz-icon nzType="desktop" nzTheme="outline"></i
                 >{{ user.work.position }}
               </p>
               <p class="item">
-                <i nz-icon type="mail" theme="outline"></i
+                <i nz-icon nzType="mail" nzTheme="outline"></i
                 >{{ user.contacts.email }}
               </p>
               <p class="item">
-                <i nz-icon type="phone" theme="outline"></i
+                <i nz-icon nzType="phone" nzTheme="outline"></i
                 >{{ user.contacts.phone }}
               </p>
               <p class="item">
-                <i nz-icon type="environment" theme="outline"></i
+                <i nz-icon nzType="environment" nzTheme="outline"></i
                 >{{ user.contacts.address }}
               </p>
             </div>
@@ -187,20 +190,20 @@
             <img [src]="user.profile.image" />
             <i
               nz-icon
-              type="stop"
-              theme="outline"
+              nzType="stop"
+              nzTheme="outline"
               *ngIf="user.settings.isDeleted"
             ></i>
           </label>
           <div class="button-group">
             <a [href]="user.social.weibo" target="_blank">
-              <i nz-icon type="weibo"></i>
+              <i nz-icon nzType="weibo"></i>
             </a>
             <a [href]="user.social.qq" target="_blank">
-              <i nz-icon type="qq"></i>
+              <i nz-icon nzType="qq"></i>
             </a>
             <a [href]="user.social.google" target="_blank">
-              <i nz-icon type="google"></i>
+              <i nz-icon nzType="google"></i>
             </a>
           </div>
         </div>
@@ -210,77 +213,80 @@
               {{ user.profile.name | uppercase }}
               {{ user.profile.surname | uppercase }}
             </h4>
-            <nz-dropdown
+            <a
+              nz-dropdown
+              class="dash-btn"
               [nzClickHide]="true"
               [nzPlacement]="'bottomRight'"
               [nzTrigger]="'click'"
+              [nzDropdownMenu]="menu"
             >
-              <a nz-dropdown class="dash-btn">
-                <i nz-icon type="ellipsis" theme="outline"></i>
-              </a>
+              <i nz-icon nzType="ellipsis" nzTheme="outline"></i>
+            </a>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
               <ul nz-menu class="more-op-list">
                 <li nz-menu-item (click)="openUserDialog(user)">
-                  <i nz-icon type="edit" theme="fill"></i>Edit
+                  <i nz-icon nzType="edit" nzTheme="fill"></i>Edit
                 </li>
                 <li nz-menu-item (click)="deleteUser(user)">
-                  <i nz-icon type="delete" theme="fill"></i>Delete
+                  <i nz-icon nzType="delete" nzTheme="fill"></i>Delete
                 </li>
                 <li
                   nz-menu-item
                   (click)="user.settings.isDeleted = !user.settings.isDeleted"
                 >
-                  <i nz-icon type="stop" theme="fill"></i>
+                  <i nz-icon nzType="stop" nzTheme="fill"></i>
                   {{ user.settings.isDeleted ? 'Unblock' : 'Block' }}
                 </li>
               </ul>
-            </nz-dropdown>
+            </nz-dropdown-menu>
           </div>
           <nz-divider></nz-divider>
           <div nz-row>
             <div class="info-list" nz-col nzXs="24" nzSm="8">
               <p class="item">
-                <i nz-icon type="table" theme="outline"></i
+                <i nz-icon nzType="table" nzTheme="outline"></i
                 >{{ user.work.company }}
               </p>
               <p class="item">
-                <i nz-icon type="desktop" theme="outline"></i
+                <i nz-icon nzType="desktop" nzTheme="outline"></i
                 >{{ user.work.position }}
               </p>
               <p class="item">
-                <i nz-icon type="pay-circle" theme="outline"></i
+                <i nz-icon nzType="pay-circle" nzTheme="outline"></i
                 >{{ user.work.salary }}
               </p>
             </div>
             <div class="info-list" nz-col nzXs="24" nzSm="8">
               <p class="item">
-                <i nz-icon type="mail" theme="outline"></i
+                <i nz-icon nzType="mail" nzTheme="outline"></i
                 >{{ user.contacts.email }}
               </p>
               <p class="item">
-                <i nz-icon type="phone" theme="outline"></i
+                <i nz-icon nzType="phone" nzTheme="outline"></i
                 >{{ user.contacts.phone }}
               </p>
               <p class="item">
-                <i nz-icon type="environment" theme="outline"></i
+                <i nz-icon nzType="environment" nzTheme="outline"></i
                 >{{ user.contacts.address }}
               </p>
             </div>
             <div class="info-list" nz-col nzXs="24" nzSm="8">
               <p class="item">
-                <i nz-icon type="tag" theme="outline"></i>Registration
+                <i nz-icon nzType="tag" nzTheme="outline"></i>Registration
                 {{
                   user.settings.registrationDate
                     | date: "dd MMMM, yyyy 'at' HH:mm"
                 }}
               </p>
               <p class="item">
-                <i nz-icon type="calendar" theme="outline"></i>Joined
+                <i nz-icon nzType="calendar" nzTheme="outline"></i>Joined
                 {{
                   user.settings.joinedDate | date: "dd MMMM, yyyy 'at' HH:mm"
                 }}
               </p>
               <p class="item">
-                <i nz-icon type="user" theme="outline"></i
+                <i nz-icon nzType="user" nzTheme="outline"></i
                 >{{ user.settings.isDeleted ? 'Blocked' : 'Active' }}
               </p>
             </div>
@@ -309,7 +315,7 @@
 <ng-container #userDialogContainer></ng-container>
 
 <ng-template #renderItemTemplate let-type let-page="page">
-  <a *ngIf="type === 'pre'">« Previous </a>
+  <a *ngIf="type === 'prev'">« Previous </a>
   <a *ngIf="type === 'next'"> Next »</a>
   <a *ngIf="type === 'page'">{{ page }}</a>
 </ng-template>

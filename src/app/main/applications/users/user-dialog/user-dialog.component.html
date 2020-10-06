@@ -131,6 +131,7 @@
             <nz-form-item>
               <nz-form-control>
                 <nz-date-picker
+                  class="w100"
                   nzPlaceHolder="Birthday"
                   formControlName="birthday"
                 ></nz-date-picker>
@@ -307,12 +308,12 @@
 <ng-template #passwordSuffixTemplate>
   <i
     nz-icon
-    type="eye"
-    [theme]="passwordVisible ? 'fill' : 'outline'"
+    nzType="eye"
+    [nzTheme]="passwordVisible ? 'fill' : 'outline'"
     (click)="passwordVisible = !passwordVisible"
   ></i>
 </ng-template>
 <ng-template #salaryPrefixTemplate>
-  <i nz-icon type="pay-circle"></i>
+  <i nz-icon nzType="pay-circle"></i>
 </ng-template>
 <ng-template #salarySuffixTemplate>.00</ng-template>

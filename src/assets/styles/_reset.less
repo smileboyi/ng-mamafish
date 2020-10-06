@@ -1,5 +1,25 @@
+@import 'ng-zorro-antd/ng-zorro-antd.min.css';
+
 .ant-modal-confirm {
   top: 30%;
   max-width: 416px;
   margin: 10px auto;
+}
+
+// 和scrollbar一致
+.cdk-virtual-scroll-viewport::-webkit-scrollbar {
+  width: 5px;
+  height: 1px;
+}
+.cdk-virtual-scroll-viewport::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: #81d4fa;
+}
+.cdk-virtual-scroll-viewport::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  background: #ededed;
 }
