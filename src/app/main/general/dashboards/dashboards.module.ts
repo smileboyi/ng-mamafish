@@ -7,6 +7,6 @@ import { SharedModule } from '@shared';
 
 @NgModule({
   declarations: [AnalyticsComponent],
-  imports: [CommonModule, SharedModule, DashboardsRoutingModule]
+  imports: [CommonModule, SharedModule, DashboardsRoutingModule],
 })
 export class DashboardsModule {}

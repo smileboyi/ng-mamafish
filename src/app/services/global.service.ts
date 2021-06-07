@@ -7,7 +7,7 @@ import { UserRole, UserInfo } from '@declare';
  * 存放全局变量的服务
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GlobalService {
   static resetThemeColor$: Subject<any> = new Subject<any>();
@@ -17,7 +17,7 @@ export class GlobalService {
   isMobile = false;
   isMini = false;
   moreHeaderState = false;
-  userRole: UserRole = UserRole.Manager;
+  userRole: UserRole = UserRole.Dictator;
   userInfo: Partial<UserInfo>;
   permissionList: Array<string> = [];
   rsapubKey: string;
@@ -25,7 +25,7 @@ export class GlobalService {
   subMenuOpenState = {
     dashboards: false,
     pages: false,
-    errors: false
+    errors: false,
   };
   pageRouteInfo: any;
   selectMenuItemId: string;
@@ -44,15 +44,15 @@ export class GlobalService {
       signInCount: 0,
       token: {
         accessToken: '',
-        expiresIn: 0
+        expiresIn: 0,
       },
       userRole: {
         description: '',
         id: 0,
         role: '',
-        value: ''
+        value: '',
       },
-      username: ''
+      username: '',
     };
   }
 }

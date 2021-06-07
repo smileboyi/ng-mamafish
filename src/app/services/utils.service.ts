@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import * as _ from 'lodash';
+import { Router, Params } from '@angular/router';
+import { throttle, debounce, cloneDeep } from 'lodash';
 import { Observable, Observer } from 'rxjs';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subject } from 'rxjs/Subject';
 
-import { navigationConfig, menuIdPathSet } from '@config/navigation.config';
+import {
+  navigationConfig,
+  menuIdPathSet,
+  NavigationItem,
+} from '@config/navigation.config';
 import { GlobalService } from '@services/global.service';
 
 /**
  * 基础服务
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UtilsService {
   static menuItemChange$: Subject<any> = new Subject<any>();
@@ -21,26 +25,26 @@ export class UtilsService {
 
   // 节流装饰器
   static throttle(delay: number = 100): MethodDecorator {
-    return function(
-      target: any,
-      propertyKey: string,
+    return (
+      _target: any,
+      _propertyKey: string | symbol,
       descriptor: PropertyDescriptor
-    ) {
+    ) => {
       const original = descriptor.value;
-      descriptor.value = _.throttle(original, delay);
+      descriptor.value = throttle(original, delay);
       return descriptor;
     };
   }
 
   // 防抖装饰器
   static debounce(delay: number = 100): MethodDecorator {
-    return function(
-      target: any,
-      propertyKey: string,
+    return (
+      _target: any,
+      _propertyKey: string | symbol,
       descriptor: PropertyDescriptor
-    ) {
+    ) => {
       const original = descriptor.value;
-      descriptor.value = _.debounce(original, delay);
+      descriptor.value = debounce(original, delay);
       return descriptor;
     };
   }
@@ -56,7 +60,7 @@ export class UtilsService {
   // 根据页面id返回页面路径
   getPagePath(pageId: string): string {
     let idPathStr = '';
-    menuIdPathSet.forEach(path => {
+    menuIdPathSet.forEach((path) => {
       if (path.includes(pageId)) {
         idPathStr = path;
       }
@@ -65,11 +69,11 @@ export class UtilsService {
     idPathArr = idPathArr.reverse();
     idPathArr.length = idPathArr.length - 1;
     idPathArr = idPathArr.reverse();
-    let obj = _.cloneDeep(navigationConfig);
+    let obj: any = cloneDeep(navigationConfig);
     const len = idPathArr.length;
     idPathArr.forEach((id: string, idx: number) => {
-      const a = obj.find(item => item.id === id);
-      obj = len - 1 > idx ? _.cloneDeep(a.children) : a;
+      const a: any = obj.find((item: NavigationItem) => item.id === id);
+      obj = len - 1 > idx ? cloneDeep(a.children) : a;
     });
     return '/' + obj.url.join('/');
   }
@@ -96,14 +100,14 @@ export class UtilsService {
    */
   gotoOtherPage(
     pageId: string,
-    hashConfig: Array<string | number> = [],
-    paramConfig: Object = {}
+    hashConfig?: Array<string | number>,
+    paramConfig?: Params
   ): void {
     let path = this.getPagePath(pageId);
     // 去掉':code'类似的字符串
     path = path.split(':')[0];
-    this.router.navigate([path, ...hashConfig], {
-      queryParams: paramConfig
+    this.router.navigate([path, ...(hashConfig || [])], {
+      queryParams: paramConfig,
     });
   }
 
@@ -123,7 +127,7 @@ export class UtilsService {
           // 修正menuItem选中位置
           UtilsService.menuItemChange$.next();
           observer.next(false);
-        }
+        },
       });
     });
   }

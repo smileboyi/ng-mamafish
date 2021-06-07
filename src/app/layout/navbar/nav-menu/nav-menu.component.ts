@@ -7,7 +7,7 @@ import {
   ElementRef,
   Renderer2,
   HostListener,
-  ChangeDetectorRef
+  ChangeDetectorRef,
 } from '@angular/core';
 
 import { NavigationItem } from '@config/navigation.config';
@@ -20,7 +20,7 @@ import { pageIdMap } from '@config/navigation.config';
 @Component({
   selector: 'cat-nav-menu',
   templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.less']
+  styleUrls: ['./nav-menu.component.less'],
 })
 export class NavMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   isPageMini = false;
@@ -35,11 +35,11 @@ export class NavMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     public utils: UtilsService,
     public global: GlobalService,
     private renderer2: Renderer2,
-    private layoutConfig: LayoutConfigService,
-    private changeDetectorRef: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private layoutConfig: LayoutConfigService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.isPageMini = this.utils.getMiniState();
 
     this.layoutConfig.config.subscribe((config: LayoutConfig) => {
@@ -51,12 +51,12 @@ export class NavMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngAfterViewInit() {
-    this.changeDetectorRef.detectChanges();
+  ngAfterViewInit(): void {
+    this.cdr.detectChanges();
     this.selectMenuItemLetActive();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     clearTimeout(this.timer);
   }
 
@@ -93,7 +93,7 @@ export class NavMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getMenuItemId(id: string): string {
-    return id in pageIdMap ? pageIdMap[id] : id;
+    return id in pageIdMap ? (pageIdMap as any)[id] : id;
   }
 
   @HostListener('window:resize')

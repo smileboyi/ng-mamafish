@@ -4,7 +4,7 @@ const black12 = 'rgba(black, 0.12)';
 const white12 = 'rgba(white, 0.12)';
 const black6 = 'rgba(black, 0.06)';
 const white6 = 'rgba(white, 0.06)';
-const themeColors = {
+const themeColors: any = {
   red: {
     50: '#ffebee',
     100: '#ffcdd2',
@@ -34,8 +34,8 @@ const themeColors = {
       A100: black87,
       A200: 'white',
       A400: 'white',
-      A700: 'white'
-    }
+      A700: 'white',
+    },
   },
 
   pink: {
@@ -67,8 +67,8 @@ const themeColors = {
       A100: black87,
       A200: 'white',
       A400: 'white',
-      A700: 'white'
-    }
+      A700: 'white',
+    },
   },
 
   purple: {
@@ -100,8 +100,8 @@ const themeColors = {
       A100: black87,
       A200: 'white',
       A400: 'white',
-      A700: 'white'
-    }
+      A700: 'white',
+    },
   },
 
   'deep-purple': {
@@ -133,8 +133,8 @@ const themeColors = {
       A100: black87,
       A200: 'white',
       A400: white87,
-      A700: white87
-    }
+      A700: white87,
+    },
   },
 
   indigo: {
@@ -166,8 +166,8 @@ const themeColors = {
       A100: black87,
       A200: 'white',
       A400: 'white',
-      A700: white87
-    }
+      A700: white87,
+    },
   },
 
   blue: {
@@ -199,8 +199,8 @@ const themeColors = {
       A100: black87,
       A200: 'white',
       A400: 'white',
-      A700: 'white'
-    }
+      A700: 'white',
+    },
   },
 
   'light-blue': {
@@ -232,8 +232,8 @@ const themeColors = {
       A100: black87,
       A200: black87,
       A400: black87,
-      A700: 'white'
-    }
+      A700: 'white',
+    },
   },
 
   cyan: {
@@ -265,8 +265,8 @@ const themeColors = {
       A100: black87,
       A200: black87,
       A400: black87,
-      A700: black87
-    }
+      A700: black87,
+    },
   },
 
   teal: {
@@ -298,8 +298,8 @@ const themeColors = {
       A100: black87,
       A200: black87,
       A400: black87,
-      A700: black87
-    }
+      A700: black87,
+    },
   },
 
   green: {
@@ -331,8 +331,8 @@ const themeColors = {
       A100: black87,
       A200: black87,
       A400: black87,
-      A700: black87
-    }
+      A700: black87,
+    },
   },
 
   'light-green': {
@@ -364,8 +364,8 @@ const themeColors = {
       A100: black87,
       A200: black87,
       A400: black87,
-      A700: black87
-    }
+      A700: black87,
+    },
   },
 
   lime: {
@@ -397,8 +397,8 @@ const themeColors = {
       A100: black87,
       A200: black87,
       A400: black87,
-      A700: black87
-    }
+      A700: black87,
+    },
   },
 
   yellow: {
@@ -430,8 +430,8 @@ const themeColors = {
       A100: black87,
       A200: black87,
       A400: black87,
-      A700: black87
-    }
+      A700: black87,
+    },
   },
 
   amber: {
@@ -463,8 +463,8 @@ const themeColors = {
       A100: black87,
       A200: black87,
       A400: black87,
-      A700: black87
-    }
+      A700: black87,
+    },
   },
 
   orange: {
@@ -496,8 +496,8 @@ const themeColors = {
       A100: black87,
       A200: black87,
       A400: black87,
-      A700: 'black'
-    }
+      A700: 'black',
+    },
   },
 
   'deep-orange': {
@@ -529,8 +529,8 @@ const themeColors = {
       A100: black87,
       A200: black87,
       A400: 'white',
-      A700: 'white'
-    }
+      A700: 'white',
+    },
   },
 
   brown: {
@@ -562,8 +562,8 @@ const themeColors = {
       A100: black87,
       A200: black87,
       A400: 'white',
-      A700: white87
-    }
+      A700: white87,
+    },
   },
 
   'blue-grey': {
@@ -595,8 +595,8 @@ const themeColors = {
       A100: black87,
       A200: black87,
       A400: 'white',
-      A700: white87
-    }
+      A700: white87,
+    },
   },
 
   dark: {
@@ -628,13 +628,13 @@ const themeColors = {
       A100: black87,
       A200: white87,
       A400: white87,
-      A700: white87
-    }
-  }
+      A700: white87,
+    },
+  },
 };
 
 const allColorsName = Object.keys(themeColors);
-const allColors = allColorsName.map(name => themeColors[name]);
+const allColors = allColorsName.map((name) => themeColors[name]);
 
 const colorReg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
 
@@ -643,14 +643,15 @@ export class ThemeColorService {
   public static allColors = allColors;
   public static allColorsName = allColorsName;
 
-  public static getColor(colorName) {
+  public static getColor(colorName: string): any {
     return themeColors[colorName] || false;
   }
 
-  public static colorHex(color: string): string {
+  public static colorHex(color: string): any {
     if (/^(rgb|RGB)/.test(color)) {
       const aColor = color.replace(/(?:\(|\)|rgb|RGB)*/g, '').split(',');
       let strHex = '#';
+      // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < aColor.length; i++) {
         let hex = Number(aColor[i]).toString(16);
         if (hex === '0') {
@@ -668,6 +669,7 @@ export class ThemeColorService {
         return color;
       } else if (aNum.length === 3) {
         let numHex = '#';
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < aNum.length; i += 1) {
           numHex += aNum[i] + aNum[i];
         }
@@ -743,8 +745,8 @@ export class ThemeColorService {
       255;
     const borderAlpha = (lightness - threshold) / 100;
     // 背景颜色越浅，边框透明度越大，边框颜色越深
-    return `rgba(${Number(reg[1]) - 50},${Number(reg[2]) - 50},${Number(
-      reg[3]
-    ) - 50},${borderAlpha})`;
+    return `rgba(${Number(reg[1]) - 50},${Number(reg[2]) - 50},${
+      Number(reg[3]) - 50
+    },${borderAlpha})`;
   }
 }

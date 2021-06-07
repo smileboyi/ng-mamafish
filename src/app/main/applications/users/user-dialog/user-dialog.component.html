@@ -53,33 +53,25 @@
           <div class="tab-content" *ngIf="contentShow[0]"></div>
           <div class="tab-content" *ngIf="contentShow[1]">
             <nz-form-item>
-              <nz-form-control>
+              <nz-form-control [nzErrorTip]="errorTpl">
                 <input
                   nz-input
                   placeholder="Username *"
                   formControlName="username"
                   required
                 />
-                <nz-form-explain
-                  *ngIf="
-                    form.get('username')?.dirty &&
-                    form.get('username')?.errors?.required
-                  "
-                >
-                  Username is required
-                </nz-form-explain>
-                <nz-form-explain
-                  *ngIf="
-                    form.get('username')?.dirty &&
-                    form.get('username').hasError('minlength')
-                  "
-                >
-                  Username isn't long enough, minimum of 5 characters
-                </nz-form-explain>
+                <ng-template #errorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Username is required
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('minlength')">
+                    Username isn't long enough, minimum of 5 characters
+                  </ng-container>
+                </ng-template>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
-              <nz-form-control>
+              <nz-form-control [nzErrorTip]="errorTpl">
                 <nz-input-group [nzSuffix]="passwordSuffixTemplate">
                   <input
                     nz-input
@@ -89,23 +81,14 @@
                     required
                   />
                 </nz-input-group>
-
-                <nz-form-explain
-                  *ngIf="
-                    form.get('password')?.dirty &&
-                    form.get('password')?.errors?.required
-                  "
-                >
-                  Password is required
-                </nz-form-explain>
-                <nz-form-explain
-                  *ngIf="
-                    form.get('password')?.dirty &&
-                    form.get('password').hasError('minlength')
-                  "
-                >
-                  Password isn't long enough, minimum of 6 characters
-                </nz-form-explain>
+                <ng-template #errorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Password is required
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('minlength')">
+                    Password isn't long enough, minimum of 6 characters
+                  </ng-container>
+                </ng-template>
               </nz-form-control>
             </nz-form-item>
           </div>
@@ -115,8 +98,8 @@
             *ngIf="contentShow[2]"
           >
             <nz-form-item>
-              <nz-form-control>
-                <input nz-input placeholder="Name" formControlName="name" />
+              <nz-form-control nzErrorTip="Name is required">
+                <input nz-input placeholder="Name *" formControlName="name" required />
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>

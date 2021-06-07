@@ -5,29 +5,29 @@ import {
   OnInit,
   Output,
   OnDestroy,
-  Input
+  Input,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
 
 @Directive({
-  selector: '[catThrottleClick]'
+  selector: '[catThrottleClick]',
 })
 export class ThrottleClickDirective implements OnInit, OnDestroy {
-  @Input() throttleTime: number = 100;
+  @Input() throttleTime = 100;
   @Output() throttleClick: any = new EventEmitter();
   private click$ = new Subject<any>();
   private subscription: Subscription;
 
   constructor() {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscription = this.click$
       .pipe(throttleTime(this.throttleTime))
-      .subscribe(e => this.throttleClick.emit(e));
+      .subscribe((e) => this.throttleClick.emit(e));
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 

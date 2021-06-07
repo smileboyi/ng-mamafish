@@ -4,6 +4,6 @@ import { CommonModule } from '@angular/common';
 import { GeneralRoutingModule } from './general-routing.module';
 @NgModule({
   declarations: [],
-  imports: [CommonModule, GeneralRoutingModule]
+  imports: [CommonModule, GeneralRoutingModule],
 })
 export class GeneralModule {}

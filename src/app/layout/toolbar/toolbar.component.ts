@@ -5,45 +5,47 @@ import {
   Renderer2,
   ViewChild,
   EventEmitter,
-  Output
+  Output,
 } from '@angular/core';
-import { from } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as screenfull from 'screenfull';
 import { NgForage } from 'ngforage';
+import { from } from 'rxjs';
 import axios from 'axios';
 
-import { Message, File, Schedule } from '../../declare';
+import { Message, File, Schedule, UserRole } from '@declare';
 import { UtilsService } from '@services/utils.service';
 import { GlobalService } from '@services/global.service';
 import { LayoutConfigService } from '@services/layout-config.service';
 import { LayoutConfig } from '@config/layout.config';
-import { UserRole } from '@declare';
 
 interface UserMessage {
   messages: Array<Message>;
-  file: Array<File>;
-  schedule: Array<Schedule>;
+  files: Array<File>;
+  schedules: Array<Schedule>;
 }
+
+@UntilDestroy()
 @Component({
   selector: 'cat-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.less']
+  styleUrls: ['./toolbar.component.less'],
 })
 export class ToolbarComponent implements OnInit {
   userMessage: UserMessage;
-  searchBarState: boolean = false;
-  isFullscreen: boolean = false;
-  showInfoContent: boolean = false;
-  isCollapsed: boolean = false;
+  searchBarState = false;
+  isFullscreen = false;
+  showInfoContent = false;
+  isCollapsed = false;
   userRoles: Array<UserRole> = [
     UserRole.Visitor,
     UserRole.Lower,
     UserRole.User,
     UserRole.Manager,
-    UserRole.Dictator
+    UserRole.Dictator,
   ];
 
-  @ViewChild('serchIpt', null)
+  @ViewChild('serchIpt')
   serchIpt: ElementRef;
 
   @Output()
@@ -52,12 +54,12 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private renderer2: Renderer2,
     private ngForage: NgForage,
-    private utils: UtilsService,
+    public utils: UtilsService,
     public global: GlobalService,
     private layoutConfig: LayoutConfigService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (!this.global.isMobile) {
       from(axios.get('/mockapi/user/message')).subscribe(
         (res) => (this.userMessage = res.data)
@@ -102,8 +104,8 @@ export class ToolbarComponent implements OnInit {
     this.isCollapsed = !this.isCollapsed;
     this.layoutConfig.config = {
       navbar: {
-        collapsed: this.isCollapsed
-      }
+        collapsed: this.isCollapsed,
+      },
     };
   }
 

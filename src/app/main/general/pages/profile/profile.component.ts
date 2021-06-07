@@ -1,17 +1,17 @@
 import {
   Component,
   OnInit,
-  OnDestroy,
   AfterViewInit,
   ElementRef,
   ViewChild,
   Renderer2,
-  HostListener
+  HostListener,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import * as _ from 'lodash';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ScrollDispatcher } from '@angular/cdk/overlay';
-import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as actions from '@actions/profile.action';
@@ -21,12 +21,14 @@ import { UtilsService } from '@services/utils.service';
 import { GlobalService } from '@services/global.service';
 import { Activitie } from '@declare';
 
+@UntilDestroy()
 @Component({
   selector: 'cat-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.less']
+  styleUrls: ['./profile.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProfileComponent implements OnInit, AfterViewInit {
   index = 0;
   activities: Array<Activitie> = [];
   profiles: Array<Activitie> = [];
@@ -34,79 +36,76 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   backTopShow = true;
   isPageMini = false;
   showStatus: 'Show more' | 'Loading more' | 'No more' = 'Show more';
-  watcher: Subscription;
-  subscriptionA: Subscription;
-  subscriptionP: Subscription;
-  subscriptionM: Subscription;
   cardHeight = 0;
   oldScrollTop = 0;
 
-  @ViewChild('card', null)
+  @ViewChild('card')
   card: ElementRef;
 
-  @ViewChild('profile', null)
+  @ViewChild('profile')
   profile: ElementRef;
 
-  @ViewChild('inkBar', null)
+  @ViewChild('inkBar')
   inkBar: ElementRef;
 
-  @ViewChild('contentMain', null)
+  @ViewChild('contentMain')
   contentMain: ElementRef;
 
-  @ViewChild('contentBox', null)
+  @ViewChild('contentBox')
   contentBox: ElementRef;
 
   constructor(
     private renderer2: Renderer2,
     private utils: UtilsService,
+    private cdr: ChangeDetectorRef,
     private store: Store<ProfileState>,
     private mediaObserver: MediaObserver,
     private scrollDispatcher: ScrollDispatcher
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.isPageMini = this.utils.getMiniState();
 
-    this.watcher = this.mediaObserver.media$.subscribe(
-      (change: MediaChange) => {
-        if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
-        } else {
-          if (this.profile) {
-            this.profile.nativeElement.scrollTo(0, 0);
-          }
+    this.mediaObserver.media$.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
+      } else {
+        if (this.profile) {
+          this.profile.nativeElement.scrollTo(0, 0);
         }
       }
-    );
+    });
 
-    this.subscriptionA = this.store
-      .select(fromReducer.selectActivities)
-      .subscribe(res => {
-        if (this.activities.length) {
-          const start = this.activities.length - 1;
-          const end = res.length - 1;
-          const activities = this.activities.concat();
-          res.slice(start, end).forEach(item => {
-            activities.push(item);
-          });
-          this.activities = activities;
-        } else {
-          this.activities = res;
-        }
-      });
-    this.subscriptionP = this.store
-      .select(fromReducer.selectProfiles)
-      .subscribe(res => (this.profiles = res));
-    this.subscriptionM = this.store
-      .select(fromReducer.selectMessages)
-      .subscribe(res => (this.messages = res));
+    this.store.select(fromReducer.selectActivities).subscribe((res) => {
+      if (this.activities.length) {
+        const start = this.activities.length - 1;
+        const end = res.length - 1;
+        const activities = this.activities.concat();
+        res.slice(start, end).forEach((item) => {
+          activities.push(item);
+        });
+        this.activities = activities;
+      } else {
+        this.activities = res;
+      }
+      this.cdr.markForCheck();
+    });
+    this.store.select(fromReducer.selectProfiles).subscribe((res) => {
+      this.profiles = res;
+      this.cdr.markForCheck();
+    });
+    this.store.select(fromReducer.selectMessages).subscribe((res) => {
+      this.messages = res;
+      this.cdr.markForCheck();
+    });
 
     this.handleFirstLoad(0);
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.cardHeight = this.card.nativeElement.clientHeight;
     const profileDom: HTMLElement = this.profile.nativeElement;
     this.scrollDispatcher.ancestorScrolled(this.profile, 100).subscribe(() => {
+      // tslint:disable-next-line:no-bitwise
       const scrollTop = profileDom.scrollTop | 0;
       if (this.oldScrollTop > scrollTop) {
         this.renderer2.setStyle(profileDom, 'padding', '15px');
@@ -119,15 +118,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       this.oldScrollTop = scrollTop;
     });
-  }
-
-  ngOnDestroy() {
-    if (this.watcher) {
-      this.watcher.unsubscribe();
-      this.subscriptionA.unsubscribe();
-      this.subscriptionP.unsubscribe();
-      this.subscriptionM.unsubscribe();
-    }
   }
 
   handleFirstLoad(index: number): void {
@@ -171,7 +161,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @UtilsService.debounce()
   reloadData(index: number): void {
-    let type;
+    let type: actions.ProfileType;
     if (index === 1) {
       type = 'profiles';
     } else if (index === 2) {
@@ -194,7 +184,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 500);
   }
 
-  fetchMoreData() {
+  fetchMoreData(): void {
     this.showStatus = 'Loading more';
     const t = setTimeout(() => {
       // 加载5次，不再加载
@@ -212,6 +202,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         this.showStatus = 'No more';
       }
+      this.cdr.markForCheck();
       clearTimeout(t);
     }, 300);
   }
@@ -220,6 +211,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, OnDestroy {
   @UtilsService.throttle(200)
   onWindowResize(): void {
     // 如果在滑动时获取高度性能不好
+    // tslint:disable-next-line:no-bitwise
     this.cardHeight = this.card.nativeElement.clientHeight | 0;
     this.isPageMini = this.utils.getMiniState();
   }

@@ -11,10 +11,11 @@
     text-align: center;
     justify-content: center;
     align-items: center;
-    .title {
+    > .title {
       line-height: 1.1;
       font-size: 48px;
       color: #fff;
+      cursor: zoom-out;
     }
     .describe {
       padding: 8px;
@@ -24,6 +25,11 @@
     .bottom-bar {
       height: 40px;
       padding: 0 8px;
+      > .title {
+        line-height: 40px;
+        color: #fff;
+        cursor: zoom-in;
+      }
     }
   }
 }

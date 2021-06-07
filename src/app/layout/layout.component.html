@@ -8,15 +8,7 @@
     ></cat-toolbar>
   </ng-container>
   <!-- body -->
-  <div
-    class="flex fe pre bsb ovh"
-    [ngStyle]="{
-      'padding-top.px':
-        (configData.toolbar.position && configData.toolbar.show) === 'above'
-          ? '64'
-          : '0'
-    }"
-  >
+  <div class="flex fe pre bsb ovh">
     <!-- navbar -->
     <ng-container *ngIf="configData.toolbar.position !== 'above'">
       <cat-navbar
@@ -138,7 +130,7 @@
 <button
   class="setting-btn pab nor z100 bgctp nobd bsb"
   nz-button
-  [nzSize]="large"
+  [nzSize]="'large'"
   [style.top.px]="global.isMobile ? 128 : 64"
   (click)="drawerVisible = true"
   *ngIf="!configData.toolbar.show"

@@ -9,6 +9,6 @@ import { NavMenuItemComponent } from './nav-menu/nav-menu-item/nav-menu-item.com
 @NgModule({
   imports: [CommonModule, SharedModule],
   declarations: [NavbarComponent, NavMenuComponent, NavMenuItemComponent],
-  exports: [NavbarComponent]
+  exports: [NavbarComponent],
 })
 export class NavbarModule {}

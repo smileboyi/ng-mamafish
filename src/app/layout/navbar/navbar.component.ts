@@ -7,7 +7,7 @@ import { LayoutConfig } from '@config/layout.config';
 @Component({
   selector: 'cat-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.less']
+  styleUrls: ['./navbar.component.less'],
 })
 export class NavbarComponent implements OnInit {
   navData: Array<NavigationItem>;
@@ -17,8 +17,8 @@ export class NavbarComponent implements OnInit {
     this.navData = navigationConfig;
   }
 
-  ngOnInit() {
-    this.layoutConfig.config.subscribe(config => {
+  ngOnInit(): void {
+    this.layoutConfig.config.subscribe((config: LayoutConfig) => {
       this.configData = config;
     });
   }

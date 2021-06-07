@@ -8,6 +8,6 @@ import { SharedModule } from '@shared';
 @NgModule({
   imports: [CommonModule, SharedModule],
   declarations: [FooterComponent],
-  exports: [FooterComponent]
+  exports: [FooterComponent],
 })
 export class FooterModule {}

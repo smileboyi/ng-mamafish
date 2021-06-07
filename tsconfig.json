@@ -1,59 +1,47 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "paths": {
-      "@config/*": [
-        "./src/app/config/*",
-      ],
-      "@declare": [
-        "./src/app/declare",
-      ],
-      "@env": [
-        "./src/environments/environment"
-      ],
-      "@tokens": [
-        "./src/app/tokens",
-      ],
-      "@services/*": [
-        "./src/app/services/*",
-      ],
-      "@shared": [
-        "./src/app/shared/shared.module",
-      ],
-      "@mock/*": [
-        "./src/app/mock/*"
-      ],
-      "@actions/*": [
-        "./src/app/stores/actions/*"
-      ],
-      "@effects/*": [
-        "./src/app/stores/effects/*"
-      ],
-      "@reducers/*": [
-        "./src/app/stores/reducers/*"
-      ],
-      "@guard/*": [
-        "./src/app/guard/*"
-      ],
-      "@animations": [
-        "./src/app/app.animations",
-      ],
-    },
+    "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
     "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "module": "es2020",
     "lib": [
-      "es2017",
+      "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@config/*": ["./src/app/config/*"],
+      "@declare": ["./src/app/declare"],
+      "@env": ["./src/environments/environment"],
+      "@tokens": ["./src/app/tokens"],
+      "@services/*": ["./src/app/services/*"],
+      "@shared": ["./src/app/shared/shared.module"],
+      "@mock/*": ["./src/app/mock/*"],
+      "@actions/*": ["./src/app/stores/actions/*"],
+      "@effects/*": ["./src/app/stores/effects/*"],
+      "@reducers/*": ["./src/app/stores/reducers/*"],
+      "@guard/*": ["./src/app/guard/*"],
+      "@animations": ["./src/app/app.animations"]
+    },
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true,
+    "enableIvy": false,
   }
 }

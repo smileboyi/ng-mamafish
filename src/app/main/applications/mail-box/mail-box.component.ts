@@ -3,10 +3,10 @@ import {
   OnInit,
   HostListener,
   Renderer2,
-  ElementRef
+  ElementRef,
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable } from 'rxjs';
 
 import { messageText } from '@config/message-text.config';
@@ -17,7 +17,7 @@ import { Mail, CanDeactivateComponent } from '@declare';
 @Component({
   selector: 'cat-mail-box',
   templateUrl: './mail-box.component.html',
-  styleUrls: ['./mail-box.component.less']
+  styleUrls: ['./mail-box.component.less'],
 })
 export class MailBoxComponent implements OnInit, CanDeactivateComponent {
   fold = false;
@@ -41,7 +41,7 @@ export class MailBoxComponent implements OnInit, CanDeactivateComponent {
     private message: NzMessageService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.mobile = this.utils.getMobileState();
     this.ltMd = window.innerWidth < 960;
     this.searchMails();
@@ -49,7 +49,7 @@ export class MailBoxComponent implements OnInit, CanDeactivateComponent {
       to: [null, [Validators.email, Validators.required]],
       cc: null,
       subject: null,
-      message: [null, [Validators.required]]
+      message: [null, [Validators.required]],
     });
   }
 
@@ -136,11 +136,11 @@ export class MailBoxComponent implements OnInit, CanDeactivateComponent {
     this.mail.starred = false;
     this.getMails();
     // 断开原对象的链接
-    this.mail = null;
+    this.mail = null as any;
     this.oldElIdx = -1;
   }
 
-  onSubmit(mail) {
+  onSubmit(mail: string): void {
     if (this.form.valid) {
       console.log(mail);
       this.message.create('success', messageText.SUC_SEND_MAIL);

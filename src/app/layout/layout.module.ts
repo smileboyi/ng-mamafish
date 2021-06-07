@@ -14,14 +14,13 @@ import { LayoutComponent } from './layout.component';
   imports: [
     CommonModule,
     SharedModule,
-
     ToolbarModule,
     FooterModule,
     NavbarModule,
     ContentModule,
-    SidebarModule
+    SidebarModule,
   ],
   declarations: [LayoutComponent],
-  exports: [LayoutComponent]
+  exports: [LayoutComponent],
 })
 export class LayoutModule {}

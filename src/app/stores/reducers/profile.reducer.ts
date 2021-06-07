@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { cloneDeep } from 'lodash';
 
 import * as profileActions from '@actions/profile.action';
 import { Activitie } from '@declare';
@@ -12,7 +12,7 @@ export interface ProfileState {
 const initialState: ProfileState = {
   activities: [],
   profiles: [],
-  messages: []
+  messages: [],
 };
 
 const types = profileActions.ProfileActionTypes;
@@ -24,25 +24,25 @@ export function ProfileReducer(
   switch (action.type) {
     case types.FETCH_PROFILE_REQ: {
       return {
-        ...state
+        ...state,
       };
     }
     case types.FETCH_PROFILE_SUC: {
-      const arr = _.cloneDeep(state[action.payload.type]);
+      const arr = cloneDeep(state[action.payload.type]);
       return {
         ...state,
-        [action.payload.type]: arr.concat(action.payload.datas)
+        [action.payload.type]: arr.concat(action.payload.datas),
       };
     }
     case types.FETCH_PROFILE_ERR: {
       return {
-        ...state
+        ...state,
       };
     }
     case types.CLEAR_PROFILE_DATAS: {
       return {
         ...state,
-        [action.payload.type]: []
+        [action.payload.type]: [],
       };
     }
     default: {

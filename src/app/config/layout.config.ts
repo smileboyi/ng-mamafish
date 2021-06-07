@@ -43,43 +43,43 @@ export const defaultLayoutConfig: LayoutConfig = {
     position: 'left',
     theme: {
       selectedFg: '#1e88e5',
-      selectedBg: '#fff'
-    }
+      selectedBg: '#fff',
+    },
   },
   toolbar: {
     show: true,
     position: 'above-fixed',
     theme: {
       selectedFg: '#1e88e5',
-      selectedBg: 'rgba(255, 255, 255, 0.7)'
-    }
+      selectedBg: 'rgba(255, 255, 255, 0.7)',
+    },
   },
   footer: {
     show: true,
     position: 'below',
     theme: {
       selectedFg: '#2d323e',
-      selectedBg: 'rgba(255, 255, 255, 0.87)'
-    }
+      selectedBg: 'rgba(255, 255, 255, 0.87)',
+    },
   },
   sidepanel: {
     show: true,
-    position: 'right'
-  }
+    position: 'right',
+  },
 };
 
 // 与_themeColor.less一致
 export const defaultThemeColor = {
   toolbar: {
     '--toolbarThemeFg': '#1e88e5',
-    '--toolbarThemeBg': 'rgba(255, 255, 255, 0.7)'
+    '--toolbarThemeBg': 'rgba(255, 255, 255, 0.7)',
   },
   footer: {
     '--footerThemeFg': '#2d323e',
-    '--footerThemeBg': 'rgba(255, 255, 255, 0.87)'
+    '--footerThemeBg': 'rgba(255, 255, 255, 0.87)',
   },
   navbar: {
     '--navbarThemeFg': '#1e88e5',
-    '--navbarThemeBg': '#fff'
-  }
+    '--navbarThemeBg': '#fff',
+  },
 };

@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
-import * as FileSaver from 'file-saver';
+import FileSaver from 'file-saver';
 
 // https://github.com/SheetJS/js-xlsx/tree/master/demos/angular2
 // https://blog.csdn.net/tian_i/article/details/84327329
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class XlsxService {
-  excelType: string =
+  excelType =
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
   excelExtension = '.xlsx';
-  wopts: Object = {
+  wopts: XLSX.WritingOptions = {
     bookType: 'xlsx',
     bookSST: false,
-    type: 'binary'
+    type: 'binary',
   };
 
   constructor() {}
@@ -24,14 +24,15 @@ export class XlsxService {
     return String.fromCharCode(65 + i);
   }
 
-  saveAsExcelFile(buffer: any, fileName: string) {
+  saveAsExcelFile(buffer: string, fileName: string): void {
     const arrayBuffer = new ArrayBuffer(buffer.length);
     const view = new Uint8Array(arrayBuffer);
     for (let i = 0; i !== buffer.length; ++i) {
+      // tslint:disable-next-line:no-bitwise
       view[i] = buffer.charCodeAt(i) & 0xff;
     }
     const data = new Blob([arrayBuffer], {
-      type: this.excelType
+      type: this.excelType,
     });
     FileSaver.saveAs(
       data,
@@ -41,11 +42,11 @@ export class XlsxService {
 
   // 参考@notadd/ngx-xlsx
   private exportAsExcelFile(
-    json,
-    excelFileName,
-    headers = null,
-    sheetNames = null
-  ) {
+    json: any,
+    excelFileName: string,
+    headers?: any,
+    sheetNames?: string[] | null
+  ): void {
     if (headers === void 0) {
       headers = null;
     }
@@ -81,7 +82,7 @@ export class XlsxService {
     }
 
     // 配置workBook
-    const workBook = { SheetNames: [], Sheets: {} };
+    const workBook = { SheetNames: [] as string[], Sheets: {} as any };
     workBook.SheetNames.push(sheetNames ? sheetNames[0] : 'sheet' + 0);
     const worksheet = XLSX.utils.json_to_sheet(json);
     /* custom header */
@@ -97,7 +98,12 @@ export class XlsxService {
     this.saveAsExcelFile(excelBuffer, excelFileName);
   }
 
-  exportExcel(json, excelFileName, headers?, sheetNames?): void {
+  exportExcel(
+    json: any,
+    excelFileName: string,
+    headers?: any,
+    sheetNames?: string[]
+  ): void {
     this.exportAsExcelFile(json, excelFileName, headers, sheetNames);
   }
 }

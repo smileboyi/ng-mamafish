@@ -12,45 +12,45 @@ const routes: Routes = [
   {
     path: routingPathConfig.pages.default,
     redirectTo: routingPathConfig.pages.profile,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: routingPathConfig.pages.profile,
     component: ProfileComponent,
     canActivate: [AuthGuard],
     data: {
-      title: '个人主页'
-    }
+      title: '个人主页',
+    },
   },
   {
     path: routingPathConfig.pages.errors,
     component: ErrorsComponent,
     data: {
       title: '错误页',
-      isFullScreen: true
-    }
+      isFullScreen: false,
+    },
   },
   {
     path: routingPathConfig.pages.login,
     component: LoginComponent,
     data: {
       title: '登录',
-      isFullScreen: true
-    }
+      isFullScreen: true,
+    },
   },
   {
     path: routingPathConfig.pages.register,
     component: RegisterComponent,
     data: {
       title: '注册',
-      isFullScreen: true
-    }
-  }
+      isFullScreen: true,
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   declarations: [],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class PagesRoutingModule {}

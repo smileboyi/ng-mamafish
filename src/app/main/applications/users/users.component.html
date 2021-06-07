@@ -1,11 +1,11 @@
-<div class="users-box pre h100">
+<div class="users-box pre h100 {{ search ? 'hidden-header-title': ''}}">
   <cat-bg-header
     headerTitle="Users"
     describe="View information about the users, search, add, edit or delete any user."
   >
     <div class="bottom-users-bar flex">
       <div>
-        <button nz-button (click)="openUserDialog(null)">
+        <button nz-button (click)="openUserDialog()">
           <i nz-icon nzType="user-add" nzTheme="outline"></i>
         </button>
         <button nz-button (click)="toggleSearch()">
@@ -100,7 +100,7 @@
             [ngClass]="user.settings.isDeleted ? '' : user.settings.bgColor"
           >
             <label class="block-bg">
-              <img [src]="user.profile.image" />
+              <img [src]="user.profile.image || '/assets/images/cat-avatar.png'" />
               <i
                 nz-icon
                 nzType="stop"

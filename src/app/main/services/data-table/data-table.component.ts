@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import * as _ from 'lodash';
-import { NzMessageService } from 'ng-zorro-antd';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { pick, flattenDeep } from 'lodash';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { PersonInfo } from '@declare';
 import { personInfos } from '@mock/data.mock';
@@ -17,7 +17,8 @@ interface CheckDataField {
 @Component({
   selector: 'cat-data-table',
   templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.less']
+  styleUrls: ['./data-table.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataTableComponent implements OnInit {
   dataSource: Array<PersonInfo> = personInfos;
@@ -27,10 +28,10 @@ export class DataTableComponent implements OnInit {
     name: 'Name',
     weight: 'Weight',
     sex: 'Sex',
-    symbol: 'Symbol'
+    symbol: 'Symbol',
   };
 
-  isVisible: boolean = false;
+  isVisible = false;
 
   // 表头
   fieldOptions: Array<CheckDataField> = [
@@ -38,15 +39,15 @@ export class DataTableComponent implements OnInit {
     { label: 'Name', value: 'name', checked: true },
     { label: 'Weight', value: 'weight', checked: true },
     { label: 'Sex', value: 'sex', checked: true },
-    { label: 'Symbol', value: 'symbol', checked: true }
+    { label: 'Symbol', value: 'symbol', checked: true },
   ];
-  checkboxError: boolean = false;
+  checkboxError = false;
   checkFields: Array<string> = ['no', 'name', 'weight', 'sex', 'symbol'];
 
   // 行数
-  radioValue: string = 'all';
-  radioError1: boolean = false;
-  radioError2: boolean = false;
+  radioValue = 'all';
+  radioError1 = false;
+  radioError2 = false;
   idxArr: Array<number> = [];
 
   constructor(
@@ -55,7 +56,7 @@ export class DataTableComponent implements OnInit {
     private message: NzMessageService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
   handleModalCancel(): void {
     this.isVisible = false;
@@ -71,7 +72,7 @@ export class DataTableComponent implements OnInit {
 
   exportSpecified(): void {
     const radioError = this.radioError1 || this.radioError2;
-    let sheetDatas: Array<Object> = [];
+    let sheetDatas: Array<PersonInfo> = [];
     if (this.radioValue === 'all') {
       if (this.checkboxError) {
         return;
@@ -81,8 +82,8 @@ export class DataTableComponent implements OnInit {
       if (this.checkboxError || radioError) {
         return;
       }
-      const tempDatas = this.dataSource.map((item: Object) => {
-        return _.pick(item, this.checkFields);
+      const tempDatas: any[] = this.dataSource.map((item: object) => {
+        return pick(item, this.checkFields);
       });
       const idxArr = this.idxArr;
       for (let i = 0, j = idxArr.length; i < j; i++) {
@@ -102,7 +103,7 @@ export class DataTableComponent implements OnInit {
     this.isVisible = false;
   }
 
-  selectCheckbox(fields: Array<string>) {
+  selectCheckbox(fields: Array<string>): void {
     this.checkFields = fields;
     this.checkboxError = Boolean(!fields.length);
   }
@@ -139,7 +140,7 @@ export class DataTableComponent implements OnInit {
       }
     }
     if (!(this.radioError1 || this.radioError2)) {
-      const idxArr = arr.map(item => {
+      const idxArr = arr.map((item) => {
         if (/^\d+-\d+$/.test(item)) {
           const [_str1, _str2] = item.split('-');
           const _arr: Array<number> = [];
@@ -153,7 +154,7 @@ export class DataTableComponent implements OnInit {
           return Number(item);
         }
       });
-      this.idxArr = _.flattenDeep(idxArr);
+      this.idxArr = flattenDeep(idxArr);
     }
   }
 }

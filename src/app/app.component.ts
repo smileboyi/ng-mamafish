@@ -3,7 +3,7 @@ import {
   OnInit,
   OnDestroy,
   HostListener,
-  Inject
+  Inject,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
@@ -12,17 +12,19 @@ import { Subscription } from 'rxjs/Subscription';
 import { takeUntil, debounceTime, filter, map, mergeMap } from 'rxjs/operators';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NgForage } from 'ngforage';
+import { NzIconService } from 'ng-zorro-antd/icon';
 
 import { UtilsService } from '@services/utils.service';
 import { GlobalService } from '@services/global.service';
 import { LayoutConfigService } from '@services/layout-config.service';
 import { LayoutConfig } from '@config/layout.config';
 import { PROFILE_INFO, LAYOUT_CONFIG } from '@tokens';
+import { appIcons } from './app.icon';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less']
+  styleUrls: ['./app.component.less'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   private resize$: Subject<any> = new Subject<any>();
@@ -37,15 +39,18 @@ export class AppComponent implements OnInit, OnDestroy {
     private ngForage: NgForage,
     private utils: UtilsService,
     private global: GlobalService,
+    private iconService: NzIconService,
     private activatedRoute: ActivatedRoute,
     private layoutConfig: LayoutConfigService,
-    @Inject(DOCUMENT) private document: any,
+    @Inject(DOCUMENT) private document: Document,
     @Inject(PROFILE_INFO) private profileInfoToken: string,
     @Inject(LAYOUT_CONFIG) public layoutConfigToken: string
-  ) {}
+  ) {
+    this.iconService.addIcon(...appIcons);
+  }
 
-  ngOnInit() {
-    this.initConfig();
+  ngOnInit(): void {
+    // this.initConfig();
     this.onWindowPopstate();
     // 窗口重置
     this.toggleBodyMini();
@@ -53,7 +58,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.global.isMobile = isMobile;
     this.subscription = this.resize$
       .pipe(debounceTime(200))
-      .subscribe(state => {
+      .subscribe((state) => {
         if (this.global.isMobile !== state) {
           this.global.isMobile = state;
           this.global.moreHeaderState = false;
@@ -73,9 +78,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.events
       .pipe(
         takeUntil(this.stop$),
-        filter(event => event instanceof NavigationEnd),
+        filter((event) => event instanceof NavigationEnd),
         map(() => this.activatedRoute),
-        map(route => {
+        map((route) => {
           while (route.firstChild) {
             route = route.firstChild;
           }
@@ -83,21 +88,21 @@ export class AppComponent implements OnInit, OnDestroy {
           this.global.pageRouteInfo = arr[arr.length - 1];
           return route;
         }),
-        mergeMap(route => route.data)
+        mergeMap((route) => route.data)
       )
-      .subscribe(data => {
+      .subscribe((data) => {
         this.title.setTitle(data.title);
         this.isFullScreen = Boolean(data.isFullScreen);
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.stop$.next();
     this.stop$.complete();
   }
 
-  async initConfig() {
+  async initConfig(): Promise<any> {
     const profileInfo: any = await this.ngForage.getItem(this.profileInfoToken);
     if (profileInfo) {
       this.global.userRole = profileInfo.userRole;
@@ -112,7 +117,7 @@ export class AppComponent implements OnInit, OnDestroy {
     );
     if (layoutConfig) {
       const htmlROOT = document.querySelector(':root');
-      htmlROOT.setAttribute(
+      htmlROOT?.setAttribute(
         'style',
         `
           --toolbarThemeFg: ${layoutConfig.toolbar.theme.selectedFg};

@@ -4,18 +4,18 @@ export const routingPathConfig = {
     general: 'general',
     applications: 'applications',
     services: 'services',
-    wildcard: '**'
+    wildcard: '**',
   },
 
   general: {
     default: '',
     dashboards: 'dashboards',
-    pages: 'pages'
+    pages: 'pages',
   },
 
   dashboards: {
     default: '',
-    analytics: 'analytics'
+    analytics: 'analytics',
   },
 
   pages: {
@@ -23,19 +23,19 @@ export const routingPathConfig = {
     profile: 'profile',
     errors: 'errors/:code',
     login: 'login',
-    register: 'register'
+    register: 'register',
   },
 
   applications: {
     default: '',
     users: 'users',
     mailBox: 'mail-box',
-    chat: 'chat'
+    chat: 'chat',
   },
 
   services: {
     default: '',
     dataTable: 'data-table',
-    screenshot: 'screenshot'
-  }
+    screenshot: 'screenshot',
+  },
 };

@@ -27,7 +27,7 @@ export enum UserRole {
   Lower = 2,
   User = 4,
   Manager = 8,
-  Dictator = 16
+  Dictator = 16,
 }
 
 export interface UserInfo {
@@ -101,7 +101,7 @@ export class Mail {
 export class UserProfile {
   name: string;
   surname: string;
-  birthday: Object;
+  birthday: object;
   gender: string;
   image: string;
 }

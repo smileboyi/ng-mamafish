@@ -13,9 +13,9 @@ import { UserDialogComponent } from './users/user-dialog/user-dialog.component';
     ChatComponent,
     UsersComponent,
     MailBoxComponent,
-    UserDialogComponent
+    UserDialogComponent,
   ],
   entryComponents: [UserDialogComponent],
-  imports: [CommonModule, SharedModule, ApplicationsRoutingModule]
+  imports: [CommonModule, SharedModule, ApplicationsRoutingModule],
 })
 export class ApplicationsModule {}

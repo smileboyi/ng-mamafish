@@ -1,11 +1,11 @@
 import {
   Component,
-  OnInit,
   ViewChild,
   ElementRef,
-  OnDestroy
+  OnDestroy,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { ScreenshotService } from '@services/screenshot.service';
 import { messageText } from '@config/message-text.config';
@@ -13,19 +13,18 @@ import { messageText } from '@config/message-text.config';
 @Component({
   selector: 'cat-screenshot',
   templateUrl: './screenshot.component.html',
-  styleUrls: ['./screenshot.component.less']
+  styleUrls: ['./screenshot.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ScreenshotComponent implements OnInit, OnDestroy {
-  @ViewChild('screen', null) screen: ElementRef;
+export class ScreenshotComponent implements OnDestroy {
+  @ViewChild('screen') screen: ElementRef;
 
   constructor(
     private screenshot: ScreenshotService,
     private message: NzMessageService
   ) {}
 
-  ngOnInit() {}
-
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.screenshot.saveImgState = false;
   }
 

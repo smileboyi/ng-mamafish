@@ -1,12 +1,19 @@
-import { Component, OnInit, Inject, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  HostListener,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { HttpClient } from '@angular/common/http';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { ActivatedRoute } from '@angular/router';
-import { JSEncrypt } from 'jsencrypt';
 import { NgForage } from 'ngforage';
-import * as _ from 'lodash';
+import { cloneDeep } from 'lodash';
+import { JSEncrypt } from 'jsencrypt';
 
 import { GlobalService } from '@services/global.service';
 import { UtilsService } from '@services/utils.service';
@@ -16,10 +23,12 @@ import { appConfig } from '@config/app.config';
 import { PROFILE_INFO } from '@tokens';
 import { UserRole } from '@declare';
 
+@UntilDestroy()
 @Component({
   selector: 'cat-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.less']
+  styleUrls: ['./login.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
   account = '';
@@ -41,25 +50,33 @@ export class LoginComponent implements OnInit {
     @Inject(PROFILE_INFO) private profileInfo: string
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.queryParams.subscribe((query: any) => {
       this.redirectUrl = query.redirectUrl || '';
       this.accountLock = Boolean(query.lock);
     });
     if (this.redirectUrl) {
-      history.pushState(null, null, document.URL);
-      history.pushState(null, null, document.URL);
+      history.pushState(null, '', document.URL);
+      history.pushState(null, '', document.URL);
     }
 
     this.validateForm = this.fb.group({
       account: [
         '',
-        [Validators.required, Validators.minLength(2), Validators.maxLength(15)]
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(15),
+        ],
       ],
       password: [
         '',
-        [Validators.required, Validators.minLength(8), Validators.maxLength(30)]
-      ]
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(30),
+        ],
+      ],
     });
 
     this.http
@@ -72,9 +89,9 @@ export class LoginComponent implements OnInit {
   }
 
   @HostListener('window:popstate')
-  onHistoryBack() {
+  onHistoryBack(): void {
     if (this.redirectUrl) {
-      history.pushState(null, null, document.URL);
+      history.pushState(null, '', document.URL);
     }
   }
 
@@ -83,11 +100,11 @@ export class LoginComponent implements OnInit {
       this.handleLockLogin();
       return;
     }
-    const submitPayload = _.cloneDeep(this.validateForm.value);
+    const submitPayload = cloneDeep(this.validateForm.value);
     sessionStorage.setItem('accountPassw', submitPayload.password);
     submitPayload.account = submitPayload.account.trim();
     // 密码加密
-    const jsencrypt = new JSEncrypt();
+    const jsencrypt = new JSEncrypt({});
     jsencrypt.setPublicKey(this.publicKey);
     submitPayload.password = jsencrypt.encrypt(submitPayload.password.trim());
 
@@ -115,7 +132,7 @@ export class LoginComponent implements OnInit {
               userRole: userRole.value,
               userInfo,
               permissionList,
-              rsapubKey: this.publicKey
+              rsapubKey: this.publicKey,
             });
 
             this.permissionsService.loadPermissions(permissionList);
@@ -127,7 +144,7 @@ export class LoginComponent implements OnInit {
             }
           }
         },
-        error => {
+        (error) => {
           console.log('Error', error);
         }
       );
@@ -136,7 +153,7 @@ export class LoginComponent implements OnInit {
   // 锁定登录输入密码解锁
   handleLockLogin(): void {
     const accountPassw = sessionStorage.getItem('accountPassw');
-    const submitPayload = _.cloneDeep(this.validateForm.value);
+    const submitPayload = cloneDeep(this.validateForm.value);
     const password = submitPayload.password.trim();
     // 这里应该在后台判断，把密码存浏览器不安全
     if (accountPassw === password) {
@@ -158,7 +175,7 @@ export class LoginComponent implements OnInit {
     this.ngForage.setItem(this.profileInfo, {
       userRole: UserRole.Visitor,
       userInfo: this.global.userInfo,
-      permissionList: userPermissions[0]
+      permissionList: userPermissions[0],
     });
     this.permissionsService.loadPermissions(userPermissions[0]);
     this.utils.gotoOtherPage('analytics');

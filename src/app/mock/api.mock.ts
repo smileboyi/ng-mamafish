@@ -5,12 +5,12 @@ import qs from 'qs';
 
 import { messages, files, schedules } from './data.mock';
 
-const mock = new MockAdapter(axios);
+const mock: MockAdapter = new MockAdapter(axios);
 
 export default {
   // 开启mock接口
-  start() {
-    mock.onGet('/mockapi/user/message').reply(config => {
+  start(): void {
+    mock.onGet('/mockapi/user/message').reply((config) => {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([
@@ -18,11 +18,11 @@ export default {
             {
               messages,
               files,
-              schedules
-            }
+              schedules,
+            },
           ]);
         }, 200);
       });
     });
-  }
+  },
 };

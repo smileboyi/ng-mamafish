@@ -15,13 +15,13 @@ import { ProfileReducer } from '@reducers/profile.reducer';
     ProfileComponent,
     ErrorsComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     PagesRoutingModule,
-    StoreModule.forFeature('profile', ProfileReducer)
-  ]
+    StoreModule.forFeature('profile', ProfileReducer),
+  ],
 })
 export class PagesModule {}

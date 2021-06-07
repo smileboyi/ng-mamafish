@@ -53,10 +53,10 @@ import {
   SettingFill,
   EyeOutline,
   EyeFill,
-  SyncOutline
+  SyncOutline,
 } from '@ant-design/icons-angular/icons';
 
-const icons: IconDefinition[] = [
+export const appIcons: IconDefinition[] = [
   ArrowDownOutline,
   ArrowUpOutline,
   LockOutline,
@@ -110,7 +110,5 @@ const icons: IconDefinition[] = [
   EyeOutline,
   EyeFill,
   GithubOutline,
-  SyncOutline
+  SyncOutline,
 ];
-
-export default icons;

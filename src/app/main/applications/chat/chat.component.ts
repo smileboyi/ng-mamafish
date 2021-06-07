@@ -7,7 +7,7 @@ import { UtilsService } from '@services/utils.service';
 @Component({
   selector: 'cat-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.less']
+  styleUrls: ['./chat.component.less'],
 })
 export class ChatComponent implements OnInit {
   fold = false;
@@ -18,14 +18,14 @@ export class ChatComponent implements OnInit {
   currentUser: ChatUser = {
     avatar: '',
     author: '',
-    status: ''
+    status: '',
   };
   currentUserIndex: number;
   newMessage = '';
 
   constructor(private utils: UtilsService, private chatService: ChatService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.mobile = this.utils.getMobileState();
     this.chatUsers = this.chatService.getChatUsers();
   }
@@ -43,14 +43,15 @@ export class ChatComponent implements OnInit {
     this.currentUser = {
       avatar: '',
       author: '',
-      status: ''
+      status: '',
     };
     this.currentUserIndex = 0;
   }
 
-  sendMessage(e): void {
+  sendMessage(e: KeyboardEvent | MouseEvent): void {
     const newMessage = this.newMessage.trim();
     if ((e.which === 1 || e.which === 13) && newMessage) {
+      // tslint:disable-next-line:one-variable-per-declaration
       const date = new Date(),
         day = date.getDate(),
         month = date.getMonth(),

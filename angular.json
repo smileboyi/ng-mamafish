@@ -1,27 +1,43 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "57174a95-9f8b-4f80-a23e-62121d513708"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "ng-mamafish": {
-      "root": "",
-      "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "cat",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "less"
+          "style": "less"
+        },
+        "@schematics/angular:application": {
+          "strict": true
         }
       },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "cat",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "axios",
+              "axios-mock-adapter",
+              "@ant-design/colors",
+              "lodash",
+              "rxjs/Subject",
+              "file-saver",
+              "xlsx"
+            ],
             "outputPath": "dist/ng-mamafish",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json",
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -35,7 +51,7 @@
               "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
               "src/assets/styles/_themeColor.less",
               "src/assets/styles/_reset.less",
-              "src/styles.css",
+              "src/styles.less",
               "src/assets/styles/positionfix.less"
             ],
             "scripts": []
@@ -51,18 +67,20 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
-            },
-            "hmr": {
-              "fileReplacements": [
+              "buildOptimizer": true,
+              "budgets": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.hmr.ts"
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "10mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "10kb"
                 }
               ]
             }
@@ -71,16 +89,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-mamafish:build",
-            "disableHostCheck": true
+            "browserTarget": "ng-mamafish:build"
           },
           "configurations": {
             "production": {
               "browserTarget": "ng-mamafish:build:production"
-            },
-            "hmr": {
-              "hmr": true,
-              "browserTarget": "ng-mamafish:build:hmr"
             }
           }
         },
@@ -95,40 +108,24 @@
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
-              "src/assets/styles/_themeColor.less",
-              "src/assets/styles/_reset.less",
-              "src/styles.css",
-              "src/assets/styles/positionfix.less"
-            ],
-            "scripts": [],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ]
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.less"],
+            "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
-        }
-      }
-    },
-    "ng-mamafish-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "architect": {
+        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -140,21 +137,9 @@
               "devServerTarget": "ng-mamafish:serve:production"
             }
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     }
   },
-  "defaultProject": "ng-mamafish",
-  "cli": {
-    "analytics": "93380519-fb70-41e7-b75c-906f125e4930"
-  }
+  "defaultProject": "ng-mamafish"
 }

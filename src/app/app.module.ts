@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { NZ_I18N, en_US, NZ_ICONS } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import { Driver, NgForageConfig } from 'ngforage';
 import en from '@angular/common/locales/en';
@@ -8,23 +7,22 @@ import { NgForage } from 'ngforage';
 import { NgxPermissionsService, NgxPermissionsModule } from 'ngx-permissions';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
-import { AppRoutingModule } from './app-routing.module';
 import { AppInterceptorProviders } from './interceptor/index';
 import { UsersData } from './main/applications/users/users.service';
 import { reducers } from '@reducers/index';
 import { effects } from '@effects/index';
-import icons from './app.icon';
 
 registerLocaleData(en);
 
-const loadFactory = (forage: NgForage, ps: NgxPermissionsService) =>
-  async function() {
+const loadFactory =
+  (forage: NgForage, ps: NgxPermissionsService) => async () => {
     const profileInfo: any = await forage.getItem('profile_info');
     if (profileInfo) {
       ps.loadPermissions(profileInfo.permissionList);
@@ -35,27 +33,25 @@ const loadFactory = (forage: NgForage, ps: NgxPermissionsService) =>
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    SharedModule,
     BrowserAnimationsModule,
     NgxPermissionsModule.forRoot(),
     InMemoryWebApiModule.forRoot(UsersData, { delay: 500 }),
-    LayoutModule,
-    SharedModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot(effects)
+    EffectsModule.forRoot(effects),
+    LayoutModule,
   ],
   providers: [
-    { provide: NZ_I18N, useValue: en_US },
     {
       provide: APP_INITIALIZER,
       useFactory: loadFactory,
       deps: [NgForage, NgxPermissionsService],
-      multi: true
+      multi: true,
     },
-    { provide: NZ_ICONS, useValue: icons },
-    AppInterceptorProviders
+    AppInterceptorProviders,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(ngfConfig: NgForageConfig) {
@@ -64,8 +60,8 @@ export class AppModule {
       driver: [
         // defaults to indexedDB -> webSQL -> localStorage -> sessionStorage
         Driver.INDEXED_DB,
-        Driver.LOCAL_STORAGE
-      ]
+        Driver.LOCAL_STORAGE,
+      ],
     });
   }
 }

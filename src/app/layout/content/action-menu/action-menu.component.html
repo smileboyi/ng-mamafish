@@ -1,0 +1,17 @@
+<div class="action-menu">
+  <div class="btn" (click)="toggleSkin.emit()">皮肤</div>
+  <div class="btn">录屏</div>
+  <div class="btn">介绍</div>
+  <div class="btn">反馈</div>
+  <div class="btn" (click)="musicHidden = !musicHidden">音乐</div>
+</div>
+<div class="music-player" cdkDrag [hidden]="musicHidden">
+  <iframe
+    src="http://music.163.com/outchain/player?type=0&amp;id=34488135&amp;auto=0"
+    width="400"
+    height="450"
+    frameborder="no"
+    marginwidth="0"
+    marginheight="0"
+  ></iframe>
+</div>

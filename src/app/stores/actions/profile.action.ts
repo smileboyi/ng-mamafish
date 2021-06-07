@@ -6,7 +6,7 @@ export enum ProfileActionTypes {
   FETCH_PROFILE_REQ = '[Profile] fetch profile req',
   FETCH_PROFILE_SUC = '[Profile] fetch profile suc',
   FETCH_PROFILE_ERR = '[Profile] fetch profile err',
-  CLEAR_PROFILE_DATAS = '[Profile] clear profile datas'
+  CLEAR_PROFILE_DATAS = '[Profile] clear profile datas',
 }
 
 export declare type ProfileType = 'activities' | 'profiles' | 'messages';

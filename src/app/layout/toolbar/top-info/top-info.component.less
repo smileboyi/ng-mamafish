@@ -81,16 +81,13 @@
           vertical-align: middle;
         }
       }
-      nz-form-explain {
-        width: 264px;
-        margin: 0 auto;
-        font-size: 12px;
-        text-align: left;
-      }
     }
     .config-box {
       nz-checkbox-group {
         width: 120px;
+        ::ng-deep > label {
+          display: flex;
+        }
       }
       ::ng-deep [nz-checkbox] {
         display: block;

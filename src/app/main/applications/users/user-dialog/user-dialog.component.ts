@@ -5,7 +5,7 @@ import {
   ViewChild,
   Renderer2,
   ElementRef,
-  HostListener
+  HostListener,
 } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
@@ -19,13 +19,13 @@ import {
   UserWork,
   UserContacts,
   UserSocial,
-  UserSettings
+  UserSettings,
 } from '@declare';
 
 @Component({
   selector: 'cat-user-dialog',
   templateUrl: './user-dialog.component.html',
-  styleUrls: ['./user-dialog.component.less']
+  styleUrls: ['./user-dialog.component.less'],
 })
 export class UserDialogComponent implements OnInit, OnDestroy {
   private form$: Subject<any> = new Subject<any>();
@@ -42,7 +42,7 @@ export class UserDialogComponent implements OnInit, OnDestroy {
   title = 'Add User';
   dialogShow = false;
 
-  @ViewChild('tabsBox', null)
+  @ViewChild('tabsBox')
   tabsBox: ElementRef;
 
   colors = [
@@ -57,7 +57,7 @@ export class UserDialogComponent implements OnInit, OnDestroy {
     { value: 'gradient-amber', viewValue: 'Amber' },
     { value: 'gradient-gray', viewValue: 'Gray' },
     { value: 'gradient-brown', viewValue: 'Brown' },
-    { value: 'gradient-lime', viewValue: 'Lime' }
+    { value: 'gradient-lime', viewValue: 'Lime' },
   ];
 
   constructor(
@@ -70,55 +70,55 @@ export class UserDialogComponent implements OnInit, OnDestroy {
       id: null,
       username: [
         null,
-        Validators.compose([Validators.required, Validators.minLength(5)])
+        Validators.compose([Validators.required, Validators.minLength(5)]),
       ],
       password: [
         null,
-        Validators.compose([Validators.required, Validators.minLength(6)])
+        Validators.compose([Validators.required, Validators.minLength(6)]),
       ],
       profile: this.fb.group({
-        name: null,
+        name: ['', [Validators.required]],
         surname: null,
         birthday: null,
         gender: null,
-        image: null
+        image: null,
       }),
       work: this.fb.group({
         company: null,
         position: null,
-        salary: null
+        salary: null,
       }),
       contacts: this.fb.group({
         email: null,
         phone: null,
-        address: null
+        address: null,
       }),
       social: this.fb.group({
         weibo: null,
         qq: null,
-        google: null
+        google: null,
       }),
       settings: this.fb.group({
         isActive: null,
         isDeleted: null,
-        registrationDate: null,
-        joinedDate: null,
-        bgColor: null
-      })
+        registrationDate: [new Date()],
+        joinedDate: [new Date()],
+        bgColor: null,
+      }),
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.isPageMini = this.utils.getMiniState();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  initForm(user: User) {
-    this.user = user;
-    if (this.user) {
+  initForm(user?: User): void {
+    if (user) {
+      this.user = user;
       this.type = 'edit';
       this.form.setValue(this.user);
     } else {
@@ -135,8 +135,8 @@ export class UserDialogComponent implements OnInit, OnDestroy {
 
   // 给定一个位置进行走马灯切换
   toggleTabContent(moveI: number): void {
-    const [prevI, currI, nextI]: any = this.contentShow.reduce(
-      (arr, val, idx) => {
+    const [prevI, currI, nextI] = this.contentShow.reduce(
+      (arr: number[], val: number, idx: number) => {
         if (val) {
           arr.push(idx);
         }

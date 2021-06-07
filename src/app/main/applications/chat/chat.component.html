@@ -52,8 +52,8 @@
       </div>
       <div
         class="person h100"
-        *ngFor="let user of chatUsers; let index"
-        (click)="selectChatUser(user, index)"
+        *ngFor="let user of chatUsers; let i = index"
+        (click)="selectChatUser(user, i)"
       >
         <nz-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
         <div class="fe">

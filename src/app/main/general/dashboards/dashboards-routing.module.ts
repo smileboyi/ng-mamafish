@@ -8,20 +8,20 @@ const routes: Routes = [
   {
     path: routingPathConfig.dashboards.default,
     redirectTo: routingPathConfig.dashboards.analytics,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: routingPathConfig.dashboards.analytics,
     component: AnalyticsComponent,
     data: {
-      title: '分析页'
-    }
-  }
+      title: '分析页',
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   declarations: [],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class DashboardsRoutingModule {}

@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
   Validators,
   ValidatorFn,
-  ValidationErrors
+  ValidationErrors,
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { cloneDeep } from 'lodash';
 import { JSEncrypt } from 'jsencrypt';
-import * as _ from 'lodash';
 
 import { appConfig } from '@config/app.config';
 import { messageText } from '@config/message-text.config';
 
-const shouldPasswordEqualValidator: ValidatorFn = (
+const shouldPasswordEqualValidator = (
   control: FormGroup
 ): ValidationErrors | null => {
   const password = control.get('password');
@@ -27,7 +27,8 @@ const shouldPasswordEqualValidator: ValidatorFn = (
 @Component({
   selector: 'cat-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.less']
+  styleUrls: ['./register.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent implements OnInit {
   publicKey = '';
@@ -39,7 +40,7 @@ export class RegisterComponent implements OnInit {
     private message: NzMessageService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.validateForm = this.fb.group(
       {
         username: [
@@ -47,8 +48,8 @@ export class RegisterComponent implements OnInit {
           [
             Validators.required,
             Validators.minLength(2),
-            Validators.maxLength(15)
-          ]
+            Validators.maxLength(15),
+          ],
         ],
         email: ['', [Validators.required, Validators.email]],
         password: [
@@ -56,17 +57,17 @@ export class RegisterComponent implements OnInit {
           [
             Validators.required,
             Validators.minLength(8),
-            Validators.maxLength(30)
-          ]
+            Validators.maxLength(30),
+          ],
         ],
         rptPassword: [
           '',
           [
             Validators.required,
             Validators.minLength(8),
-            Validators.maxLength(30)
-          ]
-        ]
+            Validators.maxLength(30),
+          ],
+        ],
       },
       { validators: shouldPasswordEqualValidator }
     );
@@ -82,11 +83,11 @@ export class RegisterComponent implements OnInit {
 
   handleRegister(): void {
     if (this.validateForm.valid) {
-      const submitPayload = _.cloneDeep(this.validateForm.value);
+      const submitPayload = cloneDeep(this.validateForm.value);
       delete submitPayload.rptPassword;
 
       // 密码加密
-      const jsencrypt = new JSEncrypt();
+      const jsencrypt = new JSEncrypt({});
       jsencrypt.setPublicKey(this.publicKey);
       submitPayload.password = jsencrypt.encrypt(submitPayload.password);
 
@@ -98,7 +99,7 @@ export class RegisterComponent implements OnInit {
               this.message.create('success', messageText.SUC_USER_REGISTER);
             }
           },
-          error => {
+          (error) => {
             console.log('Error', error);
           }
         );

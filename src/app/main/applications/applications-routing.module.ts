@@ -12,15 +12,15 @@ const routes: Routes = [
   {
     path: routingPathConfig.applications.default,
     redirectTo: routingPathConfig.applications.users,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: routingPathConfig.applications.users,
     component: UsersComponent,
     canActivate: [AuthGuard],
     data: {
-      title: '人员'
-    }
+      title: '人员',
+    },
   },
   {
     path: routingPathConfig.applications.mailBox,
@@ -28,22 +28,22 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canDeactivate: [UnsaveGuard],
     data: {
-      title: '邮箱'
-    }
+      title: '邮箱',
+    },
   },
   {
     path: routingPathConfig.applications.chat,
     component: ChatComponent,
     canActivate: [AuthGuard],
     data: {
-      title: '会话'
-    }
-  }
+      title: '会话',
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   declarations: [],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ApplicationsRoutingModule {}

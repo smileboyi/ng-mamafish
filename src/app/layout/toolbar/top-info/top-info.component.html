@@ -53,67 +53,52 @@
       (ngSubmit)="submitForm()"
     >
       <nz-form-item>
-        <nz-form-control>
+        <nz-form-control [nzErrorTip]="errorTpl">
           <input
             nz-input
             formControlName="email"
             id="email"
             placeholder="Email*"
+            nzRequired
           />
-          <nz-form-explain
-            *ngIf="
-              validateForm.get('email').dirty &&
-              validateForm.get('email').errors?.required
-            "
-          >
-            Email is required
-          </nz-form-explain>
-          <nz-form-explain
-            *ngIf="
-              validateForm.get('email').dirty &&
-              validateForm.get('email').errors?.email
-            "
-            >Invalid email address!
-          </nz-form-explain>
+          <ng-template #errorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              Email is required
+            </ng-container>
+            <ng-container *ngIf="control.hasError('email')">
+              Invalid email address!
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-control>
+        <nz-form-control nzErrorTip="Subject is required">
           <input
             nz-input
             formControlName="subject"
             id="subject"
             placeholder="Subject*"
+            nzRequired
           />
-          <nz-form-explain
-            *ngIf="
-              validateForm.get('subject').dirty &&
-              validateForm.get('subject').errors?.required
-            "
-          >
-            Subject is required
-          </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-control>
+        <nz-form-control nzErrorTip="Message is required">
           <input
             nz-input
             formControlName="message"
             id="message"
             placeholder="Message*"
+            nzRequired
           />
-          <nz-form-explain
-            *ngIf="
-              validateForm.get('message').dirty &&
-              validateForm.get('message').errors?.required
-            "
-          >
-            Message is required
-          </nz-form-explain>
         </nz-form-control>
       </nz-form-item>
-      <button class="box-shadow send-btn flex" nz-button nzType="primary">
+      <button
+        class="box-shadow send-btn flex"
+        nz-button
+        nzType="primary"
+        [disabled]="validateForm.status != 'VALID'"
+      >
         <img class="send" src="/assets/icons/send.svg" />
         <span class="text">Send</span>
       </button>

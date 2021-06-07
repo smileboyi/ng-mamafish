@@ -1,9 +1,9 @@
 import { Injectable, ElementRef } from '@angular/core';
 import html2canvas from 'html2canvas';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ScreenshotService {
   private modelWidth = 520;
@@ -12,18 +12,18 @@ export class ScreenshotService {
   constructor(private modal: NzModalService) {}
 
   // 截图，返回一个canvas
-  private captureDom(dom: any) {
+  private captureDom(dom: any): Promise<HTMLCanvasElement> {
     /* dom 宽度、高度、距离顶部的偏移量 */
     const style = window.getComputedStyle(dom);
-    const width = parseInt(style.width, null);
-    const height = parseInt(style.height, null);
+    const width = parseInt(style.width, undefined);
+    const height = parseInt(style.height, undefined);
     const canvas: HTMLCanvasElement = document.createElement('canvas');
     canvas.id = 'capture-canvas';
     const context = canvas.getContext('2d');
     const scaleBy = this.getPixelRatio(context);
     canvas.width = width * scaleBy;
     canvas.height = height * scaleBy;
-    context.scale(scaleBy, scaleBy);
+    context?.scale(scaleBy, scaleBy);
     const options = {
       allowTaint: true, // 允许加载跨域的图片
       useCORS: true,
@@ -32,7 +32,7 @@ export class ScreenshotService {
       canvas, // 自定义 canvas
       logging: false, // 日志开关，发布的时候记得改成false
       width, // dom 原始宽度
-      height // dom 原始高度
+      height, // dom 原始高度
     };
     this.modelWidth = width;
     return html2canvas(dom, options);
@@ -58,7 +58,7 @@ export class ScreenshotService {
     this.saveImgState = true;
 
     this.captureDom(element).then(
-      canvas => {
+      (canvas) => {
         if (!this.saveImgState) {
           return;
         }
@@ -87,16 +87,16 @@ export class ScreenshotService {
           nzOnCancel: () => {
             // 取消
             this.saveImgState = false;
-          }
+          },
         });
       },
-      err => {
+      (err) => {
         if (!this.saveImgState) {
           return;
         }
         this.modal.error({
           nzTitle: 'This is an error message',
-          nzContent: err
+          nzContent: err,
         });
       }
     );

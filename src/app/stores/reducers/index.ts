@@ -1,17 +1,18 @@
 import {
   ActionReducerMap,
   createSelector,
-  createFeatureSelector
+  createFeatureSelector,
 } from '@ngrx/store';
 
 import * as profileReducers from './profile.reducer';
+import { ProfileActionsUnion } from '../actions/profile.action';
 
 export interface AppState {
   profile: profileReducers.ProfileState;
 }
 
-export const reducers: ActionReducerMap<AppState> = {
-  profile: profileReducers.ProfileReducer
+export const reducers: ActionReducerMap<AppState, ProfileActionsUnion> = {
+  profile: profileReducers.ProfileReducer,
 };
 
 export const selectProfile: any = createFeatureSelector<AppState>('profile');

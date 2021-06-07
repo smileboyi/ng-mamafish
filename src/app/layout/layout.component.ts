@@ -10,13 +10,13 @@ import { LayoutConfig } from '@config/layout.config';
 @Component({
   selector: 'cat-layout',
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.less']
+  styleUrls: ['./layout.component.less'],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
   private resize$: Subject<any> = new Subject<any>();
   private subscription: Subscription;
 
-  drawerVisible: boolean = false;
+  drawerVisible = false;
   configData: LayoutConfig;
   pageWithStyle: '1200px' | '100%';
   oldPageWith: '1200px' | '100%';
@@ -26,7 +26,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     private layoutConfig: LayoutConfigService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.layoutConfig.config.subscribe((config: LayoutConfig) => {
       this.configData = config;
       this.oldPageWith = this.pageWithStyle =
@@ -34,7 +34,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     });
     this.subscription = this.resize$
       .pipe(debounceTime(200))
-      .subscribe(width => {
+      .subscribe((width) => {
         if (width < 1200) {
           this.pageWithStyle = '100%';
         } else {
@@ -43,7 +43,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
@@ -52,7 +52,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:resize', ['$event'])
-  onWindowResize(event): void {
+  onWindowResize(event: any): void {
     this.resize$.next(event.target.innerWidth);
   }
 }

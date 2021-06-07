@@ -10,7 +10,7 @@
         <button
           class="logo-text fl"
           nz-button
-          nzType="large"
+          nzSize="large"
           fxShow="false"
           fxShow.gt-sm
           (click)="utils.gotoOtherPage('analytics')"
@@ -18,14 +18,14 @@
           麻麻鱼
         </button>
         <div class="divider"></div>
-        <button nz-button nzType="large" (click)="toggleCollapsed()">
+        <button nz-button nzSize="large" (click)="toggleCollapsed()">
           <i nz-icon nzType="bars"></i>
         </button>
         <ng-container *ngIf="global.userRole >= userRoles[1]">
           <div class="divider"></div>
           <button
             nz-button
-            nzType="large"
+            nzSize="large"
             (click)="showInfoContent = !showInfoContent"
           >
             <i
@@ -40,7 +40,7 @@
           <div class="divider"></div>
           <button
             nz-button
-            nzType="large"
+            nzSize="large"
             (click)="
               utils.gotoOtherPage('login', [], {
                 redirectUrl: 'analytics',
@@ -144,7 +144,7 @@
 </ng-template>
 
 <ng-template #search>
-  <button nz-button nzType="large" (click)="showSearchBar()">
+  <button nz-button nzSize="large" (click)="showSearchBar()">
     <i nz-icon nzType="search"></i>
   </button>
   <div class="search-bar pab wh100 nob nol z50 flex" [hidden]="!searchBarState">
@@ -166,7 +166,7 @@
 <ng-template #fullscreen>
   <button
     nz-button
-    nzType="large"
+    nzSize="large"
     (click)="toggleFullscreen()"
     fxShow="false"
     fxShow.gt-sm
@@ -196,7 +196,7 @@
               *ngFor="let message of userMessage.messages"
             >
               <nz-avatar
-                nzSize="50"
+                [nzSize]="50"
                 nzIcon="user"
                 [nzSrc]="message.avatar"
               ></nz-avatar>
@@ -257,14 +257,14 @@
 </ng-template>
 
 <ng-template #settings>
-  <button nz-button nzType="large" (click)="handleOpen()">
+  <button nz-button nzSize="large" (click)="handleOpen()">
     <i nz-icon nzType="setting"></i>
   </button>
   <div class="divider nor"></div>
 </ng-template>
 
 <ng-template #more>
-  <button nz-button nzType="large" (click)="toggleMoreHeader()">
+  <button nz-button nzSize="large" (click)="toggleMoreHeader()">
     <i nz-icon nzType="ellipsis"></i>
   </button>
   <div class="divider nor"></div>

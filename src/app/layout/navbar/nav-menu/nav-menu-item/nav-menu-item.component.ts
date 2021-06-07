@@ -4,7 +4,7 @@ import {
   NavigationItem,
   equalLevelsubMenuInfo,
   relyLevelsubMenuInfo,
-  menuIdPathSet
+  menuIdPathSet,
 } from '@config/navigation.config';
 import { GlobalService } from '@services/global.service';
 import { UtilsService } from '@services/utils.service';
@@ -28,17 +28,17 @@ const fixMenuItemSelected = (id: string): void => {
   if (document.querySelector('.ant-menu-item-selected')) {
     document
       .querySelector('.ant-menu-item-selected')
-      .classList.remove('ant-menu-item-selected');
+      ?.classList.remove('ant-menu-item-selected');
   }
   if (document.getElementById(id)) {
-    document.getElementById(id).classList.add('ant-menu-item-selected');
+    document.getElementById(id)?.classList.add('ant-menu-item-selected');
   }
 };
 
 @Component({
   selector: 'cat-nav-menu-item',
   templateUrl: './nav-menu-item.component.html',
-  styleUrls: ['./nav-menu-item.component.less']
+  styleUrls: ['./nav-menu-item.component.less'],
 })
 export class NavMenuItemComponent implements OnInit {
   private isOpen = false;
@@ -51,12 +51,12 @@ export class NavMenuItemComponent implements OnInit {
 
   constructor(public global: GlobalService, private utils: UtilsService) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
   clickMenuItem(
     pathId: string,
     hashs: Array<number | string>,
-    params: Object
+    params: object
   ): void {
     const h = hashs ? hashs : [];
     const p = params ? params : {};
@@ -70,7 +70,10 @@ export class NavMenuItemComponent implements OnInit {
     this.isOpen = open;
   }
 
-  clickSubMenu(event: Event, subMenuId: string): void {
+  clickSubMenu(
+    event: Event,
+    subMenuId: 'dashboards' | 'pages' | 'errors'
+  ): void {
     event.preventDefault();
     event.stopPropagation();
     this.global.subMenuOpenState[subMenuId] = this.isOpen;
@@ -81,18 +84,23 @@ export class NavMenuItemComponent implements OnInit {
       const ids = equalLevelsubMenuInfo[key].filter(
         (val: string) => val !== subMenuId
       );
-      ids.forEach((id: string) => {
-        this.global.subMenuOpenState[id] = false;
+      ids.forEach((id) => {
+        this.global.subMenuOpenState[id as 'dashboards' | 'pages' | 'errors'] =
+          false;
       });
     } else {
       // 关闭时把子subMenu也关闭掉
       const relyArr: Array<Array<string>> = relyLevelsubMenuInfo.filter(
         (arr: Array<string>) => arr.includes(subMenuId)
       );
-      const relyIdx: number = relyArr[0].findIndex(item => item === subMenuId);
-      relyArr[0].forEach((id: string, idx: number) => {
+      const relyIdx: number = relyArr[0].findIndex(
+        (item) => item === subMenuId
+      );
+      relyArr[0].forEach((id, idx) => {
         if (idx > relyIdx) {
-          this.global.subMenuOpenState[id] = false;
+          this.global.subMenuOpenState[
+            id as 'dashboards' | 'pages' | 'errors'
+          ] = false;
         }
       });
     }
@@ -110,22 +118,23 @@ export class NavMenuItemComponent implements OnInit {
   mouseenterSubMenu(id: string): void {
     // 需等待渲染好了进行操作
     const t = setTimeout(() => {
-      const submenuEles: NodeListOf<Element> = document.querySelectorAll(
+      const submenuEles: NodeListOf<HTMLElement> = document.querySelectorAll(
         '.cdk-overlay-container .ant-menu-submenu'
       );
-      submenuEles.forEach(submenuEle => {
+      submenuEles.forEach((submenuEle) => {
         if (!submenuEle.hasAttribute('data-id')) {
-          const itemEle: Element = submenuEle.querySelector('.ant-menu-item');
+          const itemEle = submenuEle.querySelector(
+            '.ant-menu-item'
+          ) as HTMLElement;
           if (itemEle) {
-            if (id === this.getParentId(itemEle.getAttribute('id'))) {
+            if (id === this.getParentId(itemEle.getAttribute('id') as string)) {
               submenuEle.setAttribute('data-id', id);
               submenuEle.setAttribute('style', 'position: relative');
-              const itemEles: NodeListOf<Element> = submenuEle.querySelectorAll(
-                '.ant-menu-item'
-              );
+              const itemEles: NodeListOf<HTMLElement> =
+                submenuEle.querySelectorAll('.ant-menu-item');
               const currId = this.global.selectMenuItemId;
               // 不会自动切换selected类，需手动控制
-              itemEles.forEach(item => {
+              itemEles.forEach((item) => {
                 if (currId === item.getAttribute('id')) {
                   item.classList.add('ant-menu-item-selected');
                 } else {
@@ -144,18 +153,18 @@ export class NavMenuItemComponent implements OnInit {
   private hoverErrorSubMenu(): void {
     const t = setTimeout(() => {
       clearTimeout(t);
-      const box: NodeListOf<Element> = document.querySelectorAll(
+      const box: NodeListOf<HTMLElement> = document.querySelectorAll(
         '.cdk-overlay-connected-position-bounding-box'
       );
       const last = box[box.length - 1];
       const errorsSubMenuEle = last.querySelector(
         '.cdk-overlay-container .ant-menu-submenu'
       );
-      errorsSubMenuEle.setAttribute('style', 'position: relative');
+      errorsSubMenuEle?.setAttribute('style', 'position: relative');
     }, 170);
   }
 
-  private getParentId(childId: string): string {
+  private getParentId(childId: string): any {
     if (childId === 'analytics') {
       return 'dashboards';
     } else if (childId === 'profile') {

@@ -12,7 +12,7 @@
           [nzTrigger]="'click'"
           [nzDropdownMenu]="menu"
         >
-          <i nz-icon nzType="align-center" nzTheme="outline"></i>
+          <i nz-icon nzType="align-center" nzTheme="outline" style="font-size: 16px;"></i>
         </a>
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu class="inbox-header-dropdown">
@@ -172,13 +172,8 @@
       <div class="send-box h100" *ngIf="newMail">
         <form nz-form [formGroup]="form">
           <nz-form-item>
-            <nz-form-control>
+            <nz-form-control nzErrorTip="The input is not valid E-mail!">
               <input nz-input placeholder="To" formControlName="to" />
-              <nz-form-explain
-                *ngIf="form.get('to')?.dirty && form.get('to')?.errors"
-              >
-                The input is not valid E-mail!
-              </nz-form-explain>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
@@ -191,7 +186,7 @@
               <input nz-input placeholder="Subject" formControlName="subject" />
             </nz-form-control>
           </nz-form-item>
-          <quill-editor formControlName="message"></quill-editor>
+          <!-- <quill-editor formControlName="message"></quill-editor> -->
           <div class="btns flex">
             <button class="btn cancel" (click)="newMail = false">Cancel</button>
             <button class="btn send" (click)="onSubmit(form.value)">

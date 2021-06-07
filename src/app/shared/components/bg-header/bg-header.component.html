@@ -1,7 +1,20 @@
-<div class="bg-header pre">
-  <h1 class="title">{{ headerTitle }}</h1>
-  <p class="describe" *ngIf="describe">{{ describe }}</p>
+<div
+  class="bg-header pre"
+  [class.trans]="trans"
+  [style.min-height.px]="cmpSize === 'L' ? 148 : 0"
+>
+  <h1 class="title" *ngIf="cmpSize === 'L'" (click)="toggleCmpSize()">
+    {{ headerTitle }}
+  </h1>
+  <p class="describe" *ngIf="describe && cmpSize === 'L'">{{ describe }}</p>
   <div class="bottom-bar pab nob w100">
+    <h6
+      class="title pab wauto2"
+      (click)="toggleCmpSize()"
+      *ngIf="cmpSize === 'S'"
+    >
+      {{ headerTitle }}
+    </h6>
     <ng-content></ng-content>
   </div>
 </div>

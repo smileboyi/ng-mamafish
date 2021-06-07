@@ -28,7 +28,7 @@
             [(ngModel)]="toolbarHide"
             (click)="setToolbarHide()"
             catThrottleClick
-            throttleTime="200"
+            [throttleTime]="200"
           ></nz-switch>
         </h3>
         <ng-container *ngIf="!global.isMobile">
@@ -45,7 +45,7 @@
         <h3 class="title">背景颜色</h3>
         <cat-theme-panel
           (setThemeColor)="setToolbarThemeColor($event)"
-          (resetThemeColor)="resetThemeColor($event)"
+          (resetThemeColor)="resetThemeColor('toolbar')"
           [themeColor]="toolbarThemeColor"
           themeType="toolbar"
         >
@@ -58,7 +58,7 @@
             [(ngModel)]="navbarHide"
             (click)="setNavbarHide()"
             catThrottleClick
-            throttleTime="200"
+            [throttleTime]="200"
           ></nz-switch>
         </h3>
         <h3 class="title">
@@ -67,7 +67,7 @@
             [(ngModel)]="navbarCollapse"
             (click)="setNavbarCollapse()"
             catThrottleClick
-            throttleTime="200"
+            [throttleTime]="200"
           ></nz-switch>
         </h3>
         <h3 class="title" *ngIf="!global.isMobile">位置</h3>
@@ -82,7 +82,7 @@
         <h3 class="title">背景颜色</h3>
         <cat-theme-panel
           (setThemeColor)="setNavbarThemeColor($event)"
-          (resetThemeColor)="resetThemeColor($event)"
+          (resetThemeColor)="resetThemeColor('navbar')"
           [themeColor]="navbarThemeColor"
           themeType="navbar"
         >
@@ -95,7 +95,7 @@
             [(ngModel)]="footerHide"
             (click)="setFooterHide()"
             catThrottleClick
-            throttleTime="200"
+            [throttleTime]="200"
           ></nz-switch>
         </h3>
         <h3 class="title" *ngIf="!global.isMobile">位置</h3>
@@ -110,7 +110,7 @@
         <h3 class="title">背景颜色</h3>
         <cat-theme-panel
           (setThemeColor)="setFooterThemeColor($event)"
-          (resetThemeColor)="resetThemeColor($event)"
+          (resetThemeColor)="resetThemeColor('footer')"
           [themeColor]="footerThemeColor"
           themeType="footer"
         >

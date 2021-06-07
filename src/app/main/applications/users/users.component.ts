@@ -4,18 +4,20 @@ import {
   ViewChild,
   ComponentRef,
   ViewContainerRef,
-  ComponentFactoryResolver
+  ComponentFactoryResolver,
 } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { UtilsService } from '@services/utils.service';
 import { UsersService } from './users.service';
 import { User } from '@declare';
 
+@UntilDestroy()
 @Component({
   selector: 'cat-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.less']
+  styleUrls: ['./users.component.less'],
 })
 export class UsersComponent implements OnInit {
   search = false;
@@ -36,25 +38,23 @@ export class UsersComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getUsers();
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-      UserDialogComponent
-    );
-    this.userDialog = this.userDialogContainer.createComponent(
-      componentFactory
-    );
-    (<UserDialogComponent>this.userDialog.instance).subscriptionForm(
-      (user: User) => {
-        user.id ? this.updateUser(user) : this.addUser(user);
-      }
-    );
+    const componentFactory =
+      this.componentFactoryResolver.resolveComponentFactory(
+        UserDialogComponent
+      );
+    this.userDialog =
+      this.userDialogContainer.createComponent(componentFactory);
+    this.userDialog.instance.subscriptionForm((user: User) => {
+      user.id ? this.updateUser(user) : this.addUser(user);
+    });
   }
 
   getUsers(): void {
     this.users = [];
     this.fetchState = true;
-    this.usersService.getUsers().subscribe(users => {
+    this.usersService.getUsers().subscribe((users) => {
       const searchText = this.searchText.trim().toLowerCase();
       this.oldSearchText = searchText;
       this.users = users.filter((u: User) => {
@@ -108,7 +108,7 @@ export class UsersComponent implements OnInit {
     this.getUsers();
   }
 
-  openUserDialog(user: User) {
-    (<UserDialogComponent>this.userDialog.instance).initForm(user);
+  openUserDialog(user?: User): void {
+    this.userDialog.instance.initForm(user);
   }
 }

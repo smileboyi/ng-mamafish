@@ -10,29 +10,29 @@ const routes: Routes = [
   {
     path: routingPathConfig.services.default,
     redirectTo: routingPathConfig.services.dataTable,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: routingPathConfig.services.dataTable,
     component: DataTableComponent,
     canActivate: [AuthGuard],
     data: {
-      title: '数据表'
-    }
+      title: '数据表',
+    },
   },
   {
     path: routingPathConfig.services.screenshot,
     component: ScreenshotComponent,
     canActivate: [AuthGuard],
     data: {
-      title: '屏幕截图'
-    }
-  }
+      title: '屏幕截图',
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   declarations: [],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ServicesRoutingModule {}

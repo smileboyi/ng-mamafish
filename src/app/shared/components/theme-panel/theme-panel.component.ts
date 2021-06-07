@@ -1,13 +1,23 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { ThemeColorService } from './theme-color.service';
 import { GlobalService } from '@services/global.service';
 import { ThemeColor } from '@declare';
 
+@UntilDestroy()
 @Component({
   selector: 'cat-theme-panel',
   templateUrl: './theme-panel.component.html',
-  styleUrls: ['./theme-panel.component.less']
+  styleUrls: ['./theme-panel.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemePanelComponent implements OnInit {
   paletteColors = ThemeColorService.allColors;
@@ -29,14 +39,14 @@ export class ThemePanelComponent implements OnInit {
     'A100',
     'A200',
     'A400',
-    'A700'
+    'A700',
   ];
   view = 'palettes';
   selectedPalette: string;
   selectedHue = '500';
   selectedFg = '#1e88e5';
   selectedBg = '#bcdcf7';
-  selectedHueIndex: number;
+  selectedHueIndex: number | undefined;
   selectedColor = 'Select Color';
 
   @Input() themeColor: ThemeColor;
@@ -46,9 +56,9 @@ export class ThemePanelComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     // 监听重置主题配置
-    GlobalService.resetThemeColor$.subscribe(type => {
+    GlobalService.resetThemeColor$.subscribe((type) => {
       if (this.themeType === type) {
         this.deleteColor();
       }
@@ -62,13 +72,15 @@ export class ThemePanelComponent implements OnInit {
 
   selectPalette(index: number): void {
     this.selectedPalette = this.paletteColorsName[index];
-    const hueColors = ThemeColorService.themeColors[this.selectedPalette];
-    this.contrastColors = hueColors['contrast'];
+    const hueColors = (ThemeColorService as any).themeColors[
+      this.selectedPalette
+    ];
+    this.contrastColors = hueColors.contrast;
     const hueColorsName = Object.keys(hueColors);
     const delIdx = hueColorsName.indexOf('contrast');
     hueColorsName.splice(delIdx, 1);
     this.hueColorsName = hueColorsName;
-    this.hueColors = this.hueColorsName.map(name => hueColors[name]);
+    this.hueColors = this.hueColorsName.map((name) => hueColors[name]);
     this.view = 'hues';
   }
 
@@ -76,30 +88,31 @@ export class ThemePanelComponent implements OnInit {
     this.selectedHueIndex = index;
     this.selectedHue = this.hues[index];
     this.selectedFg = this.hueColors[index];
-    this.selectedBg = this.contrastColors[this.selectedHue];
+    this.selectedBg = this.contrastColors[this.selectedHue as any];
     this.selectedColor = this.selectedPalette + ' ' + this.selectedHue;
     this.setThemeColor.emit({
       // 背景色
       selectedFg: this.selectedFg,
       // 文字颜色
-      selectedBg: this.selectedBg
+      selectedBg: this.selectedBg,
     });
   }
 
   selectCustomize(): void {
-    document.getElementById('colorCustomizeIpt').click();
+    document.getElementById('colorCustomizeIpt')?.click();
   }
 
   colorChange(): void {
-    const val = (<HTMLInputElement>document.getElementById('colorCustomizeIpt'))
-      .value;
+    const val = (
+      document.getElementById('colorCustomizeIpt') as HTMLInputElement
+    ).value;
     this.selectedFg = val;
     this.selectedColor = val;
     this.selectedHue = '';
     this.selectedBg = ThemeColorService.contrastColor(val);
     this.setThemeColor.emit({
       selectedFg: val,
-      selectedBg: this.selectedBg
+      selectedBg: this.selectedBg,
     });
   }
 

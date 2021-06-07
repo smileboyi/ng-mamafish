@@ -9,13 +9,13 @@ import { User } from '@declare';
 export class UsersData implements InMemoryDbService {
   constructor() {}
 
-  createDb(): Object {
+  createDb(): object {
     return { users };
   }
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersService {
   private url = '/api/users';

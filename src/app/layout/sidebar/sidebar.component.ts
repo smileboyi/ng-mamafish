@@ -4,10 +4,11 @@ import {
   Inject,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
 } from '@angular/core';
 import { NgForage } from 'ngforage';
 import { HttpClient } from '@angular/common/http';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { GlobalService } from '@services/global.service';
 import { LayoutConfigService } from '@services/layout-config.service';
@@ -19,28 +20,28 @@ import { LAYOUT_CONFIG } from '@tokens';
 @Component({
   selector: 'cat-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.less']
+  styleUrls: ['./sidebar.component.less'],
 })
 export class SidebarComponent implements OnInit {
-  htmlROOT = document.querySelector(':root');
-  selectedIdx: number = 0;
+  htmlROOT = document.querySelector(':root') as Element;
+  selectedIdx = 0;
   readonly idxMap: Array<string> = ['width', 'toolbar', 'navbar', 'footer'];
-  private _drawerVisible: boolean = false;
+  private _drawerVisible = false;
 
-  pageWidth: string = 'fullwidth';
-  toolbarHide: boolean = false;
-  toolbarPosition: string = 'below';
+  pageWidth = 'fullwidth';
+  toolbarHide = false;
+  toolbarPosition = 'below';
   toolbarThemeColor: ThemeColor;
-  navbarHide: boolean = false;
-  navbarCollapse: boolean = false;
-  navbarPosition: string = 'left';
+  navbarHide = false;
+  navbarCollapse = false;
+  navbarPosition = 'left';
   navbarThemeColor: ThemeColor;
-  footerHide: boolean = false;
-  footerPosition: string = 'above';
+  footerHide = false;
+  footerPosition = 'above';
   footerThemeColor: ThemeColor;
 
   @Input()
-  get drawerVisible() {
+  get drawerVisible(): boolean {
     return this._drawerVisible;
   }
 
@@ -60,8 +61,8 @@ export class SidebarComponent implements OnInit {
     @Inject(LAYOUT_CONFIG) public layoutConfigToken: string
   ) {}
 
-  ngOnInit() {
-    this.layoutConfig.config.subscribe((config: LayoutConfig) => {
+  ngOnInit(): void {
+    this.layoutConfig.config.pipe(untilDestroyed(this)).subscribe((config: LayoutConfig) => {
       this.pageWidth = config.width;
       this.toolbarHide = !config.toolbar.show;
       this.toolbarPosition = config.toolbar.position;
@@ -78,11 +79,11 @@ export class SidebarComponent implements OnInit {
 
   private setThemeColor(themeColor: any): void {
     const _style = this.htmlROOT.getAttribute('style');
-    const styleObj = {};
+    const styleObj: any = {};
     if (_style) {
       const styleArr = _style.split(';');
       styleArr.pop();
-      styleArr.map(item => {
+      styleArr.map((item) => {
         const [key, val] = item.split(':');
         styleObj[key] = val;
       });
@@ -90,7 +91,7 @@ export class SidebarComponent implements OnInit {
 
     const obj = Object.assign({}, styleObj, themeColor);
     let themeStr = '';
-    Object.keys(obj).forEach(key => {
+    Object.keys(obj).forEach((key) => {
       themeStr += key + ':' + obj[key] + ';';
     });
     this.htmlROOT.setAttribute('style', `${themeStr}`);
@@ -105,6 +106,7 @@ export class SidebarComponent implements OnInit {
       //     username: this.global.userInfo.username,
       //     layoutConfig: JSON.stringify(storageConfig)
       //   })
+      //   .pipe(untilDestroyed(this))
       //   .subscribe(
       //     (res: any) => {
       //       console.log(res);
@@ -121,9 +123,11 @@ export class SidebarComponent implements OnInit {
   }
 
   handleResetConfig(): void {
-    const key: string = this.global.isMobile
-      ? this.idxMap[this.selectedIdx + 1]
-      : this.idxMap[this.selectedIdx];
+    const key = (
+      this.global.isMobile
+        ? this.idxMap[this.selectedIdx + 1]
+        : this.idxMap[this.selectedIdx]
+    ) as 'toolbar' | 'navbar' | 'footer';
     const value: any = this.layoutConfig.defaultConfig[key];
     this.layoutConfig.config = { [key]: value };
     if (value.theme) {
@@ -133,14 +137,8 @@ export class SidebarComponent implements OnInit {
   }
 
   // 重置主题颜色
-  resetThemeColor(type: string): void {
-    if (type === 'navbar') {
-      this.setThemeColor(defaultThemeColor['navbar']);
-    } else if (type === 'toolbar') {
-      this.setThemeColor(defaultThemeColor['toolbar']);
-    } else {
-      this.setThemeColor(defaultThemeColor['footer']);
-    }
+  resetThemeColor(type: 'toolbar' | 'navbar' | 'footer'): void {
+    this.setThemeColor(defaultThemeColor[type]);
   }
 
   setPageWidth(): void {
@@ -159,7 +157,7 @@ export class SidebarComponent implements OnInit {
     this.layoutConfig.config = { toolbar: { theme: themeColor } };
     this.setThemeColor({
       '--toolbarThemeFg': themeColor.selectedFg,
-      '--toolbarThemeBg': themeColor.selectedBg
+      '--toolbarThemeBg': themeColor.selectedBg,
     });
   }
 
@@ -179,7 +177,7 @@ export class SidebarComponent implements OnInit {
     this.layoutConfig.config = { navbar: { theme: themeColor } };
     this.setThemeColor({
       '--navbarThemeFg': themeColor.selectedFg,
-      '--navbarThemeBg': themeColor.selectedBg
+      '--navbarThemeBg': themeColor.selectedBg,
     });
   }
 
@@ -195,7 +193,7 @@ export class SidebarComponent implements OnInit {
     this.layoutConfig.config = { footer: { theme: themeColor } };
     this.setThemeColor({
       '--footerThemeFg': themeColor.selectedFg,
-      '--footerThemeBg': themeColor.selectedBg
+      '--footerThemeBg': themeColor.selectedBg,
     });
   }
 }
