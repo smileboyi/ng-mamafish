@@ -15,6 +15,9 @@ const routes: Routes = [
     component: AnalyticsComponent,
     data: {
       title: '分析页',
+      keywords: '数据分析,指标,analytics',
+      description: '展示数据，通过指标来分析数据',
+      icon: 'analytics'
     },
   },
 ];

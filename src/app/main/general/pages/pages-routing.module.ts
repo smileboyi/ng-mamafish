@@ -20,6 +20,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       title: '个人主页',
+      keywords: '个人主页,profile',
+      description: '展示个人信息，以及好友信息',
+      icon: 'profile'
     },
   },
   {
@@ -28,6 +31,9 @@ const routes: Routes = [
     data: {
       title: '错误页',
       isFullScreen: false,
+      keywords: '错误页面,403,404,500',
+      description: '不能访问时展示的错误页面',
+      icon: 'error'
     },
   },
   {
@@ -36,6 +42,9 @@ const routes: Routes = [
     data: {
       title: '登录',
       isFullScreen: true,
+      keywords: '登录',
+      description: '用户登录进入网站，否则以匿名用户身份进入',
+      icon: 'login'
     },
   },
   {
@@ -44,6 +53,9 @@ const routes: Routes = [
     data: {
       title: '注册',
       isFullScreen: true,
+      keywords: '注册',
+      description: '用户注册，创建个人信息',
+      icon: 'register'
     },
   },
 ];

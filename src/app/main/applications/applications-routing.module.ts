@@ -20,6 +20,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       title: '人员',
+      keywords: '人员,人员管理',
+      description: '提供人员的新增、修改、删除和查询',
+      icon: 'user'
     },
   },
   {
@@ -29,6 +32,9 @@ const routes: Routes = [
     canDeactivate: [UnsaveGuard],
     data: {
       title: '邮箱',
+      keywords: '邮箱,inbox,email',
+      description: '一个简单实用的邮箱管理',
+      icon: 'mailBox'
     },
   },
   {
@@ -37,6 +43,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       title: '会话',
+      keywords: '会话,聊天,chat',
+      description: '选择一个好友来分享你最近遇到的快乐的事',
+      icon: 'chat'
     },
   },
 ];

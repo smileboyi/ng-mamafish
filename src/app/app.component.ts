@@ -5,11 +5,18 @@ import {
   HostListener,
   Inject,
 } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-import { takeUntil, debounceTime, filter, map, mergeMap } from 'rxjs/operators';
+import {
+  takeUntil,
+  debounceTime,
+  filter,
+  map,
+  mergeMap,
+  tap,
+} from 'rxjs/operators';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NgForage } from 'ngforage';
 import { NzIconService } from 'ng-zorro-antd/icon';
@@ -34,6 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public isFullScreen = false;
 
   constructor(
+    private meta: Meta,
     private title: Title,
     private router: Router,
     private ngForage: NgForage,
@@ -84,14 +92,21 @@ export class AppComponent implements OnInit, OnDestroy {
           while (route.firstChild) {
             route = route.firstChild;
           }
+          return route;
+        }),
+        tap((route) => {
           const arr = (route.url as any).value;
           this.global.pageRouteInfo = arr[arr.length - 1];
-          return route;
         }),
         mergeMap((route) => route.data)
       )
       .subscribe((data) => {
         this.title.setTitle(data.title);
+        this.meta.updateTag({
+          name: 'description',
+          content: data.description,
+        });
+        this.meta.updateTag({ name: 'keywords', content: data.keywords });
         this.isFullScreen = Boolean(data.isFullScreen);
       });
   }
