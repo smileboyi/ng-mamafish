@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
     });
 
     this.http
-      .get(appConfig.SERVER_API_URL_BASE + '/auth/rsapubkey')
+      .get(appConfig.PATCH_URL + '/auth/rsapubkey')
       .subscribe((res: any) => {
         if (res.statusCode === 200) {
           this.publicKey = res.data.pubkey;
@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit {
     submitPayload.password = jsencrypt.encrypt(submitPayload.password.trim());
 
     this.http
-      .post(appConfig.SERVER_API_URL_BASE + '/auth/login', submitPayload)
+      .post(appConfig.PATCH_URL + '/auth/login', submitPayload)
       .subscribe(
         (res: any) => {
           if (res.statusCode === 200) {

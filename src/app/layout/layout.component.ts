@@ -47,8 +47,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  openSetting(): void {
-    this.drawerVisible = true;
+  toggleSetting(): void {
+    this.drawerVisible = !this.drawerVisible;
   }
 
   @HostListener('window:resize', ['$event'])

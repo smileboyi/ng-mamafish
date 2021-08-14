@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { routingPathConfig as pathConfig } from '@config/routing-path.config';
@@ -18,7 +23,11 @@ export class ErrorsComponent implements OnInit {
     '500': 'Internal Server Error',
   };
 
-  constructor(private route: ActivatedRoute, private utils: UtilsService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private utils: UtilsService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -27,6 +36,7 @@ export class ErrorsComponent implements OnInit {
       } else {
         this.httpCode = '404';
       }
+      this.cdr.markForCheck();
     });
   }
 

@@ -49,7 +49,7 @@ export class ToolbarComponent implements OnInit {
   serchIpt: ElementRef;
 
   @Output()
-  openSetting: EventEmitter<any> = new EventEmitter<any>();
+  toggleSetting: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private renderer2: Renderer2,
@@ -109,10 +109,10 @@ export class ToolbarComponent implements OnInit {
     };
   }
 
-  // 打开设置
-  handleOpen(): void {
-    this.showInfoContent = false;
-    this.openSetting.emit();
+  // 切换设置
+  handleToggleSetting(): void {
+    this.showInfoContent = !this.showInfoContent;
+    this.toggleSetting.emit();
   }
 
   handleLogout(): void {

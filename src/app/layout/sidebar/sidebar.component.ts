@@ -62,7 +62,7 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.layoutConfig.config.pipe(untilDestroyed(this)).subscribe((config: LayoutConfig) => {
+    this.layoutConfig.config.subscribe((config: LayoutConfig) => {
       this.pageWidth = config.width;
       this.toolbarHide = !config.toolbar.show;
       this.toolbarPosition = config.toolbar.position;
@@ -102,7 +102,7 @@ export class SidebarComponent implements OnInit {
     const storageConfig = await this.ngForage.getItem(this.layoutConfigToken);
     if (storageConfig) {
       // this.http
-      //   .put(appConfig.SERVER_API_URL_BASE + '/user/layout-config', {
+      //   .put(appConfig.PATCH_URL + '/user/layout-config', {
       //     username: this.global.userInfo.username,
       //     layoutConfig: JSON.stringify(storageConfig)
       //   })

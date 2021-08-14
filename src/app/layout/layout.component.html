@@ -3,7 +3,7 @@
   <ng-container *ngIf="configData.toolbar.show">
     <cat-toolbar
       class="pre"
-      (openSetting)="openSetting()"
+      (toggleSetting)="toggleSetting()"
       *ngIf="configData.toolbar.position === 'above'"
     ></cat-toolbar>
   </ng-container>
@@ -39,12 +39,12 @@
       <ng-container *ngIf="configData.toolbar.show">
         <cat-toolbar
           class="pre"
-          (openSetting)="openSetting()"
+          (toggleSetting)="toggleSetting()"
           *ngIf="configData.toolbar.position === 'above-static'"
         ></cat-toolbar>
         <cat-toolbar
           class="pab"
-          (openSetting)="openSetting()"
+          (toggleSetting)="toggleSetting()"
           *ngIf="configData.toolbar.position === 'above-fixed'"
         ></cat-toolbar>
       </ng-container>
@@ -141,5 +141,5 @@
 <cat-sidebar
   class="pab not wh100 z500"
   [(drawerVisible)]="drawerVisible"
-  *ngIf="drawerVisible"
+  [hidden]="!drawerVisible"
 ></cat-sidebar>
