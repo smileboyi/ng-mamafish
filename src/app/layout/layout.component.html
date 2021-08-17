@@ -89,7 +89,11 @@
         <ng-template #footerTemplate>
           <cat-footer
             class="pfi nob"
-            [style.width]="'calc(' + pageWithStyle + ' - 124px)'"
+            [style.width]="
+              global.isMobile
+                ? pageWithStyle
+                : 'calc(' + pageWithStyle + ' - 124px)'
+            "
             [style.margin-left.px]="
               configData.toolbar.position === 'above' &&
               configData.navbar.position === 'left'

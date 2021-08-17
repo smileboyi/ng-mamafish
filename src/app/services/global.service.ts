@@ -10,13 +10,15 @@ import { UserRole, UserInfo } from '@declare';
   providedIn: 'root',
 })
 export class GlobalService {
-  static resetThemeColor$: Subject<any> = new Subject<any>();
+  static resetThemeColor$ = new Subject<any>();
   static mobileWidth = 620;
   static miniWidth = 450;
   // < mobileWidth （页面状态可以使用rxjs,这样不用在多个页面去监听window resize获取状态）
   isMobile = false;
   isMini = false;
   moreHeaderState = false;
+  // isMobile为true时的sidebar隐藏状态
+  sidebarHidden = false;
   userRole: UserRole = UserRole.Dictator;
   userInfo: Partial<UserInfo>;
   permissionList: Array<string> = [];

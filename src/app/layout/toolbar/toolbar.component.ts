@@ -99,19 +99,30 @@ export class ToolbarComponent implements OnInit {
     this.global.moreHeaderState = !this.global.moreHeaderState;
   }
 
-  // 折叠\显示导航菜单
-  toggleCollapsed(): void {
+  toggleMenu(): void {
+    if (this.global.isMobile) {
+      this.isCollapsed = false;
+      this.toggleSidebarHidden();
+    } else {
+      this.toggleSidebarCollapsed();
+    }
+  }
+
+  // 折叠/展开导航菜单
+  toggleSidebarCollapsed(): void {
     this.isCollapsed = !this.isCollapsed;
     this.layoutConfig.config = {
-      navbar: {
-        collapsed: this.isCollapsed,
-      },
+      navbar: { collapsed: this.isCollapsed },
     };
+  }
+
+  // 隐藏/显示导航菜单
+  toggleSidebarHidden(): void {
+    this.global.sidebarHidden = !this.global.sidebarHidden;
   }
 
   // 切换设置
   handleToggleSetting(): void {
-    this.showInfoContent = !this.showInfoContent;
     this.toggleSetting.emit();
   }
 

@@ -1,3 +1,8 @@
+<div
+  class="nav-cover wh100"
+  *ngIf="global.isMobile"
+  (click)="handleCoverClick()"
+></div>
 <nav class="nav h100" [ngClass]="{ collapse: configData.navbar.collapsed }">
   <div class="logo-box">
     <ng-container *ngIf="!configData.navbar.collapsed; else elseTemplate">

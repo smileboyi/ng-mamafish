@@ -71,6 +71,12 @@ export class AppComponent implements OnInit, OnDestroy {
           this.global.isMobile = state;
           this.global.moreHeaderState = false;
         }
+        if (this.global.isMobile) {
+          this.layoutConfig.config = {
+            navbar: { collapsed: false },
+            toolbar: { position: 'above-fixed' },
+          };
+        }
         this.toggleBodyMini();
       });
 

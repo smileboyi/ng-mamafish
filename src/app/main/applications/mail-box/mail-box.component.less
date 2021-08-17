@@ -4,6 +4,13 @@
 :host {
   width: 100%;
   height: 100%;
+  .hidden-header-title {
+    ::ng-deep .bg-header .bottom-bar {
+      .title {
+        font-size: 0;
+      }
+    }
+  }
   .bottom-inbox-bar {
     align-items: center;
     [nz-button] {
@@ -93,7 +100,7 @@
       border-bottom: 1px solid rgba(0, 0, 0, 0.12);
       &:hover,
       &.ac {
-        background-color: rgba(245,245,245,.2);
+        background-color: rgba(245, 245, 245, 0.2);
       }
       [nzIcon] {
         min-width: 40px;
@@ -144,7 +151,7 @@
   }
   .content-box {
     padding-bottom: 150px;
-    background-color: rgba(245,245,245,.2);
+    background-color: rgba(245, 245, 245, 0.2);
     .no-data {
       [nz-icon] {
         font-size: 220px;
