@@ -2,7 +2,7 @@
   <div class="btn" (click)="toggleSkin.emit()">皮肤</div>
   <div class="btn">录屏</div>
   <div class="btn">介绍</div>
-  <div class="btn">反馈</div>
+  <div class="btn" (click)="openFeedback()">反馈</div>
   <div class="btn" (click)="musicHidden = !musicHidden">音乐</div>
 </div>
 <div class="music-player" cdkDrag [hidden]="musicHidden">
