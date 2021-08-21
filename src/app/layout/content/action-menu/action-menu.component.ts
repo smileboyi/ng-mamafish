@@ -6,6 +6,7 @@ import {
   AfterViewInit,
   EventEmitter,
 } from '@angular/core';
+import { Recorder, Player } from 'timecatjs';
 import Gitter from 'gitter-sidecar';
 
 @Component({
@@ -15,10 +16,13 @@ import Gitter from 'gitter-sidecar';
 })
 export class ActionMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   musicHidden = true;
+  screencapHidden = true;
+  replayHidden = true;
   chat: {
     toggleChat: (b: boolean) => void;
     destroy: () => void;
   };
+  recorder: Recorder;
 
   @Output() toggleSkin = new EventEmitter<any>();
 
@@ -29,7 +33,7 @@ export class ActionMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.chat = new Gitter({
       room: 'ng-mamafish/ng-mamafish',
-      activationElement: false
+      activationElement: false,
     });
   }
 
@@ -40,5 +44,18 @@ export class ActionMenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openFeedback(): void {
     this.chat.toggleChat(true);
+  }
+
+  handleRecord(): void {
+    this.replayHidden = false;
+    this.recorder = new Recorder();
+  }
+
+  handleReplay(): void {
+    this.replayHidden = true;
+    this.recorder.destroy();
+    this.screencapHidden = true;
+    this.replayHidden = true;
+    window.open('/assets/replay.html');
   }
 }

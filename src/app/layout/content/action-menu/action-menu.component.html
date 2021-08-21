@@ -1,6 +1,6 @@
 <div class="action-menu">
   <div class="btn" (click)="toggleSkin.emit()">皮肤</div>
-  <div class="btn">录屏</div>
+  <div class="btn" (click)="screencapHidden = false">录屏</div>
   <div class="btn">介绍</div>
   <div class="btn" (click)="openFeedback()">反馈</div>
   <div class="btn" (click)="musicHidden = !musicHidden">音乐</div>
@@ -14,4 +14,9 @@
     marginwidth="0"
     marginheight="0"
   ></iframe> -->
+</div>
+
+<div class="screencap box-shadow" cdkDrag [hidden]="screencapHidden">
+  <i class="record centre2" [hidden]="!replayHidden" (click)="handleRecord()"></i>
+  <i class="replay centre2" [hidden]="replayHidden" (click)="handleReplay()"></i>
 </div>
