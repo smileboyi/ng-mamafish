@@ -1,0 +1,158 @@
+:host {
+  position: fixed;
+  right: 20px;
+  top: 30%;
+  z-index: 1050;
+  display: block;
+  width: 390px;
+  background-color: #fff;
+  .music-player {
+    box-shadow: 0 0 10px #ccc;
+    background-color: #fff;
+    border-radius: 2px;
+    .player-top {
+      .img-bg {
+        width: 90px;
+        height: 90px;
+        > img {
+          object-fit: cover;
+          border: none;
+        }
+      }
+      .ctrl-box {
+        padding: 10px 10px 1px 10px;
+        .top {
+          height: 36px;
+          line-height: 36px;
+          margin-bottom: 10px;
+        }
+        .bar {
+          position: relative;
+          left: 0;
+          top: 0;
+          height: 2px;
+          width: 280px;
+          background-color: #cdcdcd;
+          .flag {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 2px;
+            background-color: #e12828;
+            .thumb {
+              position: absolute;
+              right: -4px;
+              left: auto;
+              top: -3px;
+              width: 8px;
+              height: 8px;
+              cursor: pointer;
+              background: url(/assets/icons/netease-cloud.png) no-repeat -92px -14px;
+            }
+          }
+        }
+        .opr {
+          position: relative;
+          height: 20px;
+          margin-top: 10px;
+          line-height: 20px;
+          .time {
+            position: absolute;
+            left: 0;
+            font-size: 11px;
+            color: #999;
+          }
+          .btns {
+            position: relative;
+            margin: 0 auto;
+            width: 72px;
+          }
+          .prev {
+            position: absolute;
+            top: 4px;
+            left: 0;
+            width: 9px;
+            height: 10px;
+            cursor: pointer;
+            background: url(/assets/icons/netease-cloud.png) no-repeat -33px 0;
+          }
+          .pause {
+            display: block;
+            width: 14px;
+            height: 18px;
+            cursor: pointer;
+            margin: 0 auto;
+            background: url(/assets/icons/netease-cloud.png) no-repeat 0 0;
+          }
+          .next {
+            position: absolute;
+            top: 4px;
+            right: 0;
+            width: 9px;
+            height: 10px;
+            cursor: pointer;
+            background: url(/assets/icons/netease-cloud.png) no-repeat -58px 0;
+          }
+        }
+        .more {
+          position: absolute;
+          right: 0;
+          top: 4px;
+          width: 13px;
+          height: 10px;
+          background: url(/assets/icons/netease-cloud.png) no-repeat -58px -14px;
+          cursor: pointer;
+          opacity: 0.8;
+        }
+      }
+    }
+    .player-list {
+      height: 340px;
+      border-top: 1px solid #e6e6e6;
+			overflow-x: hidden;
+			overflow-y: auto;
+      .music-box {
+
+        li {
+          display: flex;
+          padding: 6px 10px;
+          line-height: 18px;
+					cursor: pointer;
+					&:nth-child(odd) {
+						background-color: #f7f7f7;
+					}
+					&:hover{
+						background-color: #e6e6e6;
+					}
+          span {
+            font-size: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          span:nth-of-type(1) {
+            width: 30px;
+            text-align: center;
+          }
+          span:nth-of-type(2) {
+            flex: 1;
+            text-align: left;
+          }
+          span:nth-of-type(3) {
+            width: 50px;
+            text-align: left;
+          }
+          span:nth-of-type(4) {
+            width: 80px;
+            text-align: left;
+          }
+        }
+      }
+    }
+    .player-list.close {
+      height: 0 !important;
+      overflow: hidden;
+      display: none;
+    }
+  }
+}

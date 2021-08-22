@@ -1,0 +1,37 @@
+<div class="music-player">
+  <div class="player-top flex">
+    <div class="img-bg">
+      <img class="wh100" src="/assets/icons/music-icon.jpg" />
+    </div>
+    <div class="ctrl-box fe">
+      <div class="top">
+        <span>New boy</span>
+        -
+        <span>朴树</span>
+      </div>
+      <div class="bar">
+        <div class="flag" style="width: 10%">
+          <span class="thumb"></span>
+        </div>
+      </div>
+      <div class="opr">
+        <span class="time">4.32</span>
+        <div class="btns">
+          <span class="prev"></span>
+          <span class="pause"></span>
+          <span class="next"></span>
+        </div>
+        <span class="more" (click)="togglePlayList()"></span>
+      </div>
+    </div>
+  </div>
+  <div class="player-list" [ngClass]="{'close': isClose}">
+    <ul class="music-box">
+      <li class="">
+        <span></span><span>歌曲标题</span><span>时长</span><span>歌手</span>
+      </li>
+      <li *ngFor="let song of songs; let idx = index">
+      </li>
+    </ul>
+  </div>
+</div>

@@ -36,7 +36,10 @@ const loadFactory =
     SharedModule,
     BrowserAnimationsModule,
     NgxPermissionsModule.forRoot(),
-    InMemoryWebApiModule.forRoot(UsersData, { delay: 500 }),
+    InMemoryWebApiModule.forRoot(UsersData, {
+      delay: 500,
+      passThruUnknownUrl: true,
+    }),
     AppRoutingModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot(effects),
