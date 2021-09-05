@@ -11,6 +11,32 @@
     background-color: #fff;
     border-radius: 2px;
     .player-top {
+      position: relative;
+      .login {
+        position: absolute;
+        left: 90px;
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 90px);
+        height: 90px;
+        z-index: 5;
+        background-color: #fff;
+        cursor: pointer;
+        nz-form-item {
+          display: flex;
+          margin: 0;
+          nz-input-group{
+            width: auto;
+            flex: 1;;
+          }
+        }
+        .btn {
+          line-height: 25px;
+          font-size: 14px;
+          color: #1e88e5;
+          text-align: center;
+        }
+      }
       .img-bg {
         width: 90px;
         height: 90px;
@@ -56,7 +82,7 @@
           height: 20px;
           margin-top: 10px;
           line-height: 20px;
-          .time {
+          .duration {
             position: absolute;
             left: 0;
             font-size: 11px;
@@ -109,21 +135,20 @@
     .player-list {
       height: 340px;
       border-top: 1px solid #e6e6e6;
-			overflow-x: hidden;
-			overflow-y: auto;
+      overflow-x: hidden;
+      overflow-y: auto;
       .music-box {
-
         li {
           display: flex;
           padding: 6px 10px;
           line-height: 18px;
-					cursor: pointer;
-					&:nth-child(odd) {
-						background-color: #f7f7f7;
-					}
-					&:hover{
-						background-color: #e6e6e6;
-					}
+          cursor: pointer;
+          &:nth-child(odd) {
+            background-color: #f7f7f7;
+          }
+          &:hover {
+            background-color: #e6e6e6;
+          }
           span {
             font-size: 12px;
             overflow: hidden;

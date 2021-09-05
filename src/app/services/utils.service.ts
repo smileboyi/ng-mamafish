@@ -131,4 +131,16 @@ export class UtilsService {
       });
     });
   }
+
+  checkEmail(v: string): boolean {
+    return /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/.test(
+      v
+    );
+  }
+
+  checkPhone(v: string): boolean {
+    return /^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$/.test(
+      v
+    );
+  }
 }

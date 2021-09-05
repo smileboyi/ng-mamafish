@@ -1,7 +1,31 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {
+  Component,
+  OnInit,
+  Inject,
+  AfterViewInit,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpBackend,
+} from '@angular/common/http';
+import { DOCUMENT } from '@angular/common';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NgForage } from 'ngforage';
 
 import { appConfig } from '@config/app.config';
+import { messageText } from '@config/message-text.config';
+import { UtilsService } from '@services/utils.service';
+import { MUSIC_INFO } from '@tokens';
+import { Song } from '@declare';
+import {
+  songIdsResult,
+  songUrlResult,
+  songDetailResult,
+} from './music-player.data';
 
 @Component({
   selector: 'cat-music-player',
@@ -9,23 +33,264 @@ import { appConfig } from '@config/app.config';
   styleUrls: ['./music-player.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MusicPlayerComponent implements OnInit {
+export class MusicPlayerComponent implements OnInit, AfterViewInit {
   isClose = true;
-  songs = [];
+  isLogin = true;
+  song: Song = {
+    id: 0,
+    song: '',
+    singer: '',
+    picUrl: '',
+    duration: 0,
+  };
+  songs: Song[] = [];
+  logining = false;
+  account = '';
+  password = '';
+  musicCookie = '';
+  musicToken = '';
+  uid = '';
+  originalSongData: Array<{
+    id: number;
+    url: string;
+    type: string;
+  }> = [];
+  currentTime = '00:00'; // 当前播放时间
+  timer: any;
+  audio: HTMLAudioElement = new Audio();
+  playProgress = '0%'; // 播放进度
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private ngForage: NgForage,
+    private utils: UtilsService,
+    private message: NzMessageService,
+    private cdr: ChangeDetectorRef,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(MUSIC_INFO) private musicInfoToken: string
+  ) {}
 
   ngOnInit(): void {
-    this.http
-      .get(appConfig.MUSIC_API_BASE + '/artist/top/song?id=9945')
-      .subscribe((res: any) => {
-        console.log(res);
-        if (res.code === 200) {
+    this.ngForage
+      .getItem(this.musicInfoToken)
+      .then((res: any) => {
+        if (res) {
+          this.musicCookie = res.cookie;
+          this.musicToken = res.token;
+          this.uid = res.uid;
+          this.songs = res.songs;
+          this.originalSongData = res.originalSongData;
+          this.cdr.markForCheck();
+        } else {
+          this.isLogin = false;
+          this.cdr.markForCheck();
+          this.getLikeSongs().then((result) => {});
         }
-      });
+      })
+      .catch((err) => {});
   }
+
+  ngAfterViewInit(): void {}
 
   togglePlayList(): void {
     this.isClose = !this.isClose;
+  }
+
+  async loginAndFetchMusic(): Promise<void> {
+    await this.loginNeteaseCloudMusic();
+    await this.getLikeSongs();
+  }
+
+  async loginNeteaseCloudMusic(): Promise<void> {
+    try {
+      const account = this.account.trim();
+      const password = this.password.trim();
+      if (!account || !password) {
+        this.message.warning(messageText.WARN_MUSIC_LOGIN);
+        return;
+      }
+      this.logining = true;
+      let result: any;
+      // 最开始做的是扫码登录，但是登录成功后，/login/qr/check接口轮询返回的结果一直是801等待扫码
+      if (this.utils.checkEmail(account)) {
+        result = await this.http
+          .get(
+            appConfig.MUSIC_API_BASE +
+              `/login?email=${account}&password=${password}`
+          )
+          .toPromise();
+      } else if (this.utils.checkPhone(account)) {
+        result = await this.http
+          .get(
+            appConfig.MUSIC_API_BASE +
+              `/login/cellphone?phone=${account}&password=${password}`
+          )
+          .toPromise();
+      } else {
+        this.logining = false;
+        this.message.warning(messageText.ERR_MUSIC_ACCOUNT);
+        this.cdr.markForCheck();
+        return;
+      }
+      if (result.code !== 200) {
+        throw Error();
+      }
+      this.logining = false;
+      this.message.success(messageText.SUC_MUSIC_LOGIN);
+      this.cdr.markForCheck();
+      this.musicCookie = result.cookie;
+      this.musicToken = result.token;
+      this.uid = result.account.id;
+    } catch (error) {
+      this.logining = false;
+      this.message.error(messageText.ERR_MUSIC_LOGIN);
+      this.cdr.markForCheck();
+    }
+  }
+
+  // 获取用户喜爱的歌
+  async getLikeSongs(): Promise<void> {
+    let songIds: number[] = [];
+    let result: any;
+    let params = new HttpParams()
+      .set('uid', this.uid)
+      .set('timestamp', Date.now().toString());
+
+    try {
+      result = await this.http
+        .get(appConfig.MUSIC_API_BASE + `/likelist`, {
+          params,
+          withCredentials: true,
+        })
+        .toPromise();
+      if (result.code !== 200) {
+        songIds = songIdsResult;
+      } else {
+        songIds = result.ids;
+      }
+
+      params = new HttpParams().set('id', songIds.join(','));
+      result = await this.http
+        .get(appConfig.MUSIC_API_BASE + `/song/url`, {
+          params,
+          withCredentials: true,
+        })
+        .toPromise();
+
+      if (result.code !== 200) {
+        this.originalSongData = songUrlResult;
+      } else {
+        // 过滤掉url没值的歌，有些歌下架有些歌是vip等等
+        this.originalSongData = result.data
+          .filter((x: any) => x.url)
+          .map((x: any) => {
+            return {
+              id: x.id,
+              url: x.url,
+              type: x.type,
+            };
+          });
+      }
+      songIds = this.originalSongData.map((x: any) => x.id);
+
+      params = new HttpParams().set('ids', songIds.join(','));
+      result = await this.http
+        .get(appConfig.MUSIC_API_BASE + `/song/detail`, {
+          params,
+          withCredentials: true,
+        })
+        .toPromise();
+      if (result.code !== 200) {
+        this.songs = songDetailResult;
+      } else {
+        this.songs = result.songs.map((x: any) => {
+          return {
+            id: x.id,
+            song: x.name,
+            singer: x.ar[0].name,
+            picUrl: x.al.picUrl,
+            duration: x.dt,
+          };
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      this.originalSongData = songUrlResult;
+      this.songs = songDetailResult;
+    } finally {
+      this.ngForage.setItem(this.musicInfoToken, {
+        cookie: this.musicCookie,
+        token: this.musicInfoToken,
+        uid: this.uid,
+        songs: this.songs,
+        originalSongData: this.originalSongData,
+      });
+      this.song = this.songs[0];
+      this.isLogin = true;
+      this.cdr.markForCheck();
+    }
+  }
+
+  // 时间转换
+  convertSongTime(time: number): string {
+    time = Math.floor(time);
+    let m: NumOrStr = Math.floor(time / 60);
+    m = m < 10 ? '0' + m : m;
+    let s: NumOrStr = Math.floor(time % 60);
+    s = s < 10 ? '0' + s : s;
+    return m + ':' + s;
+  }
+
+  // 双击播放
+  playMusic(song: Song): void {
+    this.audio.pause();
+    const data: any = this.originalSongData.find((x) => x.id === song.id);
+    if (data) {
+      this.song = song;
+      this.audio.src = data.url;
+      // this.audio.src =
+      // 'https://audio04.dmhmusic.com/71_53_T10052939435_128_4_1_0_sdk-cpm/cn/0210/M00/C8/CD/ChR4613x-wqAcbAdABc6S1BC3yI148.mp3?xcode=b26365cc1a4b799e8ccf4488f565370c1b67653';
+      this.currentTime = '00:00';
+      this.playProgress = '0%';
+      this.cdr.markForCheck();
+      this.playOrPause();
+    } else {
+      this.message.error(messageText.ERR_MUSIC_PLAY);
+    }
+  }
+
+  // 播放暂停
+  playOrPause(): void {
+    clearInterval(this.timer);
+    if (this.audio.paused) {
+      if (!this.audio.src) {
+        const id = this.songs[0].id;
+        const data: any = this.originalSongData.find((x) => x.id === id);
+        this.song = this.songs[0];
+        this.audio.src = data.url;
+      }
+      this.audio.play();
+      this.timer = setInterval(() => {
+        if (this.audio.ended) {
+          clearInterval(this.timer);
+          let id = this.song.id;
+          let idx = this.songs.findIndex((x) => x.id === id);
+          idx = idx + 1 >= this.songs.length ? 0 : idx + 1;
+          this.song = this.songs[idx];
+          id = this.song.id;
+          const data: any = this.originalSongData.find((x) => x.id === id);
+          this.audio.src = data.url;
+          this.playOrPause();
+        } else {
+          this.currentTime = this.convertSongTime(this.audio.currentTime);
+          this.playProgress =
+            ((this.audio.currentTime / this.audio.duration) * 100).toFixed(2) +
+            '%';
+          this.cdr.markForCheck();
+        }
+      }, 1000);
+    } else {
+      this.audio.pause();
+    }
   }
 }

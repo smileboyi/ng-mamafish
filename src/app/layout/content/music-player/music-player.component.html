@@ -1,36 +1,80 @@
 <div class="music-player">
   <div class="player-top flex">
-    <div class="img-bg">
-      <img class="wh100" src="/assets/icons/music-icon.jpg" />
+    <div class="login" *ngIf="!isLogin">
+      <nz-form-item>
+        <nz-form-label nzRequired>账号</nz-form-label>
+        <nz-input-group>
+          <input
+            type="text"
+            nz-input
+            placeholder="手机号/邮箱"
+            [(ngModel)]="account"
+            autocomplete="false"
+          />
+        </nz-input-group>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired>密码</nz-form-label>
+        <nz-input-group>
+          <input
+            type="password"
+            nz-input
+            placeholder="密码"
+            [(ngModel)]="password"
+            autocomplete="false"
+          />
+        </nz-input-group>
+      </nz-form-item>
+      <span class="btn" (click)="loginAndFetchMusic()"
+        >登录网易云音乐<i
+          nz-icon
+          [nzType]="'sync'"
+          [nzSpin]="true"
+          *ngIf="logining"
+        ></i
+      ></span>
     </div>
-    <div class="ctrl-box fe">
+    <div class="img-bg">
+      <img
+        class="wh100"
+        [src]="song.picUrl || '/assets/icons/music-icon.jpg'"
+      />
+    </div>
+    <div class="ctrl-box fe pre">
       <div class="top">
-        <span>New boy</span>
+        <span>{{ song.song }}</span>
         -
-        <span>朴树</span>
+        <span>{{ song.singer }}</span>
       </div>
       <div class="bar">
-        <div class="flag" style="width: 10%">
+        <div class="flag" [ngStyle]="{ width: playProgress }">
           <span class="thumb"></span>
         </div>
       </div>
       <div class="opr">
-        <span class="time">4.32</span>
+        <span class="duration">{{ currentTime }}</span>
         <div class="btns">
           <span class="prev"></span>
-          <span class="pause"></span>
+          <span class="pause" (click)="playOrPause()"></span>
           <span class="next"></span>
         </div>
         <span class="more" (click)="togglePlayList()"></span>
       </div>
     </div>
   </div>
-  <div class="player-list" [ngClass]="{'close': isClose}">
+  <div class="player-list scrollbar" [ngClass]="{ close: isClose }">
     <ul class="music-box">
-      <li class="">
+      <li>
         <span></span><span>歌曲标题</span><span>时长</span><span>歌手</span>
       </li>
-      <li *ngFor="let song of songs; let idx = index">
+      <li
+        *ngFor="let song of songs; let idx = index"
+        (dblclick)="playMusic(song)"
+      >
+        <span>{{ idx + 1 }}</span>
+        <span>{{ song.song }}</span>
+        <span>{{ convertSongTime(song.duration / 1000) }}</span>
+        <span>{{ song.singer }}</span>
       </li>
     </ul>
   </div>

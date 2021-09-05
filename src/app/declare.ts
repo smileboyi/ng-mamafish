@@ -162,3 +162,11 @@ export interface ThemeColor {
   selectedBg: string;
   selectedBc?: string;
 }
+
+export interface Song {
+  id: number;
+  song: string;
+  singer: string;
+  picUrl: string;
+  duration: number;
+}

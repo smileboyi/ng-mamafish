@@ -5,4 +5,9 @@ export const messageText = {
   ERR_EXPORT_TO_EXCEL: '数据表导出失败',
   SCREEN_CAPTURE_START: '正在生成截屏图',
   SUC_SEND_MAIL: '邮件发送成功',
+  SUC_MUSIC_LOGIN: '网易云音乐账号登录成功',
+  ERR_MUSIC_LOGIN: '网易云音乐账号登录失败',
+  ERR_MUSIC_ACCOUNT: '账号格式错误，不是手机号和邮箱',
+  WARN_MUSIC_LOGIN: '请输入网易云音乐账号和密码',
+  ERR_MUSIC_PLAY: '该歌曲无法播放',
 };
