@@ -54,9 +54,12 @@
       <div class="opr">
         <span class="duration">{{ currentTime }}</span>
         <div class="btns">
-          <span class="prev"></span>
-          <span class="pause" (click)="playOrPause()"></span>
-          <span class="next"></span>
+          <span class="prev" (click)="handlePrevSong()"></span>
+          <span
+            class="pause {{ !audio.paused ? 'stop' : '' }}"
+            (click)="playOrPause()"
+          ></span>
+          <span class="next" (click)="handleNextSong()"></span>
         </div>
         <span class="more" (click)="togglePlayList()"></span>
       </div>
@@ -69,12 +72,13 @@
       </li>
       <li
         *ngFor="let song of songs; let idx = index"
+        [ngClass]="{'ac': playIdx === idx}"
         (dblclick)="playMusic(song)"
       >
         <span>{{ idx + 1 }}</span>
-        <span>{{ song.song }}</span>
+        <span [title]="song.song">{{ song.song }}</span>
         <span>{{ convertSongTime(song.duration / 1000) }}</span>
-        <span>{{ song.singer }}</span>
+        <span [title]="song.singer">{{ song.singer }}</span>
       </li>
     </ul>
   </div>

@@ -3,20 +3,18 @@
   <div class="btn" (click)="screencapHidden = false">录屏</div>
   <div class="btn">介绍</div>
   <div class="btn" (click)="openFeedback()">反馈</div>
-  <div class="btn" (click)="musicHidden = !musicHidden">音乐</div>
-</div>
-<div class="music-player" cdkDrag [hidden]="musicHidden">
-  <!-- <iframe
-    src="http://music.163.com/outchain/player?type=0&amp;id=34488135&amp;auto=0"
-    width="400"
-    height="450"
-    frameborder="no"
-    marginwidth="0"
-    marginheight="0"
-  ></iframe> -->
+  <div class="btn" (click)="toggleMusicView.emit()">音乐</div>
 </div>
 
 <div class="screencap box-shadow" cdkDrag [hidden]="screencapHidden">
-  <i class="record centre2" [hidden]="!replayHidden" (click)="handleRecord()"></i>
-  <i class="replay centre2" [hidden]="replayHidden" (click)="handleReplay()"></i>
+  <i
+    class="record centre2"
+    [hidden]="!replayHidden"
+    (click)="handleRecord()"
+  ></i>
+  <i
+    class="replay centre2"
+    [hidden]="replayHidden"
+    (click)="handleReplay()"
+  ></i>
 </div>

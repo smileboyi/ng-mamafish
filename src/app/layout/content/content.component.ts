@@ -8,6 +8,7 @@ import { NgForage } from 'ngforage';
 })
 export class ContentComponent implements OnInit, OnDestroy {
   skinIdx = 0;
+  musicHidden = true;
 
   @HostBinding('style.background-image')
   get skin(): string {

@@ -25,9 +25,9 @@
         nz-form-item {
           display: flex;
           margin: 0;
-          nz-input-group{
+          nz-input-group {
             width: auto;
-            flex: 1;;
+            flex: 1;
           }
         }
         .btn {
@@ -39,6 +39,7 @@
       }
       .img-bg {
         width: 90px;
+        min-width: 90px;
         height: 90px;
         > img {
           object-fit: cover;
@@ -47,10 +48,12 @@
       }
       .ctrl-box {
         padding: 10px 10px 1px 10px;
+        overflow: hidden;
         .top {
           height: 36px;
           line-height: 36px;
           margin-bottom: 10px;
+          white-space: nowrap;
         }
         .bar {
           position: relative;
@@ -109,6 +112,9 @@
             cursor: pointer;
             margin: 0 auto;
             background: url(/assets/icons/netease-cloud.png) no-repeat 0 0;
+            &.stop {
+              background-position: -37px -64px;
+            }
           }
           .next {
             position: absolute;
@@ -146,7 +152,8 @@
           &:nth-child(odd) {
             background-color: #f7f7f7;
           }
-          &:hover {
+          &:hover,
+          &.ac {
             background-color: #e6e6e6;
           }
           span {

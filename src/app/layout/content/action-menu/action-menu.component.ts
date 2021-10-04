@@ -15,7 +15,6 @@ import Gitter from 'gitter-sidecar';
   styleUrls: ['./action-menu.component.less'],
 })
 export class ActionMenuComponent implements OnInit, AfterViewInit, OnDestroy {
-  musicHidden = true;
   screencapHidden = true;
   replayHidden = true;
   chat: {
@@ -25,6 +24,7 @@ export class ActionMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   recorder: Recorder;
 
   @Output() toggleSkin = new EventEmitter<any>();
+  @Output() toggleMusicView = new EventEmitter<any>();
 
   constructor() {}
 

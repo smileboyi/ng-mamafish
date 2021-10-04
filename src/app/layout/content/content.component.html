@@ -1,9 +1,13 @@
 <div class="wh100">
-  <cat-action-menu (toggleSkin)="toggleWebSkin()"></cat-action-menu>
+  <cat-action-menu
+    (toggleSkin)="toggleWebSkin()"
+    (toggleMusicView)="musicHidden = !musicHidden"
+  ></cat-action-menu>
   <router-outlet></router-outlet>
 </div>
 
-
-<cat-music-player cdkDrag>
-
-</cat-music-player>
+<cat-music-player
+  cdkDrag
+  cdkDragBoundary="cat-layout"
+  [hidden]="musicHidden"
+></cat-music-player>

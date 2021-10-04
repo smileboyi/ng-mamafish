@@ -10401,6 +10401,11 @@
   "resolved" "https://registry.nlark.com/trim-off-newlines/download/trim-off-newlines-1.0.1.tgz"
   "version" "1.0.1"
 
+"ts-md5@^1.2.9":
+  "integrity" "sha1-Isn9K6r9/evuEGj/TS3CFf9R33c="
+  "resolved" "https://registry.nlark.com/ts-md5/download/ts-md5-1.2.9.tgz"
+  "version" "1.2.9"
+
 "ts-node@~8.3.0":
   "integrity" "sha1-5AWWGEETcZJKH7XzsSWRXzJO+1c="
   "resolved" "https://registry.nlark.com/ts-node/download/ts-node-8.3.0.tgz"

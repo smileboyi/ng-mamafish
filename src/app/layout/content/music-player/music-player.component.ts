@@ -6,15 +6,10 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpParams,
-  HttpBackend,
-} from '@angular/common/http';
-import { DOCUMENT } from '@angular/common';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NgForage } from 'ngforage';
+import { Md5 } from 'ts-md5/dist/md5';
 
 import { appConfig } from '@config/app.config';
 import { messageText } from '@config/message-text.config';
@@ -59,6 +54,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
   timer: any;
   audio: HTMLAudioElement = new Audio();
   playProgress = '0%'; // 播放进度
+  playIdx = -1; // 歌曲播放位置
 
   constructor(
     private http: HttpClient,
@@ -66,9 +62,20 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
     private utils: UtilsService,
     private message: NzMessageService,
     private cdr: ChangeDetectorRef,
-    @Inject(DOCUMENT) private document: Document,
     @Inject(MUSIC_INFO) private musicInfoToken: string
-  ) {}
+  ) {
+    this.ngForage
+      .getItem(this.musicInfoToken)
+      .then((res: any) => {
+        if (res) {
+          this.musicCookie = res.cookie;
+          this.loginRefresh();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   ngOnInit(): void {
     this.ngForage
@@ -84,10 +91,11 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
         } else {
           this.isLogin = false;
           this.cdr.markForCheck();
-          this.getLikeSongs().then((result) => {});
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   ngAfterViewInit(): void {}
@@ -116,14 +124,16 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
         result = await this.http
           .get(
             appConfig.MUSIC_API_BASE +
-              `/login?email=${account}&password=${password}`
+              `/login?email=${account}&md5_password=${Md5.hashStr(password)}`
           )
           .toPromise();
       } else if (this.utils.checkPhone(account)) {
         result = await this.http
           .get(
             appConfig.MUSIC_API_BASE +
-              `/login/cellphone?phone=${account}&password=${password}`
+              `/login/cellphone?phone=${account}&md5_password=${Md5.hashStr(
+                password
+              )}`
           )
           .toPromise();
       } else {
@@ -154,6 +164,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
     let result: any;
     let params = new HttpParams()
       .set('uid', this.uid)
+      .set('cookie', this.musicCookie)
       .set('timestamp', Date.now().toString());
 
     try {
@@ -169,7 +180,9 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
         songIds = result.ids;
       }
 
-      params = new HttpParams().set('id', songIds.join(','));
+      params = new HttpParams()
+        .set('id', songIds.join(','))
+        .set('cookie', this.musicCookie);
       result = await this.http
         .get(appConfig.MUSIC_API_BASE + `/song/url`, {
           params,
@@ -193,7 +206,9 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
       }
       songIds = this.originalSongData.map((x: any) => x.id);
 
-      params = new HttpParams().set('ids', songIds.join(','));
+      params = new HttpParams()
+        .set('ids', songIds.join(','))
+        .set('cookie', this.musicCookie);
       result = await this.http
         .get(appConfig.MUSIC_API_BASE + `/song/detail`, {
           params,
@@ -234,9 +249,9 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
   // 时间转换
   convertSongTime(time: number): string {
     time = Math.floor(time);
-    let m: NumOrStr = Math.floor(time / 60);
+    let m: StrOrNum = Math.floor(time / 60);
     m = m < 10 ? '0' + m : m;
-    let s: NumOrStr = Math.floor(time % 60);
+    let s: StrOrNum = Math.floor(time % 60);
     s = s < 10 ? '0' + s : s;
     return m + ':' + s;
   }
@@ -246,10 +261,9 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
     this.audio.pause();
     const data: any = this.originalSongData.find((x) => x.id === song.id);
     if (data) {
+      this.playIdx = this.originalSongData.findIndex((x) => x.id === song.id);
       this.song = song;
       this.audio.src = data.url;
-      // this.audio.src =
-      // 'https://audio04.dmhmusic.com/71_53_T10052939435_128_4_1_0_sdk-cpm/cn/0210/M00/C8/CD/ChR4613x-wqAcbAdABc6S1BC3yI148.mp3?xcode=b26365cc1a4b799e8ccf4488f565370c1b67653';
       this.currentTime = '00:00';
       this.playProgress = '0%';
       this.cdr.markForCheck();
@@ -259,7 +273,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // 播放暂停
+  // 播放或者暂停
   playOrPause(): void {
     clearInterval(this.timer);
     if (this.audio.paused) {
@@ -269,28 +283,64 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
         this.song = this.songs[0];
         this.audio.src = data.url;
       }
-      this.audio.play();
-      this.timer = setInterval(() => {
-        if (this.audio.ended) {
-          clearInterval(this.timer);
-          let id = this.song.id;
-          let idx = this.songs.findIndex((x) => x.id === id);
-          idx = idx + 1 >= this.songs.length ? 0 : idx + 1;
-          this.song = this.songs[idx];
-          id = this.song.id;
-          const data: any = this.originalSongData.find((x) => x.id === id);
-          this.audio.src = data.url;
-          this.playOrPause();
-        } else {
-          this.currentTime = this.convertSongTime(this.audio.currentTime);
-          this.playProgress =
-            ((this.audio.currentTime / this.audio.duration) * 100).toFixed(2) +
-            '%';
-          this.cdr.markForCheck();
-        }
-      }, 1000);
+      // 如果不能再播放了，需要重新登录
+      // https://blog.csdn.net/weixin_41767649/article/details/79918139
+      if (!isNaN(this.audio.duration)) {
+        this.audio.play();
+        this.timer = setInterval(() => {
+          if (this.audio.ended) {
+            clearInterval(this.timer);
+            let id = this.song.id;
+            let idx = this.songs.findIndex((x) => x.id === id);
+            idx = idx + 1 >= this.songs.length ? 0 : idx + 1;
+            this.song = this.songs[idx];
+            id = this.song.id;
+            const data: any = this.originalSongData.find((x) => x.id === id);
+            this.audio.src = data.url;
+            this.playOrPause();
+          } else {
+            this.currentTime = this.convertSongTime(this.audio.currentTime);
+            this.playProgress =
+              ((this.audio.currentTime / this.audio.duration) * 100).toFixed(
+                2
+              ) + '%';
+            this.cdr.markForCheck();
+          }
+        }, 1000);
+      } else {
+        this.message.error(messageText.MUSIC_LOGIN_INVALID);
+        this.ngForage.removeItem(this.musicInfoToken);
+        this.isLogin = false;
+      }
     } else {
       this.audio.pause();
     }
+  }
+
+  handlePrevSong(): void {
+    this.audio.pause();
+    const idx: number = this.playIdx ? this.playIdx - 1 : this.songs.length - 1;
+    const song: Song = this.songs[idx];
+    this.playMusic(song);
+  }
+
+  handleNextSong(): void {
+    this.audio.pause();
+    const idx: number =
+      this.playIdx === this.songs.length - 1 ? 0 : this.playIdx + 1;
+    const song: Song = this.songs[idx];
+    this.playMusic(song);
+  }
+
+  loginRefresh(): void {
+    const params = new HttpParams().set('cookie', this.musicCookie);
+    this.http
+      .get(appConfig.MUSIC_API_BASE + `/login/refresh`, {
+        params,
+        withCredentials: true,
+      })
+      .toPromise()
+      .then((res) => {})
+      .catch((err) => {});
   }
 }
