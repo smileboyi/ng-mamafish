@@ -12,14 +12,14 @@ export class ContentComponent implements OnInit, OnDestroy {
 
   @HostBinding('style.background-image')
   get skin(): string {
-    return `url(/assets/images/texture-${this.skinIdx}.webp)`;
+    return `url(/assets/images/texture-${this.skinIdx || 1}.webp)`;
   }
 
   constructor(private ngForage: NgForage) {}
 
   ngOnInit(): void {
     this.ngForage.getItem('webSkinIdx').then((idx: any) => {
-      this.skinIdx = idx;
+      this.skinIdx = idx || 0;
     });
   }
 

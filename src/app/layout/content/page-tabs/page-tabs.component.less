@@ -1,0 +1,72 @@
+:host {
+  display: block;
+  width: 100%;
+  background-color: #f4f4f4;
+  overflow: hidden;
+  .page-tabs {
+    height: 34px;
+    padding: 5px 5px 3px;
+    overflow-y: hidden;
+    overflow-x: auto;
+    box-sizing: content-box;
+    background-color: transparent;
+    .tabs {
+      white-space: nowrap;
+      background-color: transparent;
+			border-bottom: 1px solid #d5d5d5;
+      .tab {
+        display: inline-block;
+        height: 32px;
+        line-height: 32px;
+        padding: 0 10px;
+        margin-left: 1px;
+        clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 0 100%);
+        border: 1px solid #d5d5d5;
+				border-bottom: none;
+        background-color: #e3e3e3;
+				&.ac{
+					background-color: #fbfbfb;
+				}
+        .ico {
+					display: inline-block;
+          width: 16px;
+          height: 16px;
+					margin-right: 3px;
+					vertical-align: middle;
+          background-color: transparent;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 100% 100%;
+        }
+        .title {
+          height: 100%;
+          transition: all 0.3s;
+          cursor: pointer;
+        }
+        .close {
+          display: inline-block;
+          height: 15px;
+          width: 15px;
+          line-height: 1;
+          margin: -2px 8px 0 8px;
+          padding: 1px;
+          vertical-align: middle;
+          font-size: 13px;
+          color: rgba(0, 0, 0, 0.5);
+          text-align: center;
+          font-weight: lighter;
+          transition: all 0.3s;
+          border-radius: 50%;
+          cursor: pointer;
+          &::after {
+            content: '\2716';
+          }
+          &:hover {
+            color: #fff;
+            background-color: #f86363;
+          }
+        }
+      }
+    }
+  }
+}

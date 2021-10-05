@@ -56,7 +56,7 @@ export class NavMenuItemComponent implements OnInit {
   clickMenuItem(
     pathId: string,
     hashs: Array<number | string>,
-    params: object
+    params: { [k: string]: StrOrNum }
   ): void {
     const h = hashs ? hashs : [];
     const p = params ? params : {};
@@ -64,6 +64,9 @@ export class NavMenuItemComponent implements OnInit {
     fixMenuItemSelected(pathId);
     // 页面切换
     this.utils.gotoOtherPage(pathId, h, p);
+    // 保存页面地址数据
+    this.global.urlData.hashs = h;
+    this.global.urlData.params = p;
   }
 
   openSubMenu(open: boolean): void {

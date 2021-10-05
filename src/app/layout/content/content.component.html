@@ -1,11 +1,13 @@
-<div class="wh100">
+<div class="top">
   <cat-action-menu
     (toggleSkin)="toggleWebSkin()"
     (toggleMusicView)="musicHidden = !musicHidden"
   ></cat-action-menu>
+  <cat-page-tabs></cat-page-tabs>
+</div>
+<div class="fe scrollbar ovys">
   <router-outlet></router-outlet>
 </div>
-
 <cat-music-player
   cdkDrag
   cdkDragBoundary="cat-layout"

@@ -1,0 +1,15 @@
+<div class="page-tabs scrollbar">
+  <ul class="tabs">
+    <li
+      class="tab"
+      [ngClass]="{ ac: currTabIdx === i }"
+      (click)="handleTabSwitch(i)"
+      *ngFor="let item of tabsData; let i = index"
+    >
+      <i class="ico"></i>
+      <span class="title">{{ item.title }}</span>
+      <span class="close" (click)="handleTabClose(i)"></span>
+    </li>
+  </ul>
+	{{currTabIdx}}
+</div>

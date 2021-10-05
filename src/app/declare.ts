@@ -170,3 +170,14 @@ export interface Song {
   picUrl: string;
   duration: number;
 }
+
+export interface PageTab {
+  pageId: string;
+  title: string;
+  icon: string;
+  hashs: StrOrNum[];
+  params: {
+    [k: string]: StrOrNum;
+  };
+  cached: boolean;
+}

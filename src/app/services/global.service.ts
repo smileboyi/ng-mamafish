@@ -11,6 +11,7 @@ import { UserRole, UserInfo } from '@declare';
 })
 export class GlobalService {
   static resetThemeColor$ = new Subject<any>();
+  static pageChange$ = new Subject<any>();
   static mobileWidth = 620;
   static miniWidth = 450;
   // < mobileWidth （页面状态可以使用rxjs,这样不用在多个页面去监听window resize获取状态）
@@ -31,6 +32,15 @@ export class GlobalService {
   };
   pageRouteInfo: any;
   selectMenuItemId: string;
+  urlData: {
+    hashs: StrOrNum[];
+    params: {
+      [k: string]: StrOrNum;
+    };
+  } = {
+    hashs: [],
+    params: {},
+  };
 
   constructor() {}
 

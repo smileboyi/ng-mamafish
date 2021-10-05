@@ -114,6 +114,13 @@ export class AppComponent implements OnInit, OnDestroy {
         });
         this.meta.updateTag({ name: 'keywords', content: data.keywords });
         this.isFullScreen = Boolean(data.isFullScreen);
+        GlobalService.pageChange$.next({
+          pageId: this.global.selectMenuItemId,
+          icon: data.icon,
+          title: data.title,
+          hashs: this.global.urlData.hashs,
+          params: this.global.urlData.params,
+        });
       });
   }
 
