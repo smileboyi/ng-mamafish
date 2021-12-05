@@ -1,7 +1,7 @@
 <div class="page-tabs scrollbar">
   <ul class="tabs">
     <li
-      class="tab"
+      class="tab water-ripple"
       [ngClass]="{ ac: currTabIdx === i }"
       (click)="handleTabSwitch(i)"
       *ngFor="let item of tabsData; let i = index"
@@ -11,5 +11,4 @@
       <span class="close" (click)="handleTabClose(i)"></span>
     </li>
   </ul>
-	{{currTabIdx}}
 </div>

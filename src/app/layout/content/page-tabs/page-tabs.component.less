@@ -23,10 +23,13 @@
         clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 0 100%);
         border: 1px solid #d5d5d5;
 				border-bottom: none;
-        background-color: #e3e3e3;
+        background-color: #dfdfdf;
 				&.ac{
 					background-color: #fbfbfb;
 				}
+        &:not(.ac):hover{
+					background-color: #f4f4f4;
+        }
         .ico {
 					display: inline-block;
           width: 16px;
@@ -44,6 +47,8 @@
           cursor: pointer;
         }
         .close {
+          position: relative;
+          z-index: 10;
           display: inline-block;
           height: 15px;
           width: 15px;

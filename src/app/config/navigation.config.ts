@@ -222,7 +222,7 @@ export const menuIdPathSet: Array<string> = flattenDeep(
   getMenuItemPath(menuIdSet)
 );
 
-export const pageIdMap = {
+export const pageIdMap: { [k: string]: string } = {
   '403': 'error_403',
   '404': 'error_404',
   '500': 'error_500',

@@ -35,7 +35,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
-import { LAYOUT_CONFIG, PROFILE_INFO, MUSIC_INFO } from '@tokens';
+import { LAYOUT_CONFIG, PROFILE_INFO, MUSIC_INFO, PAGE_TABS_DATA } from '@tokens';
 import { ThrottleClickDirective } from './directives/throttle-click.directive';
 import { ThemePanelComponent } from './components/theme-panel/theme-panel.component';
 import { BgHeaderComponent } from './components/bg-header/bg-header.component';
@@ -54,6 +54,10 @@ const APP_CORE_PROVIDERS = [
   {
     provide: MUSIC_INFO,
     useValue: 'music_info',
+  },
+  {
+    provide: PAGE_TABS_DATA,
+    useValue: 'page_tabs_data',
   },
 ];
 

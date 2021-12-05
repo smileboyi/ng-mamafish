@@ -25,7 +25,8 @@ import { UtilsService } from '@services/utils.service';
 import { GlobalService } from '@services/global.service';
 import { LayoutConfigService } from '@services/layout-config.service';
 import { LayoutConfig } from '@config/layout.config';
-import { PROFILE_INFO, LAYOUT_CONFIG } from '@tokens';
+import { pageIdMap } from '@config/navigation.config';
+import { PROFILE_INFO, LAYOUT_CONFIG, PAGE_TABS_DATA } from '@tokens';
 import { appIcons } from './app.icon';
 
 @Component({
@@ -52,8 +53,10 @@ export class AppComponent implements OnInit, OnDestroy {
     private layoutConfig: LayoutConfigService,
     @Inject(DOCUMENT) private document: Document,
     @Inject(PROFILE_INFO) private profileInfoToken: string,
-    @Inject(LAYOUT_CONFIG) public layoutConfigToken: string
+    @Inject(LAYOUT_CONFIG) public layoutConfigToken: string,
+    @Inject(PAGE_TABS_DATA) private pageTabsDataToken: string
   ) {
+    this.handleTabsDataInvalid().then(() => {});
     this.iconService.addIcon(...appIcons);
   }
 
@@ -102,7 +105,12 @@ export class AppComponent implements OnInit, OnDestroy {
         }),
         tap((route) => {
           const arr = (route.url as any).value;
-          this.global.pageRouteInfo = arr[arr.length - 1];
+          // 第一个是地址，第二个是哈希
+          const item = arr[arr.length - 1];
+          // 如果存在哈希，通过哈希获取pathid,否则直接取path
+          const pathId = pageIdMap[item.path] || item.path;
+          item.path = pathId;
+          this.global.pageRouteInfo = item;
         }),
         mergeMap((route) => route.data)
       )
@@ -114,13 +122,16 @@ export class AppComponent implements OnInit, OnDestroy {
         });
         this.meta.updateTag({ name: 'keywords', content: data.keywords });
         this.isFullScreen = Boolean(data.isFullScreen);
-        GlobalService.pageChange$.next({
-          pageId: this.global.selectMenuItemId,
-          icon: data.icon,
-          title: data.title,
-          hashs: this.global.urlData.hashs,
-          params: this.global.urlData.params,
-        });
+        if (!this.isFullScreen) {
+          // 如果是全屏显示，就不需要更新page-tabs组件
+          GlobalService.pageChange$.next({
+            pageId: '',
+            icon: data.icon,
+            title: data.title,
+            hashs: this.global.urlData.hashs,
+            params: this.global.urlData.params,
+          });
+        }
       });
   }
 
@@ -165,7 +176,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.resize$.next(isMobile);
   }
 
-  private toggleBodyBoxed(bool: boolean): void {
+  toggleBodyBoxed(bool: boolean): void {
     if (bool) {
       this.document.body.classList.add('boxed');
     } else {
@@ -173,7 +184,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  private toggleBodyMini(): void {
+  toggleBodyMini(): void {
     if (window.innerWidth <= GlobalService.miniWidth) {
       this.global.isMini = true;
       this.document.body.classList.add('mini');
@@ -183,10 +194,29 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  async handleTabsDataInvalid(): Promise<void> {
+    const loadTime = new Date().getTime();
+    const unloadTime = localStorage.getItem('unloadTime') || 0;
+    localStorage.setItem('loadTime', String(loadTime));
+    const gap = loadTime - Number(unloadTime);
+    if (gap > 10000) {
+      // 重新进入页面，删除PageTab数据
+      await this.ngForage.removeItem(this.pageTabsDataToken);
+    } else {
+      // 刷新页面，不需要操作
+    }
+  }
+
   // 监听popstate: https://www.cnblogs.com/mininice/p/4064901.html
   @HostListener('window:popstate')
   onWindowPopstate(): void {
     // 菜单定位
     this.global.selectMenuItemId = this.utils.getRouteId();
+  }
+
+  @HostListener('window:unload')
+  onWindowUnload(): void {
+    const unloadTime = new Date().getTime();
+    localStorage.setItem('unloadTime', String(unloadTime));
   }
 }

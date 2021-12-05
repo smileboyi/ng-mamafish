@@ -179,5 +179,4 @@ export interface PageTab {
   params: {
     [k: string]: StrOrNum;
   };
-  cached: boolean;
 }

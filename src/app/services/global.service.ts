@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs';
 
-import { UserRole, UserInfo } from '@declare';
+import { UserRole, UserInfo, PageTab } from '@declare';
 
 /**
  * 存放全局变量的服务
@@ -11,7 +12,7 @@ import { UserRole, UserInfo } from '@declare';
 })
 export class GlobalService {
   static resetThemeColor$ = new Subject<any>();
-  static pageChange$ = new Subject<any>();
+  static pageChange$ = new BehaviorSubject<PageTab>({} as PageTab);
   static mobileWidth = 620;
   static miniWidth = 450;
   // < mobileWidth （页面状态可以使用rxjs,这样不用在多个页面去监听window resize获取状态）
