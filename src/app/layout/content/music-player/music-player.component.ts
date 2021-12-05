@@ -233,13 +233,15 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
       this.originalSongData = songUrlResult;
       this.songs = songDetailResult;
     } finally {
-      this.ngForage.setItem(this.musicInfoToken, {
-        cookie: this.musicCookie,
-        token: this.musicInfoToken,
-        uid: this.uid,
-        songs: this.songs,
-        originalSongData: this.originalSongData,
-      });
+      this.ngForage
+        .setItem(this.musicInfoToken, {
+          cookie: this.musicCookie,
+          token: this.musicInfoToken,
+          uid: this.uid,
+          songs: this.songs,
+          originalSongData: this.originalSongData,
+        })
+        .then(() => {});
       this.song = this.songs[0];
       this.isLogin = true;
       this.cdr.markForCheck();
@@ -309,7 +311,7 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
         }, 1000);
       } else {
         this.message.error(messageText.MUSIC_LOGIN_INVALID);
-        this.ngForage.removeItem(this.musicInfoToken);
+        this.ngForage.removeItem(this.musicInfoToken).then(() => {});
         this.isLogin = false;
       }
     } else {

@@ -126,8 +126,8 @@ export class ToolbarComponent implements OnInit {
     this.toggleSetting.emit();
   }
 
-  handleLogout(): void {
-    this.ngForage.clear();
+  async handleLogout(): Promise<void> {
+    await this.ngForage.clear();
     this.global.resetUserInfo();
     this.global.rsapubKey = '';
     this.global.userRole = UserRole.Visitor;

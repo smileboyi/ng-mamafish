@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
     const profileInfo: any = await this.ngForage.getItem('profile_info');
     if (!profileInfo) {
       // 未登录状态
-      this.handleLogout();
+      await this.handleLogout();
       history.pushState(null, '', document.URL);
       const pathIds = state.url.split('/').reverse();
       this.utils.gotoOtherPage('login', [], {
@@ -74,8 +74,8 @@ export class AuthGuard implements CanActivate {
     }
   }
 
-  handleLogout(): void {
-    this.ngForage.clear();
+  async handleLogout(): Promise<void> {
+    await this.ngForage.clear();
     this.global.resetUserInfo();
     this.global.rsapubKey = '';
     this.global.userRole = UserRole.Visitor;

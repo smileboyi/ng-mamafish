@@ -24,7 +24,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ngForage.setItem('webSkinIdx', this.skinIdx);
+    this.ngForage.setItem('webSkinIdx', this.skinIdx).then(() => {});
   }
 
   toggleWebSkin(): void {

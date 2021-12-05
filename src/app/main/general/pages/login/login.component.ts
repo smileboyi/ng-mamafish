@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     private global: GlobalService,
     private message: NzMessageService,
     private permissionsService: NgxPermissionsService,
-    @Inject(PROFILE_INFO) private profileInfo: string
+    @Inject(PROFILE_INFO) private profileInfoToken: string
   ) {}
 
   ngOnInit(): void {
@@ -128,12 +128,14 @@ export class LoginComponent implements OnInit {
             permissionList.push(userRole.role);
             this.global.permissionList = permissionList;
             this.global.rsapubKey = this.publicKey;
-            this.ngForage.setItem(this.profileInfo, {
-              userRole: userRole.value,
-              userInfo,
-              permissionList,
-              rsapubKey: this.publicKey,
-            });
+            this.ngForage
+              .setItem(this.profileInfoToken, {
+                userRole: userRole.value,
+                userInfo,
+                permissionList,
+                rsapubKey: this.publicKey,
+              })
+              .then(() => {});
 
             this.permissionsService.loadPermissions(permissionList);
 
@@ -172,11 +174,13 @@ export class LoginComponent implements OnInit {
     this.global.permissionList = userPermissions[0];
     this.global.resetUserInfo();
     this.global.userInfo.username = 'Visitor';
-    this.ngForage.setItem(this.profileInfo, {
-      userRole: UserRole.Visitor,
-      userInfo: this.global.userInfo,
-      permissionList: userPermissions[0],
-    });
+    this.ngForage
+      .setItem(this.profileInfoToken, {
+        userRole: UserRole.Visitor,
+        userInfo: this.global.userInfo,
+        permissionList: userPermissions[0],
+      })
+      .then(() => {});
     this.permissionsService.loadPermissions(userPermissions[0]);
     this.utils.gotoOtherPage('analytics');
   }

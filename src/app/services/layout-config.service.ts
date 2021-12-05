@@ -27,19 +27,19 @@ export class LayoutConfigService {
 
   constructor(
     private ngForage: NgForage,
-    @Inject(LAYOUT_CONFIG) public layoutConfig: string
+    @Inject(LAYOUT_CONFIG) public layoutConfigToken: string
   ) {
     this.defaultConfig = defaultLayoutConfig;
     this.initConfig();
   }
 
   async setStorageConfig(config: LayoutConfig): Promise<any> {
-    await this.ngForage.setItem(this.layoutConfig, config);
+    await this.ngForage.setItem(this.layoutConfigToken, config);
   }
 
   async initConfig(): Promise<any> {
     this.config$ = new BehaviorSubject(cloneDeep(this.defaultConfig));
-    const storageConfig = await this.ngForage.getItem(this.layoutConfig);
+    const storageConfig = await this.ngForage.getItem(this.layoutConfigToken);
     if (storageConfig) {
       this.config$.next(cloneDeep(storageConfig));
     }
