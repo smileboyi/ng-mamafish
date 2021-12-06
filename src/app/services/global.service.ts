@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 import { UserRole, UserInfo, PageTab } from '@declare';
 
@@ -26,7 +25,7 @@ export class GlobalService {
   permissionList: Array<string> = [];
   rsapubKey: string;
   // 所有subMenu展开状态量
-  subMenuOpenState = {
+  subMenuOpenState: { [k: string]: boolean } = {
     dashboards: false,
     pages: false,
     errors: false,

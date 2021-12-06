@@ -8,7 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import * as screenfull from 'screenfull';
+import screenfull from 'screenfull';
 import { NgForage } from 'ngforage';
 import { from } from 'rxjs';
 import axios from 'axios';

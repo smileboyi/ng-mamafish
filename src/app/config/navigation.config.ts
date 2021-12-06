@@ -151,8 +151,15 @@ export const navigationConfig: Array<NavigationItem> = [
         role: UserRole.User,
         url: [pathConfig.app.applications, pathConfig.applications.chat],
       },
+      {
+        id: 'editor',
+        title: '编辑器',
+        icon: 'editor',
+        role: UserRole.User,
+        url: [pathConfig.app.applications, pathConfig.applications.editor],
+      },
     ],
-    childrenIds: ['users', 'mail-box', 'chat'],
+    childrenIds: ['users', 'mail-box', 'chat', 'editor'],
   },
   {
     id: 'services',

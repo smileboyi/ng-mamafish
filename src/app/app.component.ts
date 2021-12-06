@@ -7,8 +7,7 @@ import {
 } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
+import { Subject, Subscription } from 'rxjs';
 import {
   takeUntil,
   debounceTime,
@@ -137,7 +136,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    this.stop$.next();
+    this.stop$.next(0);
     this.stop$.complete();
   }
 

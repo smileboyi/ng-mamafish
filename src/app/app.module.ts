@@ -7,6 +7,7 @@ import { NgForage } from 'ngforage';
 import { NgxPermissionsService, NgxPermissionsModule } from 'ngx-permissions';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +36,7 @@ const loadFactory =
     BrowserModule,
     SharedModule,
     BrowserAnimationsModule,
+    MonacoEditorModule.forRoot(),
     NgxPermissionsModule.forRoot(),
     InMemoryWebApiModule.forRoot(UsersData, {
       delay: 500,

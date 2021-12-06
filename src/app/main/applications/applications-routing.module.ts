@@ -5,6 +5,7 @@ import { routingPathConfig } from '@config/routing-path.config';
 import { ChatComponent } from './chat/chat.component';
 import { UsersComponent } from './users/users.component';
 import { MailBoxComponent } from './mail-box/mail-box.component';
+import { EditorComponent } from './editor/editor.component';
 import { AuthGuard } from '@guard/auth.guard';
 import { UnsaveGuard } from '@guard/unsave.guard';
 
@@ -45,6 +46,17 @@ const routes: Routes = [
       title: '会话',
       keywords: '会话,聊天,chat',
       description: '选择一个好友来分享你最近遇到的快乐的事',
+      icon: 'chat'
+    },
+  },
+  {
+    path: routingPathConfig.applications.editor,
+    component: EditorComponent,
+    canActivate: [AuthGuard],
+    data: {
+      title: '编辑器',
+      keywords: '编辑器,editor,Monaco Editor',
+      description: 'Monaco Editor是一款强大的现代编辑器，支持多种语言的语法高亮和代码提示，以及code diff。',
       icon: 'chat'
     },
   },

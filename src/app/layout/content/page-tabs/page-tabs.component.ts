@@ -100,7 +100,7 @@ export class PageTabsComponent implements OnInit, OnDestroy {
     this.utils.gotoOtherPage(pageId, hashs, params);
     this.global.urlData.hashs = hashs;
     this.global.urlData.params = params;
-    UtilsService.menuItemChange$.next();
+    UtilsService.menuItemChange$.next(null);
   }
 
   updateCache(): void {

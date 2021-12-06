@@ -7,6 +7,7 @@ import { ChatComponent } from './chat/chat.component';
 import { UsersComponent } from './users/users.component';
 import { MailBoxComponent } from './mail-box/mail-box.component';
 import { UserDialogComponent } from './users/user-dialog/user-dialog.component';
+import { EditorComponent } from './editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { UserDialogComponent } from './users/user-dialog/user-dialog.component';
     UsersComponent,
     MailBoxComponent,
     UserDialogComponent,
+    EditorComponent,
   ],
   entryComponents: [UserDialogComponent],
   imports: [CommonModule, SharedModule, ApplicationsRoutingModule],

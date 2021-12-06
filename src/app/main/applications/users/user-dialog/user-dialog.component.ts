@@ -7,8 +7,7 @@ import {
   ElementRef,
   HostListener,
 } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
+import { Subject, Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { UtilsService } from '@services/utils.service';

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router, Params } from '@angular/router';
 import { throttle, debounce, cloneDeep } from 'lodash';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subject } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Subject } from 'rxjs/Subject';
 
 import {
   navigationConfig,
@@ -125,7 +124,7 @@ export class UtilsService {
         nzOnOk: () => observer.next(true),
         nzOnCancel: () => {
           // 修正menuItem选中位置
-          UtilsService.menuItemChange$.next();
+          UtilsService.menuItemChange$.next(null);
           observer.next(false);
         },
       });

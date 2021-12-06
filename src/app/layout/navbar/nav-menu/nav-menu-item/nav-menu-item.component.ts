@@ -55,8 +55,8 @@ export class NavMenuItemComponent implements OnInit {
 
   clickMenuItem(
     pathId: string,
-    hashs: Array<number | string>,
-    params: { [k: string]: StrOrNum }
+    hashs?: Array<number | string>,
+    params?: { [k: string]: StrOrNum }
   ): void {
     const h = hashs ? hashs : [];
     const p = params ? params : {};
@@ -73,10 +73,7 @@ export class NavMenuItemComponent implements OnInit {
     this.isOpen = open;
   }
 
-  clickSubMenu(
-    event: Event,
-    subMenuId: 'dashboards' | 'pages' | 'errors'
-  ): void {
+  clickSubMenu(event: Event, subMenuId: string): void {
     event.preventDefault();
     event.stopPropagation();
     this.global.subMenuOpenState[subMenuId] = this.isOpen;
@@ -88,8 +85,7 @@ export class NavMenuItemComponent implements OnInit {
         (val: string) => val !== subMenuId
       );
       ids.forEach((id) => {
-        this.global.subMenuOpenState[id as 'dashboards' | 'pages' | 'errors'] =
-          false;
+        this.global.subMenuOpenState[id] = false;
       });
     } else {
       // 关闭时把子subMenu也关闭掉
@@ -101,9 +97,7 @@ export class NavMenuItemComponent implements OnInit {
       );
       relyArr[0].forEach((id, idx) => {
         if (idx > relyIdx) {
-          this.global.subMenuOpenState[
-            id as 'dashboards' | 'pages' | 'errors'
-          ] = false;
+          this.global.subMenuOpenState[id] = false;
         }
       });
     }
