@@ -97,7 +97,7 @@
         class="box-shadow send-btn flex"
         nz-button
         nzType="primary"
-        [disabled]="validateForm.status != 'VALID'"
+        [disabled]="validateForm.status !== 'VALID'"
       >
         <img class="send" src="/assets/icons/send.svg" />
         <span class="text">Send</span>

@@ -172,7 +172,6 @@ export const chatUsers: Array<ChatUser> = [
 ];
 
 export const getChatTalks = (user: ChatUser): Array<ChatTalk> => {
-  // tslint:disable-next-line:one-variable-per-declaration
   const date = new Date(),
     day = date.getDate(),
     month = date.getMonth(),

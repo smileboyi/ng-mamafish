@@ -105,7 +105,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.cardHeight = this.card.nativeElement.clientHeight;
     const profileDom: HTMLElement = this.profile.nativeElement;
     this.scrollDispatcher.ancestorScrolled(this.profile, 100).subscribe(() => {
-      // tslint:disable-next-line:no-bitwise
       const scrollTop = profileDom.scrollTop | 0;
       if (this.oldScrollTop > scrollTop) {
         this.renderer2.setStyle(profileDom, 'padding', '15px');
@@ -211,7 +210,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   @UtilsService.throttle(200)
   onWindowResize(): void {
     // 如果在滑动时获取高度性能不好
-    // tslint:disable-next-line:no-bitwise
     this.cardHeight = this.card.nativeElement.clientHeight | 0;
     this.isPageMini = this.utils.getMiniState();
   }

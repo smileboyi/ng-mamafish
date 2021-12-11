@@ -29,7 +29,7 @@ import { PROFILE_INFO, LAYOUT_CONFIG, PAGE_TABS_DATA } from '@tokens';
 import { appIcons } from './app.icon';
 
 @Component({
-  selector: 'app-root',
+  selector: 'cat-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less'],
 })

@@ -20,7 +20,7 @@ interface CheckDataField {
   styleUrls: ['./data-table.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataTableComponent implements OnInit {
+export class DataTableComponent {
   dataSource: Array<PersonInfo> = personInfos;
   dataNum: number = personInfos.length;
   tableHeaders: { [k: string]: string } = {
@@ -55,8 +55,6 @@ export class DataTableComponent implements OnInit {
     private xlsx: XlsxService,
     private message: NzMessageService
   ) {}
-
-  ngOnInit(): void {}
 
   handleModalCancel(): void {
     this.isVisible = false;

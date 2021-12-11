@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   Inject,
-  AfterViewInit,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
@@ -28,7 +27,7 @@ import {
   styleUrls: ['./music-player.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MusicPlayerComponent implements OnInit, AfterViewInit {
+export class MusicPlayerComponent implements OnInit {
   isClose = true;
   isLogin = true;
   song: Song = {
@@ -97,8 +96,6 @@ export class MusicPlayerComponent implements OnInit, AfterViewInit {
         console.log(err);
       });
   }
-
-  ngAfterViewInit(): void {}
 
   togglePlayList(): void {
     this.isClose = !this.isClose;

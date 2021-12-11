@@ -51,7 +51,6 @@ export class ChatComponent implements OnInit {
   sendMessage(e: KeyboardEvent | MouseEvent): void {
     const newMessage = this.newMessage.trim();
     if ((e.which === 1 || e.which === 13) && newMessage) {
-      // tslint:disable-next-line:one-variable-per-declaration
       const date = new Date(),
         day = date.getDate(),
         month = date.getMonth(),

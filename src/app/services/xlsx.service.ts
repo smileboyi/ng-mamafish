@@ -28,7 +28,6 @@ export class XlsxService {
     const arrayBuffer = new ArrayBuffer(buffer.length);
     const view = new Uint8Array(arrayBuffer);
     for (let i = 0; i !== buffer.length; ++i) {
-      // tslint:disable-next-line:no-bitwise
       view[i] = buffer.charCodeAt(i) & 0xff;
     }
     const data = new Blob([arrayBuffer], {

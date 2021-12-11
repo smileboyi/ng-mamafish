@@ -11,7 +11,7 @@ import {
   styleUrls: ['./bg-header.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BgHeaderComponent implements OnInit {
+export class BgHeaderComponent {
   trans = false;
 
   @Input() cmpSize?: 'L' | 'S' = 'L';
@@ -19,8 +19,6 @@ export class BgHeaderComponent implements OnInit {
   @Input() describe = '';
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   toggleCmpSize(): void {
     if (this.cmpSize === 'L') {

@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   Output,
   OnDestroy,
   AfterViewInit,
@@ -14,7 +13,7 @@ import Gitter from 'gitter-sidecar';
   templateUrl: './action-menu.component.html',
   styleUrls: ['./action-menu.component.less'],
 })
-export class ActionMenuComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ActionMenuComponent implements AfterViewInit, OnDestroy {
   screencapHidden = true;
   replayHidden = true;
   chat: {
@@ -27,8 +26,6 @@ export class ActionMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() toggleMusicView = new EventEmitter<any>();
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.chat = new Gitter({

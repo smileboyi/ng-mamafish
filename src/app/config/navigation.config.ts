@@ -1,4 +1,4 @@
-import { flattenDeep, StringNullableChain } from 'lodash-es';
+import { flattenDeep } from 'lodash-es';
 
 import { UserRole } from '@declare';
 import { routingPathConfig as pathConfig } from './routing-path.config';

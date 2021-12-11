@@ -1,6 +1,11 @@
 {
   "name": "ng-mamafish",
   "version": "0.0.0",
+  "author": {
+    "name": "smileboyi",
+    "email": "152151143@163.com",
+    "url": "https://github.com/smileboyi"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.config.json --host 0.0.0.0",
@@ -54,7 +59,12 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~13.0.4",
+    "@angular-devkit/build-angular": "^13.0.1",
+    "@angular-eslint/builder": "13.0.1",
+    "@angular-eslint/eslint-plugin": "13.0.1",
+    "@angular-eslint/eslint-plugin-template": "13.0.1",
+    "@angular-eslint/schematics": "13.0.1",
+    "@angular-eslint/template-parser": "13.0.1",
     "@angular/cli": "~13.0.4",
     "@angular/compiler-cli": "~13.0.3",
     "@commitlint/cli": "^15.0.0",
@@ -67,8 +77,10 @@
     "@types/node": "^16.11.11",
     "@types/qs": "^6.9.7",
     "@types/quill": "^2.0.9",
-    "codelyzer": "^6.0.2",
+    "@typescript-eslint/eslint-plugin": "5.3.0",
+    "@typescript-eslint/parser": "5.3.0",
     "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.2.0",
     "husky": "^7.0.0",
     "jasmine-core": "~3.10.1",
     "jasmine-spec-reporter": "~7.0.0",
@@ -77,10 +89,10 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.1",
     "karma-jasmine-html-reporter": "^1.7.0",
+    "lint-staged": "^12.1.2",
     "protractor": "~7.0.0",
     "ts-node": "~10.4.0",
-    "tslint": "~6.1.0",
-    "typescript": "^4.4.3",
+    "typescript": "^4.4.4",
     "webpack-bundle-analyzer": "^4.5.0"
   },
   "commitlint": {
@@ -88,10 +100,12 @@
       "@commitlint/config-conventional"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
+  "lint-staged": {
+    " src/** /*.{ts,html} ": [
+      "eslint --fix"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/smileboyi/ng-mamafish/issues"
   }
 }

@@ -17,7 +17,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 export class TopInfoComponent implements OnInit {
   validateForm: FormGroup;
   @Input() showInfoContent = false;
-  // tslint:disable-next-line:no-output-on-prefix
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() onCloseInfoContent: EventEmitter<any> = new EventEmitter();
 
   checkOptions = [

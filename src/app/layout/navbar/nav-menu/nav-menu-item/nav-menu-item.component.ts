@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import {
   NavigationItem,
@@ -40,7 +40,7 @@ const fixMenuItemSelected = (id: string): void => {
   templateUrl: './nav-menu-item.component.html',
   styleUrls: ['./nav-menu-item.component.less'],
 })
-export class NavMenuItemComponent implements OnInit {
+export class NavMenuItemComponent {
   private isOpen = false;
   private errorsEle: Element;
 
@@ -50,8 +50,6 @@ export class NavMenuItemComponent implements OnInit {
   @Input() position: string;
 
   constructor(public global: GlobalService, private utils: UtilsService) {}
-
-  ngOnInit(): void {}
 
   clickMenuItem(
     pathId: string,

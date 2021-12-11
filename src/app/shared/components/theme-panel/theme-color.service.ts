@@ -651,7 +651,6 @@ export class ThemeColorService {
     if (/^(rgb|RGB)/.test(color)) {
       const aColor = color.replace(/(?:\(|\)|rgb|RGB)*/g, '').split(',');
       let strHex = '#';
-      // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < aColor.length; i++) {
         let hex = Number(aColor[i]).toString(16);
         if (hex === '0') {
@@ -669,7 +668,6 @@ export class ThemeColorService {
         return color;
       } else if (aNum.length === 3) {
         let numHex = '#';
-        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < aNum.length; i += 1) {
           numHex += aNum[i] + aNum[i];
         }
@@ -693,7 +691,6 @@ export class ThemeColorService {
       // 处理六位的颜色值
       const sColorChange = [];
       for (let i = 1; i < 7; i += 2) {
-        // tslint:disable-next-line:radix
         sColorChange.push(parseInt('0x' + sColor.slice(i, i + 2)));
       }
       return 'RGB(' + sColorChange.join(',') + ')';
