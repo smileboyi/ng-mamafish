@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 import { ApplicationsRoutingModule } from './applications-routing.module';
 import { SharedModule } from '@shared';
@@ -18,6 +19,11 @@ import { EditorComponent } from './editor/editor.component';
     EditorComponent,
   ],
   entryComponents: [UserDialogComponent],
-  imports: [CommonModule, SharedModule, ApplicationsRoutingModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    ApplicationsRoutingModule,
+    MonacoEditorModule.forRoot(),
+  ],
 })
 export class ApplicationsModule {}

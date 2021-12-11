@@ -6,7 +6,11 @@
       (click)="handleTabSwitch(i)"
       *ngFor="let item of tabsData; let i = index"
     >
-      <i class="ico"></i>
+      <i nz-icon>
+        <svg aria-hidden="true">
+          <use [attr.xlink:href]="'#icon-' + item.icon"></use>
+        </svg>
+      </i>
       <span class="title">{{ item.title }}</span>
       <span class="close" (click)="handleTabClose(i)"></span>
     </li>

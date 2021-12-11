@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, Params } from '@angular/router';
-import { throttle, debounce, cloneDeep } from 'lodash';
+import { throttle, debounce, cloneDeep } from 'lodash-es';
 import { Observable, Observer, Subject } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 

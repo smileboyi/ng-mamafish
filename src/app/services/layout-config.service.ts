@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { NgForage } from 'ngforage';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { merge, cloneDeep } from 'lodash';
+import { merge, cloneDeep } from 'lodash-es';
 
 import { defaultLayoutConfig, LayoutConfig } from '@config/layout.config';
 import { LAYOUT_CONFIG } from '@tokens';

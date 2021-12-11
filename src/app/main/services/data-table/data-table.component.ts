@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { pick, flattenDeep } from 'lodash';
+import { pick, flattenDeep } from 'lodash-es';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { PersonInfo } from '@declare';

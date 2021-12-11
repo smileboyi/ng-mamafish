@@ -23,7 +23,7 @@ const routes: Routes = [
       title: '人员',
       keywords: '人员,人员管理',
       description: '提供人员的新增、修改、删除和查询',
-      icon: 'user'
+      icon: 'users'
     },
   },
   {
@@ -35,7 +35,7 @@ const routes: Routes = [
       title: '邮箱',
       keywords: '邮箱,inbox,email',
       description: '一个简单实用的邮箱管理',
-      icon: 'mailBox'
+      icon: 'mail'
     },
   },
   {
@@ -46,7 +46,7 @@ const routes: Routes = [
       title: '会话',
       keywords: '会话,聊天,chat',
       description: '选择一个好友来分享你最近遇到的快乐的事',
-      icon: 'chat'
+      icon: 'message'
     },
   },
   {
@@ -55,9 +55,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       title: '编辑器',
-      keywords: '编辑器,editor,Monaco Editor',
+      keywords: '编辑器,editor,Monaco Editor,MarkDown',
       description: 'Monaco Editor是一款强大的现代编辑器，支持多种语言的语法高亮和代码提示，以及code diff。',
-      icon: 'chat'
+      icon: 'editor'
     },
   },
 ];

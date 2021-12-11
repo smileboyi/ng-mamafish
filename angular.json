@@ -48,8 +48,8 @@
               },
               {
                 "glob": "**/*",
-                "input": "../node_modules/ngx-monaco-editor/assets/monaco",
-                "output": "./assets/monaco/"
+                "input": "./node_modules/monaco-editor",
+                "output": "/assets/monaco-editor/"
               }
             ],
             "styles": [
@@ -99,8 +99,8 @@
           "configurations": {
             "production": {
               "browserTarget": "ng-mamafish:build:production"
-             }
             }
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

@@ -20,7 +20,7 @@ const routes: Routes = [
       title: '数据表',
       keywords: 'dataTable',
       description: '通过筛选数据列和行，导出数据到excel表格',
-      icon: 'dataTable'
+      icon: 'data-table'
     },
   },
   {

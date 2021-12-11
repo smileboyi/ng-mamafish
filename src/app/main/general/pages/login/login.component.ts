@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ActivatedRoute } from '@angular/router';
 import { NgForage } from 'ngforage';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash-es';
 import { JSEncrypt } from 'jsencrypt';
 
 import { GlobalService } from '@services/global.service';

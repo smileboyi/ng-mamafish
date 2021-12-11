@@ -5,7 +5,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { NgForage } from 'ngforage';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash-es';
 
 import { navigationConfig, NavigationItem } from '@config/navigation.config';
 import { UtilsService } from '@services/utils.service';

@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash-es';
 import { JSEncrypt } from 'jsencrypt';
 
 import { appConfig } from '@config/app.config';

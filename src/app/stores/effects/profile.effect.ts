@@ -4,7 +4,7 @@ import { map, catchError } from 'rxjs/operators';
 import { switchMap } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash-es';
 
 import * as profileActions from '@actions/profile.action';
 import { activities } from '@mock/data.mock';

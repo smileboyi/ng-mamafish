@@ -1,4 +1,4 @@
-import { flattenDeep, StringNullableChain } from 'lodash';
+import { flattenDeep, StringNullableChain } from 'lodash-es';
 
 import { UserRole } from '@declare';
 import { routingPathConfig as pathConfig } from './routing-path.config';
@@ -140,7 +140,7 @@ export const navigationConfig: Array<NavigationItem> = [
       {
         id: 'mail-box',
         title: '邮箱',
-        icon: 'youxiang',
+        icon: 'mail',
         role: UserRole.User,
         url: [pathConfig.app.applications, pathConfig.applications.mailBox],
       },
@@ -169,7 +169,7 @@ export const navigationConfig: Array<NavigationItem> = [
       {
         id: 'data-table',
         title: '数据表',
-        icon: 'biao',
+        icon: 'table',
         role: UserRole.Manager,
         url: [pathConfig.app.services, pathConfig.services.dataTable],
       },

@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash-es';
 
 import * as profileActions from '@actions/profile.action';
 import { Activitie } from '@declare';
