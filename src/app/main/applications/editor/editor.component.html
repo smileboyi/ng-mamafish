@@ -1,8 +1,224 @@
-<div class="editor-box wh100">
-	<div class="tool"></div>
+<div class="editor-box wh100" [class.fullscreen]="isFullScreen">
+  <div class="tool flex">
+    <div class="command">
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="字体大小"
+        nzTooltipPlacement="topCenter"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-font-size"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="加粗"
+        nzTooltipPlacement="topCenter"
+        (click)="handleBold()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-bold"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="斜体"
+        nzTooltipPlacement="topCenter"
+        (click)="handleItalic()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-italic"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="删除线"
+        nzTooltipPlacement="topCenter"
+        (click)="handleStrike()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-strike"></use>
+        </svg>
+      </i>
+
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="下划线"
+        nzTooltipPlacement="topCenter"
+        (click)="handleUnderline()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-underline"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="链接"
+        nzTooltipPlacement="topCenter"
+        (click)="handleLink()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-link"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="有序列表"
+        nzTooltipPlacement="topCenter"
+        (click)="handleOrderedlist()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-orderedlist"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="无序列表"
+        nzTooltipPlacement="topCenter"
+        (click)="handleUnorderedlist()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-unorderedlist"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="图片"
+        nzTooltipPlacement="topCenter"
+        (click)="handleImage()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-image"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="表格"
+        nzTooltipPlacement="topCenter"
+        (click)="handleTable()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-table"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="代码块"
+        nzTooltipPlacement="topCenter"
+        (click)="handleCode()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-code"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="引用"
+        nzTooltipPlacement="topCenter"
+        (click)="handleBlockquote()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-blockquote"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="格式化"
+        nzTooltipPlacement="topCenter"
+        (click)="handleFormat()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-format"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="表情"
+        nzTooltipPlacement="topCenter"
+        (click)="handleExpression()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-expression"></use>
+        </svg>
+      </i>
+    </div>
+    <div class="operation">
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="全屏"
+        nzTooltipPlacement="topCenter"
+        (click)="handleFullscreen()"
+        *ngIf="!isFullScreen"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-fullscreen"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="退出全屏"
+        nzTooltipPlacement="topCenter"
+        (click)="handleExitFullscreen()"
+        *ngIf="isFullScreen"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-exit-fullscreen"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="预览"
+        nzTooltipPlacement="topCenter"
+        (click)="handlePreview()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-preview"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="打印"
+        nzTooltipPlacement="topCenter"
+        (click)="handlePrint()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-print"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="下载"
+        nzTooltipPlacement="topCenter"
+        (click)="handleUpload()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-upload"></use>
+        </svg>
+      </i>
+    </div>
+  </div>
   <ngx-monaco-editor
     [options]="options"
     [ngModel]="template"
   ></ngx-monaco-editor>
-  <div class="preview"></div>
+  <div class="preview h100"></div>
 </div>

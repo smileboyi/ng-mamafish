@@ -1663,43 +1663,43 @@
     "@angular-devkit/schematics" "13.0.4"
     jsonc-parser "3.0.0"
 
-"@timecat/player@1.2.0-alpha.26":
-  version "1.2.0-alpha.26"
-  resolved "https://registry.npmmirror.com/@timecat/player/download/@timecat/player-1.2.0-alpha.26.tgz#6eff81af0493fc204a0e0d69690933ee3369c3a5"
-  integrity sha512-2bZ5yIvCuRAerX4L8qK9pk5a9WNYN5IksTr9FtrNWv4CgONVtAQENYYiF6yThcpRmkTJciSbbuZXn1++jG3OnA==
+"@timecat/player@1.2.0-alpha.21":
+  version "1.2.0-alpha.21"
+  resolved "https://registry.npmmirror.com/@timecat/player/download/@timecat/player-1.2.0-alpha.21.tgz#1ed83c1cd55f4c39239acf6ed30315d330f5fe39"
+  integrity sha1-Htg8HNVfTDkjms9u0wMV0zD1/jk=
   dependencies:
-    "@timecat/share" "1.2.0-alpha.26"
-    "@timecat/utils" "1.2.0-alpha.26"
-    "@timecat/virtual-dom" "1.2.0-alpha.26"
+    "@timecat/share" "1.2.0-alpha.21"
+    "@timecat/utils" "1.2.0-alpha.21"
+    "@timecat/virtual-dom" "1.2.0-alpha.21"
 
-"@timecat/recorder@1.2.0-alpha.26":
-  version "1.2.0-alpha.26"
-  resolved "https://registry.npmmirror.com/@timecat/recorder/download/@timecat/recorder-1.2.0-alpha.26.tgz#314e9787fc3b18962f253975fa8d145c3f0d49d3"
-  integrity sha512-Kco9olLXYivz2tZtfAgdhJTN8zcmJlUFnhcVyptf8zO+Lfvcvu8GwClBhzMMcnxwyyrjz4GqKX0T+KK6fAMagg==
+"@timecat/recorder@1.2.0-alpha.21":
+  version "1.2.0-alpha.21"
+  resolved "https://registry.npmmirror.com/@timecat/recorder/download/@timecat/recorder-1.2.0-alpha.21.tgz#251fb0cf89e7e186c61cd03fad25a71a86684b72"
+  integrity sha1-JR+wz4nn4YbGHNA/rSWnGoZoS3I=
   dependencies:
-    "@timecat/share" "1.2.0-alpha.26"
-    "@timecat/utils" "1.2.0-alpha.26"
-    "@timecat/virtual-dom" "1.2.0-alpha.26"
+    "@timecat/share" "1.2.0-alpha.21"
+    "@timecat/utils" "1.2.0-alpha.21"
+    "@timecat/virtual-dom" "1.2.0-alpha.21"
 
-"@timecat/share@1.2.0-alpha.26":
-  version "1.2.0-alpha.26"
-  resolved "https://registry.npmmirror.com/@timecat/share/download/@timecat/share-1.2.0-alpha.26.tgz#f3d15ff58486ca668802ed5e70007187b10ea39e"
-  integrity sha512-QD0G2EpUmQRHVAplUbhi+h8x1BN4k5SeNq2JdMWul18PBLe+pS/lOOOnRcEKYjtsnn1UVAqdEZlp1rBicnDPsA==
+"@timecat/share@1.2.0-alpha.21":
+  version "1.2.0-alpha.21"
+  resolved "https://registry.npmmirror.com/@timecat/share/download/@timecat/share-1.2.0-alpha.21.tgz#8efcb13a3fd2ed73cfba033ee6a6ee602437e826"
+  integrity sha1-jvyxOj/S7XPPugM+5qbuYCQ36CY=
 
-"@timecat/utils@1.2.0-alpha.26":
-  version "1.2.0-alpha.26"
-  resolved "https://registry.npmmirror.com/@timecat/utils/download/@timecat/utils-1.2.0-alpha.26.tgz#feaa29d023f5d8932d35337ec2f380a077e7d5f9"
-  integrity sha512-2dQiAQMQ0vHGP4dff8QXAcYWdNnsOz7LY5u8TunjXHM3nx5ugsYBBDJyIsSdvwmqlbOsE33nVKqIQpVNeu8vhw==
+"@timecat/utils@1.2.0-alpha.21":
+  version "1.2.0-alpha.21"
+  resolved "https://registry.npmmirror.com/@timecat/utils/download/@timecat/utils-1.2.0-alpha.21.tgz#ebec06c409ec6398af7548dfd5a568d686ab0782"
+  integrity sha1-6+wGxAnsY5ivdUjf1aVo1oarB4I=
   dependencies:
-    "@timecat/share" "1.2.0-alpha.26"
+    "@timecat/share" "1.2.0-alpha.21"
 
-"@timecat/virtual-dom@1.2.0-alpha.26":
-  version "1.2.0-alpha.26"
-  resolved "https://registry.npmmirror.com/@timecat/virtual-dom/download/@timecat/virtual-dom-1.2.0-alpha.26.tgz#659b2a87a4547f1c07aad8dfef0c25c4fb030337"
-  integrity sha512-Dmp9LEP8XMxSqTF9tLY2NqaOYdbofQStuqUniHkw9B01pSqn2AsHP/XAvPk0HvcFavHI334jOfhTdIF43rZMkw==
+"@timecat/virtual-dom@1.2.0-alpha.21":
+  version "1.2.0-alpha.21"
+  resolved "https://registry.npmmirror.com/@timecat/virtual-dom/download/@timecat/virtual-dom-1.2.0-alpha.21.tgz#984f66a26ba5832a91abea5ecd2ce12d01d6cea8"
+  integrity sha1-mE9momulgyqRq+pezSzhLQHWzqg=
   dependencies:
-    "@timecat/share" "1.2.0-alpha.26"
-    "@timecat/utils" "1.2.0-alpha.26"
+    "@timecat/share" "1.2.0-alpha.21"
+    "@timecat/utils" "1.2.0-alpha.21"
 
 "@tootallnate/once@1":
   version "1.1.2"
@@ -1795,6 +1795,11 @@
   version "4.14.178"
   resolved "https://registry.npmmirror.com/@types/lodash/download/@types/lodash-4.14.178.tgz#341f6d2247db528d4a13ddbb374bcdc80406f4f8"
   integrity sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==
+
+"@types/marked@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.npmmirror.com/@types/marked/download/@types/marked-4.0.1.tgz?cache=0&sync_timestamp=1637197498641&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fmarked%2Fdownload%2F%40types%2Fmarked-4.0.1.tgz#d588a7bbc4d6551c5e75249bc106ffda96ae33c5"
+  integrity sha512-ZigEmCWdNUU7IjZEuQ/iaimYdDHWHfTe3kg8ORfKjyGYd9RWumPoOJRQXB0bO+XLkNwzCthW3wUIQtANaEZ1ag==
 
 "@types/minimist@^1.2.0":
   version "1.2.2"
@@ -4835,6 +4840,11 @@ hdr-histogram-percentiles-obj@^3.0.0:
   resolved "https://registry.npm.taobao.org/hdr-histogram-percentiles-obj/download/hdr-histogram-percentiles-obj-3.0.0.tgz#9409f4de0c2dda78e61de2d9d78b1e9f3cba283c"
   integrity sha1-lAn03gwt2njmHeLZ14senzy6KDw=
 
+highlight.js@^11.3.1:
+  version "11.3.1"
+  resolved "https://registry.npmmirror.com/highlight.js/download/highlight.js-11.3.1.tgz#813078ef3aa519c61700f84fe9047231c5dc3291"
+  integrity sha1-gTB47zqlGcYXAPhP6QRyMcXcMpE=
+
 hoist-non-react-statics@^3.3.0:
   version "3.3.2"
   resolved "https://registry.nlark.com/hoist-non-react-statics/download/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
@@ -6042,6 +6052,11 @@ marked@^0.3.5:
   version "0.3.19"
   resolved "https://registry.npmmirror.com/marked/download/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
   integrity sha1-XUf3CcTJ/Dwha21GEnKA9As515A=
+
+marked@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.npmmirror.com/marked/download/marked-4.0.7.tgz#596a0826e7a8c6b4119eacd00b0220ddaee7fc71"
+  integrity sha512-mQrRvV2vRk7DHZsWsYJfAjmBo+lSYPhTJPThaaGpkEfmC+4oefeug2txZniQTieDS0CFpokfVhd7JuS5GtnHhA==
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -8656,15 +8671,15 @@ thunky@^1.0.2:
   resolved "https://registry.npmmirror.com/thunky/download/thunky-1.1.0.tgz#5abaf714a9405db0504732bbccd2cedd9ef9537d"
   integrity sha1-Wrr3FKlAXbBQRzK7zNLO3Z75U30=
 
-timecatjs@^1.2.0-alpha.21:
-  version "1.2.0-alpha.26"
-  resolved "https://registry.npmmirror.com/timecatjs/download/timecatjs-1.2.0-alpha.26.tgz#fab9072e6f368510e9208458e2249b50946da2e1"
-  integrity sha512-W+SRorM4N4/r0vKjdNnnDuMEQCnm3EX9gjmrNJ5lkn9w69VwhtrFW477dVXk4qn2gGssjUMtoIVXJMoyKJ1vGA==
+timecatjs@1.2.0-alpha.21:
+  version "1.2.0-alpha.21"
+  resolved "https://registry.npmmirror.com/timecatjs/download/timecatjs-1.2.0-alpha.21.tgz#035eb823cdfbedc46de0457da44d4203622e8a5c"
+  integrity sha1-A164I8377cRt4EV9pE1CA2Iuilw=
   dependencies:
-    "@timecat/player" "1.2.0-alpha.26"
-    "@timecat/recorder" "1.2.0-alpha.26"
-    "@timecat/share" "1.2.0-alpha.26"
-    "@timecat/utils" "1.2.0-alpha.26"
+    "@timecat/player" "1.2.0-alpha.21"
+    "@timecat/recorder" "1.2.0-alpha.21"
+    "@timecat/share" "1.2.0-alpha.21"
+    "@timecat/utils" "1.2.0-alpha.21"
 
 tmp@0.0.30:
   version "0.0.30"
@@ -8846,7 +8861,12 @@ typed-assert@^1.0.8:
   resolved "https://registry.npmmirror.com/typed-assert/download/typed-assert-1.0.8.tgz#4bf9f1ce7f3f974d09c3afd7c68d12e1391a233c"
   integrity sha1-S/nxzn8/l00Jw6/Xxo0S4TkaIzw=
 
-typescript@^4.4.3, typescript@^4.4.4:
+typescript@4.4.4:
+  version "4.4.4"
+  resolved "https://registry.npmmirror.com/typescript/download/typescript-4.4.4.tgz#2cd01a1a1f160704d3101fd5a58ff0f9fcb8030c"
+  integrity sha1-LNAaGh8WBwTTEB/VpY/w+fy4Aww=
+
+typescript@^4.4.3:
   version "4.5.3"
   resolved "https://registry.npmmirror.com/typescript/download/typescript-4.5.3.tgz#afaa858e68c7103317d89eb90c5d8906268d353c"
   integrity sha512-eVYaEHALSt+s9LbvgEv4Ef+Tdq7hBiIZgii12xXJnukryt3pMgJf6aKhoCZ3FWQsu6sydEnkg11fYXLzhLBjeQ==

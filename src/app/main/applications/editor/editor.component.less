@@ -1,10 +1,48 @@
 :host {
   overflow: hidden;
+  .editor-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    &.fullscreen{
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1001;
+    }
+  }
+  .tool {
+    min-height: 30px;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    line-height: 1;
+    padding: 2px 5px;
+    box-shadow: 0 0 3px 3px rgb(0 0 0 / 20%);
+    background-color: #fff;
+    [nz-icon] {
+      font-size: 16px;
+      height: 28px;
+      width: 28px;
+      line-height: 28px;
+      margin: 0 2px;
+      vertical-align: middle;
+      border: 1px solid transparent;
+      cursor: pointer;
+      &:hover {
+        border-color: #ccc;
+      }
+      svg {
+        fill: #666;
+      }
+    }
+  }
   ngx-monaco-editor {
     height: 100%;
     overflow: hidden;
     ::ng-deep .editor-container {
       height: 100%;
     }
+  }
+  .preview{
+    background-color: #fff;
   }
 }
