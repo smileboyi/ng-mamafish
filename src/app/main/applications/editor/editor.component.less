@@ -3,6 +3,7 @@
   .editor-box {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
     &.fullscreen{
       position: fixed;
       top: 0;
@@ -11,9 +12,7 @@
     }
   }
   .tool {
-    min-height: 30px;
-    grid-column-start: 1;
-    grid-column-end: 4;
+    grid-column: 1 / 4;
     line-height: 1;
     padding: 2px 5px;
     box-shadow: 0 0 3px 3px rgb(0 0 0 / 20%);
@@ -37,7 +36,7 @@
   }
   ngx-monaco-editor {
     height: 100%;
-    overflow: hidden;
+    background-color: #fff;
     ::ng-deep .editor-container {
       height: 100%;
     }

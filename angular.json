@@ -28,8 +28,8 @@
               "axios",
               "axios-mock-adapter",
               "@ant-design/colors",
-              "lodash",
-              "rxjs/Subject",
+              "lodash-es",
+              "rxjs",
               "file-saver",
               "xlsx"
             ],
@@ -89,8 +89,18 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
+
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -100,8 +110,12 @@
           "configurations": {
             "production": {
               "browserTarget": "ng-mamafish:build:production"
+            },
+            "development": {
+              "browserTarget": "ng-mamafish:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

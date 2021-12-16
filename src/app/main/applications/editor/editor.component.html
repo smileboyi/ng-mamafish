@@ -147,9 +147,9 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="表情"
+        nzTooltipTitle="emoji"
         nzTooltipPlacement="topCenter"
-        (click)="handleExpression()"
+        (click)="handleEmoji()"
       >
         <svg aria-hidden="true">
           <use xlink:href="#icon-expression"></use>
@@ -206,9 +206,9 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="下载"
+        nzTooltipTitle="导出"
         nzTooltipPlacement="topCenter"
-        (click)="handleUpload()"
+        (click)="handleDownload()"
       >
         <svg aria-hidden="true">
           <use xlink:href="#icon-upload"></use>
@@ -217,8 +217,9 @@
     </div>
   </div>
   <ngx-monaco-editor
+    class="h100 ovh"
     [options]="options"
-    [ngModel]="template"
+    [(ngModel)]="template"
   ></ngx-monaco-editor>
-  <div class="preview h100"></div>
+  <iframe class="preview wh100 nobd" src="/assets/markdown.html" #preview></iframe>
 </div>
