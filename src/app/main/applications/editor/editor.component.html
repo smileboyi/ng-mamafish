@@ -4,16 +4,6 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="字体大小"
-        nzTooltipPlacement="topCenter"
-      >
-        <svg aria-hidden="true">
-          <use xlink:href="#icon-font-size"></use>
-        </svg>
-      </i>
-      <i
-        nz-icon
-        nz-tooltip
         nzTooltipTitle="加粗"
         nzTooltipPlacement="topCenter"
         (click)="handleBold()"
@@ -31,6 +21,19 @@
       >
         <svg aria-hidden="true">
           <use xlink:href="#icon-italic"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="标题"
+        nzTooltipPlacement="topCenter"
+        nz-dropdown
+        [nzDropdownMenu]="menu"
+        nzPlacement="bottomCenter"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-font-size"></use>
         </svg>
       </i>
       <i
@@ -59,7 +62,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="链接"
+        nzTooltipTitle="链接(A)"
         nzTooltipPlacement="topCenter"
         (click)="handleLink()"
       >
@@ -70,7 +73,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="有序列表"
+        nzTooltipTitle="有序列表(OL)"
         nzTooltipPlacement="topCenter"
         (click)="handleOrderedlist()"
       >
@@ -81,7 +84,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="无序列表"
+        nzTooltipTitle="无序列表(UL)"
         nzTooltipPlacement="topCenter"
         (click)="handleUnorderedlist()"
       >
@@ -92,7 +95,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="图片"
+        nzTooltipTitle="图片(P)"
         nzTooltipPlacement="topCenter"
         (click)="handleImage()"
       >
@@ -103,7 +106,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="表格"
+        nzTooltipTitle="表格(T)"
         nzTooltipPlacement="topCenter"
         (click)="handleTable()"
       >
@@ -114,7 +117,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="代码块"
+        nzTooltipTitle="代码块(C)"
         nzTooltipPlacement="topCenter"
         (click)="handleCode()"
       >
@@ -220,6 +223,22 @@
     class="h100 ovh"
     [options]="options"
     [(ngModel)]="template"
+    (onInit)="onEditorInit($event)"
   ></ngx-monaco-editor>
-  <iframe class="preview wh100 nobd" src="/assets/markdown.html" #preview></iframe>
+  <iframe
+    class="preview wh100 nobd"
+    src="/assets/markdown.html"
+    #preview
+  ></iframe>
 </div>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="handleTitle('# ')">1级标题</li>
+    <li nz-menu-item (click)="handleTitle('## ')">2级标题</li>
+    <li nz-menu-item (click)="handleTitle('### ')">3级标题</li>
+    <li nz-menu-item (click)="handleTitle('#### ')">4级标题</li>
+    <li nz-menu-item (click)="handleTitle('##### ')">5级标题</li>
+    <li nz-menu-item (click)="handleTitle('###### ')">6级标题</li>
+  </ul>
+</nz-dropdown-menu>

@@ -19,6 +19,7 @@ import {
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NgForage } from 'ngforage';
 import { NzIconService } from 'ng-zorro-antd/icon';
+import * as monaco from 'monaco-editor';
 
 import { UtilsService } from '@services/utils.service';
 import { GlobalService } from '@services/global.service';
@@ -57,6 +58,8 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
     this.handleTabsDataInvalid().then(() => {});
     this.iconService.addIcon(...appIcons);
+    // 要加上这句，提前引入monaco-editor，否则editor页面中monaco-editor编译失败
+    console.log(monaco);
   }
 
   ngOnInit(): void {
@@ -114,19 +117,19 @@ export class AppComponent implements OnInit, OnDestroy {
         mergeMap((route) => route.data)
       )
       .subscribe((data) => {
-        this.title.setTitle(data.title);
+        this.title.setTitle(data['title']);
         this.meta.updateTag({
           name: 'description',
-          content: data.description,
+          content: data['description'],
         });
-        this.meta.updateTag({ name: 'keywords', content: data.keywords });
-        this.isFullScreen = Boolean(data.isFullScreen);
+        this.meta.updateTag({ name: 'keywords', content: data['keywords'] });
+        this.isFullScreen = Boolean(data['isFullScreen']);
         if (!this.isFullScreen) {
           // 如果是全屏显示，就不需要更新page-tabs组件
           GlobalService.pageChange$.next({
             pageId: '',
-            icon: data.icon,
-            title: data.title,
+            icon: data['icon'],
+            title: data['title'],
             hashs: this.global.urlData.hashs,
             params: this.global.urlData.params,
           });

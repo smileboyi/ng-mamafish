@@ -31,8 +31,8 @@ export class ErrorsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      if (['403', '404', '500'].includes(params.code)) {
-        this.httpCode = params.code;
+      if (['403', '404', '500'].includes(params['code'])) {
+        this.httpCode = params['code'];
       } else {
         this.httpCode = '404';
       }

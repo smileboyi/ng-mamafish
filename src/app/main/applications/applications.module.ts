@@ -23,7 +23,11 @@ import { EditorComponent } from './editor/editor.component';
     CommonModule,
     SharedModule,
     ApplicationsRoutingModule,
-    MonacoEditorModule.forRoot(),
+    MonacoEditorModule.forRoot({
+      onMonacoLoad: () => {
+        console.log((<any>window).monaco);
+      },
+    }),
   ],
 })
 export class ApplicationsModule {}

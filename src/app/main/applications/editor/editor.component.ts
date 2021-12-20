@@ -11,7 +11,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { marked, Tokenizer } from 'marked';
 import { Subject, Subscription, fromEvent } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
-import monaco from 'monaco-editor';
+import { EditorComponent as MonacoEditorComponent } from 'ngx-monaco-editor';
+import { editor, Selection, Position } from 'monaco-editor';
+import * as monaco from 'monaco-editor';
 
 const rendererMD = new marked.Renderer();
 marked.setOptions({
@@ -46,6 +48,8 @@ export class EditorComponent implements OnInit, AfterViewInit {
 殊风限清汉，飞雪滞故乡。
 
 攀条何所叹，北望熊与湘。
+
+![mahua](http://localhost:4200/assets/images/avatar.jpg)
 `;
   options = {
     theme: 'vs',
@@ -53,8 +57,10 @@ export class EditorComponent implements OnInit, AfterViewInit {
     automaticLayout: true,
     readOnly: false,
     fontSize: 16,
+    wordWrap: 'on',
   };
-
+  editorRef: any;
+  modelRef: editor.IModel;
   editorSub$: Subject<string> = new Subject<string>();
 
   constructor(private sanitizer: DomSanitizer, private renderer2: Renderer2) {
@@ -81,29 +87,67 @@ export class EditorComponent implements OnInit, AfterViewInit {
     }, 2000);
   }
 
-  handleBold(): void {}
+  onEditorInit(editorRef: any) {
+    this.editorRef = editorRef;
+    this.modelRef = this.editorRef.getModel();
+  }
 
-  handleItalic(): void {}
+  handleTitle(marks: string): void {
+    this.selectionLineWholeReplace(marks + this.getSelectionValue());
+  }
 
-  handleStrike(): void {}
+  handleBold(): void {
+    this.selectionLineInlineReplace('**' + this.getSelectionValue() + '**');
+  }
 
-  handleUnderline(): void {}
+  handleItalic(): void {
+    this.selectionLineInlineReplace('*' + this.getSelectionValue() + '*');
+  }
 
-  handleLink(): void {}
+  handleStrike(): void {
+    this.selectionLineInlineReplace('~' + this.getSelectionValue() + '~');
+  }
 
-  handleOrderedlist(): void {}
+  handleUnderline(): void {
+    this.selectionLineInlineReplace('<u>' + this.getSelectionValue() + '</u>');
+  }
 
-  handleUnorderedlist(): void {}
+  handleLink(): void {
+    this.selectionLineInlineReplace('[' + this.getSelectionValue() + '](url)');
+  }
 
-  handleImage(): void {}
+  handleOrderedlist(): void {
+    this.newLineInsert(`1. \n2. \n3. \n`);
+  }
 
-  handleTable(): void {}
+  handleUnorderedlist(): void {
+    this.newLineInsert(`- \n- \n- \n`);
+  }
 
-  handleCode(): void {}
+  handleImage(): void {
+    this.selectionLineInlineReplace('![' + this.getSelectionValue() + '](url)');
+  }
 
-  handleBlockquote(): void {}
+  handleTable(): void {
+    this.newLineInsert(
+      `| head1 | head1 |\n| ----- | ----- |\n| cell1 | cell2 |\n| cell4 | cell4 |`
+    );
+  }
 
-  handleFormat(): void {}
+  handleCode(): void {
+    this.newLineInsert(`\`\`\`js\n  console.log('hello world!');\n\`\`\`\n`);
+  }
+
+  handleBlockquote(): void {
+    this.selectionLineWholeReplace('> ' + this.getSelectionValue());
+  }
+
+  handleFormat(): void {
+    monaco.editor.colorizeElement(
+      this.markdownResult.querySelector('code') as HTMLElement,
+      {}
+    );
+  }
 
   handleEmoji(): void {
     window.open('https://emojixd.com/', '_blank');
@@ -128,5 +172,74 @@ export class EditorComponent implements OnInit, AfterViewInit {
       marked.parse(this.template)
     );
     this.markdownResult.innerHTML = html.changingThisBreaksApplicationSecurity;
+  }
+
+  // 获取选中的值
+  getSelectionValue(): string {
+    return this.modelRef.getValueInRange(this.editorRef.getSelection());
+  }
+  // 获取光标位置
+  getCursorPosi(): string {
+    return this.editorRef.getSelection();
+  }
+  // 在内容选中行里处理替换
+  selectionLineInlineReplace(text: string): void {
+    const selection: Selection = this.editorRef.getSelection();
+    const range = new monaco.Range(
+      selection.startLineNumber,
+      selection.startColumn,
+      selection.endLineNumber,
+      selection.endColumn
+    );
+    const id = { major: 1, minor: 1 };
+    const op = {
+      identifier: id,
+      range: range,
+      text: text,
+      forceMoveMarkers: true,
+    };
+    this.editorRef.executeEdits(null, [op]);
+    this.editorRef.focus();
+    this.handleHtmlRender();
+  }
+  // 在选中行整行处理替换
+  selectionLineWholeReplace(text: string): void {
+    const position: Position = this.editorRef.getPosition();
+    const range = new monaco.Range(
+      position.lineNumber,
+      1,
+      position.lineNumber,
+      1
+    );
+    const id = { major: 1, minor: 1 };
+    const op = {
+      identifier: id,
+      range: range,
+      text: text,
+      forceMoveMarkers: true,
+    };
+    this.editorRef.executeEdits(null, [op]);
+    this.editorRef.focus();
+    this.handleHtmlRender();
+  }
+  // 新增行插入内容
+  newLineInsert(text: string): void {
+    const position: Position = this.editorRef.getPosition();
+    const range = new monaco.Range(
+      position.lineNumber + 1,
+      1,
+      position.lineNumber + 1,
+      1
+    );
+    const id = { major: 1, minor: 1 };
+    const op = {
+      identifier: id,
+      range: range,
+      text: text,
+      forceMoveMarkers: true,
+    };
+    this.editorRef.executeEdits(null, [op]);
+    this.editorRef.focus();
+    this.handleHtmlRender();
   }
 }
