@@ -10,11 +10,19 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { marked, Tokenizer } from 'marked';
-import { Subject, Subscription, fromEvent } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
-import { editor, Range, Selection, Position } from 'monaco-editor-core';
+import {
+  editor,
+  Range,
+  Selection,
+  Position,
+  languages,
+} from 'monaco-editor-core';
 import FileSaver from 'file-saver';
 import { throttle } from 'lodash-es';
+
+import { template, createSuggestions } from './editor.data';
 
 const rendererMD = new marked.Renderer();
 marked.setOptions({
@@ -35,29 +43,17 @@ marked.use({
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
+  isFullScreen = false;
+  isPreview = false;
+  template = '';
   @ViewChild('preview') preview: ElementRef;
   iframeBody: HTMLBodyElement;
   markdownResult: HTMLDivElement;
-  isFullScreen = false;
-  isPreview = false;
-  template = `
-## 南中荣橘柚
-#### 柳宗元 〔唐代〕
-
-橘柚怀贞质，受命此炎方。
-
-密林耀朱绿，晚岁有馀芳。
-
-殊风限清汉，飞雪滞故乡。
-
-攀条何所叹，北望熊与湘。
-
-![mahua](http://localhost:4200/assets/images/avatar.jpg)
-`;
   modelRef: editor.IModel;
   editorRef: editor.IStandaloneCodeEditor;
   editorSub$: Subject<void> = new Subject<void>();
   subs: Subscription;
+
   constructor(private sanitizer: DomSanitizer) {
     this.subs = this.editorSub$.pipe(debounceTime(50)).subscribe(() => {
       this.handleHtmlRender();
@@ -65,7 +61,7 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log();
+    this.template = template;
   }
 
   ngAfterViewInit(): void {
@@ -89,6 +85,16 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
       wordWrap: 'on',
     };
     editor.setTheme('vs');
+    languages.register({ id: 'markdown' });
+    languages.registerCompletionItemProvider('markdown', {
+      provideCompletionItems: function (model, position) {
+        const range = new Range(position.lineNumber, 1, position.lineNumber, 1);
+        return {
+          suggestions: createSuggestions(range),
+          triggerCharacters: ['@'],
+        };
+      },
+    });
     this.editorRef = editor.create(
       document.getElementById('monacoEditor')!,
       options
@@ -106,7 +112,6 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   initIframe() {
     const iframe: HTMLIFrameElement = this.preview.nativeElement;
-    // 等待iframe加载好后获取result容器
     iframe.onload = () => {
       this.iframeBody = (iframe.contentWindow as any).document.body;
       this.markdownResult = this.iframeBody.querySelector(
@@ -166,6 +171,18 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectionLineWholeReplace('> ' + this.getSelectionValue());
   }
 
+  handleAudio(): void {
+    const src = 'https://www.w3school.com.cn/i/horse.ogg';
+    this.newLineInsert(`\n<audio controls="" src="${src}"></audio>\n`);
+  }
+
+  handleVideo(): void {
+    const src = 'https://www.w3school.com.cn/i/movie.ogg';
+    this.newLineInsert(`\n<video controls="" src="${src}"></video>\n`);
+  }
+
+  handleHelp(): void {}
+
   handleFormat(): void {}
 
   handleEmoji(): void {
@@ -196,6 +213,8 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     FileSaver.saveAs(textBlob, 'markdown_' + new Date().getTime() + '.md');
   }
+
+  handleTheme(): void {}
 
   handleHtmlRender(): void {
     const html: any = this.sanitizer.bypassSecurityTrustHtml(

@@ -8,7 +8,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="加粗"
+        nzTooltipTitle="加粗(B)"
         nzTooltipPlacement="topCenter"
         (click)="handleBold()"
       >
@@ -19,7 +19,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="斜体"
+        nzTooltipTitle="斜体(I)"
         nzTooltipPlacement="topCenter"
         (click)="handleItalic()"
       >
@@ -30,7 +30,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="标题"
+        nzTooltipTitle="标题(T)"
         nzTooltipPlacement="topCenter"
         nz-dropdown
         [nzDropdownMenu]="menu"
@@ -43,7 +43,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="删除线"
+        nzTooltipTitle="删除线(D)"
         nzTooltipPlacement="topCenter"
         (click)="handleStrike()"
       >
@@ -55,7 +55,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="下划线"
+        nzTooltipTitle="下划线(U)"
         nzTooltipPlacement="topCenter"
         (click)="handleUnderline()"
       >
@@ -77,45 +77,12 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="有序列表(OL)"
-        nzTooltipPlacement="topCenter"
-        (click)="handleOrderedlist()"
-      >
-        <svg aria-hidden="true">
-          <use xlink:href="#icon-orderedlist"></use>
-        </svg>
-      </i>
-      <i
-        nz-icon
-        nz-tooltip
-        nzTooltipTitle="无序列表(UL)"
-        nzTooltipPlacement="topCenter"
-        (click)="handleUnorderedlist()"
-      >
-        <svg aria-hidden="true">
-          <use xlink:href="#icon-unorderedlist"></use>
-        </svg>
-      </i>
-      <i
-        nz-icon
-        nz-tooltip
         nzTooltipTitle="图片(P)"
         nzTooltipPlacement="topCenter"
         (click)="handleImage()"
       >
         <svg aria-hidden="true">
           <use xlink:href="#icon-image"></use>
-        </svg>
-      </i>
-      <i
-        nz-icon
-        nz-tooltip
-        nzTooltipTitle="表格(T)"
-        nzTooltipPlacement="topCenter"
-        (click)="handleTable()"
-      >
-        <svg aria-hidden="true">
-          <use xlink:href="#icon-table"></use>
         </svg>
       </i>
       <i
@@ -132,12 +99,45 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="引用"
+        nzTooltipTitle="引用(Q)"
         nzTooltipPlacement="topCenter"
         (click)="handleBlockquote()"
       >
         <svg aria-hidden="true">
           <use xlink:href="#icon-blockquote"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="有序列表"
+        nzTooltipPlacement="topCenter"
+        (click)="handleOrderedlist()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-orderedlist"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="无序列表"
+        nzTooltipPlacement="topCenter"
+        (click)="handleUnorderedlist()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-unorderedlist"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="表格"
+        nzTooltipPlacement="topCenter"
+        (click)="handleTable()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-table"></use>
         </svg>
       </i>
       <!-- <i
@@ -154,12 +154,45 @@
       <i
         nz-icon
         nz-tooltip
+        nzTooltipTitle="音频"
+        nzTooltipPlacement="topCenter"
+        (click)="handleAudio()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-audio"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="视频"
+        nzTooltipPlacement="topCenter"
+        (click)="handleVideo()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-video"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="帮助"
+        nzTooltipPlacement="topCenter"
+        (click)="handleHelp()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-help"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
         nzTooltipTitle="emoji"
         nzTooltipPlacement="topCenter"
         (click)="handleEmoji()"
       >
         <svg aria-hidden="true">
-          <use xlink:href="#icon-expression"></use>
+          <use xlink:href="#icon-emoji"></use>
         </svg>
       </i>
     </div>
@@ -220,6 +253,17 @@
       >
         <svg aria-hidden="true">
           <use xlink:href="#icon-upload"></use>
+        </svg>
+      </i>
+      <i
+        nz-icon
+        nz-tooltip
+        nzTooltipTitle="主题"
+        nzTooltipPlacement="topCenter"
+        (click)="handleTheme()"
+      >
+        <svg aria-hidden="true">
+          <use xlink:href="#icon-theme"></use>
         </svg>
       </i>
     </div>
