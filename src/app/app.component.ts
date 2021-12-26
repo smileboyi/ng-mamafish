@@ -19,7 +19,7 @@ import {
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NgForage } from 'ngforage';
 import { NzIconService } from 'ng-zorro-antd/icon';
-import * as monaco from 'monaco-editor';
+import * as monaco from "monaco-editor-core";
 
 import { UtilsService } from '@services/utils.service';
 import { GlobalService } from '@services/global.service';
@@ -58,7 +58,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
     this.handleTabsDataInvalid().then(() => {});
     this.iconService.addIcon(...appIcons);
-    // 要加上这句，提前引入monaco-editor，否则editor页面中monaco-editor编译失败
+    // 要加上这句，提前引入monaco-editor-core，否则editor页面中monaco-editor-core编译失败
     console.log(monaco);
   }
 

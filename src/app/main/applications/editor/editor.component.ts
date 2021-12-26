@@ -4,6 +4,7 @@ import {
   ViewChild,
   ElementRef,
   Renderer2,
+  OnDestroy,
   AfterViewInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
@@ -11,9 +12,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { marked, Tokenizer } from 'marked';
 import { Subject, Subscription, fromEvent } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
-import { EditorComponent as MonacoEditorComponent } from 'ngx-monaco-editor';
-import { editor, Selection, Position } from 'monaco-editor';
-import * as monaco from 'monaco-editor';
+import { editor, Range, Selection, Position } from 'monaco-editor-core';
+import FileSaver from 'file-saver';
+import { throttle } from 'lodash-es';
 
 const rendererMD = new marked.Renderer();
 marked.setOptions({
@@ -33,10 +34,12 @@ marked.use({
   styleUrls: ['./editor.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditorComponent implements OnInit, AfterViewInit {
+export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('preview') preview: ElementRef;
+  iframeBody: HTMLBodyElement;
   markdownResult: HTMLDivElement;
   isFullScreen = false;
+  isPreview = false;
   template = `
 ## 南中荣橘柚
 #### 柳宗元 〔唐代〕
@@ -51,24 +54,14 @@ export class EditorComponent implements OnInit, AfterViewInit {
 
 ![mahua](http://localhost:4200/assets/images/avatar.jpg)
 `;
-  options = {
-    theme: 'vs',
-    language: 'markdown',
-    automaticLayout: true,
-    readOnly: false,
-    fontSize: 16,
-    wordWrap: 'on',
-  };
-  editorRef: any;
   modelRef: editor.IModel;
-  editorSub$: Subject<string> = new Subject<string>();
-
-  constructor(private sanitizer: DomSanitizer, private renderer2: Renderer2) {
-    fromEvent(document, 'keyup')
-      .pipe(debounceTime(100))
-      .subscribe(() => {
-        this.handleHtmlRender();
-      });
+  editorRef: editor.IStandaloneCodeEditor;
+  editorSub$: Subject<void> = new Subject<void>();
+  subs: Subscription;
+  constructor(private sanitizer: DomSanitizer) {
+    this.subs = this.editorSub$.pipe(debounceTime(50)).subscribe(() => {
+      this.handleHtmlRender();
+    });
   }
 
   ngOnInit(): void {
@@ -76,20 +69,51 @@ export class EditorComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // 等待iframe加载好后获取result容器
-    let t = setTimeout(() => {
-      clearTimeout(t);
-      const iframe: HTMLIFrameElement = this.preview.nativeElement;
-      this.markdownResult = (
-        iframe.contentWindow as Window
-      ).document.body.querySelector('.markdown-result') as HTMLDivElement;
-      this.handleHtmlRender();
-    }, 2000);
+    this.initEditor();
+    this.initIframe();
   }
 
-  onEditorInit(editorRef: any) {
-    this.editorRef = editorRef;
-    this.modelRef = this.editorRef.getModel();
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+    if (this.editorRef) {
+      (this.editorRef.getModel() as editor.IModel).dispose();
+      this.editorRef.dispose();
+    }
+  }
+
+  initEditor() {
+    const options: editor.IEditorOptions = {
+      automaticLayout: true,
+      readOnly: false,
+      fontSize: 16,
+      wordWrap: 'on',
+    };
+    editor.setTheme('vs');
+    this.editorRef = editor.create(
+      document.getElementById('monacoEditor')!,
+      options
+    );
+    this.modelRef = this.editorRef.getModel() as editor.ITextModel;
+    editor.setModelLanguage(this.modelRef, 'markdown');
+    this.editorRef.setValue(this.template);
+    this.editorRef.onDidChangeModelContent(
+      throttle(() => {
+        this.template = this.editorRef.getValue();
+        this.editorSub$.next();
+      }, 500)
+    );
+  }
+
+  initIframe() {
+    const iframe: HTMLIFrameElement = this.preview.nativeElement;
+    // 等待iframe加载好后获取result容器
+    iframe.onload = () => {
+      this.iframeBody = (iframe.contentWindow as any).document.body;
+      this.markdownResult = this.iframeBody.querySelector(
+        '.markdown-result'
+      ) as HTMLDivElement;
+      this.handleHtmlRender();
+    };
   }
 
   handleTitle(marks: string): void {
@@ -113,41 +137,36 @@ export class EditorComponent implements OnInit, AfterViewInit {
   }
 
   handleLink(): void {
-    this.selectionLineInlineReplace('[' + this.getSelectionValue() + '](url)');
+    this.selectionLineInlineReplace('[' + this.getSelectionValue() + ']()');
   }
 
   handleOrderedlist(): void {
-    this.newLineInsert(`1. \n2. \n3. \n`);
+    this.newLineInsert(`\n1. \n2. \n3. \n`);
   }
 
   handleUnorderedlist(): void {
-    this.newLineInsert(`- \n- \n- \n`);
+    this.newLineInsert(`\n- \n- \n- \n`);
   }
 
   handleImage(): void {
-    this.selectionLineInlineReplace('![' + this.getSelectionValue() + '](url)');
+    this.selectionLineInlineReplace('![' + this.getSelectionValue() + ']()');
   }
 
   handleTable(): void {
     this.newLineInsert(
-      `| head1 | head1 |\n| ----- | ----- |\n| cell1 | cell2 |\n| cell4 | cell4 |`
+      `\n| head1 | head1 |\n| ----- | ----- |\n| cell1 | cell2 |\n| cell4 | cell4 |\n`
     );
   }
 
   handleCode(): void {
-    this.newLineInsert(`\`\`\`js\n  console.log('hello world!');\n\`\`\`\n`);
+    this.newLineInsert(`\n\`\`\`js\n  console.log('hello world!');\n\`\`\`\n`);
   }
 
   handleBlockquote(): void {
     this.selectionLineWholeReplace('> ' + this.getSelectionValue());
   }
 
-  handleFormat(): void {
-    monaco.editor.colorizeElement(
-      this.markdownResult.querySelector('code') as HTMLElement,
-      {}
-    );
-  }
+  handleFormat(): void {}
 
   handleEmoji(): void {
     window.open('https://emojixd.com/', '_blank');
@@ -161,11 +180,22 @@ export class EditorComponent implements OnInit, AfterViewInit {
     this.isFullScreen = false;
   }
 
-  handlePreview(): void {}
+  handlePreview(): void {
+    this.isPreview = !this.isPreview;
+    this.iframeBody.className = this.isPreview ? 'body--preview' : '';
+  }
 
-  handlePrint(): void {}
+  handlePrint(): void {
+    const iframe: HTMLIFrameElement = this.preview.nativeElement;
+    (iframe.contentWindow as Window).postMessage('print', '*');
+  }
 
-  handleDownload(): void {}
+  handleDownload(): void {
+    const textBlob = new Blob([this.template], {
+      type: 'text/plain;charset=utf-8',
+    });
+    FileSaver.saveAs(textBlob, 'markdown_' + new Date().getTime() + '.md');
+  }
 
   handleHtmlRender(): void {
     const html: any = this.sanitizer.bypassSecurityTrustHtml(
@@ -176,70 +206,53 @@ export class EditorComponent implements OnInit, AfterViewInit {
 
   // 获取选中的值
   getSelectionValue(): string {
-    return this.modelRef.getValueInRange(this.editorRef.getSelection());
+    return this.modelRef.getValueInRange(
+      this.editorRef.getSelection() as Selection
+    );
   }
   // 获取光标位置
-  getCursorPosi(): string {
-    return this.editorRef.getSelection();
+  getCursorPosi(): Selection {
+    return this.editorRef.getSelection() as Selection;
+  }
+  // 传入编辑的范围和内容进行编辑
+  baseExecuteEdits(range: Range, text: string): void {
+    const id = { major: 1, minor: 1 };
+    const op = {
+      text,
+      range,
+      identifier: id,
+      forceMoveMarkers: true,
+    };
+    this.editorRef.executeEdits(null, [op]);
+    this.editorRef.focus();
+    this.handleHtmlRender();
   }
   // 在内容选中行里处理替换
   selectionLineInlineReplace(text: string): void {
-    const selection: Selection = this.editorRef.getSelection();
-    const range = new monaco.Range(
+    const selection = this.editorRef.getSelection() as Selection;
+    const range = new Range(
       selection.startLineNumber,
       selection.startColumn,
       selection.endLineNumber,
       selection.endColumn
     );
-    const id = { major: 1, minor: 1 };
-    const op = {
-      identifier: id,
-      range: range,
-      text: text,
-      forceMoveMarkers: true,
-    };
-    this.editorRef.executeEdits(null, [op]);
-    this.editorRef.focus();
-    this.handleHtmlRender();
+    this.baseExecuteEdits(range, text);
   }
   // 在选中行整行处理替换
   selectionLineWholeReplace(text: string): void {
-    const position: Position = this.editorRef.getPosition();
-    const range = new monaco.Range(
-      position.lineNumber,
-      1,
-      position.lineNumber,
-      1
-    );
-    const id = { major: 1, minor: 1 };
-    const op = {
-      identifier: id,
-      range: range,
-      text: text,
-      forceMoveMarkers: true,
-    };
-    this.editorRef.executeEdits(null, [op]);
-    this.editorRef.focus();
-    this.handleHtmlRender();
+    const position = this.editorRef.getPosition() as Position;
+    const range = new Range(position.lineNumber, 1, position.lineNumber, 1);
+    this.baseExecuteEdits(range, text);
   }
   // 新增行插入内容
   newLineInsert(text: string): void {
-    const position: Position = this.editorRef.getPosition();
-    const range = new monaco.Range(
+    const position = this.editorRef.getPosition() as Position;
+    const range = new Range(
       position.lineNumber + 1,
       1,
       position.lineNumber + 1,
       1
     );
-    const id = { major: 1, minor: 1 };
-    const op = {
-      identifier: id,
-      range: range,
-      text: text,
-      forceMoveMarkers: true,
-    };
-    this.editorRef.executeEdits(null, [op]);
-    this.editorRef.focus();
-    this.handleHtmlRender();
+    this.baseExecuteEdits(range, text);
   }
 }

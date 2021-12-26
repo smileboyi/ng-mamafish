@@ -4840,11 +4840,6 @@ hdr-histogram-percentiles-obj@^3.0.0:
   resolved "https://registry.npm.taobao.org/hdr-histogram-percentiles-obj/download/hdr-histogram-percentiles-obj-3.0.0.tgz#9409f4de0c2dda78e61de2d9d78b1e9f3cba283c"
   integrity sha1-lAn03gwt2njmHeLZ14senzy6KDw=
 
-highlight.js@^11.3.1:
-  version "11.3.1"
-  resolved "https://registry.npmmirror.com/highlight.js/download/highlight.js-11.3.1.tgz#813078ef3aa519c61700f84fe9047231c5dc3291"
-  integrity sha1-gTB47zqlGcYXAPhP6QRyMcXcMpE=
-
 hoist-non-react-statics@^3.3.0:
   version "3.3.2"
   resolved "https://registry.nlark.com/hoist-non-react-statics/download/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
@@ -6271,10 +6266,10 @@ mockjs@^1.1.0:
   dependencies:
     commander "*"
 
-monaco-editor@0.24.0:
-  version "0.24.0"
-  resolved "https://registry.npmmirror.com/monaco-editor/download/monaco-editor-0.24.0.tgz#990b55096bcc95d08d8d28e55264c6eb17707269"
-  integrity sha1-mQtVCWvMldCNjSjlUmTG6xdwcmk=
+monaco-editor-core@^0.31.1:
+  version "0.31.1"
+  resolved "https://registry.npmmirror.com/monaco-editor-core/download/monaco-editor-core-0.31.1.tgz#7dfde54f00a3894e87db6151b7c1333944727455"
+  integrity sha512-JdwqSmTJP10bhb7qc94ehWX0C1D2R2rwCHfm+5Vd2Oh0dwjfeCAWHDelnTZ+BVbGPCb+7ZGHZvG+oYZHdmuemg==
 
 mrmime@^1.0.0:
   version "1.0.0"
@@ -6371,13 +6366,6 @@ ngforage@^6.0.0:
     "@angular/cdk" "^8.2.3"
     lazy-get-decorator "^2.0.0"
     tslib "^1.13.0"
-
-ngx-monaco-editor@^12.0.0:
-  version "12.0.0"
-  resolved "https://registry.npmmirror.com/ngx-monaco-editor/download/ngx-monaco-editor-12.0.0.tgz#060b46d764df68319826e3664358cf1529c5ca11"
-  integrity sha1-BgtG12TfaDGYJuNmQ1jPFSnFyhE=
-  dependencies:
-    tslib "^2.1.0"
 
 ngx-permissions@^13.0.1:
   version "13.0.1"

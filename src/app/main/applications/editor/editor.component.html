@@ -1,4 +1,8 @@
-<div class="editor-box wh100" [class.fullscreen]="isFullScreen">
+<div
+  class="editor-box wh100 ovh"
+  [class.editor-box--fullscreen]="isFullScreen"
+  [class.editor-box--preview]="isPreview"
+>
   <div class="tool flex">
     <div class="command">
       <i
@@ -136,7 +140,7 @@
           <use xlink:href="#icon-blockquote"></use>
         </svg>
       </i>
-      <i
+      <!-- <i
         nz-icon
         nz-tooltip
         nzTooltipTitle="格式化"
@@ -146,7 +150,7 @@
         <svg aria-hidden="true">
           <use xlink:href="#icon-format"></use>
         </svg>
-      </i>
+      </i> -->
       <i
         nz-icon
         nz-tooltip
@@ -187,6 +191,7 @@
       <i
         nz-icon
         nz-tooltip
+        class="preview-ico"
         nzTooltipTitle="预览"
         nzTooltipPlacement="topCenter"
         (click)="handlePreview()"
@@ -219,17 +224,14 @@
       </i>
     </div>
   </div>
-  <ngx-monaco-editor
-    class="h100 ovh"
-    [options]="options"
-    [(ngModel)]="template"
-    (onInit)="onEditorInit($event)"
-  ></ngx-monaco-editor>
-  <iframe
-    class="preview wh100 nobd"
-    src="/assets/markdown.html"
-    #preview
-  ></iframe>
+  <div class="wrap">
+    <div class="monaco-editor ovh" id="monacoEditor"></div>
+    <iframe
+      class="preview-panel w100 nobd"
+      src="/assets/markdown.html"
+      #preview
+    ></iframe>
+  </div>
 </div>
 
 <nz-dropdown-menu #menu="nzDropdownMenu">

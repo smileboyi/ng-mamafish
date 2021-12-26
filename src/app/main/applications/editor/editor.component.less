@@ -1,18 +1,32 @@
 :host {
+  display: block;
+  height: 100%;
   overflow: hidden;
   .editor-box {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
-    &.fullscreen{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .wrap {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+    &.editor-box--fullscreen {
       position: fixed;
       top: 0;
       left: 0;
       z-index: 1001;
     }
+    &.editor-box--preview {
+      #monacoEditor {
+        display: none;
+      }
+      .preview-panel {
+        display: block;
+      }
+    }
   }
   .tool {
-    grid-column: 1 / 4;
     line-height: 1;
     padding: 2px 5px;
     box-shadow: 0 0 3px 3px rgb(0 0 0 / 20%);
@@ -34,14 +48,26 @@
       }
     }
   }
-  ngx-monaco-editor {
-    height: 100%;
+  #monacoEditor {
+    flex: 1;
     background-color: #fff;
     ::ng-deep .editor-container {
       height: 100%;
     }
   }
-  .preview{
+  .preview-panel {
+    flex: 1;
     background-color: #fff;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  :host {
+    #monacoEditor {
+      display: block;
+    }
+    .preview-panel {
+      display: none;
+    }
   }
 }

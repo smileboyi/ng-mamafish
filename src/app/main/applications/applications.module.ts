@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 import { ApplicationsRoutingModule } from './applications-routing.module';
 import { SharedModule } from '@shared';
@@ -23,11 +22,6 @@ import { EditorComponent } from './editor/editor.component';
     CommonModule,
     SharedModule,
     ApplicationsRoutingModule,
-    MonacoEditorModule.forRoot({
-      onMonacoLoad: () => {
-        console.log((<any>window).monaco);
-      },
-    }),
   ],
 })
 export class ApplicationsModule {}
