@@ -30,7 +30,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="标题(T)"
+        nzTooltipTitle="标题"
         nzTooltipPlacement="topCenter"
         nz-dropdown
         [nzDropdownMenu]="menu"
@@ -66,7 +66,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="链接(A)"
+        nzTooltipTitle="链接(L)"
         nzTooltipPlacement="topCenter"
         (click)="handleLink()"
       >
@@ -88,7 +88,7 @@
       <i
         nz-icon
         nz-tooltip
-        nzTooltipTitle="代码块(C)"
+        nzTooltipTitle="代码块(O)"
         nzTooltipPlacement="topCenter"
         (click)="handleCode()"
       >
@@ -202,7 +202,7 @@
         nz-tooltip
         nzTooltipTitle="全屏"
         nzTooltipPlacement="topCenter"
-        (click)="handleFullscreen()"
+        (click)="isFullScreen = true"
         *ngIf="!isFullScreen"
       >
         <svg aria-hidden="true">
@@ -214,7 +214,7 @@
         nz-tooltip
         nzTooltipTitle="退出全屏"
         nzTooltipPlacement="topCenter"
-        (click)="handleExitFullscreen()"
+        (click)="isFullScreen = false"
         *ngIf="isFullScreen"
       >
         <svg aria-hidden="true">
@@ -260,7 +260,7 @@
         nz-tooltip
         nzTooltipTitle="主题"
         nzTooltipPlacement="topCenter"
-        (click)="handleTheme()"
+        (click)="isVisible = true"
       >
         <svg aria-hidden="true">
           <use xlink:href="#icon-theme"></use>
@@ -288,3 +288,26 @@
     <li nz-menu-item (click)="handleTitle('###### ')">6级标题</li>
   </ul>
 </nz-dropdown-menu>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Markdown 预览主题"
+  nzCentered
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="isVisible = false"
+>
+  <ng-template #modalContent>
+    <textarea
+      rows="8"
+      nz-input
+      [(ngModel)]="themeStyle"
+      placeholder="可上github搜索markdown css，选择一份通用的主题样式，复制到这里。"
+    ></textarea>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="insertCustomStyle()">
+      确定
+    </button>
+  </ng-template>
+</nz-modal>

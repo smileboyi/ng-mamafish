@@ -35,14 +35,6 @@ export const createSuggestions = (range: IRange) => {
       insertText: `\n1. \n2. \n3. \n`,
     },
     {
-      label: '@ol',
-      kind: 27,
-      detail: '有序列表',
-      range,
-      insertTextRules: 4,
-      insertText: `\n1. \n2. \n3. \n`,
-    },
-    {
       label: '@link',
       kind: 27,
       detail: '链接',
@@ -78,17 +70,28 @@ export const createSuggestions = (range: IRange) => {
   return suggestions;
 };
 
-export const template = `
-## 南中荣橘柚
-#### 柳宗元 〔唐代〕
+export const resetRenderer = {
+  heading: function (text: string, level: string) {
+    return `<h${level}><i class="title-ico"></i>${text}</h${level}>`;
+  },
+};
 
-橘柚怀贞质，受命此炎方。
+export const helpTemplate = `
 
-密林耀朱绿，晚岁有馀芳。
+## 快捷键
 
-殊风限清汉，飞雪滞故乡。
+- Ctrl + B, 加粗
+- Ctrl + I, 斜体
+- Ctrl + D, 删除线
+- Ctrl + U, 下划线
+- Ctrl + L, 链接
+- Ctrl + P, 图片
+- Ctrl + O, 代码块
+- Ctrl + Q, 引用
 
-攀条何所叹，北望熊与湘。
-
-![mahua](http://localhost:4200/assets/images/avatar.jpg)
+## 文本提示
+输入@，接着输入标识单词会出现文本提示，也可 Ctrl + Space 主动触发提示。
+![文本提示](${location.origin}/assets/images/suggestions.jpg)
 `;
+
+

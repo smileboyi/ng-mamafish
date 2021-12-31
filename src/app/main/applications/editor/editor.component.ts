@@ -3,7 +3,6 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  Renderer2,
   OnDestroy,
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -11,18 +10,20 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { marked, Tokenizer } from 'marked';
 import { Subject, Subscription } from 'rxjs';
-import { map, debounceTime } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 import {
   editor,
   Range,
   Selection,
   Position,
   languages,
+  KeyCode,
+  KeyMod,
 } from 'monaco-editor-core';
 import FileSaver from 'file-saver';
-import { throttle } from 'lodash-es';
+import { throttle, merge } from 'lodash-es';
 
-import { template, createSuggestions } from './editor.data';
+import { helpTemplate, createSuggestions, resetRenderer } from './editor.data';
 
 const rendererMD = new marked.Renderer();
 marked.setOptions({
@@ -30,12 +31,8 @@ marked.setOptions({
   gfm: true,
   smartLists: true,
 });
-
-marked.use({
-  renderer: rendererMD,
-  gfm: true,
-  smartLists: true,
-});
+let renderer = new marked.Renderer();
+renderer = merge(renderer, resetRenderer);
 @Component({
   selector: 'cat-editor',
   templateUrl: './editor.component.html',
@@ -45,7 +42,10 @@ marked.use({
 export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
   isFullScreen = false;
   isPreview = false;
+  isVisible = false;
+  helpShow = false;
   template = '';
+  themeStyle = '';
   @ViewChild('preview') preview: ElementRef;
   iframeBody: HTMLBodyElement;
   markdownResult: HTMLDivElement;
@@ -56,17 +56,18 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private sanitizer: DomSanitizer) {
     this.subs = this.editorSub$.pipe(debounceTime(50)).subscribe(() => {
-      this.handleHtmlRender();
+      this.iframeBody && this.handleHtmlRender();
     });
   }
 
   ngOnInit(): void {
-    this.template = template;
+    this.template = helpTemplate;
   }
 
   ngAfterViewInit(): void {
     this.initEditor();
     this.initIframe();
+    this.bindingKeyEvent();
   }
 
   ngOnDestroy(): void {
@@ -121,6 +122,33 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
 
+  bindingKeyEvent(): void {
+    this.editorRef.addCommand(KeyMod.CtrlCmd | KeyCode.KeyB, (v) => {
+      this.handleBold();
+    });
+    this.editorRef.addCommand(KeyMod.CtrlCmd | KeyCode.KeyI, (v) => {
+      this.handleItalic();
+    });
+    this.editorRef.addCommand(KeyMod.CtrlCmd | KeyCode.KeyD, (v) => {
+      this.handleStrike();
+    });
+    this.editorRef.addCommand(KeyMod.CtrlCmd | KeyCode.KeyU, (v) => {
+      this.handleUnderline();
+    });
+    this.editorRef.addCommand(KeyMod.CtrlCmd | KeyCode.KeyL, (v) => {
+      this.handleLink();
+    });
+    this.editorRef.addCommand(KeyMod.CtrlCmd | KeyCode.KeyP, (v) => {
+      this.handleImage();
+    });
+    this.editorRef.addCommand(KeyMod.CtrlCmd | KeyCode.KeyO, (v) => {
+      this.handleCode(true);
+    });
+    this.editorRef.addCommand(KeyMod.CtrlCmd | KeyCode.KeyQ, (v) => {
+      this.handleBlockquote();
+    });
+  }
+
   handleTitle(marks: string): void {
     this.selectionLineWholeReplace(marks + this.getSelectionValue());
   }
@@ -145,6 +173,14 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectionLineInlineReplace('[' + this.getSelectionValue() + ']()');
   }
 
+  handleImage(): void {
+    this.selectionLineInlineReplace('![' + this.getSelectionValue() + ']()');
+  }
+
+  handleBlockquote(): void {
+    this.selectionLineWholeReplace('> ' + this.getSelectionValue());
+  }
+
   handleOrderedlist(): void {
     this.newLineInsert(`\n1. \n2. \n3. \n`);
   }
@@ -153,22 +189,20 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
     this.newLineInsert(`\n- \n- \n- \n`);
   }
 
-  handleImage(): void {
-    this.selectionLineInlineReplace('![' + this.getSelectionValue() + ']()');
-  }
-
   handleTable(): void {
     this.newLineInsert(
       `\n| head1 | head1 |\n| ----- | ----- |\n| cell1 | cell2 |\n| cell4 | cell4 |\n`
     );
   }
 
-  handleCode(): void {
-    this.newLineInsert(`\n\`\`\`js\n  console.log('hello world!');\n\`\`\`\n`);
-  }
-
-  handleBlockquote(): void {
-    this.selectionLineWholeReplace('> ' + this.getSelectionValue());
+  handleCode(inline = false): void {
+    if (inline) {
+      this.selectionLineInlineReplace('`' + this.getSelectionValue() + '`');
+    } else {
+      this.newLineInsert(
+        `\n\`\`\`js\n  console.log('hello world!');\n\`\`\`\n`
+      );
+    }
   }
 
   handleAudio(): void {
@@ -181,20 +215,23 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
     this.newLineInsert(`\n<video controls="" src="${src}"></video>\n`);
   }
 
-  handleHelp(): void {}
+  handleHelp(): void {
+    // 不要使用setValue，因为不能Undo
+    const fullRange = (
+      this.editorRef.getModel() as editor.IModel
+    ).getFullModelRange();
+    this.editorRef.executeEdits(null, [
+      {
+        text: helpTemplate,
+        range: fullRange,
+      },
+    ]);
+  }
 
   handleFormat(): void {}
 
   handleEmoji(): void {
     window.open('https://emojixd.com/', '_blank');
-  }
-
-  handleFullscreen(): void {
-    this.isFullScreen = true;
-  }
-
-  handleExitFullscreen(): void {
-    this.isFullScreen = false;
   }
 
   handlePreview(): void {
@@ -204,7 +241,7 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   handlePrint(): void {
     const iframe: HTMLIFrameElement = this.preview.nativeElement;
-    (iframe.contentWindow as Window).postMessage('print', '*');
+    (iframe.contentWindow as Window).postMessage({ type: 'print' }, '*');
   }
 
   handleDownload(): void {
@@ -214,22 +251,29 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
     FileSaver.saveAs(textBlob, 'markdown_' + new Date().getTime() + '.md');
   }
 
-  handleTheme(): void {}
+  insertCustomStyle(): void {
+    const iframe: HTMLIFrameElement = this.preview.nativeElement;
+    (iframe.contentWindow as Window).postMessage(
+      { type: 'theme', data: this.themeStyle },
+      '*'
+    );
+    this.isVisible = false;
+  }
 
   handleHtmlRender(): void {
     const html: any = this.sanitizer.bypassSecurityTrustHtml(
-      marked.parse(this.template)
+      marked.parse(this.template, { renderer: renderer })
     );
     this.markdownResult.innerHTML = html.changingThisBreaksApplicationSecurity;
   }
 
-  // 获取选中的值
+  // 获取选中的文本
   getSelectionValue(): string {
     return this.modelRef.getValueInRange(
       this.editorRef.getSelection() as Selection
     );
   }
-  // 获取光标位置
+  // 获取文本选中位置
   getCursorPosi(): Selection {
     return this.editorRef.getSelection() as Selection;
   }
