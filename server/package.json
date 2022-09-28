@@ -75,7 +75,7 @@
     "concurrently": "^4.1.0",
     "copy-webpack-plugin": "^5.1.1",
     "jest": "^23.6.0",
-    "nodemon": "^1.18.9",
+    "nodemon": "^2.0.20",
     "prettier": "^1.15.3",
     "soap": "^0.31.0",
     "supertest": "^3.4.1",
