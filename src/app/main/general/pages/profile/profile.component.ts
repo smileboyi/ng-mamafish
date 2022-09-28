@@ -66,13 +66,13 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.isPageMini = this.utils.getMiniState();
 
-    this.mediaObserver.media$.subscribe((change: MediaChange) => {
-      if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
-      } else {
-        if (this.profile) {
-          this.profile.nativeElement.scrollTo(0, 0);
-        }
-      }
+    this.mediaObserver.asObservable().subscribe((change: MediaChange[]) => {
+      // if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
+      // } else {
+      //   if (this.profile) {
+      //     this.profile.nativeElement.scrollTo(0, 0);
+      //   }
+      // }
     });
 
     this.store.select(fromReducer.selectActivities).subscribe((res) => {

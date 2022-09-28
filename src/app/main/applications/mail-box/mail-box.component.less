@@ -2,8 +2,12 @@
 @import url('https://cdn.quilljs.com/1.3.6/quill.snow.css');
 @import url('https://cdn.quilljs.com/1.3.6/quill.bubble.css');
 :host {
+  display: block;
   width: 100%;
   height: 100%;
+  .main {
+    height: calc(100% - var(--header-height));
+  }
   .hidden-header-title {
     ::ng-deep .bg-header .bottom-bar {
       .title {
@@ -81,6 +85,7 @@
   .person-box {
     position: relative;
     z-index: 15;
+    left: 0;
     width: 350px;
     height: 100%;
     box-shadow: 2px 0 5px 0 #d9d6d6;
@@ -150,7 +155,6 @@
     }
   }
   .content-box {
-    padding-bottom: 150px;
     background-color: rgba(245, 245, 245, 0.2);
     .no-data {
       [nz-icon] {
@@ -227,6 +231,12 @@
     .send-box {
       padding: 20px;
       [nz-form] {
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 40px);
+        quill-editor {
+          max-height: calc(100% - 205px);
+        }
         ::ng-deep .ql-container.ql-snow {
           min-height: 120px;
           margin-bottom: 10px;
@@ -246,9 +256,12 @@
           }
         }
         .btns {
+          display: flex;
+          justify-content: center;
           .btn {
             height: 36px;
             padding: 0 16px;
+            margin: 0 20px;
             font-size: 14px;
             border: none;
             border-radius: 3px;

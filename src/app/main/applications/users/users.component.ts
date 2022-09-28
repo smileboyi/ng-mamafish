@@ -4,7 +4,6 @@ import {
   ViewChild,
   ComponentRef,
   ViewContainerRef,
-  ComponentFactoryResolver,
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -35,17 +34,12 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
-    private componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getUsers();
-    const componentFactory =
-      this.componentFactoryResolver.resolveComponentFactory(
-        UserDialogComponent
-      );
     this.userDialog =
-      this.userDialogContainer.createComponent(componentFactory);
+      this.userDialogContainer.createComponent(UserDialogComponent);
     this.userDialog.instance.subscriptionForm((user: User) => {
       user.id ? this.updateUser(user) : this.addUser(user);
     });

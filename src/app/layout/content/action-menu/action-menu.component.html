@@ -4,6 +4,7 @@
   <div class="btn">介绍</div>
   <div class="btn" (click)="openFeedback()">反馈</div>
   <div class="btn" (click)="toggleMusicView.emit()">音乐</div>
+  <div class="btn">{{screencapHidden}}</div>
 </div>
 
 <div class="screencap box-shadow" cdkDrag [hidden]="screencapHidden">

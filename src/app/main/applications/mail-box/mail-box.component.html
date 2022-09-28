@@ -1,4 +1,7 @@
-<div class="mail-box grail wh100 ovh {{ search ? 'hidden-header-title': ''}}">
+<div
+  class="mail-box grail wh100 ovh {{ search ? 'hidden-header-title' : '' }}"
+  style="--header-height: 148px"
+>
   <cat-bg-header headerTitle="Inbox">
     <div class="bottom-inbox-bar flex">
       <div>
@@ -12,7 +15,12 @@
           [nzTrigger]="'click'"
           [nzDropdownMenu]="menu"
         >
-          <i nz-icon nzType="align-center" nzTheme="outline" style="font-size: 16px;"></i>
+          <i
+            nz-icon
+            nzType="align-center"
+            nzTheme="outline"
+            style="font-size: 16px"
+          ></i>
         </a>
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu class="inbox-header-dropdown">
@@ -104,7 +112,7 @@
       </div>
     </div>
   </cat-bg-header>
-  <div class="main fe flex pre h100">
+  <div class="main flex pre">
     <div
       class="person-box-cover"
       (click)="fold = true"
@@ -186,8 +194,8 @@
               <input nz-input placeholder="Subject" formControlName="subject" />
             </nz-form-control>
           </nz-form-item>
-          <!-- <quill-editor formControlName="message"></quill-editor> -->
-          <div class="btns flex">
+          <quill-editor class="grail" formControlName="message"></quill-editor>
+          <div class="btns">
             <button class="btn cancel" (click)="newMail = false">Cancel</button>
             <button class="btn send" (click)="onSubmit(form.value)">
               Send

@@ -8,7 +8,9 @@ import {
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NgForage } from 'ngforage';
-import { Md5 } from 'ts-md5/dist/md5';
+import { Md5 } from 'ts-md5';
+import { of } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 import { appConfig } from '@config/app.config';
 import { messageText } from '@config/message-text.config';
@@ -121,16 +123,16 @@ export class MusicPlayerComponent implements OnInit {
         result = await this.http
           .get(
             appConfig.MUSIC_API_BASE +
-              `/login?email=${account}&md5_password=${Md5.hashStr(password)}`
+            `/login?email=${account}&md5_password=${Md5.hashStr(password)}`
           )
           .toPromise();
       } else if (this.utils.checkPhone(account)) {
         result = await this.http
           .get(
             appConfig.MUSIC_API_BASE +
-              `/login/cellphone?phone=${account}&md5_password=${Md5.hashStr(
-                password
-              )}`
+            `/login/cellphone?phone=${account}&md5_password=${Md5.hashStr(
+              password
+            )}`
           )
           .toPromise();
       } else {
@@ -238,7 +240,7 @@ export class MusicPlayerComponent implements OnInit {
           songs: this.songs,
           originalSongData: this.originalSongData,
         })
-        .then(() => {});
+        .then(() => { });
       this.song = this.songs[0];
       this.isLogin = true;
       this.cdr.markForCheck();
@@ -308,7 +310,7 @@ export class MusicPlayerComponent implements OnInit {
         }, 1000);
       } else {
         this.message.error(messageText.MUSIC_LOGIN_INVALID);
-        this.ngForage.removeItem(this.musicInfoToken).then(() => {});
+        this.ngForage.removeItem(this.musicInfoToken).then(() => { });
         this.isLogin = false;
       }
     } else {
@@ -337,9 +339,6 @@ export class MusicPlayerComponent implements OnInit {
       .get(appConfig.MUSIC_API_BASE + `/login/refresh`, {
         params,
         withCredentials: true,
-      })
-      .toPromise()
-      .then((res) => {})
-      .catch((err) => {});
+      }).pipe(catchError(err => of())).subscribe(res => { })
   }
 }

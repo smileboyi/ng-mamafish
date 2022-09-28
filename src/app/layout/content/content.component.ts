@@ -6,7 +6,7 @@ import { NgForage } from 'ngforage';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.less'],
 })
-export class ContentComponent implements OnInit, OnDestroy {
+export class ContentComponent implements OnInit {
   skinIdx = 0;
   musicHidden = true;
 
@@ -15,7 +15,7 @@ export class ContentComponent implements OnInit, OnDestroy {
     return `url(/assets/images/texture-${this.skinIdx || 1}.webp)`;
   }
 
-  constructor(private ngForage: NgForage) {}
+  constructor(private ngForage: NgForage) { }
 
   ngOnInit(): void {
     this.ngForage.getItem('webSkinIdx').then((idx: any) => {
@@ -23,14 +23,11 @@ export class ContentComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.ngForage.setItem('webSkinIdx', this.skinIdx).then(() => {});
-  }
-
   toggleWebSkin(): void {
-    if (this.skinIdx >= 20) {
+    if (this.skinIdx >= 30 || this.skinIdx < 0) {
       this.skinIdx = 0;
     }
     this.skinIdx += 1;
+    this.ngForage.setItem('webSkinIdx', this.skinIdx).then(() => { });
   }
 }

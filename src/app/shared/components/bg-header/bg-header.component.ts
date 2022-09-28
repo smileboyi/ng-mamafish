@@ -1,7 +1,10 @@
+import { ThisReceiver } from '@angular/compiler';
 import {
   Component,
   OnInit,
   Input,
+  Renderer2,
+  ElementRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
 
@@ -18,13 +21,23 @@ export class BgHeaderComponent {
   @Input() headerTitle = '';
   @Input() describe = '';
 
-  constructor() {}
+  constructor(private el: ElementRef, private renderer2: Renderer2) {}
 
   toggleCmpSize(): void {
     if (this.cmpSize === 'L') {
       this.cmpSize = 'S';
+      this.renderer2.setAttribute(
+        this.el.nativeElement.parentNode,
+        'style',
+        '--header-height:36px'
+      );
     } else {
       this.cmpSize = 'L';
+      this.renderer2.setAttribute(
+        this.el.nativeElement.parentNode,
+        'style',
+        '--header-height:148px'
+      );
     }
     let t = setTimeout(() => {
       this.trans = true;

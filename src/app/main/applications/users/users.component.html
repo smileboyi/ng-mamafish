@@ -1,4 +1,7 @@
-<div class="users-box pre h100 {{ search ? 'hidden-header-title': ''}}">
+<div
+  class="users-box pre h100 {{ search ? 'hidden-header-title' : '' }}"
+  style="--header-height: 148px"
+>
   <cat-bg-header
     headerTitle="Users"
     describe="View information about the users, search, add, edit or delete any user."
@@ -33,7 +36,7 @@
       </div>
     </div>
   </cat-bg-header>
-  <div class="main fe" *ngIf="fetchState">
+  <div class="main ovys scrollbar" *ngIf="fetchState">
     <div class="grid-list" fxLayout="row wrap" *ngIf="showWay === 'grid'">
       <nz-skeleton
         [nzAvatar]="true"
@@ -84,7 +87,7 @@
       ></nz-skeleton>
     </div>
   </div>
-  <div class="main fe" *ngIf="!fetchState && users.length">
+  <div class="main ovys scrollbar" *ngIf="!fetchState && users.length">
     <div class="grid-list" fxLayout="row wrap" *ngIf="showWay === 'grid'">
       <div
         fxFlex="100"
@@ -100,7 +103,9 @@
             [ngClass]="user.settings.isDeleted ? '' : user.settings.bgColor"
           >
             <label class="block-bg">
-              <img [src]="user.profile.image || '/assets/images/cat-avatar.png'" />
+              <img
+                [src]="user.profile.image || '/assets/images/cat-avatar.png'"
+              />
               <i
                 nz-icon
                 nzType="stop"
