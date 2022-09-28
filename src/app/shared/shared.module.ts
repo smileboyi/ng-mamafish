@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -35,12 +36,17 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
-import { LAYOUT_CONFIG, PROFILE_INFO, MUSIC_INFO, PAGE_TABS_DATA } from '@tokens';
 import { ThrottleClickDirective } from './directives/throttle-click.directive';
 import { ThemePanelComponent } from './components/theme-panel/theme-panel.component';
 import { BgHeaderComponent } from './components/bg-header/bg-header.component';
 import { PaginatePipe } from './pipes/paginate.pipe';
 import { KeysPipe } from './pipes/keys.pipe';
+import {
+  LAYOUT_CONFIG,
+  PROFILE_INFO,
+  MUSIC_INFO,
+  PAGE_TABS_DATA,
+} from '@tokens';
 
 const APP_CORE_PROVIDERS = [
   {
@@ -61,6 +67,34 @@ const APP_CORE_PROVIDERS = [
   },
 ];
 
+const NZ_MODULES = [
+  NzButtonModule,
+  NzDropDownModule,
+  NzMenuModule,
+  NzSelectModule,
+  NzAvatarModule,
+  NzFormModule,
+  NzModalModule,
+  NzInputModule,
+  NzTableModule,
+  NzSpinModule,
+  NzResultModule,
+  NzTabsModule,
+  NzSkeletonModule,
+  NzBackTopModule,
+  NzPaginationModule,
+  NzDividerModule,
+  NzCheckboxModule,
+  NzProgressModule,
+  NzToolTipModule,
+  NzPopoverModule,
+  NzRadioModule,
+  NzSwitchModule,
+  NzIconModule,
+  NzMessageModule,
+  NzDatePickerModule,
+];
+
 @NgModule({
   imports: [
     CommonModule,
@@ -73,31 +107,7 @@ const APP_CORE_PROVIDERS = [
     NgxPermissionsModule,
     ScrollingModule,
     DragDropModule,
-    NzButtonModule,
-    NzDropDownModule,
-    NzMenuModule,
-    NzSelectModule,
-    NzAvatarModule,
-    NzFormModule,
-    NzModalModule,
-    NzInputModule,
-    NzTableModule,
-    NzSpinModule,
-    NzResultModule,
-    NzTabsModule,
-    NzSkeletonModule,
-    NzBackTopModule,
-    NzPaginationModule,
-    NzDividerModule,
-    NzCheckboxModule,
-    NzProgressModule,
-    NzToolTipModule,
-    NzPopoverModule,
-    NzRadioModule,
-    NzSwitchModule,
-    NzIconModule,
-    NzMessageModule,
-    NzDatePickerModule,
+    ...NZ_MODULES
   ],
   declarations: [
     ThemePanelComponent,
@@ -111,38 +121,14 @@ const APP_CORE_PROVIDERS = [
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    // QuillModule,
+    QuillModule,
     FormsModule,
     RouterModule,
     FlexLayoutModule,
     ScrollingModule,
     DragDropModule,
     NgxPermissionsModule,
-    NzButtonModule,
-    NzDropDownModule,
-    NzMenuModule,
-    NzSelectModule,
-    NzAvatarModule,
-    NzFormModule,
-    NzInputModule,
-    NzModalModule,
-    NzTableModule,
-    NzSpinModule,
-    NzResultModule,
-    NzTabsModule,
-    NzSkeletonModule,
-    NzBackTopModule,
-    NzPaginationModule,
-    NzDividerModule,
-    NzCheckboxModule,
-    NzProgressModule,
-    NzToolTipModule,
-    NzPopoverModule,
-    NzRadioModule,
-    NzSwitchModule,
-    NzIconModule,
-    NzMessageModule,
-    NzDatePickerModule,
+    ...NZ_MODULES,
     ThemePanelComponent,
     BgHeaderComponent,
     ThrottleClickDirective,
@@ -151,3 +137,4 @@ const APP_CORE_PROVIDERS = [
   ],
 })
 export class SharedModule {}
+

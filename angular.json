@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
     "analytics": "57174a95-9f8b-4f80-a23e-62121d513708",
-    "defaultCollection": "@angular-eslint/schematics"
+    "defaultCollection": "@angular-eslint/schematics",
+    "packageManager": "pnpm"
   },
   "version": 1,
   "newProjectRoot": "projects",
@@ -50,6 +51,7 @@
             ],
             "styles": [
               "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
+              "node_modules/monaco-editor-core/min/vs/editor/editor.main.css",
               "src/assets/styles/_themeColor.less",
               "src/assets/styles/_reset.less",
               "src/styles.less",

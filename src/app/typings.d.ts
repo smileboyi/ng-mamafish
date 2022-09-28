@@ -18,3 +18,8 @@ declare module 'gitter-sidecar' {
   const Gitter: Gitter;
   export default Gitter;
 }
+
+
+declare module '@timecat/timecat' {
+  interface RecorderModule {}
+}

@@ -163,12 +163,12 @@ for (let i = 1; i <= 100; i++) {
 export const personInfos: Array<PersonInfo> = _personInfos;
 
 export const chatUsers: Array<ChatUser> = [
-  new ChatUser('assets/images/ashley.jpg', 'Ashley Ahlberg', 'Online'),
-  new ChatUser('assets/images/bruno.jpg', 'Bruno Vespa', 'Do not disturb'),
-  new ChatUser('assets/images/julia.jpg', 'Julia Aniston', 'Away'),
-  new ChatUser('assets/images/adam.jpg', 'Adam Sandler', 'Online'),
-  new ChatUser('assets/images/tereza.jpg', 'Tereza Stiles', 'Offline'),
-  new ChatUser('assets/images/michael.jpg', 'Michael Blair', 'Online')
+  new ChatUser('/assets/images/ashley.jpg', 'Ashley Ahlberg', 'Online'),
+  new ChatUser('/assets/images/bruno.jpg', 'Bruno Vespa', 'Do not disturb'),
+  new ChatUser('/assets/images/julia.jpg', 'Julia Aniston', 'Away'),
+  new ChatUser('/assets/images/adam.jpg', 'Adam Sandler', 'Online'),
+  new ChatUser('/assets/images/tereza.jpg', 'Tereza Stiles', 'Offline'),
+  new ChatUser('/assets/images/michael.jpg', 'Michael Blair', 'Online')
 ];
 
 export const getChatTalks = (user: ChatUser): Array<ChatTalk> => {
@@ -187,7 +187,7 @@ export const getChatTalks = (user: ChatUser): Array<ChatTalk> => {
       false
     ),
     new ChatTalk(
-      'assets/images/user.jpg',
+      '/assets/images/user.jpg',
       'Emilio Verdines',
       'Yes, that\'s right. He is two and a half years older than I am, and we get along very well now.',
       new Date(year, month, day - 2, hour, minute + 8),
@@ -201,7 +201,7 @@ export const getChatTalks = (user: ChatUser): Array<ChatTalk> => {
       false
     ),
     new ChatTalk(
-      'assets/images/user.jpg',
+      '/assets/images/user.jpg',
       'Emilio Verdines',
       'Not very well at all actually. He was always very mean and heartless, should we say.',
       new Date(year, month, day - 2, hour, minute + 6),
@@ -215,7 +215,7 @@ export const getChatTalks = (user: ChatUser): Array<ChatTalk> => {
       false
     ),
     new ChatTalk(
-      'assets/images/user.jpg',
+      '/assets/images/user.jpg',
       'Emilio Verdines',
       'Perhaps the first thing was the time I fell asleep on the bus when I was on kindergarten.\
 			He actually left me there sleeping, and I didn\'t wake up until my lunch box fell on the ground,\
@@ -232,7 +232,7 @@ export const getChatTalks = (user: ChatUser): Array<ChatTalk> => {
       false
     ),
     new ChatTalk(
-      'assets/images/user.jpg',
+      '/assets/images/user.jpg',
       'Emilio Verdines',
       'My mom asked my brother,\'Hey! Aren\'t you forgetting something?\',\
 			referring to me, and he responded3, \'Hey! How did you know I forgot my homework!\'',
@@ -246,7 +246,7 @@ export const Mails: Array<Mail> = [
   new Mail(
     2,
     'Josiah Fromdahl',
-    'assets/images/bruno.jpg',
+    '/assets/images/bruno.jpg',
     'Reekie8647@gmail.com',
     'Useful tool for those who are involved in SEO',
     '9:47 AM',
@@ -271,7 +271,7 @@ export const Mails: Array<Mail> = [
   new Mail(
     3,
     'Google Cloud Platform',
-    'assets/images/google-platform.png',
+    '/assets/images/google-platform.png',
     'CloudPlatform-noreply@google.com',
     'Lessons from the field: surviving success with Customer Reliability Engineering',
     'Jan 5',
@@ -294,7 +294,7 @@ export const Mails: Array<Mail> = [
   new Mail(
     4,
     'Microsoft Visual Studio',
-    'assets/images/vs.jpg',
+    '/assets/images/vs.jpg',
     'MVS@e-mail.microsoft.com',
     'Welcome to Visual Studio Team Services',
     '24.12.2016',
@@ -336,7 +336,7 @@ export const Mails: Array<Mail> = [
   new Mail(
     7,
     'MailChimp',
-    'assets/images/mailchimp.jpg',
+    '/assets/images/mailchimp.jpg',
     'hello@mailchimp.com',
     'Our 2016 annual report',
     '22.12.2016',
@@ -357,7 +357,7 @@ export const Mails: Array<Mail> = [
   new Mail(
     8,
     'Bluehost',
-    'assets/images/bluehost.jpg',
+    '/assets/images/bluehost.jpg',
     'no-reply@e.bluehost.com',
     'Your domain privacy may be at risk',
     '20.12.2016',
@@ -386,7 +386,7 @@ export const users: Array<User> = [
       surname: 'Ahlberg',
       birthday: new Date(1981, 2, 29),
       gender: 'female',
-      image: 'assets/images/ashley.jpg'
+      image: '/assets/images/ashley.jpg'
     },
     work: {
       company: 'Google',
@@ -420,7 +420,7 @@ export const users: Array<User> = [
       surname: 'Vespa',
       birthday: new Date(1992, 11, 20),
       gender: 'male',
-      image: 'assets/images/bruno.jpg'
+      image: '/assets/images/bruno.jpg'
     },
     work: {
       company: 'Dell EMC',
@@ -454,7 +454,7 @@ export const users: Array<User> = [
       surname: 'Warhol',
       birthday: new Date(1979, 10, 21),
       gender: 'male',
-      image: 'assets/images/avatar-3.png'
+      image: '/assets/images/avatar-3.png'
     },
     work: {
       company: 'Adecco',
@@ -488,7 +488,7 @@ export const users: Array<User> = [
       surname: 'Aniston',
       birthday: new Date(1982, 6, 18),
       gender: 'female',
-      image: 'assets/images/julia.jpg'
+      image: '/assets/images/julia.jpg'
     },
     work: {
       company: 'Apple',
@@ -522,7 +522,7 @@ export const users: Array<User> = [
       surname: 'Manuel',
       birthday: new Date(1992, 12, 2),
       gender: 'female',
-      image: 'assets/images/avatar-7.png'
+      image: '/assets/images/avatar-7.png'
     },
     work: {
       company: 'Alphabet',
@@ -556,7 +556,7 @@ export const users: Array<User> = [
       surname: 'Sandler',
       birthday: new Date(1987, 12, 24),
       gender: 'male',
-      image: 'assets/images/adam.jpg'
+      image: '/assets/images/adam.jpg'
     },
     work: {
       company: 'General Electric',
@@ -590,7 +590,7 @@ export const users: Array<User> = [
       surname: 'Stiles',
       birthday: new Date(1979, 7, 9),
       gender: 'female',
-      image: 'assets/images/tereza.jpg'
+      image: '/assets/images/tereza.jpg'
     },
     work: {
       company: 'Southwest Airlines',
@@ -624,7 +624,7 @@ export const users: Array<User> = [
       surname: 'Blair',
       birthday: new Date(1978, 11, 15),
       gender: 'male',
-      image: 'assets/images/michael.jpg'
+      image: '/assets/images/michael.jpg'
     },
     work: {
       company: 'Microsoft',
@@ -658,7 +658,7 @@ export const users: Array<User> = [
       surname: 'Warhol',
       birthday: new Date(1979, 10, 21),
       gender: 'male',
-      image: 'assets/images/avatar-3.png'
+      image: '/assets/images/avatar-3.png'
     },
     work: {
       company: 'Adecco',
@@ -692,7 +692,7 @@ export const users: Array<User> = [
       surname: 'Aniston',
       birthday: new Date(1982, 6, 18),
       gender: 'female',
-      image: 'assets/images/julia.jpg'
+      image: '/assets/images/julia.jpg'
     },
     work: {
       company: 'Apple',
@@ -726,7 +726,7 @@ export const users: Array<User> = [
       surname: 'Stiles',
       birthday: new Date(1979, 7, 9),
       gender: 'female',
-      image: 'assets/images/tereza.jpg'
+      image: '/assets/images/tereza.jpg'
     },
     work: {
       company: 'Southwest Airlines',
@@ -760,7 +760,7 @@ export const users: Array<User> = [
       surname: 'Ormond',
       birthday: new Date(1981, 11, 18),
       gender: 'female',
-      image: 'assets/images/avatar-5.png'
+      image: '/assets/images/avatar-5.png'
     },
     work: {
       company: 'Starbucks',
@@ -794,7 +794,7 @@ export const users: Array<User> = [
       surname: 'Ahlberg',
       birthday: new Date(1981, 2, 29),
       gender: 'female',
-      image: 'assets/images/ashley.jpg'
+      image: '/assets/images/ashley.jpg'
     },
     work: {
       company: 'Google',
@@ -828,7 +828,7 @@ export const users: Array<User> = [
       surname: 'Blair',
       birthday: new Date(1978, 11, 15),
       gender: 'male',
-      image: 'assets/images/michael.jpg'
+      image: '/assets/images/michael.jpg'
     },
     work: {
       company: 'Microsoft',
@@ -862,7 +862,7 @@ export const users: Array<User> = [
       surname: 'Sandler',
       birthday: new Date(1987, 12, 24),
       gender: 'male',
-      image: 'assets/images/adam.jpg'
+      image: '/assets/images/adam.jpg'
     },
     work: {
       company: 'General Electric',
@@ -896,7 +896,7 @@ export const users: Array<User> = [
       surname: 'Vespa',
       birthday: new Date(1992, 11, 20),
       gender: 'male',
-      image: 'assets/images/bruno.jpg'
+      image: '/assets/images/bruno.jpg'
     },
     work: {
       company: 'Dell EMC',
@@ -930,7 +930,7 @@ export const users: Array<User> = [
       surname: 'Manuel',
       birthday: new Date(1992, 12, 2),
       gender: 'female',
-      image: 'assets/images/avatar-7.png'
+      image: '/assets/images/avatar-7.png'
     },
     work: {
       company: 'Alphabet',
@@ -964,7 +964,7 @@ export const users: Array<User> = [
       surname: 'Ormond',
       birthday: new Date(1981, 11, 18),
       gender: 'female',
-      image: 'assets/images/avatar-5.png'
+      image: '/assets/images/avatar-5.png'
     },
     work: {
       company: 'Starbucks',
