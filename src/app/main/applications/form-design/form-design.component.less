@@ -1,0 +1,226 @@
+:host {
+  display: grid;
+  grid-template-columns: 270px auto 300px;
+  grid-template-rows: 50px auto;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  height: 100%;
+  grid-template-areas:
+    "top top top"
+    "choice drag config";
+}
+
+.top-box {
+  display: flex;
+  grid-area: top;
+  background-color: #fff;
+  justify-content: space-evenly;
+  .left-btns {
+    line-height: 50px;
+    nz-button-group {
+      top: 2px;
+    }
+    nz-radio-group {
+      margin: 0 20px;
+    }
+  }
+  .right-btns {
+    line-height: 50px;
+  }
+}
+
+.choice-box {
+  grid-area: choice;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.choice-box .choice-item {
+  width: 115px;
+  padding: 10px;
+  height: 50px;
+  margin: 10px 13px;
+  cursor: move;
+  font-size: 13px;
+  color: #303133;
+  text-align: center;
+  background-color: #f1f2f3;
+  &:nth-child(even) {
+    margin-left: 0;
+  }
+  &:hover {
+    color: #fff;
+    background-color: #2e73ff;
+  }
+}
+
+.drag-box {
+  grid-area: drag;
+  background-color: #f1f2f3;
+  .layout-box {
+    position: relative;
+    z-index: 50;
+    overflow: hidden;
+    height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    [nz-form] {
+      position: relative;
+      width: calc(100% - 24px);
+      height: auto;
+      margin: 0 auto;
+      padding: 5px 13px 5px 13px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+      [nz-row] {
+        [nz-col] {
+          min-height: 40px;
+        }
+      }
+    }
+    &::before {
+      position: absolute;
+      content: "";
+      display: block;
+      padding-bottom: 300%;
+      background-size: 100% auto;
+      background-position-x: center;
+      background-repeat: no-repeat;
+    }
+
+    &.desktop {
+      min-width: 1000px;
+      max-width: 1600px;
+      padding-top: 5.1%;
+      &::before {
+        width: 134%;
+        height: 0;
+        top: 0;
+        left: -17.2%;
+        margin-top: -36%;
+        background-image: url(/assets/icons/desktop.svg);
+      }
+
+      [nz-form] {
+        position: absolute;
+        left: 5.2%;
+        width: 90%;
+        height: 0;
+        padding-bottom: 50%;
+      }
+    }
+    &.ipadpro {
+      min-width: 750px;
+      &::before {
+        width: 1400px;
+        height: 200%;
+        top: -160px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-image: url(/assets/icons/ipadpro.svg);
+      }
+      [nz-form] {
+        position: absolute;
+        width: 655px;
+        top: 102px;
+        margin-left: -1px;
+        height: 873px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+    &.iphonex {
+      min-width: 360px;
+      &::before {
+        width: 950px;
+        height: 100%;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-image: url(/assets/icons/iphonex.svg);
+      }
+      [nz-form] {
+        position: absolute;
+        width: 297px;
+        top: 144px;
+        margin-left: 1px;
+        height: 622px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-bottom-left-radius: 27px;
+        border-bottom-right-radius: 27px;
+      }
+    }
+  }
+
+  [nz-form] [nz-col] {
+    display: flex;
+    align-items: center;
+    overflow-x: hidden;
+    outline: 1px dotted #b0b0b0;
+    &.drag-focus::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #2e73ff30;
+    }
+  }
+}
+
+.config-box {
+  grid-area: config;
+  background-color: #fff;
+  ::ng-deep nz-tabs-nav {
+    margin: 0 10px;
+  }
+  .prop-list {
+    .prop-item {
+      display: flex;
+      margin-bottom: 10px;
+      .name {
+        width: 100px;
+        padding: 5px;
+        align-self: center;
+      }
+      .warp {
+        flex: 1;
+      }
+    }
+  }
+}
+
+:host-context(body.darg-move) {
+  .top-box,
+  .drag-box,
+  .config-box {
+    cursor: not-allowed !important;
+  }
+  .choice-box,
+  .drag-box [nz-form] {
+    cursor: move !important;
+  }
+}
+
+::ng-deep body.darg-move .darg-move-block {
+  display: block;
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+  z-index: 1000;
+  width: 115px;
+  height: 50px;
+  text-align: center;
+  color: #fff;
+  pointer-events: none;
+  border: 1px solid #2e73ff;
+  background-color: #8ec6f7;
+}

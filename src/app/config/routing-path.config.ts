@@ -32,6 +32,7 @@ export const routingPathConfig = {
     mailBox: 'mail-box',
     chat: 'chat',
     editor: 'editor',
+    formDesign: 'form-design',
   },
 
   services: {

@@ -35,6 +35,16 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { NzCascaderModule } from 'ng-zorro-antd/cascader';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzMentionModule } from 'ng-zorro-antd/mention';
+import { NzRateModule } from 'ng-zorro-antd/rate';
+import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { NzTransferModule } from 'ng-zorro-antd/transfer';
+import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 import { ThrottleClickDirective } from './directives/throttle-click.directive';
 import { ThemePanelComponent } from './components/theme-panel/theme-panel.component';
@@ -93,6 +103,16 @@ const NZ_MODULES = [
   NzIconModule,
   NzMessageModule,
   NzDatePickerModule,
+  NzAutocompleteModule,
+  NzCascaderModule,
+  NzInputNumberModule,
+  NzMentionModule,
+  NzRateModule,
+  NzSliderModule,
+  NzTimePickerModule,
+  NzTransferModule,
+  NzTreeSelectModule,
+  NzUploadModule
 ];
 
 @NgModule({
@@ -136,5 +156,5 @@ const NZ_MODULES = [
     KeysPipe,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }
 

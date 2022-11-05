@@ -6,8 +6,10 @@ import { ChatComponent } from './chat/chat.component';
 import { UsersComponent } from './users/users.component';
 import { MailBoxComponent } from './mail-box/mail-box.component';
 import { EditorComponent } from './editor/editor.component';
+import { FormDesignComponent } from './form-design/form-design.component';
 import { AuthGuard } from '@guard/auth.guard';
 import { UnsaveGuard } from '@guard/unsave.guard';
+
 
 const routes: Routes = [
   {
@@ -57,6 +59,17 @@ const routes: Routes = [
       title: '编辑器',
       keywords: '编辑器,editor,Monaco Editor,MarkDown',
       description: 'Monaco Editor是一款强大的现代编辑器，支持多种语言的语法高亮和代码提示，以及code diff。',
+      icon: 'editor'
+    },
+  },
+  {
+    path: routingPathConfig.applications.formDesign,
+    component: FormDesignComponent,
+    canActivate: [AuthGuard],
+    data: {
+      title: '表单设计器',
+      keywords: '低代码',
+      description: '表单设计器可以快速开发表单',
       icon: 'editor'
     },
   },

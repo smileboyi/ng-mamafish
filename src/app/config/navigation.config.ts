@@ -158,6 +158,13 @@ export const navigationConfig: Array<NavigationItem> = [
         role: UserRole.User,
         url: [pathConfig.app.applications, pathConfig.applications.editor],
       },
+      {
+        id: 'form-design',
+        title: '表单设计器',
+        icon: 'editor',
+        role: UserRole.User,
+        url: [pathConfig.app.applications, pathConfig.applications.formDesign],
+      },
     ],
     childrenIds: ['users', 'mail-box', 'chat', 'editor'],
   },

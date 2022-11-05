@@ -8,6 +8,7 @@ import { UsersComponent } from './users/users.component';
 import { MailBoxComponent } from './mail-box/mail-box.component';
 import { UserDialogComponent } from './users/user-dialog/user-dialog.component';
 import { EditorComponent } from './editor/editor.component';
+import { FormDesignComponent } from './form-design/form-design.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { EditorComponent } from './editor/editor.component';
     MailBoxComponent,
     UserDialogComponent,
     EditorComponent,
+    FormDesignComponent,
   ],
   entryComponents: [UserDialogComponent],
   imports: [
