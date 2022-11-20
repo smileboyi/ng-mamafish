@@ -2,20 +2,24 @@ import {
   ActionReducerMap,
   createSelector,
   createFeatureSelector,
-} from '@ngrx/store';
+} from "@ngrx/store";
 
-import * as profileReducers from './profile.reducer';
-import { ProfileActionsUnion } from '../actions/profile.action';
+import * as profileReducers from "./profile.reducer";
+import * as formDesignReducers from "./form-design.reducer";
+import { ProfileActionsUnion } from "../actions/profile.action";
+import { FormDesignActionsUnion } from "../actions/form-design.action";
 
 export interface AppState {
   profile: profileReducers.ProfileState;
+  formDesign: formDesignReducers.FormDesignState;
 }
 
-export const reducers: ActionReducerMap<AppState, ProfileActionsUnion> = {
+export const reducers: ActionReducerMap<AppState, never> = {
   profile: profileReducers.ProfileReducer,
+  formDesign: formDesignReducers.FormDesignAReducer,
 };
 
-export const selectProfile: any = createFeatureSelector<AppState>('profile');
+export const selectProfile: any = createFeatureSelector<AppState>("profile");
 
 export const selectActivities = createSelector(
   selectProfile,
@@ -30,4 +34,13 @@ export const selectProfiles = createSelector(
 export const selectMessages = createSelector(
   selectProfile,
   profileReducers.selectMessages
+);
+
+export const selectFormDesign: any = createFeatureSelector<AppState>(
+  "formDesign"
+);
+
+export const selecEleIndex = createSelector(
+  selectFormDesign,
+  formDesignReducers.selecEleIndex
 );

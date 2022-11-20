@@ -9,6 +9,9 @@ import {
   Inject,
   ChangeDetectorRef,
   Renderer2,
+  ViewContainerRef,
+  EmbeddedViewRef,
+  TemplateRef
 } from "@angular/core";
 import {
   UntypedFormBuilder,
@@ -30,8 +33,8 @@ import {
 } from "rxjs/operators";
 
 import { FormDesignEle, formDesignEles } from "./form-design.data";
-
-type LayoutType = "PC" | "iPad" | "H5";
+import { FormDesignTemplateComponent } from "./form-design.template";
+import { DsignLayoutType, DsignEleNode, FdTemplateConfig } from "@declare";
 
 @Component({
   selector: "cat-form-design",
@@ -40,7 +43,7 @@ type LayoutType = "PC" | "iPad" | "H5";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormDesignComponent implements OnInit, AfterViewInit {
-  layoutType: LayoutType = "PC";
+  layoutType: DsignLayoutType = "PC";
   get layoutClass() {
     return {
       PC: "desktop",
@@ -53,16 +56,25 @@ export class FormDesignComponent implements OnInit, AfterViewInit {
   validateForm!: UntypedFormGroup;
   subscription: Subscription[] = [];
 
+  column = 2;
   formConfig = {
-    labelPosi:'left',
-    layout:"horizontal",
-    compSize:'default'
+    labelPosi: "left",
+    layout: "horizontal",
+    compSize: "default",
+    labelWidth: 6,
+  };
+
+  get columns() {
+    return new Array(this.column).fill(24 / this.column);
   }
 
   @ViewChild("choiceBox") choiceBox: ElementRef;
   @ViewChild("lastNzRow") lastNzRow: ElementRef;
   @ViewChild("form") form: ElementRef;
-
+  @ViewChild("fdemplate", { read: FormDesignTemplateComponent })
+  fdemplate: FormDesignTemplateComponent;
+  @ViewChild("nzRowTemplate")
+  nzRowTemplate: ElementRef<any>;
   nodes = [
     {
       title: "parent 1",
@@ -89,12 +101,15 @@ export class FormDesignComponent implements OnInit, AfterViewInit {
     private fb: UntypedFormBuilder,
     private el: ElementRef,
     private cdr: ChangeDetectorRef,
+    private vcr: ViewContainerRef,
     private renderer2: Renderer2,
     @Inject(DOCUMENT) private document: Document
   ) {}
 
   ngOnInit(): void {
-    this.validateForm = this.fb.group({});
+    this.validateForm = this.fb.group({
+      userName: ["sdfsfd", []],
+    });
   }
 
   ngAfterViewInit(): void {
@@ -102,36 +117,39 @@ export class FormDesignComponent implements OnInit, AfterViewInit {
       this.choiceBox.nativeElement,
       "mousedown"
     );
-    const mouseOver = fromEvent<MouseEvent>(
-      this.form.nativeElement,
-      "mousemove"
-    );
     const mouseMove = fromEvent<MouseEvent>(this.document, "mousemove");
     const mouseUp = fromEvent<MouseEvent>(this.document, "mouseup");
     let cloneNode: HTMLDivElement | null;
-    let focusCol: HTMLDivElement;
+    let focusBox: HTMLDivElement | null;
 
-    const formSubs$ = mouseOver
+    const hoverSubs$ = fromEvent<MouseEvent>(
+      this.form.nativeElement,
+      "mousemove"
+    )
       .pipe(
-        debounceTime(50),
+        debounceTime(10),
         filter(() => Boolean(cloneNode))
       )
       .subscribe((e: MouseEvent) => {
         let target = e.target as Element;
-
+        if (target.classList.contains("drag-focus")) {
+          return;
+        }
         if (target.hasAttribute("nz-form") || target.hasAttribute("nz-row")) {
           return;
         }
-        if (!target.hasAttribute("nz-col")) {
-          while (!target.hasAttribute("nz-col")) {
+        if (target.nodeName != "cat-div" && !target.hasAttribute("nz-col")) {
+          while (
+            target.nodeName == "cat-div" ||
+            target.hasAttribute("nz-col")
+          ) {
             target = target.parentNode as Element;
           }
         }
-
-        if (!target || !target.classList.contains("drag-focus")) {
-          focusCol?.classList.remove("drag-focus");
-          focusCol = target as HTMLDivElement;
-          focusCol.classList.add("drag-focus");
+        if (target) {
+          focusBox?.classList.remove("drag-focus");
+          focusBox = target as HTMLDivElement;
+          focusBox.classList.add("drag-focus");
         }
       });
 
@@ -146,11 +164,7 @@ export class FormDesignComponent implements OnInit, AfterViewInit {
           cloneNode = (e.target as Element).cloneNode(true) as HTMLDivElement;
           cloneNode.classList.add("darg-move-block");
           this.document.body.appendChild(cloneNode);
-          this.renderer2.setStyle(
-            this.lastNzRow.nativeElement,
-            "visibility",
-            "visible"
-          );
+          this.lastNzRow.nativeElement.classList.add("show");
         }),
         map(() =>
           mouseMove.pipe(
@@ -160,13 +174,11 @@ export class FormDesignComponent implements OnInit, AfterViewInit {
                 tap((e) => {
                   this.document.body.classList.remove("darg-move");
                   this.document.body.removeChild(cloneNode!);
-                  this.renderer2.setStyle(
-                    this.lastNzRow.nativeElement,
-                    "visibility",
-                    "hidden"
-                  );
-                  focusCol?.classList.remove("drag-focus");
+                  this.lastNzRow.nativeElement.classList.remove("show");
+                  focusBox?.classList.remove("drag-focus");
+                  this.inertEleNodeToForm(focusBox, cloneNode);
                   cloneNode = null;
+                  focusBox = null;
                 })
               )
             ),
@@ -183,10 +195,95 @@ export class FormDesignComponent implements OnInit, AfterViewInit {
       .subscribe((e: MouseEvent) => {});
 
     this.subscription.push(dargSubs$);
-    this.subscription.push(formSubs$);
+    this.subscription.push(hoverSubs$);
   }
 
-  switchLayout(type: LayoutType) {
+  switchLayout(type: DsignLayoutType) {
     this.layoutType = type;
+  }
+
+  genTreeDirectory(): DsignEleNode[] {
+    const directory: DsignEleNode[] = [];
+    (this.form.nativeElement as HTMLFormElement).childNodes.forEach(
+      (rowMode: ChildNode, x: number) => {
+        let children: DsignEleNode[] = [];
+        rowMode.childNodes.forEach((colNode: ChildNode, y: number) => {
+          let subChildren: DsignEleNode[] = [];
+          colNode.childNodes.forEach((node: ChildNode, z: number) => {
+            if (node.nodeType == 1) {
+              const path = `${x}-${y}-${z}`;
+              subChildren.push({
+                title: node.nodeName,
+                key: path,
+                children: this.getDsignEleNode(node, path),
+              });
+            }
+          });
+          children.push({
+            title: "col",
+            key: `${x}-${y}`,
+            children: subChildren,
+          });
+        });
+        directory.push({
+          title: "row",
+          key: `${x}`,
+          children: children,
+        });
+      }
+    );
+    return directory;
+  }
+
+  getDsignEleNode(node: ChildNode, path: string): DsignEleNode[] {
+    if (node.nodeName == "cat-div") {
+      const directory: DsignEleNode[] = [];
+      node.childNodes.forEach((node: ChildNode, i: number) => {
+        if (node.nodeType == 1) {
+          directory.push({
+            title: node.nodeName,
+            key: `${path}-${i}`,
+            children: this.getDsignEleNode(node, `${path}-${i}`),
+          });
+        }
+      });
+      return directory;
+    } else {
+      return [];
+    }
+  }
+
+  getEleNodePosi() {}
+
+  inertEleNodeToForm(focusBox: HTMLDivElement | null, node: any) {
+    if (!focusBox) return;
+    const nodetype = (node.getAttribute("nodetype") as string)
+      .split("d-")[1]
+      .replace("-", "");
+
+    const ele = this.vcr.createEmbeddedView<{
+      $implicit: FdTemplateConfig;
+      // @ts-ignore
+    }>(this.fdemplate[nodetype], {
+      $implicit: {},
+    });
+    if ((focusBox.parentNode as Element).classList.contains("last-row")) {
+      const nzRow = this.nzRowTemplate.nativeElement.cloneNode(
+        true
+      ) as HTMLDivElement;
+      nzRow.classList.remove("dn");
+      const nzCol = nzRow.querySelector("[nz-col]") as HTMLDivElement;
+      nzCol.appendChild(ele.rootNodes[0]);
+      this.form.nativeElement.insertBefore(nzRow, focusBox.parentNode);
+    } else {
+      focusBox.appendChild(ele.rootNodes[0]);
+    }
+  }
+
+  handleTest2() {
+    this.validateForm.patchValue({
+      userName: "234234234",
+    });
+    this.column = 4;
   }
 }

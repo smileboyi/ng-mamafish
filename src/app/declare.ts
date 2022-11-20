@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs';
+import { EventEmitter } from "@angular/core";
+import { Observable } from "rxjs";
 
 export interface Message {
   avatar: string;
@@ -56,7 +57,7 @@ export interface PersonInfo {
   no: number;
   name: string;
   weight: number;
-  sex: 'man' | 'woman';
+  sex: "man" | "woman";
   symbol: string;
 }
 
@@ -178,5 +179,41 @@ export interface PageTab {
   hashs: StrOrNum[];
   params: {
     [k: string]: StrOrNum;
+  };
+}
+
+export type DsignLayoutType = "PC" | "iPad" | "H5";
+
+export interface DsignEleNode {
+  title: string;
+  key: string;
+  children: DsignEleNode[];
+}
+
+export interface FdEleMeta {
+  type: string;
+  name: string;
+}
+
+export type NzSize = "large" | "small" | "default";
+
+export interface FdTemplateConfig {
+  base?: Partial<{
+    id: string;
+    labelName: string;
+    labelWidth: number;
+    eleName: string;
+    nzRequired: boolean;
+    nzDisabled: boolean;
+    nzSize: NzSize;
+    eleType: string;
+    visible: boolean;
+    tooltip:string;
+  }>;
+  self?: {
+    [k: string]: any;
+  };
+  event?: {
+    [k: string]: EventEmitter<any>;
   };
 }

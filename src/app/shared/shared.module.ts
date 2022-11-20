@@ -47,6 +47,7 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 import { ThrottleClickDirective } from './directives/throttle-click.directive';
+import { FormDesignToolDirective } from './directives/form-design-tool.directive';
 import { ThemePanelComponent } from './components/theme-panel/theme-panel.component';
 import { BgHeaderComponent } from './components/bg-header/bg-header.component';
 import { PaginatePipe } from './pipes/paginate.pipe';
@@ -133,6 +134,7 @@ const NZ_MODULES = [
     ThemePanelComponent,
     BgHeaderComponent,
     ThrottleClickDirective,
+    FormDesignToolDirective,
     PaginatePipe,
     KeysPipe,
   ],
@@ -152,6 +154,7 @@ const NZ_MODULES = [
     ThemePanelComponent,
     BgHeaderComponent,
     ThrottleClickDirective,
+    FormDesignToolDirective,
     PaginatePipe,
     KeysPipe,
   ],

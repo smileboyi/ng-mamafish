@@ -55,6 +55,7 @@ import {
   EyeOutline,
   EyeFill,
   SyncOutline,
+  QuestionCircleFill
 } from '@ant-design/icons-angular/icons';
 
 export const appIcons: IconDefinition[] = [
@@ -113,4 +114,5 @@ export const appIcons: IconDefinition[] = [
   EyeFill,
   GithubOutline,
   SyncOutline,
+  QuestionCircleFill
 ];
