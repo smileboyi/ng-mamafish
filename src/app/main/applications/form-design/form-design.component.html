@@ -51,13 +51,24 @@
     <form nz-form [formGroup]="validateForm" #form>
       <div nz-row [nzGutter]="24">
         <div nz-col [nzSpan]="8">
-          <cat-input formControlName="userName"></cat-input>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzFor="email">E-mail</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <input
+                nz-input
+                name="email"
+                type="email"
+                id="email1"
+                formControlName="userName"
+              />
+            </nz-form-control>
+          </nz-form-item>
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
             <nz-form-label [nzSpan]="8" nzFor="email">E-mail</nz-form-label>
             <nz-form-control [nzSpan]="14">
-              <input nz-input name="email" type="email" id="email" />
+              <input nz-input name="email" type="email" id="email2" />
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -78,9 +89,6 @@
       </div>
       <div nz-row [nzGutter]="24" class="last-row" #lastNzRow>
         <div nz-col [nzSpan]="24"></div>
-      </div>
-      <div nz-row [nzGutter]="24" class="dn" #nzRowTemplate >
-        <div nz-col [nzSpan]="c" *ngFor="let c of  columns"></div>
       </div>
     </form>
   </div>
@@ -175,3 +183,7 @@
   class="dn"
   #fdemplate="formDesignTemplate"
 ></cat-form-design-template>
+
+<div nz-row [nzGutter]="24" class="dn" #nzRowTemplate>
+  <div nz-col [nzSpan]="c" *ngFor="let c of  columns"></div>
+</div>

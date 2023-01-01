@@ -5,6 +5,7 @@ import {
   AfterViewInit,
   ViewChild,
   Inject,
+  ChangeDetectorRef,
 } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { NzInputDirective } from "ng-zorro-antd/input";
@@ -12,6 +13,7 @@ import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 import { FormDesignState } from "@reducers/form-design.reducer";
 import { FdEleBaseComponent } from "./fd-ele-base.component";
+import { FormDesignService } from "@services/form-design.service";
 import { FdEleMeta, FdTemplateConfig } from "@declare";
 import { FD_ELE_META } from "@tokens";
 
@@ -64,10 +66,12 @@ export class InputComponent extends FdEleBaseComponent
   nzType = "text";
 
   constructor(
-    @Inject(FD_ELE_META) fdEleMeta: FdEleMeta,
-    private store: Store<FormDesignState>
+    @Inject(FD_ELE_META) protected fdEleMeta: FdEleMeta,
+    protected store: Store<FormDesignState>,
+    protected formDesign: FormDesignService,
+    protected cdr: ChangeDetectorRef
   ) {
-    super(fdEleMeta, store);
+    super(fdEleMeta, store, formDesign, cdr);
   }
 
   ngOnInit(): void {}
@@ -79,5 +83,4 @@ export class InputComponent extends FdEleBaseComponent
   setInputConfig(config: FdTemplateConfig) {
     console.log(this.target);
   }
-
 }

@@ -11,6 +11,7 @@ import { EditorComponent } from "./editor/editor.component";
 import { FormDesignComponent } from "./form-design/form-design.component";
 import { FormDesignTemplateComponent } from "./form-design/form-design.template";
 import { InputComponent } from "./form-design/ele-template/input.component";
+import { WarpComponent } from "./form-design/ele-template/warp.component";
 
 @NgModule({
   declarations: [
@@ -22,11 +23,13 @@ import { InputComponent } from "./form-design/ele-template/input.component";
     FormDesignComponent,
     FormDesignTemplateComponent,
     InputComponent,
+    WarpComponent,
   ],
   entryComponents: [
     UserDialogComponent,
     FormDesignTemplateComponent,
     InputComponent,
+    WarpComponent,
   ],
   imports: [CommonModule, SharedModule, ApplicationsRoutingModule],
 })

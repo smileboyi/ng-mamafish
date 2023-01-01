@@ -16,8 +16,11 @@ import {
 @Component({
   selector: "cat-form-design-template",
   template: `
-    <ng-template let-config #input>
-      <cat-input [config]="config" catFormDesignTool></cat-input>
+    <ng-template let-config let-key="key" #input>
+      <cat-input [config]="config" [key]="key" catFormDesignTool></cat-input>
+    </ng-template>
+    <ng-template let-config let-key="key" #warp>
+      <cat-warp [config]="config" [key]="key" catFormDesignTool></cat-warp>
     </ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -111,7 +111,7 @@
         margin-top: -36%;
         background-image: url(/assets/icons/desktop.svg);
       }
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
       [nz-form] {
         position: absolute;
         left: 5.2%;
@@ -166,9 +166,16 @@
 
   [nz-form] [nz-col] {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     overflow-x: hidden;
     outline: 1px dotted #b0b0b0;
+  }
+  ::ng-deep [nz-form] cat-warp{
+    border: 1px dashed #40a9ff;
+  }
+  ::ng-deep [nz-form] [nz-col],
+  ::ng-deep [nz-form] cat-warp {
     &.drag-focus::before {
       content: "";
       display: block;

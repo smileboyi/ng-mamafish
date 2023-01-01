@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Subject, BehaviorSubject } from "rxjs";
 
-import { UserRole, UserInfo, PageTab } from '@declare';
+import { UserRole, UserInfo, PageTab } from "@declare";
 
 /**
  * 存放全局变量的服务
  */
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class GlobalService {
   static resetThemeColor$ = new Subject<any>();
@@ -47,24 +47,24 @@ export class GlobalService {
   resetUserInfo(): void {
     this.userInfo = {
       avatar: null,
-      createdDate: '',
-      email: '',
+      createdDate: "",
+      email: "",
       id: 0,
-      lastSignInAt: '',
-      lastSignInIp: '',
+      lastSignInAt: "",
+      lastSignInIp: "",
       layoutConfig: null,
       signInCount: 0,
       token: {
-        accessToken: '',
+        accessToken: "",
         expiresIn: 0,
       },
       userRole: {
-        description: '',
+        description: "",
         id: 0,
-        role: '',
-        value: '',
+        role: "",
+        value: "",
       },
-      username: '',
+      username: "",
     };
   }
 }

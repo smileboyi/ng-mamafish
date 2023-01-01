@@ -77,7 +77,7 @@ export const formDesignEles: FormDesignEle[] = [
     name: "分割线",
   },
   {
-    icon: "d-div",
-    name: "div容器",
+    icon: "d-warp",
+    name: "容器",
   },
 ];
