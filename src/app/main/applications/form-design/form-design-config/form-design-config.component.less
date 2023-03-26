@@ -1,0 +1,28 @@
+:host {
+  grid-area: config;
+  background-color: #fff;
+  ::ng-deep nz-tabs-nav {
+    padding: 0 10px;
+  }
+  .prop-list {
+    .prop-item {
+      display: flex;
+      margin-bottom: 10px;
+      .name {
+        width: 100px;
+        padding: 5px;
+        align-self: center;
+      }
+      .warp {
+        flex: 1;
+
+        > nz-select {
+          width: 178px;
+        }
+        > nz-input-number-group {
+          width: 179px;
+        }
+      }
+    }
+  }
+}

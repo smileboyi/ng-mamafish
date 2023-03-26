@@ -1,15 +1,17 @@
-export interface FormDesignEle {
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+
+interface FormDesignEle {
   icon: string;
   name: string;
 }
 
-export const formDesignEles: FormDesignEle[] = [
+const formDesignEles: FormDesignEle[] = [
   {
     icon: "d-input",
     name: "输入框",
   },
   {
-    icon: "d-number-input",
+    icon: "d-input-number",
     name: "数字输入框",
   },
   {
@@ -81,3 +83,17 @@ export const formDesignEles: FormDesignEle[] = [
     name: "容器",
   },
 ];
+
+@Component({
+  selector: "cat-form-design-ele",
+  templateUrl: "./form-design-ele.component.html",
+  styleUrls: ["./form-design-ele.component.less"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class FormDesignEleComponent implements OnInit {
+  choiceEles: FormDesignEle[] = formDesignEles;
+
+  constructor() {}
+
+  ngOnInit(): void {}
+}

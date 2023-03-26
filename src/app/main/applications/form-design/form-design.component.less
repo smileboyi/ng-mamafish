@@ -6,53 +6,30 @@
   grid-row-gap: 0px;
   height: 100%;
   grid-template-areas:
-    "top top top"
-    "choice drag config";
+    "header header header"
+    "ele drag config";
 }
 
-.top-box {
-  display: flex;
-  grid-area: top;
+cat-form-design-header {
+  grid-area: header;
+}
+
+cat-form-design-ele {
+  grid-area: ele;
+}
+
+cat-form-design-config {
+  grid-area: config;
+}
+
+.context-menu {
+  width: 150px;
   background-color: #fff;
-  justify-content: space-evenly;
-  .left-btns {
-    line-height: 50px;
-    nz-button-group {
-      top: 2px;
-    }
-    nz-radio-group {
-      margin: 0 20px;
-    }
-  }
-  .right-btns {
-    line-height: 50px;
-  }
-}
-
-.choice-box {
-  grid-area: choice;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  font-size: 14px;
-  background-color: #fff;
-}
-
-.choice-box .choice-item {
-  width: 115px;
-  padding: 10px;
-  height: 50px;
-  margin: 10px 13px;
-  cursor: move;
-  font-size: 13px;
-  color: #303133;
-  text-align: center;
-  background-color: #f1f2f3;
-  &:nth-child(even) {
-    margin-left: 0;
-  }
-  &:hover {
-    color: #fff;
-    background-color: #2e73ff;
+  z-index: 1100;
+  nz-list-item:hover {
+    color: #1890ff;
+    background-color: #e6f7ff;
+    cursor: pointer;
   }
 }
 
@@ -65,15 +42,17 @@
     overflow: hidden;
     height: 100%;
     margin: 0 auto;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     [nz-form] {
       position: relative;
       width: calc(100% - 24px);
       height: auto;
       margin: 0 auto;
       padding: 5px 13px 5px 13px;
-      overflow-x: hidden;
-      overflow-y: auto;
+      // overflow-x: hidden;
+      // overflow-y: auto;
+      overflow: visible;
       &::-webkit-scrollbar {
         width: 0;
       }
@@ -111,7 +90,7 @@
         margin-top: -36%;
         background-image: url(/assets/icons/desktop.svg);
       }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
       [nz-form] {
         position: absolute;
         left: 5.2%;
@@ -168,10 +147,10 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    overflow-x: hidden;
+    overflow-x: visible;
     outline: 1px dotted #b0b0b0;
   }
-  ::ng-deep [nz-form] cat-warp{
+  ::ng-deep [nz-form] cat-warp {
     border: 1px dashed #40a9ff;
   }
   ::ng-deep [nz-form] [nz-col],
@@ -189,37 +168,8 @@
   }
 }
 
-.config-box {
-  grid-area: config;
-  background-color: #fff;
-  ::ng-deep nz-tabs-nav {
-    margin: 0 10px;
-  }
-  .prop-list {
-    .prop-item {
-      display: flex;
-      margin-bottom: 10px;
-      .name {
-        width: 100px;
-        padding: 5px;
-        align-self: center;
-      }
-      .warp {
-        flex: 1;
-
-        > nz-select {
-          width: 178px;
-        }
-        > nz-input-number-group {
-          width: 179px;
-        }
-      }
-    }
-  }
-}
-
 :host-context(body.darg-move) {
-  .top-box,
+  cat-form-design-header,
   .drag-box,
   .config-box {
     cursor: not-allowed !important;

@@ -1,0 +1,27 @@
+:host {
+  background-color: #fff;
+  .choice-box {
+    flex-wrap: wrap;
+    align-content: flex-start;
+    font-size: 14px;
+  }
+
+  .choice-box .choice-item {
+    width: 115px;
+    padding: 10px;
+    height: 50px;
+    margin: 10px 13px;
+    cursor: move;
+    font-size: 13px;
+    color: #303133;
+    text-align: center;
+    background-color: #f1f2f3;
+    &:nth-child(even) {
+      margin-left: 0;
+    }
+    &:hover {
+      color: #fff;
+      background-color: #2e73ff;
+    }
+  }
+}

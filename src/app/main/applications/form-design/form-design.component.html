@@ -1,183 +1,15 @@
-<div class="top-box">
-  <div class="left-btns">
-    <nz-button-group>
-      <button nz-button nzType="text">
-        <span nz-icon nzType="arrow-left" nzTheme="outline"></span>
-      </button>
-      <button nz-button nzType="text">
-        <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
-      </button>
-    </nz-button-group>
-    <nz-radio-group [(ngModel)]="layoutType">
-      <label nz-radio-button nzValue="PC">PC</label>
-      <label nz-radio-button nzValue="iPad">iPad</label>
-      <label nz-radio-button nzValue="H5">H5</label>
-    </nz-radio-group>
-    <button nz-button nzType="text" (click)="handleTest2()">
-      <span nz-icon nzType="arrow-left" nzTheme="outline"></span>
-    </button>
-    <button nz-button nzType="text" (click)="handleTest2()">
-      <span nz-icon nzType="arrow-left" nzTheme="outline"></span>
-    </button>
-  </div>
-  <div class="right-btns">
-    <nz-button-group>
-      <button nz-button nzType="link">
-        <span nz-icon nzType="arrow-left" nzTheme="outline"></span>清空
-      </button>
-      <button nz-button nzType="link">
-        <span nz-icon nzType="arrow-right" nzTheme="outline"></span>导入
-      </button>
-      <button nz-button nzType="link">
-        <span nz-icon nzType="arrow-right" nzTheme="outline"></span>导出
-      </button>
-      <button nz-button nzType="link">
-        <span nz-icon nzType="arrow-right" nzTheme="outline"></span>代码
-      </button>
-    </nz-button-group>
-  </div>
-</div>
-<aside class="choice-box flex" #choiceBox>
-  <div
-    class="choice-item"
-    *ngFor="let ele of choiceEles; let idx = index"
-    [attr.nodeType]="ele.icon"
-  >
-    <i></i>{{ele.name}}
-  </div>
-</aside>
+<cat-form-design-header [(layoutType)]="layoutType"></cat-form-design-header>
+<cat-form-design-ele #choiceBox></cat-form-design-ele>
 <main class="drag-box">
   <div class="layout-box {{layoutClass}}">
     <form nz-form [formGroup]="validateForm" #form>
-      <div nz-row [nzGutter]="24">
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="8" nzFor="email">E-mail</nz-form-label>
-            <nz-form-control [nzSpan]="14">
-              <input
-                nz-input
-                name="email"
-                type="email"
-                id="email1"
-                formControlName="userName"
-              />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="8" nzFor="email">E-mail</nz-form-label>
-            <nz-form-control [nzSpan]="14">
-              <input nz-input name="email" type="email" id="email2" />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="6" nzFor="email">E-mail</nz-form-label>
-            <nz-form-control [nzSpan]="14">
-              <nz-tree-select
-                style="width: 250px;"
-                [nzExpandedKeys]="['100', '1001']"
-                [nzNodes]="nodes"
-                nzShowSearch
-                nzPlaceHolder="Please select"
-              ></nz-tree-select>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div>
       <div nz-row [nzGutter]="24" class="last-row" #lastNzRow>
         <div nz-col [nzSpan]="24"></div>
       </div>
     </form>
   </div>
 </main>
-<div class="config-box">
-  <nz-tabset>
-    <nz-tab nzTitle="表单设置">
-      <nz-divider nzText="属性"></nz-divider>
-      <div class="prop-list">
-        <div class="prop-item">
-          <span class="name">默认列数</span>
-          <div class="warp">
-            <nz-select ngModel="column">
-              <nz-option nzValue="1" nzLabel="1列"></nz-option>
-              <nz-option nzValue="2" nzLabel="2列"></nz-option>
-              <nz-option nzValue="3" nzLabel="3列"></nz-option>
-              <nz-option nzValue="4" nzLabel="4列"></nz-option>
-            </nz-select>
-          </div>
-        </div>
-        <div class="prop-item">
-          <span class="name">标签位置</span>
-          <div class="warp">
-            <nz-radio-group
-              [(ngModel)]="formConfig.labelPosi"
-              nzButtonStyle="solid"
-            >
-              <label nz-radio-button nzValue="left">居左</label>
-              <label nz-radio-button nzValue="top">居上</label>
-              <label nz-radio-button nzValue="right">居右</label>
-            </nz-radio-group>
-          </div>
-        </div>
-        <div class="prop-item">
-          <span class="name">标签宽度占比</span>
-          <div class="warp">
-            <nz-input-number-group nzAddOnAfter="span">
-              <nz-input-number
-                [(ngModel)]="formConfig.labelWidth"
-                [nzStep]="1"
-                [nzPrecision]="0"
-                [nzMax]="10"
-                [nzMin]="3"
-              ></nz-input-number>
-            </nz-input-number-group>
-          </div>
-        </div>
-        <div class="prop-item">
-          <span class="name">表单布局</span>
-          <div class="warp">
-            <nz-radio-group
-              [(ngModel)]="formConfig.layout"
-              nzButtonStyle="solid"
-            >
-              <label nz-radio-button nzValue="horizontal">水平</label>
-              <label nz-radio-button nzValue="vertical">垂直</label>
-            </nz-radio-group>
-          </div>
-        </div>
-        <div class="prop-item">
-          <span class="name">组件大小</span>
-          <div class="warp">
-            <nz-radio-group
-              [(ngModel)]="formConfig.compSize"
-              nzButtonStyle="solid"
-            >
-              <label nz-radio-button nzValue="small">偏小</label>
-              <label nz-radio-button nzValue="default">默认</label>
-              <label nz-radio-button nzValue="large">偏大</label>
-            </nz-radio-group>
-          </div>
-        </div>
-      </div>
-      <nz-divider nzText="事件"></nz-divider>
-      <div class="prop-item">
-        <span class="name"></span>
-        <div class="warp"></div>
-      </div>
-    </nz-tab>
-    <nz-tab nzTitle="组件设置">
-      <nz-divider nzText="属性"></nz-divider>
-      <div class="prop-item">
-        <span class="name"></span>
-        <div class="warp"></div>
-      </div>
-      <nz-divider nzText="事件"></nz-divider>
-    </nz-tab>
-  </nz-tabset>
-</div>
+<cat-form-design-config></cat-form-design-config>
 
 <cat-form-design-template
   class="dn"
@@ -187,3 +19,18 @@
 <div nz-row [nzGutter]="24" class="dn" #nzRowTemplate>
   <div nz-col [nzSpan]="c" *ngFor="let c of  columns"></div>
 </div>
+
+<ng-template #contextMenu>
+  <nz-list nzBordered nzSize="small" class="context-menu">
+    <nz-list-item>向上插入一行</nz-list-item>
+    <nz-list-item>向下插入一行</nz-list-item>
+    <nz-list-item *ngIf="contextMenuVar.canLeftMerge"
+      >向左合并单元格</nz-list-item
+    >
+    <nz-list-item *ngIf="contextMenuVar.canRightMerge"
+      >向右合并单元格</nz-list-item
+    >
+    <nz-list-item>删除当前行</nz-list-item>
+    <nz-list-item>新增单元格</nz-list-item>
+  </nz-list>
+</ng-template>

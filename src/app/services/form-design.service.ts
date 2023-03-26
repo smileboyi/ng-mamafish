@@ -6,7 +6,7 @@ import {
 } from "@angular/core";
 import { Subject } from "rxjs";
 
-import { FdTemplateConfig } from "@declare";
+import { FdEleNodeInfo, FdTemplateConfig } from "@declare";
 import { FormDesignToolDirective } from "../shared/directives/form-design-tool.directive";
 
 @Injectable({
@@ -21,20 +21,7 @@ export class FormDesignService {
   // 当前选中组件的key值，使用path作为key
   currFormDesignKey = "";
   // 每个组件的信息
-  formDesignMap = new Map<
-    string,
-    Partial<{
-      key: string;
-      // cat组件的引用
-      ele: EmbeddedViewRef<any>;
-      // cat组件内部target，主要是nz组件的引用
-      target: Directive | ComponentRef<any>;
-      eleName: string;
-      config: FdTemplateConfig;
-      eleType: string;
-      eleIndex: number;
-    }>
-  >();
+  formDesignMap = new Map<string, FdEleNodeInfo>();
 
   constructor() {}
 }

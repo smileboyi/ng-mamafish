@@ -1,0 +1,9 @@
+<aside class="choice-box flex">
+  <div
+    class="choice-item"
+    *ngFor="let ele of choiceEles; let idx = index"
+    [attr.nodeType]="ele.icon"
+  >
+    <i></i>{{ele.name}}
+  </div>
+</aside>

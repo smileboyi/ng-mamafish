@@ -1,4 +1,8 @@
 export const appConfig = {
-  PATCH_URL: 'http://127.0.0.1:3000/api',
-  MUSIC_API_BASE: 'https://netease-cloud-music-api-sand-phi.vercel.app',
+  PATCH_URL: "http://127.0.0.1:3000/api",
+  MUSIC_API_BASE: "https://netease-cloud-music-api-sand-phi.vercel.app",
 };
+
+export const elePrefix = "cat-";
+
+export const warpNodeName = elePrefix + "warp-ele";

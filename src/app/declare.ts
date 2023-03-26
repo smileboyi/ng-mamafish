@@ -1,4 +1,9 @@
-import { EventEmitter } from "@angular/core";
+import {
+  ComponentRef,
+  Directive,
+  EmbeddedViewRef,
+  EventEmitter,
+} from "@angular/core";
 import { Observable } from "rxjs";
 
 export interface Message {
@@ -208,7 +213,8 @@ export interface FdTemplateConfig {
     nzSize: NzSize;
     eleType: string;
     visible: boolean;
-    tooltip:string;
+    tooltip: string;
+    nzErrorTip:string;
   }>;
   self?: {
     [k: string]: any;
@@ -217,3 +223,14 @@ export interface FdTemplateConfig {
     [k: string]: EventEmitter<any>;
   };
 }
+
+export type FdEleNodeInfo = Partial<{
+  // cat组件的引用
+  ele: EmbeddedViewRef<any>;
+  // cat组件内部target，主要是nz组件的引用
+  target: Directive | ComponentRef<any>;
+  eleName: string;
+  config: FdTemplateConfig;
+  eleType: string;
+  eleIndex: number;
+}>;

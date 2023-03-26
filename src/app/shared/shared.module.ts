@@ -45,6 +45,7 @@ import { NzTimePickerModule } from "ng-zorro-antd/time-picker";
 import { NzTransferModule } from "ng-zorro-antd/transfer";
 import { NzTreeSelectModule } from "ng-zorro-antd/tree-select";
 import { NzUploadModule } from "ng-zorro-antd/upload";
+import { NzListModule  } from "ng-zorro-antd/list";
 
 import { ThrottleClickDirective } from "./directives/throttle-click.directive";
 import {
@@ -117,6 +118,7 @@ const NZ_MODULES = [
   NzTransferModule,
   NzTreeSelectModule,
   NzUploadModule,
+  NzListModule
 ];
 
 @NgModule({

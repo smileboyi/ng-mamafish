@@ -91,10 +91,12 @@ export class FormDesignToolDirective implements AfterViewInit, OnDestroy {
     <div class="form-design-panel">
       <span class="move" #move>{{ eleName }}</span>
       <div class="tool" *ngIf="handle$">
-        <span class="up" (click)="operate($event, 'up')">A</span>
-        <span class="down" (click)="operate($event, 'down')">B</span>
-        <span class="copy" (click)="operate($event, 'copy')">C</span>
-        <span class="del" (click)="operate($event, 'del')">D</span>
+        <span class="top" (click)="operate($event, 'top')">上</span>
+        <span class="bottom" (click)="operate($event, 'bottom')">下</span>
+        <span class="left" (click)="operate($event, 'left')">左</span>
+        <span class="right" (click)="operate($event, 'right')">右</span>
+        <span class="copy" (click)="operate($event, 'copy')">复</span>
+        <span class="del" (click)="operate($event, 'del')">删</span>
       </div>
     </div>
   `,
@@ -104,11 +106,12 @@ export class FormDesignToolDirective implements AfterViewInit, OnDestroy {
         display: flex;
         position: absolute;
         top: 0;
-        left: 0;
+        right: 0;
         z-index: 500;
         box-sizing: border-box;
         width: 100%;
         height: 100%;
+        min-width: 250px;
         background-color: transparent;
         border: 2px solid #409eff;
         pointer-events: none;
@@ -168,6 +171,7 @@ export class FormDesignToolPanelComponent implements AfterViewInit, OnDestroy {
     const info = this.formDesign.formDesignMap.get(
       this.formDesign.currFormDesignKey
     )!;
+    console.log(this.formDesign.currFormDesignKey);
     this.eleName = info.eleName!;
   }
 

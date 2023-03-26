@@ -3,17 +3,16 @@ import {
   Input,
   OnDestroy,
   OnChanges,
-  Inject,
+  inject,
   AfterViewInit,
   SimpleChanges,
-  HostBinding,
   ɵdetectChanges as detectChanges,
   ChangeDetectorRef,
 } from "@angular/core";
 import { Subscription } from "rxjs";
 import { skip, first } from "rxjs/operators";
 import { Store } from "@ngrx/store";
-import { ControlValueAccessor } from "@angular/forms";
+import { ControlValueAccessor,FormControl, Validators } from "@angular/forms";
 
 import * as fromReducer from "@reducers/index";
 import * as actions from "@actions/form-design.action";
@@ -23,26 +22,34 @@ import { FdEleMeta, FdTemplateConfig } from "@declare";
 import { FD_ELE_META } from "@tokens";
 
 // 组件的wapper包装器
-@Component({ template: "" })
+@Component({ 
+  template: "" ,
+})
 export class FdEleBaseComponent
   implements ControlValueAccessor, OnChanges, AfterViewInit, OnDestroy {
-  subscriptions: Subscription[] = [];
+  private store: Store<FormDesignState>= inject(Store<FormDesignState>);
+  private formDesign = inject(FormDesignService);
+  private cdr = inject(ChangeDetectorRef);
+  private fdEleMeta: FdEleMeta = inject(FD_ELE_META);
 
-  @Input() config: FdTemplateConfig;
+  subscriptions: Subscription[] = [];
+  @Input() formControl:FormControl;
+
+  @Input() config?: FdTemplateConfig = {};
   // 用于formDesignMap
   @Input() key: string;
   target: any;
   eleType = "";
   eleIndex = 0;
 
-  value: Event;
-  onTouch = (): void => {};
-  onChange = (value: Event | null): Event | null => value;
+  @Input() formDirty:any;
 
-  // @HostBinding("attr.eleid")
-  // get id(): string {
-  //   return this.eleType + this.eleIndex;
-  // }
+  value: Event;
+  onTouch = (): void => {
+  };
+  onChange = (value: Event | null): Event | null => {
+     return value
+  };
 
   get labelWidth(): number {
     return this.config?.base?.labelWidth || 8;
@@ -60,18 +67,20 @@ export class FdEleBaseComponent
     return this.config?.base?.tooltip || "";
   }
 
-  constructor(
-    @Inject(FD_ELE_META)
-    protected fdEleMeta: FdEleMeta,
-    protected store: Store<FormDesignState>,
-    protected formDesign: FormDesignService,
-    protected cdr: ChangeDetectorRef
-  ) {
-    this.eleType = fdEleMeta.type;
+  constructor() {
+    this.eleType = this.fdEleMeta.type;
+    this.formControl = new FormControl('', [Validators.required]);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges({formDirty}: SimpleChanges): void {
     // console.log(changes);
+    if(formDirty){
+      if (formDirty.currentValue) {
+        this.formControl.markAsDirty();
+      } else {
+        this.formControl.markAsPristine();
+      }
+    }
   }
 
   ngAfterViewInit(): void {
@@ -88,7 +97,6 @@ export class FdEleBaseComponent
         .subscribe((res) => {
           this.eleIndex = res[this.eleType];
           const info = this.formDesign.formDesignMap.get(this.key) || {};
-          info.key = this.key;
           info.target = this.target;
           info.eleName = this.eleName;
           info.eleType = this.eleType;
@@ -97,6 +105,7 @@ export class FdEleBaseComponent
         });
     } else {
       const info = this.formDesign.formDesignMap.get(this.key)!;
+      this.eleIndex = info.eleIndex!;
     }
   }
 
@@ -108,6 +117,11 @@ export class FdEleBaseComponent
 
   writeValue(v: Event): void {
     this.value = v;
+
+    // this.formControl.valid;
+    // this.formControl.markAsDirty();
+    // this.formControl.updateValueAndValidity({ onlySelf: true });
+    // console.log(3452345354,this.formControl.valid)
     this.onChange(v);
   }
   registerOnChange(fn: (value: Event | null) => Event | null): void {
