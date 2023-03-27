@@ -1,5 +1,7 @@
 # NgMamafish
 
+[![Join the chat at https://gitter.im/ng-mamafish/ng-mamafish](https://badges.gitter.im/ng-mamafish/ng-mamafish.svg)](https://gitter.im/ng-mamafish/ng-mamafish?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.1.
 
 ## Development server
