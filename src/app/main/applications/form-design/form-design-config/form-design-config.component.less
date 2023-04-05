@@ -4,23 +4,24 @@
   ::ng-deep nz-tabs-nav {
     padding: 0 10px;
   }
-  .prop-list {
+  ::ng-deep {
     .prop-item {
       display: flex;
       margin-bottom: 10px;
       .name {
         width: 100px;
         padding: 5px;
+        line-height: 1;
+        margin-left: -5px;
         align-self: center;
       }
       .warp {
         flex: 1;
-
-        > nz-select {
-          width: 178px;
-        }
-        > nz-input-number-group {
-          width: 179px;
+        > nz-select,
+        > nz-input-number,
+        > nz-input-number-group,
+        > [nz-input] {
+          width: 177px;
         }
       }
     }

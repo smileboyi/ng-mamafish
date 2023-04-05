@@ -192,6 +192,8 @@ export type DsignLayoutType = "PC" | "iPad" | "H5";
 export interface DsignEleNode {
   title: string;
   key: string;
+  type: string;
+  expanded: boolean,
   children: DsignEleNode[];
 }
 
@@ -212,15 +214,22 @@ export interface FdTemplateConfig {
     nzDisabled: boolean;
     nzSize: NzSize;
     eleType: string;
-    visible: boolean;
+    // visible: boolean;
     tooltip: string;
-    nzErrorTip:string;
+    nzErrorTip: string;
   }>;
   self?: {
     [k: string]: any;
   };
   event?: {
     [k: string]: EventEmitter<any>;
+  };
+  other?: {
+    style: string;
+    className: string;
+    canShow: boolean;
+    ref: any;
+    extraAttr: string;
   };
 }
 

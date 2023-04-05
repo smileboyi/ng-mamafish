@@ -13,6 +13,7 @@ import { Subscription } from "rxjs";
 import { skip, first } from "rxjs/operators";
 import { Store } from "@ngrx/store";
 import { ControlValueAccessor,FormControl, Validators } from "@angular/forms";
+import { NzSizeLDSType } from "ng-zorro-antd/core/types";
 
 import * as fromReducer from "@reducers/index";
 import * as actions from "@actions/form-design.action";
@@ -45,14 +46,15 @@ export class FdEleBaseComponent
   @Input() formDirty:any;
 
   value: Event;
-  onTouch = (): void => {
-  };
-  onChange = (value: Event | null): Event | null => {
-     return value
-  };
+  onTouch = (): void => {};
+  onChange = (value: Event | null): Event | null => value;
+
+  get nzSize(): NzSizeLDSType {
+    return this.config?.base?.nzSize || "default";
+  }
 
   get labelWidth(): number {
-    return this.config?.base?.labelWidth || 8;
+    return this.config?.base?.labelWidth || 6;
   }
 
   get eleName(): string {
@@ -117,11 +119,6 @@ export class FdEleBaseComponent
 
   writeValue(v: Event): void {
     this.value = v;
-
-    // this.formControl.valid;
-    // this.formControl.markAsDirty();
-    // this.formControl.updateValueAndValidity({ onlySelf: true });
-    // console.log(3452345354,this.formControl.valid)
     this.onChange(v);
   }
   registerOnChange(fn: (value: Event | null) => Event | null): void {

@@ -1,0 +1,193 @@
+<form nz-form [formGroup]="configFrom">
+  <nz-collapse>
+    <nz-collapse-panel
+      nzHeader="基本设置"
+      [nzActive]="true"
+      formGroupName="base"
+    >
+      <div class="prop-item">
+        <span class="name">显示文本</span>
+        <div class="warp">
+          <input nz-input formControlName="labelName" />
+        </div>
+      </div>
+      <div class="prop-item">
+        <span class="name">标签宽度占比</span>
+        <div class="warp">
+          <nz-input-number-group nzAddOnAfter="span">
+            <nz-input-number
+              [nzStep]="1"
+              [nzPrecision]="0"
+              [nzMax]="10"
+              [nzMin]="2"
+              formControlName="labelWidth"
+            ></nz-input-number>
+          </nz-input-number-group>
+        </div>
+      </div>
+      <div class="prop-item">
+        <span class="name">组件大小</span>
+        <div class="warp">
+          <nz-radio-group nzButtonStyle="solid" formControlName="nzSize">
+            <label nz-radio-button nzValue="small">偏小</label>
+            <label nz-radio-button nzValue="default">默认</label>
+            <label nz-radio-button nzValue="large">偏大</label>
+          </nz-radio-group>
+        </div>
+      </div>
+      <div class="prop-item">
+        <span class="name">提示信息</span>
+        <div class="warp">
+          <input nz-input formControlName="tooltip" />
+        </div>
+      </div>
+      <div class="prop-item">
+        <span class="name">错误提示信息</span>
+        <div class="warp">
+          <input nz-input formControlName="nzErrorTip" />
+        </div>
+      </div>
+      <div class="prop-item">
+        <span class="name">是否必填</span>
+        <div class="warp">
+          <nz-switch formControlName="nzRequired"></nz-switch>
+        </div>
+      </div>
+      <div class="prop-item">
+        <span class="name">是否禁用</span>
+        <div class="warp">
+          <nz-switch formControlName="nzDisabled"></nz-switch>
+        </div>
+      </div>
+    </nz-collapse-panel>
+    <nz-collapse-panel
+      nzHeader="属性设置"
+      [nzActive]="true"
+      formGroupName="self"
+    >
+      <div class="prop-list">
+        <div class="prop-item">
+          <span class="name">类型</span>
+          <div class="warp">
+            <nz-radio-group nzButtonStyle="solid" formControlName="type">
+              <label nz-radio-button nzValue="text">文本框</label>
+              <label nz-radio-button nzValue="password">密码框</label>
+            </nz-radio-group>
+          </div>
+        </div>
+        <div class="prop-item">
+          <span class="name">占位符</span>
+          <div class="warp">
+            <input nz-input formControlName="placeholder" />
+          </div>
+        </div>
+        <div class="prop-item">
+          <span class="name">是否隐藏边框</span>
+          <div class="warp">
+            <nz-switch formControlName="nzBorderless"></nz-switch>
+          </div>
+        </div>
+        <div class="prop-item">
+          <span class="name">是否为文本域</span>
+          <div class="warp">
+            <nz-switch formControlName="fdTextareaMode"></nz-switch>
+          </div>
+        </div>
+        <div class="prop-item">
+          <span class="name">自适应内容高度</span>
+          <div class="warp">
+            <nz-select formControlName="nzAutosize">
+              <nz-option nzValue="yes" nzLabel="自适应"></nz-option>
+              <nz-option nzValue="no" nzLabel="不自适应"></nz-option>
+              <nz-option nzValue="custom" nzLabel="自定义行数"></nz-option>
+            </nz-select>
+            <p style="margin: 3px 0;">文本框最小最大行数</p>
+            <nz-input-number-group nz-row nzCompact>
+              <div nz-col nzSpan="12">
+                <nz-input-number
+                  [nzStep]="1"
+                  [nzMin]="1"
+                  [nzPrecision]="0"
+                  class="w100"
+                ></nz-input-number>
+              </div>
+              <div nz-col nzSpan="12">
+                <nz-input-number
+                  [nzStep]="1"
+                  [nzMin]="1"
+                  [nzPrecision]="0"
+                  class="w100"
+                ></nz-input-number>
+              </div>
+            </nz-input-number-group>
+          </div>
+        </div>
+        <div class="prop-item">
+          <span class="name">最大字数</span>
+          <div class="warp">
+            <nz-input-number
+              [nzStep]="1"
+              [nzMin]="1"
+              [nzPrecision]="0"
+              formControlName="nzMaxCharacterCount"
+            ></nz-input-number>
+          </div>
+        </div>
+        <div class="prop-item">
+          <span class="name">自定义统计字数函数</span>
+          <div class="warp">
+            <input nz-input formControlName="nzComputeCharacterCount" />
+          </div>
+        </div>
+      </div>
+    </nz-collapse-panel>
+    <nz-collapse-panel
+      nzHeader="事件设置"
+      [nzActive]="true"
+      formGroupName="event"
+    >
+      <div class="prop-item">
+        <span class="name">css类</span>
+        <div class="warp">
+          <!-- <input nz-input formControlName="nzComputeCharacterCount" /> -->
+        </div>
+      </div>
+    </nz-collapse-panel>
+    <nz-collapse-panel
+      nzHeader="其他设置"
+      [nzActive]="true"
+      formGroupName="other"
+    >
+      <div class="prop-item">
+        <span class="name">组件style</span>
+        <div class="warp">
+          <input nz-input formControlName="style" />
+        </div>
+      </div>
+      <div class="prop-item">
+        <span class="name">样式名称</span>
+        <div class="warp">
+          <input nz-input formControlName="className" />
+        </div>
+      </div>
+      <div class="prop-item">
+        <span class="name">显示条件</span>
+        <div class="warp">
+          <input nz-input formControlName="className" />
+        </div>
+      </div>
+      <div class="prop-item">
+        <span class="name">组件引用</span>
+        <div class="warp">
+          <input nz-input formControlName="ref" />
+        </div>
+      </div>
+      <div class="prop-item">
+        <span class="name">额外属性</span>
+        <div class="warp">
+          <textarea nz-input rows="4" formControlName="extraAttr"></textarea>
+        </div>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+</form>

@@ -1,25 +1,26 @@
 :host {
   display: grid;
-  grid-template-columns: 270px auto 300px;
+  grid-template-columns: 270px auto 330px;
   grid-template-rows: 50px auto;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   height: 100%;
   grid-template-areas:
     "header header header"
-    "ele drag config";
+    "leftPane drag rightPane";
 }
 
 cat-form-design-header {
   grid-area: header;
 }
 
-cat-form-design-ele {
-  grid-area: ele;
+cat-form-design-ele,
+cat-form-design-tree {
+  grid-area: leftPane;
 }
 
 cat-form-design-config {
-  grid-area: config;
+  grid-area: rightPane;
 }
 
 .context-menu {
@@ -56,6 +57,20 @@ cat-form-design-config {
       &::-webkit-scrollbar {
         width: 0;
       }
+
+      ::ng-deep {
+        cat-input-ele,
+        cat-input-number-ele,
+        cat-autocomplete-ele,
+        cat-rate-ele,
+        cat-warp-ele,
+        cat-checkbox-ele,
+        cat-cascader-ele {
+          display: block;
+          width: 100%;
+        }
+      }
+
       [nz-row] {
         &.last-row {
           visibility: hidden;
@@ -100,7 +115,7 @@ cat-form-design-config {
       }
     }
     &.ipadpro {
-      min-width: 750px;
+      min-width: 800px;
       &::before {
         width: 1400px;
         height: 200%;
@@ -120,7 +135,7 @@ cat-form-design-config {
       }
     }
     &.iphonex {
-      min-width: 360px;
+      min-width: 400px;
       &::before {
         width: 950px;
         height: 100%;
@@ -150,11 +165,11 @@ cat-form-design-config {
     overflow-x: visible;
     outline: 1px dotted #b0b0b0;
   }
-  ::ng-deep [nz-form] cat-warp {
+  ::ng-deep [nz-form] cat-warp-ele {
     border: 1px dashed #40a9ff;
   }
   ::ng-deep [nz-form] [nz-col],
-  ::ng-deep [nz-form] cat-warp {
+  ::ng-deep [nz-form] cat-warp-ele {
     &.drag-focus::before {
       content: "";
       display: block;

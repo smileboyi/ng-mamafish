@@ -1,80 +1,107 @@
 <nz-tabset>
-  <nz-tab nzTitle="表单设置">
-    <nz-divider nzText="属性"></nz-divider>
-    <div class="prop-list">
-      <div class="prop-item">
-        <span class="name">默认列数</span>
-        <div class="warp">
-          <nz-select ngModel="column">
-            <nz-option nzValue="1" nzLabel="1列"></nz-option>
-            <nz-option nzValue="2" nzLabel="2列"></nz-option>
-            <nz-option nzValue="3" nzLabel="3列"></nz-option>
-            <nz-option nzValue="4" nzLabel="4列"></nz-option>
-          </nz-select>
-        </div>
-      </div>
-      <div class="prop-item">
-        <span class="name">标签位置</span>
-        <div class="warp">
-          <nz-radio-group
-            [(ngModel)]="formConfig.labelPosi"
-            nzButtonStyle="solid"
-          >
-            <label nz-radio-button nzValue="left">居左</label>
-            <label nz-radio-button nzValue="top">居上</label>
-            <label nz-radio-button nzValue="right">居右</label>
-          </nz-radio-group>
-        </div>
-      </div>
-      <div class="prop-item">
-        <span class="name">标签宽度占比</span>
-        <div class="warp">
-          <nz-input-number-group nzAddOnAfter="span">
-            <nz-input-number
-              [(ngModel)]="formConfig.labelWidth"
-              [nzStep]="1"
-              [nzPrecision]="0"
-              [nzMax]="10"
-              [nzMin]="3"
-            ></nz-input-number>
-          </nz-input-number-group>
-        </div>
-      </div>
-      <div class="prop-item">
-        <span class="name">表单布局</span>
-        <div class="warp">
-          <nz-radio-group [(ngModel)]="formConfig.layout" nzButtonStyle="solid">
-            <label nz-radio-button nzValue="horizontal">水平</label>
-            <label nz-radio-button nzValue="vertical">垂直</label>
-          </nz-radio-group>
-        </div>
-      </div>
-      <div class="prop-item">
-        <span class="name">组件大小</span>
-        <div class="warp">
-          <nz-radio-group
-            [(ngModel)]="formConfig.compSize"
-            nzButtonStyle="solid"
-          >
-            <label nz-radio-button nzValue="small">偏小</label>
-            <label nz-radio-button nzValue="default">默认</label>
-            <label nz-radio-button nzValue="large">偏大</label>
-          </nz-radio-group>
-        </div>
-      </div>
-    </div>
-    <nz-divider nzText="事件"></nz-divider>
-    <div class="prop-item">
-      <span class="name"></span>
-      <div class="warp"></div>
-    </div>
-  </nz-tab>
   <nz-tab nzTitle="组件设置">
-    <nz-divider nzText="属性"></nz-divider>
-    <div class="prop-item">
-      <span class="name"></span>
-      <div class="warp"></div>
-    </div>
-    <nz-divider nzText="事件"></nz-divider>
+    <cat-input-config></cat-input-config>
+  </nz-tab>
+  <nz-tab nzTitle="表单设置">
+    <nz-collapse>
+      <nz-collapse-panel nzHeader="基本设置" [nzActive]="true">
+        <div class="prop-list">
+          <div class="prop-item">
+            <span class="name">默认列数</span>
+            <div class="warp">
+              <nz-select ngModel="column">
+                <nz-option nzValue="1" nzLabel="1列"></nz-option>
+                <nz-option nzValue="2" nzLabel="2列"></nz-option>
+                <nz-option nzValue="3" nzLabel="3列"></nz-option>
+                <nz-option nzValue="4" nzLabel="4列"></nz-option>
+              </nz-select>
+            </div>
+          </div>
+          <div class="prop-item">
+            <span class="name">标签位置</span>
+            <div class="warp">
+              <nz-radio-group
+                [(ngModel)]="formConfig.labelPosi"
+                nzButtonStyle="solid"
+              >
+                <label nz-radio-button nzValue="left">居左</label>
+                <label nz-radio-button nzValue="top">居上</label>
+                <label nz-radio-button nzValue="right">居右</label>
+              </nz-radio-group>
+            </div>
+          </div>
+          <div class="prop-item">
+            <span class="name">标签宽度占比</span>
+            <div class="warp">
+              <nz-input-number-group nzAddOnAfter="span">
+                <nz-input-number
+                  [(ngModel)]="formConfig.labelWidth"
+                  [nzStep]="1"
+                  [nzPrecision]="0"
+                  [nzMax]="10"
+                  [nzMin]="2"
+                ></nz-input-number>
+              </nz-input-number-group>
+            </div>
+          </div>
+          <div class="prop-item">
+            <span class="name">表单布局</span>
+            <div class="warp">
+              <nz-radio-group
+                [(ngModel)]="formConfig.layout"
+                nzButtonStyle="solid"
+              >
+                <label nz-radio-button nzValue="horizontal">水平</label>
+                <label nz-radio-button nzValue="vertical">垂直</label>
+              </nz-radio-group>
+            </div>
+          </div>
+          <div class="prop-item">
+            <span class="name">组件大小</span>
+            <div class="warp">
+              <nz-radio-group
+                [(ngModel)]="formConfig.compSize"
+                nzButtonStyle="solid"
+              >
+                <label nz-radio-button nzValue="small">偏小</label>
+                <label nz-radio-button nzValue="default">默认</label>
+                <label nz-radio-button nzValue="large">偏大</label>
+              </nz-radio-group>
+            </div>
+          </div>
+        </div>
+      </nz-collapse-panel>
+      <!-- <nz-collapse-panel nzHeader="其他设置" [nzActive]="true">
+        <div class="prop-list">
+          <div class="prop-item">
+            <span class="name">生命周期钩子</span>
+            <div class="warp">
+              <nz-select ngModel="column" nzMode="multiple">
+                <nz-option nzValue="OnInit" nzLabel="OnInit"></nz-option>
+                <nz-option nzValue="DoCheck" nzLabel="DoCheck"></nz-option>
+                <nz-option nzValue="OnChanges" nzLabel="OnChanges"></nz-option>
+                <nz-option
+                  nzValue="AfterContentInit"
+                  nzLabel="AfterContentInit"
+                ></nz-option>
+                <nz-option
+                  nzValue="AfterContentChecked"
+                  nzLabel="AfterContentChecked"
+                ></nz-option>
+                <nz-option
+                  nzValue="AfterViewInit"
+                  nzLabel="AfterViewInit"
+                ></nz-option>
+                <nz-option
+                  nzValue="AfterViewChecked"
+                  nzLabel="AfterViewChecked"
+                ></nz-option>
+                <nz-option nzValue="OnDestroy" nzLabel="OnDestroy"></nz-option>
+              </nz-select>
+            </div>
+          </div>
+        </div>
+      </nz-collapse-panel> -->
+    </nz-collapse>
   </nz-tab>
 </nz-tabset>

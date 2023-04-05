@@ -12,9 +12,19 @@ import { DsignLayoutType } from "@declare";
   selector: "cat-form-design-header",
   templateUrl: "./form-design-header.component.html",
   styleUrls: ["./form-design-header.component.less"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormDesignHeaderComponent {
-  @Input() layoutType: DsignLayoutType = "PC";
+  @Input() layoutType: DsignLayoutType = "iPad";
   @Output() layoutTypeChange = new EventEmitter<DsignLayoutType>();
+  @Output() triggerAction = new EventEmitter<string>();
+
+  
+  handle(type:string):void {
+    if(type =="treeview") {
+
+
+    }
+    this.triggerAction.next(type)
+  }
 }

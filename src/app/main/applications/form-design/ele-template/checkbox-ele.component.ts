@@ -4,15 +4,16 @@ import {
   OnInit,
   AfterViewInit,
   ViewChild,
+  Input,
 } from "@angular/core";
-import { NzInputDirective } from "ng-zorro-antd/input";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
+import { NzCheckboxGroupComponent } from "ng-zorro-antd/checkbox";
 
 import { FdEleBaseComponent } from "./fd-ele-base.component";
 import { FD_ELE_META } from "@tokens";
 
 @Component({
-  selector: "cat-input-ele",
+  selector: "cat-checkbox-ele",
   template: `
     <nz-form-item>
       <nz-form-label
@@ -24,21 +25,19 @@ import { FD_ELE_META } from "@tokens";
           *ngIf="tooltip"
           nz-icon
           nz-tooltip
-          nzType="question-circle"
           nzTheme="fill"
+          nzType="question-circle"
           [nzTooltipTitle]="tooltip"
         ></span>
       </nz-form-label>
-      <nz-form-control [nzSpan]="14">
-        <input
-          nz-input
-          [attr.name]="eleName"
-          [attr.type]="nzType"
+      <nz-form-control [nzSpan]="14" [nzErrorTip]="config?.base?.nzErrorTip">
+        <nz-checkbox-group
           [(ngModel)]="value"
           (ngModelChange)="writeValue($event)"
-          [attr.disabled]="config?.base?.nzDisabled"
+          [nzDisabled]="config?.base?.nzDisabled"
           #target
-        />
+        >
+        </nz-checkbox-group>
       </nz-form-control>
     </nz-form-item>
   `,
@@ -46,25 +45,27 @@ import { FD_ELE_META } from "@tokens";
   providers: [
     {
       provide: FD_ELE_META,
-      useValue: { type: "input", name: "输入框" },
+      useValue: { type: "checkbox", name: "复选框" },
     },
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: InputEleComponent,
+      useExisting: CheckboxEleComponent,
       multi: true,
     },
   ],
 })
-export class InputEleComponent extends FdEleBaseComponent
+export class CheckboxEleComponent extends FdEleBaseComponent
   implements OnInit, AfterViewInit {
-  @ViewChild("target", { read: NzInputDirective, static: false })
-  target: NzInputDirective;
-
-  nzType = "text";
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.value = ([
+      { label: "item1", value: 1 },
+      { label: "item2", value: 2 },
+    ] as any) as Event;
+  }
 
   ngAfterViewInit(): void {
     super.ngAfterViewInit();
   }
 }
+// [nzSize]="config?.self?.nzSize"
+// [nzButtonStyle]="config?.self?.nzButtonStyle"

@@ -53,7 +53,7 @@ import { elePrefix, warpNodeName } from "@config/app.config";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormDesignComponent implements OnInit, AfterViewInit {
-  layoutType: DsignLayoutType = "PC";
+  layoutType: DsignLayoutType = "iPad";
   get layoutClass() {
     return {
       PC: "desktop",
@@ -81,6 +81,8 @@ export class FormDesignComponent implements OnInit, AfterViewInit {
     )!;
   }
 
+  nodes: DsignEleNode[] = [];
+  treeview = false;
   @ViewChild("choiceBox", { read: ElementRef }) choiceBox: ElementRef;
   @ViewChild("lastNzRow") lastNzRow: ElementRef;
   @ViewChild("form") form: ElementRef;
@@ -284,23 +286,32 @@ export class FormDesignComponent implements OnInit, AfterViewInit {
               colNode.childNodes.forEach((node: ChildNode, z: number) => {
                 if (node.nodeType == 1) {
                   const path = `${x}-${y}-${z}`;
-                  subChildren.push({
-                    title: node.nodeName,
-                    key: path,
-                    children: this.getDsignEleNode(node, path),
-                  });
+                  const res = /cat-(\S+)-ele/.exec(node.nodeName.toLowerCase());
+                  if (res) {
+                    subChildren.push({
+                      title: res[1] + " " + path,
+                      key: path,
+                      type: res[1],
+                      expanded: true,
+                      children: this.getDsignEleNode(node, path),
+                    });
+                  }
                 }
               });
               children.push({
-                title: "col",
+                title: "col " + `${x}-${y}`,
                 key: `${x}-${y}`,
+                type: "col",
+                expanded: true,
                 children: subChildren,
               });
             }
           });
           directory.push({
-            title: "row",
+            title: "row " + `${x}`,
             key: `${x}`,
+            type: "row",
+            expanded: true,
             children: children,
           });
         }
@@ -318,11 +329,16 @@ export class FormDesignComponent implements OnInit, AfterViewInit {
           node.nodeType == 1 &&
           node.nodeName.toLowerCase().includes(elePrefix)
         ) {
-          directory.push({
-            title: node.nodeName,
-            key: `${path}-${i}`,
-            children: this.getDsignEleNode(node, `${path}-${i}`),
-          });
+          const res = /cat-(\S+)-ele/.exec(node.nodeName.toLowerCase());
+          if (res) {
+            directory.push({
+              title: res[1] + " " + `${path}-${i}`,
+              key: `${path}-${i}`,
+              type: res[1],
+              expanded: true,
+              children: this.getDsignEleNode(node, `${path}-${i}`),
+            });
+          }
         }
       });
       return directory;
@@ -574,7 +590,6 @@ export class FormDesignComponent implements OnInit, AfterViewInit {
       };
       fn(Array.from(parentNode.children));
     }
-    console.log(this.formDesign.formDesignMap);
   }
 
   moveInlinePosi(type: "top" | "bottom"): void {
@@ -714,6 +729,8 @@ export class FormDesignComponent implements OnInit, AfterViewInit {
   handleTest2() {
     // console.log(this.validateForm.valid);
 
+    console.log(this.genTreeDirectory());
+
     if (this.validateForm.valid) {
       console.log("submit", this.validateForm.value);
     } else {
@@ -732,5 +749,16 @@ export class FormDesignComponent implements OnInit, AfterViewInit {
     // });
     // this.column = 4;
     // console.log(this.genTreeDirectory());
+  }
+
+  triggerAction(action: string): void {
+    if (action == "treeview") {
+      this.treeview = !this.treeview;
+      if (this.treeview) {
+        this.nodes = this.genTreeDirectory();
+        this.cdr.detectChanges();
+      }
+    } else if (action == "copy") {
+    }
   }
 }

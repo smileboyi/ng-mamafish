@@ -1,5 +1,6 @@
-<cat-form-design-header [(layoutType)]="layoutType"></cat-form-design-header>
-<cat-form-design-ele #choiceBox></cat-form-design-ele>
+<cat-form-design-header [(layoutType)]="layoutType" (triggerAction)="triggerAction($event)"></cat-form-design-header>
+<cat-form-design-ele #choiceBox  [hidden]="treeview"></cat-form-design-ele>
+<cat-form-design-tree [nodes]="nodes" [hidden]="!treeview"></cat-form-design-tree>
 <main class="drag-box">
   <div class="layout-box {{layoutClass}}">
     <form nz-form [formGroup]="validateForm" #form>

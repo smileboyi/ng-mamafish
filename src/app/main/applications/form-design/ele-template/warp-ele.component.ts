@@ -11,7 +11,7 @@ import { FdEleBaseComponent } from "./fd-ele-base.component";
 import { FD_ELE_META } from "@tokens";
 
 @Component({
-  selector: "cat-warp",
+  selector: "cat-warp-ele",
   template: `
     <span>{{ frontText }}</span>
     <ng-content></ng-content>
@@ -38,7 +38,7 @@ import { FD_ELE_META } from "@tokens";
     },
   ],
 })
-export class WarpComponent extends FdEleBaseComponent
+export class WarpEleComponent extends FdEleBaseComponent
   implements OnInit, AfterViewInit {
   @Input() frontText = "";
   @Input() behindText = "";

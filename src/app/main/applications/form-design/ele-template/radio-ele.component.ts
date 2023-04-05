@@ -4,40 +4,58 @@ import {
   OnInit,
   AfterViewInit,
   ViewChild,
+  Input,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
-import { NzInputNumberComponent } from "ng-zorro-antd/input-number";
 
 import { FdEleBaseComponent } from "./fd-ele-base.component";
 import { FD_ELE_META } from "@tokens";
 
+interface RadioDataSourceItem {
+  value: string;
+  label: string;
+  disabled?: boolean;
+  autoFocus?: boolean;
+}
+
+export declare type RadioDataSource = Array<
+  RadioDataSourceItem | string | number
+>;
+
 @Component({
-  selector: "cat-input-number",
+  selector: "cat-radio-ele",
   template: `
     <nz-form-item>
       <nz-form-label
         [nzSpan]="labelWidth"
         [nzRequired]="config?.base?.nzRequired"
       >
+        {{ eleName }}
         <span
           *ngIf="tooltip"
           nz-icon
           nz-tooltip
-          nzType="question-circle"
           nzTheme="fill"
+          nzType="question-circle"
           [nzTooltipTitle]="tooltip"
         ></span>
       </nz-form-label>
-      <nz-form-control [nzSpan]="14" nzErrorTip="Please input your password!">
-        <nz-input-number
-          [attr.name]="eleName"
-          [attr.type]="nzType"
+      <nz-form-control [nzSpan]="14" [nzErrorTip]="config?.base?.nzErrorTip">
+        <nz-radio-group
           [(ngModel)]="value"
           (ngModelChange)="writeValue($event)"
           [nzDisabled]="config?.base?.nzDisabled"
-          [formControl]="formControl"
           #target
-        ></nz-input-number>
+        >
+          <!-- <label
+            nz-radio
+            nzValue="d.value"
+            [nzAutoFocus]="d.autoFocus"
+            [nzDisabled]="d.disabled"
+            *ngFor="let d of data"
+            >{{ d.label }}</label
+          > -->
+        </nz-radio-group>
       </nz-form-control>
     </nz-form-item>
   `,
@@ -45,27 +63,22 @@ import { FD_ELE_META } from "@tokens";
   providers: [
     {
       provide: FD_ELE_META,
-      useValue: { type: "input-number", name: "数字输入框" },
+      useValue: { type: "radio", name: "单选框" },
     },
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: InputNumberComponent,
+      useExisting: RadioEleComponent,
       multi: true,
     },
   ],
 })
-export class InputNumberComponent extends FdEleBaseComponent
+export class RadioEleComponent extends FdEleBaseComponent
   implements OnInit, AfterViewInit {
-  @ViewChild("target")
-  target: NzInputNumberComponent;
-
-  nzType = "text";
+  @Input() data: string[] = [];
 
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     super.ngAfterViewInit();
-    this.config?.base?.eleName;
-    console.log((this as any))
   }
 }
